@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-        title: 'Stimmungsringe', home: MyHomePage(title: 'Übersicht'));
+      title: 'Stimmungsringe',
+      home: MyHomePage(title: 'Übersicht'),
+    );
   }
 }
 
@@ -61,8 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       navigationBar: CupertinoNavigationBar(
         middle: Text(widget.title),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 68),
+      child: SafeArea(
         child: Column(
 //          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
