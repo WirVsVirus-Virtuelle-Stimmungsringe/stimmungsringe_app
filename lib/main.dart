@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => runApp(MyApp());
 
@@ -7,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Stimmungsringe',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Stimmungsringe'),
     );
   }
 }
@@ -45,6 +47,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _hello = "";
+
+  _MyHomePageState() : super() {
+    _updateHello();
+  }
+
+  Future<String> _getHelloFromServer() async {
+    String url =
+        'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring/sample';
+    http.Response response = await http.get(url);
+    return json.decode(response.body)['message'];
+  }
+
+  void _updateHello() {
+    _getHelloFromServer().then((hello) => _hello = hello);
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -91,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text('Hello from Server: ' + _hello),
             Text(
               'You have pushed the button this many times:',
             ),
