@@ -1,11 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AvatarRow extends StatefulWidget {
   final String name;
   final ImageProvider image;
   final Color gradientStartColor;
   final Color gradientEndColor;
+  final IconData icon;
 
   const AvatarRow({
     Key key,
@@ -13,6 +15,7 @@ class AvatarRow extends StatefulWidget {
     @required this.image,
     @required this.gradientStartColor,
     @required this.gradientEndColor,
+    @required this.icon,
   }) : super(key: key);
 
   @override
@@ -39,6 +42,26 @@ class _SelfAvatarRowState extends State<AvatarRow> {
                 end: Alignment.bottomRight,
                 colors: [widget.gradientStartColor, widget.gradientEndColor],
               ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Container(),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      FaIcon(
+                        widget.icon,
+                        size: avatarSize / 2,
+                        color: Color(0xffffffff),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(

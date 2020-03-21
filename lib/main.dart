@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Padding(
         padding: const EdgeInsets.only(top: 68),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+//          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
               name: 'Avatar',
@@ -71,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
               gradientStartColor: Color(0xff941919),
               gradientEndColor: Color(0xffd7670b),
+              icon: FontAwesomeIcons.cloud,
             ),
           ],
         ),
