@@ -50,15 +50,12 @@ class _SelfAvatarRowState extends State<AvatarRow> {
                   child: Container(),
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FaIcon(
-                        widget.icon,
-                        size: avatarSize / 2,
-                        color: Color(0xffffffff),
-                      )
-                    ],
+                  child: Center(
+                    child: FaIcon(
+                      widget.icon,
+                      size: avatarSize / 2,
+                      color: Color(0xffffffff),
+                    ),
                   ),
                 ),
               ],
