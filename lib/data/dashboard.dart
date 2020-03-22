@@ -1,27 +1,21 @@
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'user.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
-
-
 Future<Dashboard> loadDashboardPageData() async {
-
-  final String url = restUrlDashboard();
+  final String url =
+  restUrlDashboard();
 
   http.Response response = await http.get(
-      url, headers: {
-    'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'
-  });
+    url,
+    headers: {'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'},
+  );
 
   var dashboard = Dashboard.fromJson(json.decode(response.body));
 
   return dashboard;
 }
-
-
 
 class MyTile {
   UserMinimal user;
@@ -51,9 +45,8 @@ class Dashboard {
     this.myTile = new MyTile.fromJson(jsonMap['myTile']);
 
     final _otherTiles = (jsonMap['otherTiles'] as List);
-    this.otherTiles = _otherTiles.map((tileJson) =>
-      new OtherTile.fromJson(tileJson)
-    ).toList();
-
+    this.otherTiles = _otherTiles
+        .map((tileJson) => new OtherTile.fromJson(tileJson))
+        .toList();
   }
 }

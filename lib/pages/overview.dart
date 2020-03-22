@@ -9,11 +9,10 @@ import 'package:stimmungsringeapp/global_constants.dart';
 class OverviewPage extends StatelessWidget {
   final Dashboard dashboard;
 
-  OverviewPage({Key key,
-    @required this.dashboard
-      // TODO: add contacts data, add own data
-      })
-      : super(key: key);
+  OverviewPage({
+    Key key,
+    this.dashboard,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,44 +38,42 @@ class OverviewPage extends StatelessWidget {
 
   List<Widget> children() {
     return <Widget>[
-          AvatarRow(
-            name: dashboard.myTile.user.displayName,
-            image: NetworkImage(
-                avatarImageUrl(dashboard.myTile.user.userId)),
-            avatarSentiment: Sentiment.thundery,
+      AvatarRow(
+        name: dashboard.myTile.user.displayName,
+        image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
+        avatarSentiment: Sentiment.thundery,
+      ),
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Title(
+          color: CupertinoColors.black,
+          child: Text(
+            'Meine Achtgeber:',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 8),
-            child: Title(
-              color: CupertinoColors.black,
-              child: Text(
-                'Meine Achtgeber:',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Expanded(
-              child: ListView(
+        ),
+      ),
+      Expanded(
+          child: ListView(
             padding: const EdgeInsets.all(8),
             children: otherTiles(),
           ))
-        ];
+    ];
   }
 
   List<Widget> otherTiles() {
     List<Widget> tiles = [];
 
-    return dashboard.otherTiles.map((tile) =>
-      Container(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: AvatarRowCondensed(
-          name: tile.user.displayName,
-          image: NetworkImage(
-              avatarImageUrl(tile.user.userId)),
-          avatarSentiment: Sentiment.sunny,
-        ),
-      )
-    ).toList(growable: false);
-
+    return dashboard.otherTiles
+        .map((tile) =>
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: AvatarRowCondensed(
+            name: tile.user.displayName,
+            image: NetworkImage(avatarImageUrl(tile.user.userId)),
+            avatarSentiment: Sentiment.sunny,
+          ),
+        ))
+        .toList(growable: false);
   }
 }
