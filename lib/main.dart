@@ -12,18 +12,14 @@ void main() {
   runApp(StimmungslagenApp());
 }
 
-
 class StimmungslagenApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _StimmungslageState();
+    return _StimmungslagenAppState();
   }
-
 }
 
-
-class _StimmungslageState extends State<StimmungslagenApp> {
-
+class _StimmungslagenAppState extends State<StimmungslagenApp> {
   Dashboard _dashboard;
 
   @override
@@ -32,23 +28,26 @@ class _StimmungslageState extends State<StimmungslagenApp> {
       title: 'Stimmungsringe',
       routes: {
         '/': (_) => OverviewPage(dashboard: _dashboard),
-        'my-sentiment': (_) => SetMySentimentPage(),
+        'my-sentiment': (_) =>
+            SetMySentimentPage(
+              dashboard: _dashboard,
+              onSentimentChange: (sentiment) {
+                if (_dashboard.myTile.sentimentStatus.sentimentCode !=
+                    sentiment.name) {
+                  _dashboard.myTile.sentimentStatus.sentimentCode =
+                      sentiment.name;
+                  setState(() {});
+                }
+              },
+            ),
       },
     );
   }
 
   @override
   void initState() {
-
     loadDashboardPageData().then((dashboard) {
-
-      this.setState(() =>
-        _dashboard = dashboard
-      );
-
+      this.setState(() => _dashboard = dashboard);
     });
   }
-
 }
-
-

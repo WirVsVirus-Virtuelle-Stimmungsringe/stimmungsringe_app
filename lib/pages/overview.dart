@@ -42,7 +42,7 @@ class OverviewPage extends StatelessWidget {
         name: dashboard.myTile.user.displayName,
         image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
         avatarSentiment:
-            Sentiment.fromSentiment(dashboard.myTile.sentimentStatus),
+        Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus),
       ),
       Container(
         margin: EdgeInsets.symmetric(vertical: 8),
@@ -71,7 +71,8 @@ class OverviewPage extends StatelessWidget {
             child: AvatarRowCondensed(
               name: tile.user.displayName,
               image: NetworkImage(avatarImageUrl(tile.user.userId)),
-              avatarSentiment: Sentiment.fromSentiment(tile.sentimentStatus),
+              avatarSentiment: Sentiment.fromSentimentStatus(
+                  tile.sentimentStatus),
             ),
           ),
         )

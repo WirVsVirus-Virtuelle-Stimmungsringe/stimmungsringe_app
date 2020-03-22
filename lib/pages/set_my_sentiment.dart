@@ -1,24 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
+import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
+
+import '../global_constants.dart';
 
 class SetMySentimentPage extends StatelessWidget {
+  final Dashboard dashboard;
+  final void Function(Sentiment) onSentimentChange;
+
   SetMySentimentPage({
     Key key,
-    // TODO: add own data
-  }) : super(key: key);
+    @required this.dashboard,
+    @required this.onSentimentChange,
+  })
+      : assert(dashboard != null),
+        assert(onSentimentChange != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<Widget> allSentiments = Sentiment.all.map((sentiment) {
-      return Center(
-        child: FaIcon(
-          sentiment.icon,
-          size: 70,
-          color: CupertinoColors.inactiveGray,
-        ),
+      return SentimentIconButton(
+        sentiment: sentiment,
+        isSelected:
+        Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
+            sentiment,
+        onTap: onSentimentChange,
       );
     }).toList(growable: false);
 
@@ -31,13 +41,13 @@ class SetMySentimentPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
-              name: 'Avatar',
-              image: NetworkImage(
-                  'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-              avatarSentiment: Sentiment.thundery,
+              name: dashboard.myTile.user.displayName,
+              image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
+              avatarSentiment: Sentiment.fromSentimentStatus(
+                  dashboard.myTile.sentimentStatus),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: Title(
                 color: CupertinoColors.black,
                 child: Text(
@@ -47,7 +57,8 @@ class SetMySentimentPage extends StatelessWidget {
             ),
             Expanded(
               child: GridView.count(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
                 children: allSentiments,
               ),

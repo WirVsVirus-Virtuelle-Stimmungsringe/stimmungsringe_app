@@ -11,23 +11,27 @@ class SentimentStatus {
 }
 
 class Sentiment {
+  final String name;
   final IconData icon;
   final _SentimentColors colors;
 
-  const Sentiment(this.icon, this.colors);
+  const Sentiment(this.name, this.icon, this.colors)
+      : assert(name != null),
+        assert(icon != null),
+        assert(colors != null);
 
   static final Sentiment sunny =
-      const Sentiment(FontAwesomeIcons.sun, _SentimentColors.good);
-  static final Sentiment sunnyWithClouds =
-      const Sentiment(FontAwesomeIcons.cloudSun, _SentimentColors.good);
-  static final Sentiment cloudy =
-      const Sentiment(FontAwesomeIcons.cloud, _SentimentColors.medium);
+  const Sentiment('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
+  static final Sentiment sunnyWithClouds = const Sentiment(
+      'sunnyWithClouds', FontAwesomeIcons.cloudSun, _SentimentColors.good);
+  static final Sentiment cloudy = const Sentiment(
+      'cloudy', FontAwesomeIcons.cloud, _SentimentColors.medium);
   static final Sentiment windy =
-      const Sentiment(FontAwesomeIcons.wind, _SentimentColors.medium);
-  static final Sentiment cloudyNight =
-      const Sentiment(FontAwesomeIcons.cloudMoon, _SentimentColors.medium);
+  const Sentiment('windy', FontAwesomeIcons.wind, _SentimentColors.medium);
+  static final Sentiment cloudyNight = const Sentiment(
+      'cloudyNight', FontAwesomeIcons.cloudMoon, _SentimentColors.medium);
   static final Sentiment thundery =
-      const Sentiment(FontAwesomeIcons.bolt, _SentimentColors.bad);
+  const Sentiment('thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
 
   static final List<Sentiment> all = [
     sunny,
@@ -38,7 +42,7 @@ class Sentiment {
     thundery
   ];
 
-  static Sentiment fromSentiment(SentimentStatus sentimentStatus) {
+  static Sentiment fromSentimentStatus(SentimentStatus sentimentStatus) {
     var map = {
       // old compat mapping
       'SNOWFLAKE': Sentiment.thundery,
@@ -58,7 +62,7 @@ class Sentiment {
 
     final Sentiment sentiment = map[sentimentStatus.sentimentCode];
     assert(sentiment != null,
-        'Undefined sentiment code ' + sentimentStatus.sentimentCode);
+    'Undefined sentiment code ' + sentimentStatus.sentimentCode);
     return sentiment;
   }
 }
