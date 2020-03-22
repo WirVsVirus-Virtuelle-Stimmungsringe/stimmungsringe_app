@@ -1,0 +1,58 @@
+import 'dart:developer';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'user.dart';
+
+
+
+Future<Dashboard> loadDashboardPageData() async {
+
+  String url = 'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring/dashboard';
+
+  http.Response response = await http.get(
+      url, headers: {
+    'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'
+  });
+
+  var dashboard = Dashboard.fromJson(json.decode(response.body));
+
+  return dashboard;
+}
+
+
+
+class MyTile {
+  UserMinimal user;
+  SentimentStatus sentimentStatus;
+
+  MyTile.fromJson(Map<String, dynamic> jsonMap) {
+    this.user = UserMinimal.fromJson(jsonMap['user']);
+    this.sentimentStatus = SentimentStatus.fromJson(jsonMap['sentimentStatus']);
+  }
+}
+
+class OtherTile {
+  UserMinimal user;
+  SentimentStatus sentimentStatus;
+
+  OtherTile.fromJson(Map<String, dynamic> jsonMap) {
+    this.user = UserMinimal.fromJson(jsonMap['user']);
+    this.sentimentStatus = SentimentStatus.fromJson(jsonMap['sentimentStatus']);
+  }
+}
+
+class Dashboard {
+  MyTile myTile;
+  List<OtherTile> otherTiles;
+
+  Dashboard.fromJson(Map<String, dynamic> jsonMap) {
+    this.myTile = new MyTile.fromJson(jsonMap['myTile']);
+
+    final _otherTiles = (jsonMap['otherTiles'] as List);
+    this.otherTiles = _otherTiles.map((tileJson) =>
+      new OtherTile.fromJson(tileJson)
+    ).toList();
+
+  }
+}
