@@ -20,7 +20,7 @@ class OverviewPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'own-sentiment'), // TODO
+          onTap: () => Navigator.pushNamed(context, 'my-sentiment'), // TODO
           child: Icon(
             CupertinoIcons.add,
             color: CupertinoColors.activeBlue,
