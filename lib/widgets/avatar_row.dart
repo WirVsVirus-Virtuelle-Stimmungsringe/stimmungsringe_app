@@ -47,9 +47,7 @@ class AvatarRow extends StatelessWidget {
                   child: Container(),
                 ),
                 Expanded(
-                  child: Center(
-                    child: _buildSentimentIcon(),
-                  ),
+                  child: _buildSentimentIcon(),
                 ),
               ],
             ),
@@ -101,20 +99,20 @@ class AvatarRow extends StatelessWidget {
     return onSentimentIconTap != null
         ? GestureDetector(
       onTap: onSentimentIconTap,
-      child: Stack(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           sentimentIcon,
-          Positioned(
-            top: 0,
-            right: 0,
-            child: Icon(
-              CupertinoIcons.pen,
-              color: CupertinoColors.white,
-            ),
-          )
+          Icon(
+            CupertinoIcons.pen,
+            color: CupertinoColors.white,
+          ),
         ],
       ),
     )
-        : sentimentIcon;
+        : Center(
+      child: sentimentIcon,
+    );
   }
 }
