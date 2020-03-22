@@ -39,18 +39,26 @@ class Sentiment {
   ];
 
   static Sentiment fromSentiment(SentimentStatus sentimentStatus) {
-    //backend SNOWFLAKE, SMOG, CLOUD_RAIN, CLOUD, CLOUD_SUN, SUN
     var map = {
-      'SNOWFLAKE': Sentiment.all[5],
-      'SMOG': Sentiment.all[4],
-      'CLOUD_RAIN': Sentiment.all[3],
-      'CLOUD': Sentiment.all[2],
-      'CLOUD_SUN': Sentiment.all[1],
-      'SUN': Sentiment.all[0],
+      // old compat mapping
+      'SNOWFLAKE': Sentiment.thundery,
+      'SMOG': Sentiment.cloudyNight,
+      'CLOUD_RAIN': Sentiment.windy,
+      'CLOUD': Sentiment.cloudy,
+      'CLOUD_SUN': sunnyWithClouds,
+      'SUN': Sentiment.sunny,
+      // new mapping
+      'thundery': thundery,
+      'cloudyNight': cloudyNight,
+      'windy': windy,
+      'cloudy': cloudy,
+      'sunnyWithClouds': sunnyWithClouds,
+      'sunny': sunny,
     };
 
     final Sentiment sentiment = map[sentimentStatus.sentimentCode];
-    assert(sentiment != null);
+    assert(sentiment != null,
+        'Undefined sentiment code ' + sentimentStatus.sentimentCode);
     return sentiment;
   }
 }
