@@ -64,9 +64,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
           ),
         ),
         Expanded(
-          child: ListView(
-            children: buildSuggestions(),
-          ),
+          child: buildSuggestionsList(),
         )
       ],
     );
@@ -87,10 +85,11 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
     );
   }
 
-  Widget buildSuggestionRow(Suggestion suggestion, NetworkImage myAvatarImage) {
+  Widget buildSuggestionRow(
+      Suggestion suggestion, NetworkImage myAvatarImage, bool lastItem) {
     NetworkImage placeholder = NetworkImage(
         'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
-    return Container(
+    Widget row = Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,13 +105,43 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
         ],
       ),
     );
+
+    if (!lastItem) {
+      return row;
+    }
+
+    return Column(
+      children: <Widget>[
+        row,
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 60,
+            right: 16,
+          ),
+          child: Container(
+            height: 1,
+            color: const Color(0xFFD9D9D9),
+          ),
+        ),
+      ],
+    );
   }
 
-  List<Widget> buildSuggestions() {
+  ListView buildSuggestionsList() {
     var myAvatarImage =
         NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
-    return _otherDetail.suggestions
-        .map((sugg) => buildSuggestionRow(sugg, myAvatarImage))
-        .toList(growable: false);
+
+    return ListView.builder(
+      itemCount: _otherDetail.suggestions.length,
+      itemBuilder: (context, index) {
+        final suggestion = _otherDetail.suggestions[index];
+
+        return buildSuggestionRow(
+          suggestion,
+          myAvatarImage,
+          index < _otherDetail.suggestions.length - 1,
+        );
+      },
+    );
   }
 }
