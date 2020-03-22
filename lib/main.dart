@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:stimmungsringeapp/widgets/avatar_row.dart';
+import 'data/mood.dart';
+import 'widgets/avatar_row.dart';
+import 'widgets/avatar_row_condensed.dart';
 
 void main() {
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+//  SystemChrome.setPreferredOrientations(
+//      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   runApp(MyApp());
 }
@@ -62,19 +65,69 @@ class _MyHomePageState extends State<MyHomePage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text(widget.title),
+        trailing: GestureDetector(
+          onTap: () {
+            debugPrint('add icon tapped');
+          },
+          child: Icon(
+            CupertinoIcons.add,
+            color: CupertinoColors.black,
+          ),
+        ),
       ),
       child: SafeArea(
         child: Column(
-//          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
               name: 'Avatar',
               image: NetworkImage(
                   'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-              gradientStartColor: Color(0xff941919),
-              gradientEndColor: Color(0xffd7670b),
-              icon: FontAwesomeIcons.cloud,
+              avatarMood: Mood.thundery,
             ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Title(
+                color: CupertinoColors.black,
+                child: Text(
+                  'Meine Achtgeber:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Expanded(
+                child: ListView(
+              padding: const EdgeInsets.all(8),
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: AvatarRowCondensed(
+                    name: 'Avatar',
+                    image: NetworkImage(
+                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+                    avatarMood: Mood.sunny,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: AvatarRowCondensed(
+                    name: 'Avatar lcksööl',
+                    image: NetworkImage(
+                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+                    avatarMood: Mood.cloudyNight,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: AvatarRowCondensed(
+                    name: 'Avatar svö d',
+                    image: NetworkImage(
+                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+                    avatarMood: Mood.thundery,
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),
