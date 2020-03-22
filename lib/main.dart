@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/overview.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment.dart';
 
@@ -30,14 +31,7 @@ class _SentimentAppState extends State<SentimentApp> {
         'my-sentiment': (_) =>
             SetMySentimentPage(
               dashboard: _dashboard,
-              onSentimentChange: (sentiment) {
-                if (_dashboard.myTile.sentimentStatus.sentimentCode !=
-                    sentiment.name) {
-                  setState(() =>
-                  _dashboard
-                      .myTile.sentimentStatus.sentimentCode = sentiment.name);
-                }
-              },
+              onSentimentChange: _updateMySentiment,
             ),
       },
     );
@@ -48,5 +42,12 @@ class _SentimentAppState extends State<SentimentApp> {
     loadDashboardPageData().then((dashboard) {
       this.setState(() => _dashboard = dashboard);
     });
+  }
+
+  _updateMySentiment(final Sentiment sentiment) {
+    if (_dashboard.myTile.sentimentStatus.sentimentCode != sentiment.name) {
+      setState(() =>
+      _dashboard.myTile.sentimentStatus.sentimentCode = sentiment.name);
+    }
   }
 }
