@@ -41,7 +41,8 @@ class OverviewPage extends StatelessWidget {
       AvatarRow(
         name: dashboard.myTile.user.displayName,
         image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
-        avatarSentiment: Sentiment.thundery,
+        avatarSentiment:
+            Sentiment.fromSentiment(dashboard.myTile.sentimentStatus),
       ),
       Container(
         margin: EdgeInsets.symmetric(vertical: 8),
@@ -65,16 +66,15 @@ class OverviewPage extends StatelessWidget {
   List<Widget> otherTiles() {
     return dashboard.otherTiles
         .map(
-          (tile) =>
-          Container(
+          (tile) => Container(
             padding: EdgeInsets.symmetric(vertical: 4),
             child: AvatarRowCondensed(
               name: tile.user.displayName,
               image: NetworkImage(avatarImageUrl(tile.user.userId)),
-              avatarSentiment: Sentiment.sunny,
+              avatarSentiment: Sentiment.fromSentiment(tile.sentimentStatus),
             ),
           ),
-    )
+        )
         .toList(growable: false);
   }
 }

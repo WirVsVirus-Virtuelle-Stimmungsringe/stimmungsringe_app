@@ -1,6 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+class SentimentStatus {
+  String sentimentCode;
+
+  SentimentStatus.fromJson(Map<String, dynamic> jsonMap) {
+    // e.g .CLOUD_RAIN
+    this.sentimentCode = jsonMap['sentiment']['sentimentCode'];
+  }
+}
+
 class Sentiment {
   final IconData icon;
   final _SentimentColors colors;
@@ -28,6 +37,22 @@ class Sentiment {
     cloudyNight,
     thundery
   ];
+
+  static Sentiment fromSentiment(SentimentStatus sentimentStatus) {
+    //backend SNOWFLAKE, SMOG, CLOUD_RAIN, CLOUD, CLOUD_SUN, SUN
+    var map = {
+      'SNOWFLAKE': Sentiment.all[5],
+      'SMOG': Sentiment.all[4],
+      'CLOUD_RAIN': Sentiment.all[3],
+      'CLOUD': Sentiment.all[2],
+      'CLOUD_SUN': Sentiment.all[1],
+      'SUN': Sentiment.all[0],
+    };
+
+    final Sentiment sentiment = map[sentimentStatus.sentimentCode];
+    assert(sentiment != null);
+    return sentiment;
+  }
 }
 
 class _SentimentColors {

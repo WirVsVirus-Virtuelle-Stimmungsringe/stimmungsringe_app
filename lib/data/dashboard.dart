@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'user.dart';
+import 'sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
 Future<Dashboard> loadDashboardPageData() async {
@@ -8,7 +9,7 @@ Future<Dashboard> loadDashboardPageData() async {
 
   http.Response response = await http.get(
     url,
-    headers: {'X-User-ID': sampleUserTimmy},
+    headers: {'X-User-ID': sampleUserMutti},
   );
 
   var dashboard = Dashboard.fromJson(json.decode(response.body));
