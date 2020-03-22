@@ -28,8 +28,7 @@ class _SentimentAppState extends State<SentimentApp> {
       title: 'Stimmungsringe',
       routes: {
         '/': (_) => OverviewPage(dashboard: _dashboard),
-        'my-sentiment': (_) =>
-            SetMySentimentPage(
+        'my-sentiment': (_) => SetMySentimentPage(
               dashboard: _dashboard,
               onSentimentChange: _updateMySentiment,
             ),
@@ -49,7 +48,7 @@ class _SentimentAppState extends State<SentimentApp> {
     if (Sentiment.fromSentimentStatus(_dashboard.myTile.sentimentStatus) !=
         sentiment) {
       setState(() =>
-      _dashboard.myTile.sentimentStatus.sentimentCode = sentiment.name);
+          _dashboard.myTile.sentimentStatus.sentimentCode = sentiment.name);
     }
   }
 }

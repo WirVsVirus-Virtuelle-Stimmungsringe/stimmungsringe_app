@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 
@@ -98,21 +98,21 @@ class AvatarRow extends StatelessWidget {
 
     return onSentimentIconTap != null
         ? GestureDetector(
-      onTap: onSentimentIconTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          sentimentIcon,
-          Icon(
-            CupertinoIcons.pen,
-            color: CupertinoColors.white,
-          ),
-        ],
-      ),
-    )
+            onTap: onSentimentIconTap,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                sentimentIcon,
+                Icon(
+                  CupertinoIcons.pen,
+                  color: CupertinoColors.white,
+                ),
+              ],
+            ),
+          )
         : Center(
-      child: sentimentIcon,
-    );
+            child: sentimentIcon,
+          );
   }
 }

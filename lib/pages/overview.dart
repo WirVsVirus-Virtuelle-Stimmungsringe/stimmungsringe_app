@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
+import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
 
 class OverviewPage extends StatelessWidget {
   final Dashboard dashboard;
@@ -41,7 +41,7 @@ class OverviewPage extends StatelessWidget {
         name: dashboard.myTile.user.displayName,
         image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
         avatarSentiment:
-        Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus),
+            Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus),
         onSentimentIconTap: () => Navigator.pushNamed(context, 'my-sentiment'),
       ),
       Container(
@@ -72,7 +72,7 @@ class OverviewPage extends StatelessWidget {
               name: tile.user.displayName,
               image: NetworkImage(avatarImageUrl(tile.user.userId)),
               avatarSentiment:
-              Sentiment.fromSentimentStatus(tile.sentimentStatus),
+                  Sentiment.fromSentimentStatus(tile.sentimentStatus),
             ),
           ),
         )

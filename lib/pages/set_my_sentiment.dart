@@ -14,8 +14,7 @@ class SetMySentimentPage extends StatelessWidget {
     Key key,
     @required this.dashboard,
     @required this.onSentimentChange,
-  })
-      : assert(dashboard != null),
+  })  : assert(dashboard != null),
         assert(onSentimentChange != null),
         super(key: key);
 
@@ -26,8 +25,8 @@ class SetMySentimentPage extends StatelessWidget {
         child: SentimentIconButton(
           sentiment: sentiment,
           isSelected:
-          Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
-              sentiment,
+              Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
+                  sentiment,
           onTap: onSentimentChange,
         ),
       );

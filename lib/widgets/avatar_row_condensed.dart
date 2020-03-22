@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 
@@ -28,7 +28,10 @@ class AvatarRowCondensed extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [avatarSentiment.colors.startColor, avatarSentiment.colors.endColor],
+          colors: [
+            avatarSentiment.colors.startColor,
+            avatarSentiment.colors.endColor
+          ],
         ),
       ),
       padding: const EdgeInsets.all(10),

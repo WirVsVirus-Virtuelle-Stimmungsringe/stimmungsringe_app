@@ -21,17 +21,17 @@ class Sentiment {
         assert(colors != null);
 
   static final Sentiment sunny =
-  const Sentiment('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
+      const Sentiment('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
   static final Sentiment sunnyWithClouds = const Sentiment(
       'sunnyWithClouds', FontAwesomeIcons.cloudSun, _SentimentColors.good);
   static final Sentiment cloudy = const Sentiment(
       'cloudy', FontAwesomeIcons.cloud, _SentimentColors.medium);
   static final Sentiment windy =
-  const Sentiment('windy', FontAwesomeIcons.wind, _SentimentColors.medium);
+      const Sentiment('windy', FontAwesomeIcons.wind, _SentimentColors.medium);
   static final Sentiment cloudyNight = const Sentiment(
       'cloudyNight', FontAwesomeIcons.cloudMoon, _SentimentColors.medium);
   static final Sentiment thundery =
-  const Sentiment('thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
+      const Sentiment('thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
 
   static final List<Sentiment> all = [
     sunny,
@@ -62,7 +62,7 @@ class Sentiment {
 
     final Sentiment sentiment = map[sentimentStatus.sentimentCode];
     assert(sentiment != null,
-    'Undefined sentiment code ' + sentimentStatus.sentimentCode);
+        'Undefined sentiment code ' + sentimentStatus.sentimentCode);
     return sentiment;
   }
 }
