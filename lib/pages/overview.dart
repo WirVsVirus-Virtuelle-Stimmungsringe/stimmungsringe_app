@@ -54,26 +54,27 @@ class OverviewPage extends StatelessWidget {
         ),
       ),
       Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(8),
-            children: otherTiles(),
-          ))
+        child: ListView(
+          padding: const EdgeInsets.all(8),
+          children: otherTiles(),
+        ),
+      )
     ];
   }
 
   List<Widget> otherTiles() {
-    List<Widget> tiles = [];
-
     return dashboard.otherTiles
-        .map((tile) =>
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 4),
-          child: AvatarRowCondensed(
-            name: tile.user.displayName,
-            image: NetworkImage(avatarImageUrl(tile.user.userId)),
-            avatarSentiment: Sentiment.sunny,
+        .map(
+          (tile) =>
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 4),
+            child: AvatarRowCondensed(
+              name: tile.user.displayName,
+              image: NetworkImage(avatarImageUrl(tile.user.userId)),
+              avatarSentiment: Sentiment.sunny,
+            ),
           ),
-        ))
+    )
         .toList(growable: false);
   }
 }
