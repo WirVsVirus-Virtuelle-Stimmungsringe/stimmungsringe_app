@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stimmungsringeapp/data/mood.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
@@ -20,7 +20,7 @@ class OverviewPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'own-mood'), // TODO
+          onTap: () => Navigator.pushNamed(context, 'own-sentiment'), // TODO
           child: Icon(
             CupertinoIcons.add,
             color: CupertinoColors.activeBlue,
@@ -42,7 +42,7 @@ class OverviewPage extends StatelessWidget {
             name: dashboard.myTile.user.displayName,
             image: NetworkImage(
                 'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-            avatarMood: Mood.thundery,
+            avatarSentiment: Sentiment.thundery,
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 8),
@@ -72,7 +72,7 @@ class OverviewPage extends StatelessWidget {
           name: tile.user.displayName,
           image: NetworkImage(
               'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-          avatarMood: Mood.sunny,
+          avatarSentiment: Sentiment.sunny,
         ),
       )
     ).toList(growable: false);

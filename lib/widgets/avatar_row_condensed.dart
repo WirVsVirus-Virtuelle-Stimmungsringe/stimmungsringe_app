@@ -1,22 +1,22 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:stimmungsringeapp/data/mood.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 
 const double _avatarSize = 90;
-const double _moodIconSize = 70;
+const double _sentimentIconSize = 70;
 
 class AvatarRowCondensed extends StatelessWidget {
-  final Mood avatarMood;
+  final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
 
   const AvatarRowCondensed({
     Key key,
-    @required this.avatarMood,
+    @required this.avatarSentiment,
     @required this.name,
     @required this.image,
-  })  : assert(avatarMood != null),
+  })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
         super(key: key);
@@ -28,7 +28,7 @@ class AvatarRowCondensed extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [avatarMood.colors.startColor, avatarMood.colors.endColor],
+          colors: [avatarSentiment.colors.startColor, avatarSentiment.colors.endColor],
         ),
       ),
       padding: const EdgeInsets.all(10),
@@ -72,8 +72,8 @@ class AvatarRowCondensed extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.only(right: 20),
                   child: FaIcon(
-                    avatarMood.icon,
-                    size: _moodIconSize,
+                    avatarSentiment.icon,
+                    size: _sentimentIconSize,
                     color: CupertinoColors.white,
                   ),
                 ),

@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:stimmungsringeapp/data/mood.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 
-class SetOwnMoodPage extends StatelessWidget {
-  SetOwnMoodPage({
+class SetOwnSentimentPage extends StatelessWidget {
+  SetOwnSentimentPage({
     Key key,
     // TODO: add own data
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> allMoods = Mood.allMoods.map((mood) {
+    List<Widget> allSentiments = Sentiment.all.map((sentiment) {
       return Center(
         child: FaIcon(
-          mood.icon,
+          sentiment.icon,
           size: 70,
           color: CupertinoColors.inactiveGray,
         ),
@@ -34,7 +34,7 @@ class SetOwnMoodPage extends StatelessWidget {
               name: 'Avatar',
               image: NetworkImage(
                   'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-              avatarMood: Mood.thundery,
+              avatarSentiment: Sentiment.thundery,
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -49,7 +49,7 @@ class SetOwnMoodPage extends StatelessWidget {
               child: GridView.count(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 crossAxisCount: 3,
-                children: allMoods,
+                children: allSentiments,
               ),
             )
           ],
