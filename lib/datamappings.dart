@@ -9,6 +9,38 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'datamappings.dart';
 
 
+Future<Dashboard> loadDashboardPageData() async {
+
+  String url = 'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring/dashboard';
+
+  http.Response response = await http.get(
+      url, headers: {
+    'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'
+  });
+
+
+  //var user = UserMinimal.fromJson(json.decode(userJson));
+  // log(user.toString());
+
+
+
+  var dashboard = Dashboard.fromJson(json.decode(response.body));
+ // log(dashboard.toString());
+
+
+
+  // log(response.body);
+
+
+  //var dashboard = Dashboard.fromJson(json.decode(response.body));
+
+
+
+
+
+  return dashboard;
+}
+
 class UserMinimal {
   String userId;
   String displayName;
@@ -102,64 +134,6 @@ class _HierGehtsWeiterPageState extends State<HierGehtsWeiterPage> {
 
 
 
-  Future<String> loadDashboardPageData() async {
-
-    String url = 'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring/dashboard';
-
-    http.Response response = await http.get(
-        url, headers: {
-      'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'
-    });
-
-    const sampleJson = """
-    {
-          "myTile": {
-              "user": {
-                  "userId": "cafecafe-b855-46ba-b907-321d2d38beef",
-                  "displayName": "Mutti"
-              },
-              "sentimentStatus": {
-                  "sentiment": {
-                      "sentimentCode": "CLOUD_RAIN"
-                  }
-              }
-          },
-          "otherTiles": [
-              {
-                  "user": {
-                      "userId": "12340000-b855-46ba-b907-321d2d38feeb",
-                      "displayName": "Timmy"
-                  },
-                  "sentimentStatus": {
-                      "sentiment": {
-                          "sentimentCode": "SMOG"
-                      }
-                  }
-              }
-          ]
-      }
-      """;
-
-
-    //var user = UserMinimal.fromJson(json.decode(userJson));
-    // log(user.toString());
-
-    var dashboard = Dashboard.fromJson(json.decode(sampleJson));
-    log(dashboard.toString());
-
-
-
-   // log(response.body);
-
-
-    //var dashboard = Dashboard.fromJson(json.decode(response.body));
-
-
-
-
-
-    return response.body;
-  }
 
   @override
   Widget build(BuildContext context) {

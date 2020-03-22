@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:stimmungsringeapp/data/mood.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
+import 'package:stimmungsringeapp/datamappings.dart';
 
 class OverviewPage extends StatelessWidget {
-  OverviewPage({Key key
+  final Dashboard dashboard;
+
+  OverviewPage({Key key,
+    @required this.dashboard
       // TODO: add contacts data, add own data
       })
       : super(key: key);
@@ -26,59 +30,52 @@ class OverviewPage extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            AvatarRow(
-              name: 'Avatar',
-              image: NetworkImage(
-                  'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-              avatarMood: Mood.thundery,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              child: Title(
-                color: CupertinoColors.black,
-                child: Text(
-                  'Meine Achtgeber:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Expanded(
-                child: ListView(
-              padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: AvatarRowCondensed(
-                    name: 'Avatar',
-                    image: NetworkImage(
-                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-                    avatarMood: Mood.sunny,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: AvatarRowCondensed(
-                    name: 'Avatar lcksööl',
-                    image: NetworkImage(
-                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-                    avatarMood: Mood.cloudyNight,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: AvatarRowCondensed(
-                    name: 'Avatar svö d',
-                    image: NetworkImage(
-                        'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
-                    avatarMood: Mood.thundery,
-                  ),
-                ),
-              ],
-            ))
-          ],
+          children: dashboard == null ? [] : children(),
         ),
       ),
     );
+  }
+
+  List<Widget> children() {
+    return <Widget>[
+          AvatarRow(
+            name: dashboard.myTile.user.displayName,
+            image: NetworkImage(
+                'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+            avatarMood: Mood.thundery,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Title(
+              color: CupertinoColors.black,
+              child: Text(
+                'Meine Achtgeber:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Expanded(
+              child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: otherTiles(),
+          ))
+        ];
+  }
+
+  List<Widget> otherTiles() {
+    List<Widget> tiles = [];
+
+    return dashboard.otherTiles.map((tile) =>
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: AvatarRowCondensed(
+          name: tile.user.displayName,
+          image: NetworkImage(
+              'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+          avatarMood: Mood.sunny,
+        ),
+      )
+    ).toList(growable: false);
+
   }
 }
