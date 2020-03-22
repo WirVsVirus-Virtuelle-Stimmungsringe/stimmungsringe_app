@@ -11,7 +11,18 @@ void main() {
   runApp(StimmungslagenApp());
 }
 
-class StimmungslagenApp extends StatelessWidget {
+
+class StimmungslagenApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _StimmungslageState();
+  }
+
+}
+
+
+class _StimmungslageState extends State<StimmungslagenApp> {
+
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
@@ -22,4 +33,7 @@ class StimmungslagenApp extends StatelessWidget {
       },
     );
   }
+
 }
+
+
