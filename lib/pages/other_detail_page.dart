@@ -59,7 +59,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
           child: Title(
             color: CupertinoColors.black,
             child: Text(
-              'Die Küche könnte etwas sauberer sein ...',
+              '',
             ),
           ),
         ),
@@ -97,9 +97,10 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 15),
-            child: CircleAvatar(backgroundImage: placeholder
-                // NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
-                ),
+            child: CircleAvatar(
+              backgroundImage: // placeholder
+                  NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
+            ),
           ),
           Expanded(child: Text(suggestion.text))
         ],
