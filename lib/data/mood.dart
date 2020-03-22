@@ -15,6 +15,15 @@ class Mood {
   static final Mood cloudyNight =
       Mood(FontAwesomeIcons.cloudMoon, _MoodColors.medium);
   static final Mood thundery = Mood(FontAwesomeIcons.bolt, _MoodColors.bad);
+
+  static final List<Mood> allMoods = [
+    sunny,
+    sunnyWithClouds,
+    cloudy,
+    windy,
+    cloudyNight,
+    thundery
+  ];
 }
 
 class _MoodColors {

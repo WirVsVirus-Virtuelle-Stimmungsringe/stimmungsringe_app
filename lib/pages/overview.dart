@@ -5,14 +5,10 @@ import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 
 class OverviewPage extends StatelessWidget {
-  final void Function() addButtonClick;
-
-  OverviewPage({
-    Key key,
-    // TODO: add contacts data, add own data
-    @required this.addButtonClick,
-  })  : assert(addButtonClick != null),
-        super(key: key);
+  OverviewPage({Key key
+      // TODO: add contacts data, add own data
+      })
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +16,7 @@ class OverviewPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: addButtonClick,
+          onTap: () => Navigator.pushNamed(context, 'own-mood'),
           child: Icon(
             CupertinoIcons.add,
             color: CupertinoColors.black,
