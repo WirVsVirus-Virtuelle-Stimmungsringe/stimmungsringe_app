@@ -87,7 +87,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
     );
   }
 
-  Widget buildSuggestionRow(Suggestion suggestion) {
+  Widget buildSuggestionRow(Suggestion suggestion, NetworkImage myAvatarImage) {
     NetworkImage placeholder = NetworkImage(
         'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
     return Container(
@@ -99,7 +99,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
             padding: EdgeInsets.only(right: 15),
             child: CircleAvatar(
               backgroundImage: // placeholder
-                  NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
+                  myAvatarImage,
             ),
           ),
           Expanded(child: Text(suggestion.text))
@@ -109,8 +109,10 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
   }
 
   List<Widget> buildSuggestions() {
+    var myAvatarImage =
+        NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
     return _otherDetail.suggestions
-        .map((sugg) => buildSuggestionRow(sugg))
+        .map((sugg) => buildSuggestionRow(sugg, myAvatarImage))
         .toList(growable: false);
   }
 }
