@@ -4,12 +4,11 @@ import 'user.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
 Future<Dashboard> loadDashboardPageData() async {
-  final String url =
-  restUrlDashboard();
+  final String url = restUrlDashboard();
 
   http.Response response = await http.get(
     url,
-    headers: {'X-User-ID': 'cafecafe-b855-46ba-b907-321d2d38beef'},
+    headers: {'X-User-ID': sampleUserTimmy},
   );
 
   var dashboard = Dashboard.fromJson(json.decode(response.body));
