@@ -39,13 +39,15 @@ class _SentimentAppState extends State<SentimentApp> {
 
   @override
   void initState() {
+    super.initState();
     loadDashboardPageData().then((dashboard) {
       this.setState(() => _dashboard = dashboard);
     });
   }
 
   _updateMySentiment(final Sentiment sentiment) {
-    if (_dashboard.myTile.sentimentStatus.sentimentCode != sentiment.name) {
+    if (Sentiment.fromSentimentStatus(_dashboard.myTile.sentimentStatus) !=
+        sentiment) {
       setState(() =>
       _dashboard.myTile.sentimentStatus.sentimentCode = sentiment.name);
     }
