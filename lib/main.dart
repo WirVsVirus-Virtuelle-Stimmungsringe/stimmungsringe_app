@@ -8,17 +8,17 @@ void main() {
 //  SystemChrome.setPreferredOrientations(
 //      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  runApp(StimmungslagenApp());
+  runApp(SentimentApp());
 }
 
-class StimmungslagenApp extends StatefulWidget {
+class SentimentApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _StimmungslagenAppState();
+    return _SentimentAppState();
   }
 }
 
-class _StimmungslagenAppState extends State<StimmungslagenApp> {
+class _SentimentAppState extends State<SentimentApp> {
   Dashboard _dashboard;
 
   @override
@@ -33,9 +33,9 @@ class _StimmungslagenAppState extends State<StimmungslagenApp> {
               onSentimentChange: (sentiment) {
                 if (_dashboard.myTile.sentimentStatus.sentimentCode !=
                     sentiment.name) {
-                  _dashboard.myTile.sentimentStatus.sentimentCode =
-                      sentiment.name;
-                  setState(() {});
+                  setState(() =>
+                  _dashboard
+                      .myTile.sentimentStatus.sentimentCode = sentiment.name);
                 }
               },
             ),

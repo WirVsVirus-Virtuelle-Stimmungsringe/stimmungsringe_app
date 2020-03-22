@@ -22,12 +22,14 @@ class SetMySentimentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> allSentiments = Sentiment.all.map((sentiment) {
-      return SentimentIconButton(
-        sentiment: sentiment,
-        isSelected:
-        Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
-            sentiment,
-        onTap: onSentimentChange,
+      return Center(
+        child: SentimentIconButton(
+          sentiment: sentiment,
+          isSelected:
+          Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
+              sentiment,
+          onTap: onSentimentChange,
+        ),
       );
     }).toList(growable: false);
 

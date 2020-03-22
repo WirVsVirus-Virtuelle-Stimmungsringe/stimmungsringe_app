@@ -9,12 +9,14 @@ class AvatarRow extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
+  final void Function() onSentimentIconTap;
 
   const AvatarRow({
     Key key,
     @required this.avatarSentiment,
     @required this.name,
     @required this.image,
+    this.onSentimentIconTap,
   })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
@@ -46,11 +48,7 @@ class AvatarRow extends StatelessWidget {
                 ),
                 Expanded(
                   child: Center(
-                    child: FaIcon(
-                      avatarSentiment.icon,
-                      size: _avatarSize / 2,
-                      color: CupertinoColors.white,
-                    ),
+                    child: _buildSentimentIcon(),
                   ),
                 ),
               ],
@@ -91,5 +89,32 @@ class AvatarRow extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildSentimentIcon() {
+    Widget sentimentIcon = FaIcon(
+      avatarSentiment.icon,
+      size: _avatarSize / 2,
+      color: CupertinoColors.white,
+    );
+
+    return onSentimentIconTap != null
+        ? GestureDetector(
+      onTap: onSentimentIconTap,
+      child: Stack(
+        children: <Widget>[
+          sentimentIcon,
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Icon(
+              CupertinoIcons.pen,
+              color: CupertinoColors.white,
+            ),
+          )
+        ],
+      ),
+    )
+        : sentimentIcon;
   }
 }

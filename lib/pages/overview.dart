@@ -19,7 +19,7 @@ class OverviewPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'my-sentiment'), // TODO
+          onTap: () => {}, // TODO
           child: Icon(
             CupertinoIcons.add,
             color: CupertinoColors.activeBlue,
@@ -29,19 +29,20 @@ class OverviewPage extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: dashboard == null ? [] : children(),
+          children: dashboard == null ? [] : children(context),
         ),
       ),
     );
   }
 
-  List<Widget> children() {
+  List<Widget> children(BuildContext context) {
     return <Widget>[
       AvatarRow(
         name: dashboard.myTile.user.displayName,
         image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
         avatarSentiment:
         Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus),
+        onSentimentIconTap: () => Navigator.pushNamed(context, 'my-sentiment'),
       ),
       Container(
         margin: EdgeInsets.symmetric(vertical: 8),
@@ -70,8 +71,8 @@ class OverviewPage extends StatelessWidget {
             child: AvatarRowCondensed(
               name: tile.user.displayName,
               image: NetworkImage(avatarImageUrl(tile.user.userId)),
-              avatarSentiment: Sentiment.fromSentimentStatus(
-                  tile.sentimentStatus),
+              avatarSentiment:
+              Sentiment.fromSentimentStatus(tile.sentimentStatus),
             ),
           ),
         )

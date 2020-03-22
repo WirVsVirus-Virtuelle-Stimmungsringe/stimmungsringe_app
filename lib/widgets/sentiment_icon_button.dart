@@ -19,18 +19,16 @@ class SentimentIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: () {
-          onTap(this.sentiment);
-        },
-        child: FaIcon(
-          sentiment.icon,
-          size: 70,
-          color: isSelected
-              ? CupertinoColors.activeBlue
-              : CupertinoColors.inactiveGray,
-        ),
+    return GestureDetector(
+      onTap: () {
+        onTap(this.sentiment);
+      },
+      child: FaIcon(
+        sentiment.icon,
+        size: 70,
+        color: isSelected
+            ? CupertinoColors.activeBlue
+            : CupertinoColors.inactiveGray,
       ),
     );
   }
