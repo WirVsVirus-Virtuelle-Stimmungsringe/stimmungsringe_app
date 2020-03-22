@@ -4,6 +4,7 @@ import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/global_constants.dart';
 
 class OverviewPage extends StatelessWidget {
   final Dashboard dashboard;
@@ -41,7 +42,7 @@ class OverviewPage extends StatelessWidget {
           AvatarRow(
             name: dashboard.myTile.user.displayName,
             image: NetworkImage(
-                'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+                avatarImageUrl(dashboard.myTile.user.userId)),
             avatarSentiment: Sentiment.thundery,
           ),
           Container(
@@ -71,7 +72,7 @@ class OverviewPage extends StatelessWidget {
         child: AvatarRowCondensed(
           name: tile.user.displayName,
           image: NetworkImage(
-              'https://2.bp.blogspot.com/-5lSguULPXW4/Tttrmykan6I/AAAAAAAAB_M/AlKHJLOKKO4/s1600/famosos_avatar.jpg'),
+              avatarImageUrl(tile.user.userId)),
           avatarSentiment: Sentiment.sunny,
         ),
       )

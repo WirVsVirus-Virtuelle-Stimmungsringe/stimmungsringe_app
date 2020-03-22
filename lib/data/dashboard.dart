@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'user.dart';
+import 'package:stimmungsringeapp/global_constants.dart';
 
 
 
 Future<Dashboard> loadDashboardPageData() async {
 
-  String url = 'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring/dashboard';
+  final String url = restUrlDashboard();
 
   http.Response response = await http.get(
       url, headers: {
