@@ -72,7 +72,7 @@ class AvatarRowCondensed extends StatelessWidget {
                   child: FaIcon(
                     avatarMood.icon,
                     size: _avatarSize - _avatarSize / 4,
-                    color: Color(0xffffffff),
+                    color: CupertinoColors.white,
                   ),
                 ),
               ],

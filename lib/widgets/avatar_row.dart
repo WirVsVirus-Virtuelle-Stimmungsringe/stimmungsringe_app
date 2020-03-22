@@ -49,7 +49,7 @@ class AvatarRow extends StatelessWidget {
                     child: FaIcon(
                       avatarMood.icon,
                       size: _avatarSize / 2,
-                      color: const Color(0xffffffff),
+                      color: CupertinoColors.white,
                     ),
                   ),
                 ),
@@ -70,7 +70,7 @@ class AvatarRow extends StatelessWidget {
                 borderRadius: const BorderRadius.all(
                     const Radius.circular(_avatarSize / 2)),
                 border: Border.all(
-                  color: const Color(0xffffffff),
+                  color: CupertinoColors.white,
                   width: 4.0,
                 ),
               ),
