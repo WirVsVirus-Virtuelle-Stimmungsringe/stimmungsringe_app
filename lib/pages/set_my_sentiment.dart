@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 
-class SetOwnSentimentPage extends StatelessWidget {
-  SetOwnSentimentPage({
+class SetMySentimentPage extends StatelessWidget {
+  SetMySentimentPage({
     Key key,
     // TODO: add own data
   }) : super(key: key);

@@ -32,7 +32,7 @@ class _StimmungslageState extends State<StimmungslagenApp> {
       title: 'Stimmungsringe',
       routes: {
         '/': (_) => OverviewPage(dashboard: _dashboard),
-        'my-sentiment': (_) => SetOwnSentimentPage(),
+        'my-sentiment': (_) => SetMySentimentPage(),
       },
     );
   }
