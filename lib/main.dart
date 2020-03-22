@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stimmungsringeapp/datamappings.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/pages/overview.dart';
 import 'package:stimmungsringeapp/pages/set_own_mood.dart';
 

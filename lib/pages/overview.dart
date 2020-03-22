@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stimmungsringeapp/data/mood.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
-import 'package:stimmungsringeapp/datamappings.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 
 class OverviewPage extends StatelessWidget {
   final Dashboard dashboard;
