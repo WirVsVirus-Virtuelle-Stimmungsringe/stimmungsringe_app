@@ -15,7 +15,10 @@ class AvatarRow extends StatelessWidget {
     @required this.avatarMood,
     @required this.name,
     @required this.image,
-  }) : super(key: key);
+  })  : assert(avatarMood != null),
+        assert(name != null),
+        assert(image != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class AvatarRow extends StatelessWidget {
                     child: FaIcon(
                       avatarMood.icon,
                       size: _avatarSize / 2,
-                      color: Color(0xffffffff),
+                      color: const Color(0xffffffff),
                     ),
                   ),
                 ),
@@ -59,14 +62,14 @@ class AvatarRow extends StatelessWidget {
             child: Container(
               width: _avatarSize,
               height: _avatarSize,
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
+              decoration: BoxDecoration(
+                image: DecorationImage(
                   image: image,
                   fit: BoxFit.cover,
                 ),
-                borderRadius: new BorderRadius.all(
-                    new Radius.circular(_avatarSize / 2)),
-                border: new Border.all(
+                borderRadius: const BorderRadius.all(
+                    const Radius.circular(_avatarSize / 2)),
+                border: Border.all(
                   color: const Color(0xffffffff),
                   width: 4.0,
                 ),
@@ -79,7 +82,7 @@ class AvatarRow extends StatelessWidget {
             child: Text(
               name,
               style: TextStyle(
-                color: Color(0x7f000000),
+                color: const Color(0x7f000000),
                 fontSize: 20,
               ),
             ),

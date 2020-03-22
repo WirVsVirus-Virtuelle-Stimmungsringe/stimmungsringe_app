@@ -15,7 +15,10 @@ class AvatarRowCondensed extends StatelessWidget {
     @required this.avatarMood,
     @required this.name,
     @required this.image,
-  }) : super(key: key);
+  })  : assert(avatarMood != null),
+        assert(name != null),
+        assert(image != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
