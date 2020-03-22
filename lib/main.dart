@@ -41,7 +41,7 @@ class _SentimentAppState extends State<SentimentApp> {
   void initState() {
     super.initState();
     loadDashboardPageData().then((dashboard) {
-      this.setState(() => _dashboard = dashboard);
+      setState(() => _dashboard = dashboard);
     });
   }
 
