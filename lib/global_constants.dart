@@ -1,4 +1,5 @@
 const _backendBaseUrl =
+//    'http://192.168.178.20:8080/stimmungsring';
     'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring';
 
 const sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
