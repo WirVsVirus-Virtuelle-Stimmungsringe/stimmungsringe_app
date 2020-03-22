@@ -20,10 +20,10 @@ class OverviewPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'own-mood'),
+          onTap: () => Navigator.pushNamed(context, 'own-mood'), // TODO
           child: Icon(
             CupertinoIcons.add,
-            color: CupertinoColors.black,
+            color: CupertinoColors.activeBlue,
           ),
         ),
       ),
@@ -45,7 +45,7 @@ class OverviewPage extends StatelessWidget {
             avatarMood: Mood.thundery,
           ),
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: EdgeInsets.symmetric(vertical: 8),
             child: Title(
               color: CupertinoColors.black,
               child: Text(
@@ -67,7 +67,7 @@ class OverviewPage extends StatelessWidget {
 
     return dashboard.otherTiles.map((tile) =>
       Container(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: EdgeInsets.symmetric(vertical: 4),
         child: AvatarRowCondensed(
           name: tile.user.displayName,
           image: NetworkImage(

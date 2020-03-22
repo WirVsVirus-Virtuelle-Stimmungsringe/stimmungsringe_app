@@ -7,14 +7,17 @@ class Mood {
 
   const Mood(this.icon, this.colors);
 
-  static final Mood sunny = Mood(FontAwesomeIcons.sun, _MoodColors.good);
+  static final Mood sunny = const Mood(FontAwesomeIcons.sun, _MoodColors.good);
   static final Mood sunnyWithClouds =
-      Mood(FontAwesomeIcons.cloudSun, _MoodColors.good);
-  static final Mood cloudy = Mood(FontAwesomeIcons.cloud, _MoodColors.medium);
-  static final Mood windy = Mood(FontAwesomeIcons.wind, _MoodColors.medium);
+      const Mood(FontAwesomeIcons.cloudSun, _MoodColors.good);
+  static final Mood cloudy =
+      const Mood(FontAwesomeIcons.cloud, _MoodColors.medium);
+  static final Mood windy =
+      const Mood(FontAwesomeIcons.wind, _MoodColors.medium);
   static final Mood cloudyNight =
-      Mood(FontAwesomeIcons.cloudMoon, _MoodColors.medium);
-  static final Mood thundery = Mood(FontAwesomeIcons.bolt, _MoodColors.bad);
+      const Mood(FontAwesomeIcons.cloudMoon, _MoodColors.medium);
+  static final Mood thundery =
+      const Mood(FontAwesomeIcons.bolt, _MoodColors.bad);
 
   static final List<Mood> allMoods = [
     sunny,
@@ -35,9 +38,9 @@ class _MoodColors {
         assert(endColor != null);
 
   static const _MoodColors good =
-      _MoodColors(Color(0xff3c9a6b), Color(0xff377371));
+      const _MoodColors(const Color(0xff3c9a6b), const Color(0xff377371));
   static const _MoodColors medium =
-      _MoodColors(Color(0xffedd626), Color(0xfff2770c));
+      const _MoodColors(const Color(0xffedd626), const Color(0xfff2770c));
   static const _MoodColors bad =
-      _MoodColors(Color(0xff951919), Color(0xffd7670c));
+      const _MoodColors(const Color(0xff951919), const Color(0xffd7670c));
 }

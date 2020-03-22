@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/mood.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
-import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 
 class SetOwnMoodPage extends StatelessWidget {
   SetOwnMoodPage({
@@ -12,6 +12,16 @@ class SetOwnMoodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> allMoods = Mood.allMoods.map((mood) {
+      return Center(
+        child: FaIcon(
+          mood.icon,
+          size: 70,
+          color: CupertinoColors.inactiveGray,
+        ),
+      );
+    }).toList(growable: false);
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Persönliches Wetter'),
@@ -27,15 +37,21 @@ class SetOwnMoodPage extends StatelessWidget {
               avatarMood: Mood.thundery,
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: Title(
                 color: CupertinoColors.black,
                 child: Text(
-                  'TODO',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  'Wie würdest Du Dein persönliches Wetter gerade beschreiben?',
                 ),
               ),
             ),
+            Expanded(
+              child: GridView.count(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                crossAxisCount: 3,
+                children: allMoods,
+              ),
+            )
           ],
         ),
       ),

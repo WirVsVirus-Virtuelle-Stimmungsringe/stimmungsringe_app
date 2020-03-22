@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/mood.dart';
 
 const double _avatarSize = 90;
+const double _moodIconSize = 70;
 
 class AvatarRowCondensed extends StatelessWidget {
   final Mood avatarMood;
@@ -46,7 +47,8 @@ class AvatarRowCondensed extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.all(
-                      const Radius.circular(_avatarSize / 2)),
+                    const Radius.circular(_avatarSize / 2),
+                  ),
                   border: Border.all(
                     color: CupertinoColors.white,
                     width: 4.0,
@@ -71,7 +73,7 @@ class AvatarRowCondensed extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 20),
                   child: FaIcon(
                     avatarMood.icon,
-                    size: _avatarSize - _avatarSize / 4,
+                    size: _moodIconSize,
                     color: CupertinoColors.white,
                   ),
                 ),
