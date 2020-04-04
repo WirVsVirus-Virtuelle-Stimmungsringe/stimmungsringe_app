@@ -1,8 +1,25 @@
-const localdev = true;
+enum AppEnv { iOSSimulator, localNetwork, prod }
 
-const _backendBaseUrl = localdev
-    ? 'http://192.168.178.20:8080/stimmungsring'
-    : 'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring';
+// Pick your environment here
+const currentDevEnv = AppEnv.iOSSimulator;
+
+const backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
+const backendUrlLocalNetwork = 'http://192.168.178.20:5000/stimmungsring';
+const backendUrlProd =
+    'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring';
+
+String backendUrlForEnv(AppEnv appEnv) {
+  switch (appEnv) {
+    case AppEnv.iOSSimulator:
+      return backendUrlIOSSimulator;
+    case AppEnv.localNetwork:
+      return backendUrlLocalNetwork;
+    default:
+      return backendUrlProd;
+  }
+}
+
+var _backendBaseUrl = backendUrlForEnv(currentDevEnv);
 
 const sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
 // note available on EBS yet
