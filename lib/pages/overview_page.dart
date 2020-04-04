@@ -32,10 +32,9 @@ class OverviewPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
-              name: dashboard.myTile.user.displayName,
-              image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
-              avatarSentiment: Sentiment.fromSentimentStatus(
-                  dashboard.myTile.sentimentStatus),
+              name: dashboard.user.displayName,
+              image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
+              avatarSentiment: dashboard.sentiment,
               onSentimentIconTap: () =>
                   Navigator.pushNamed(context, 'my-sentiment'),
             ),

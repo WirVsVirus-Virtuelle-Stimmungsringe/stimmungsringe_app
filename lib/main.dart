@@ -52,10 +52,8 @@ class _SentimentAppState extends State<SentimentApp> {
   }
 
   _updateMySentiment(final Sentiment sentiment) {
-    if (Sentiment.fromSentimentStatus(_dashboard.myTile.sentimentStatus) !=
-        sentiment) {
-      setState(() =>
-          _dashboard.myTile.sentimentStatus.sentimentCode = sentiment.name);
+    if (_dashboard.sentiment != sentiment) {
+      setState(() => _dashboard.mySentiment = sentiment);
     }
   }
 }

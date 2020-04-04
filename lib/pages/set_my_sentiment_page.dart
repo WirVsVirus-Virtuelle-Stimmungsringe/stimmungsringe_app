@@ -24,9 +24,7 @@ class SetMySentimentPage extends StatelessWidget {
       return Center(
         child: SentimentIconButton(
           sentiment: sentiment,
-          isSelected:
-              Sentiment.fromSentimentStatus(dashboard.myTile.sentimentStatus) ==
-                  sentiment,
+          isSelected: dashboard.sentiment == sentiment,
           onTap: onSentimentChange,
         ),
       );
@@ -41,10 +39,9 @@ class SetMySentimentPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
-              name: dashboard.myTile.user.displayName,
-              image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
-              avatarSentiment: Sentiment.fromSentimentStatus(
-                  dashboard.myTile.sentimentStatus),
+              name: dashboard.user.displayName,
+              image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
+              avatarSentiment: dashboard.sentiment,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

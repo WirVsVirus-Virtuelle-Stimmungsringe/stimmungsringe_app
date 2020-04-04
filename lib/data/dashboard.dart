@@ -51,19 +51,26 @@ class OtherTile extends Equatable {
 }
 
 class Dashboard extends Equatable {
-  final MyTile myTile;
   final List<OtherTile> otherTiles;
+  final UserMinimal user;
+  final Sentiment sentiment;
 
-  static fromJson(Map<String, dynamic> jsonMap) {
-    return Dashboard(
-        MyTile.fromJson(jsonMap['myTile']),
-        (jsonMap['otherTiles'] as List)
-            .map((tileJson) => OtherTile.fromJson(tileJson))
-            .toList());
+  const Dashboard(this.otherTiles, this.user, this.sentiment);
+
+  Dashboard withSentiment({Sentiment newSentiment}) {
+    return Dashboard(otherTiles, user, newSentiment ?? sentiment);
   }
 
-  const Dashboard(this.myTile, this.otherTiles);
+  static fromJson(Map<String, dynamic> jsonMap) {
+    final MyTile myTile = MyTile.fromJson(jsonMap['myTile']);
+    return Dashboard(
+        (jsonMap['otherTiles'] as List)
+            .map((tileJson) => OtherTile.fromJson(tileJson))
+            .toList(),
+        myTile.user,
+        Sentiment.fromSentimentStatus(myTile.sentimentStatus));
+  }
 
   @override
-  List<Object> get props => [myTile, otherTiles];
+  List<Object> get props => [otherTiles, user, sentiment];
 }

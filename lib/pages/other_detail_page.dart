@@ -128,8 +128,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
   }
 
   ListView buildSuggestionsList() {
-    var myAvatarImage =
-        NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
+    var myAvatarImage = NetworkImage(avatarImageUrl(dashboard.user.userId));
 
     return ListView.builder(
       itemCount: _otherDetail.suggestions.length,
