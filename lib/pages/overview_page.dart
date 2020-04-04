@@ -1,18 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
+import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OverviewPage extends StatelessWidget {
-  final Dashboard dashboard;
-
-  OverviewPage({
-    Key key,
-    @required this.dashboard,
-  })  : assert(dashboard != null),
-        super(key: key);
+  OverviewPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +28,22 @@ class OverviewPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            AvatarRow(
-              name: dashboard.user.displayName,
-              image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
-              avatarSentiment: dashboard.sentiment,
-              onSentimentIconTap: () =>
-                  Navigator.pushNamed(context, 'my-sentiment'),
-            ),
+            BlocBuilder<DashboardBloc, DashboardState>(
+                builder: (context, state) {
+              if (state.hasDashboard) {
+                final Dashboard dashboard =
+                    (state as StateWithDashboard).dashboard;
+                return AvatarRow(
+                  name: dashboard.user.displayName,
+                  image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
+                  avatarSentiment: dashboard.sentiment,
+                  onSentimentIconTap: () =>
+                      Navigator.pushNamed(context, 'my-sentiment'),
+                );
+              } else {
+                return LoadingSpinnerWidget();
+              }
+            }),
             Container(
               margin: EdgeInsets.symmetric(vertical: 8),
               child: Title(
@@ -49,10 +55,19 @@ class OverviewPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: otherTiles(context),
-              ),
+              child: BlocBuilder<DashboardBloc, DashboardState>(
+                  builder: (context, state) {
+                if (state.hasDashboard) {
+                  final Dashboard dashboard =
+                      (state as StateWithDashboard).dashboard;
+                  return ListView(
+                    padding: const EdgeInsets.all(8),
+                    children: otherTiles(context, dashboard),
+                  );
+                } else {
+                  return LoadingSpinnerWidget();
+                }
+              }),
             )
           ],
         ),
@@ -60,7 +75,7 @@ class OverviewPage extends StatelessWidget {
     );
   }
 
-  List<Widget> otherTiles(BuildContext context) {
+  List<Widget> otherTiles(BuildContext context, Dashboard dashboard) {
     return dashboard.otherTiles
         .map(
           (tile) => Container(

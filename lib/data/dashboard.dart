@@ -24,7 +24,7 @@ class MyTile extends Equatable {
   final UserMinimal user;
   final SentimentStatus sentimentStatus;
 
-  static fromJson(Map<String, dynamic> jsonMap) {
+  static MyTile fromJson(Map<String, dynamic> jsonMap) {
     return MyTile(UserMinimal.fromJson(jsonMap['user']),
         SentimentStatus.fromJson(jsonMap['sentimentStatus']));
   }
@@ -39,7 +39,7 @@ class OtherTile extends Equatable {
   final UserMinimal user;
   final SentimentStatus sentimentStatus;
 
-  static fromJson(Map<String, dynamic> jsonMap) {
+  static OtherTile fromJson(Map<String, dynamic> jsonMap) {
     return OtherTile(UserMinimal.fromJson(jsonMap['user']),
         SentimentStatus.fromJson(jsonMap['sentimentStatus']));
   }
@@ -61,7 +61,7 @@ class Dashboard extends Equatable {
     return Dashboard(otherTiles, user, newSentiment ?? sentiment);
   }
 
-  static fromJson(Map<String, dynamic> jsonMap) {
+  static Dashboard fromJson(Map<String, dynamic> jsonMap) {
     final MyTile myTile = MyTile.fromJson(jsonMap['myTile']);
     return Dashboard(
         (jsonMap['otherTiles'] as List)

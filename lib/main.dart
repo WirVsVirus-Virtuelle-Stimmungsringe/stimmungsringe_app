@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
+import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/overview_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
@@ -29,9 +30,10 @@ class _SentimentAppState extends State<SentimentApp> {
     return CupertinoApp(
       title: 'Stimmungsringe',
       routes: {
-        '/': (_) => _dashboard != null
-            ? OverviewPage(dashboard: _dashboard)
-            : LoadingSpinnerPage(),
+        '/': (_) => BlocProvider<DashboardBloc>(
+              create: (context) => DashboardBloc()..add(FetchDashboard()),
+              child: new OverviewPage(),
+            ),
         'my-sentiment': (_) => SetMySentimentPage(
               dashboard: _dashboard,
               onSentimentChange: _updateMySentiment,
