@@ -53,8 +53,7 @@ class _SentimentAppState extends State<SentimentApp> {
 
   _updateMySentiment(final Sentiment sentiment) {
     if (_dashboard.sentiment != sentiment) {
-      setState(
-          () => _dashboard = _dashboard.withSentiment(newSentiment: sentiment));
+      setState(() => _dashboard = _dashboard.withSentiment(sentiment));
     }
   }
 }

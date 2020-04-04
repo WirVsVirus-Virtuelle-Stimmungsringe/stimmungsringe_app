@@ -57,7 +57,7 @@ class Dashboard extends Equatable {
 
   const Dashboard(this.otherTiles, this.user, this.sentiment);
 
-  Dashboard withSentiment({Sentiment newSentiment}) {
+  Dashboard withSentiment(Sentiment newSentiment) {
     return Dashboard(otherTiles, user, newSentiment ?? sentiment);
   }
 
