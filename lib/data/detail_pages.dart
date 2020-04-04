@@ -22,25 +22,29 @@ Future<OtherDetail> loadOtherDetailPageData(String userId) async {
 }
 
 class Suggestion {
-  String text;
+  final String text;
 
-  Suggestion.fromJson(Map<String, dynamic> jsonMap) {
-    this.text = jsonMap['text'];
+  static fromJson(Map<String, dynamic> jsonMap) {
+    return Suggestion(jsonMap['text']);
   }
+
+  const Suggestion(this.text);
 }
 
 class OtherDetail {
-  UserMinimal user;
-  SentimentStatus sentimentStatus;
-  List<Suggestion> suggestions;
+  final UserMinimal user;
+  final SentimentStatus sentimentStatus;
+  final List<Suggestion> suggestions;
 
-  OtherDetail.fromJson(Map<String, dynamic> jsonMap) {
-    this.user = UserMinimal.fromJson(jsonMap['user']);
-    this.sentimentStatus = SentimentStatus.fromJson(jsonMap['sentimentStatus']);
-
+  static fromJson(Map<String, dynamic> jsonMap) {
     final suggestionsJson = (jsonMap['suggestions'] as List);
-    this.suggestions = suggestionsJson
-        .map((sugg) => Suggestion.fromJson(sugg))
-        .toList(growable: false);
+    return OtherDetail(
+        UserMinimal.fromJson(jsonMap['user']),
+        SentimentStatus.fromJson(jsonMap['sentimentStatus']),
+        suggestionsJson
+            .map((sugg) => Suggestion.fromJson(sugg))
+            .toList(growable: false));
   }
+
+  OtherDetail(this.user, this.sentimentStatus, this.suggestions);
 }

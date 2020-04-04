@@ -1,13 +1,19 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SentimentStatus {
-  String sentimentCode;
+class SentimentStatus extends Equatable {
+  final String sentimentCode;
 
-  SentimentStatus.fromJson(Map<String, dynamic> jsonMap) {
+  static fromJson(Map<String, dynamic> jsonMap) {
     // e.g .CLOUD_RAIN
-    this.sentimentCode = jsonMap['sentiment']['sentimentCode'];
+    return SentimentStatus(jsonMap['sentiment']['sentimentCode']);
   }
+
+  SentimentStatus(this.sentimentCode);
+
+  @override
+  List<Object> get props => [sentimentCode];
 }
 
 class Sentiment {

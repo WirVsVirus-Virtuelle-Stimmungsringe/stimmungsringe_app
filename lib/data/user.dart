@@ -1,4 +1,6 @@
-class UserMinimal {
+import 'package:equatable/equatable.dart';
+
+class UserMinimal extends Equatable {
   String userId;
   String displayName;
 
@@ -6,4 +8,7 @@ class UserMinimal {
     this.userId = jsonMap['userId'];
     this.displayName = jsonMap['displayName'];
   }
+
+  @override
+  List<Object> get props => [userId, displayName];
 }
