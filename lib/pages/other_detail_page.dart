@@ -16,6 +16,11 @@ class OtherDetailPage extends StatelessWidget {
       : assert(otherUserId != null) {
     // FIXME
 
+    loadOtherDetailPageData(otherUserId).then((details) {
+      print("other details loaded - not used ATM " +
+          details.user.toJson().toString());
+    });
+
     this._otherDetail = OtherDetail(UserMinimal(otherUserId, "test test"),
         SentimentStatus(Sentiment("windy")), []);
   }

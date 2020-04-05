@@ -4,9 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
-import 'sentiment.dart';
-import 'user.dart';
-
 Future<OtherDetail> loadOtherDetailPageData(String userId) async {
   final String url = restUrlOtherStatus(userId);
 
@@ -25,7 +22,7 @@ Future<OtherDetail> loadOtherDetailPageData(String userId) async {
 class Suggestion {
   final String text;
 
-  static fromJson(Map<String, dynamic> jsonMap) {
+  static Suggestion fromJson(Map<String, dynamic> jsonMap) {
     return Suggestion(jsonMap['text']);
   }
 
@@ -37,7 +34,7 @@ class OtherDetail {
   final SentimentStatus sentimentStatus;
   final List<Suggestion> suggestions;
 
-  static fromJson(Map<String, dynamic> jsonMap) {
+  static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
     final suggestionsJson = (jsonMap['suggestions'] as List);
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user']),
