@@ -4,13 +4,18 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OverviewPage extends StatelessWidget {
-  OverviewPage({Key key}) : super(key: key);
+  final DashboardRepository dashboardRepository;
+
+  OverviewPage({Key key, DashboardRepository this.dashboardRepository})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +55,9 @@ class OverviewPage extends StatelessWidget {
                       Navigator.of(context).push(CupertinoPageRoute(
                           builder: (_) => BlocProvider.value(
                                 value: BlocProvider.of<DashboardBloc>(context),
-                                child: new SetMySentimentPage(),
+                                child: new SetMySentimentPage(
+                                    dashboardRepository: dashboardRepository),
                               ))),
-                  //Navigator.pushNamed(context, 'my-sentiment'),
                 );
               } else {
                 return LoadingSpinnerWidget();
@@ -101,8 +106,13 @@ class OverviewPage extends StatelessWidget {
                   avatarSentiment:
                       SentimentUi.fromSentimentStatus(tile.sentimentStatus),
                 ),
-                onTap: () => Navigator.pushNamed(context, 'other-detail-page',
-                    arguments: tile.user.userId),
+                onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (_) => BlocProvider.value(
+                          value: BlocProvider.of<DashboardBloc>(context),
+                          child: new OtherDetailPage(
+                              dashboardRepository: dashboardRepository,
+                              otherUserId: tile.user.userId),
+                        ))),
               )),
         )
         .toList(growable: false);

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
-import 'package:stimmungsringeapp/pages/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/overview_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
@@ -45,15 +44,15 @@ class _SentimentAppState extends State<SentimentApp> {
               create: (context) =>
                   DashboardBloc(dashboardRepository: dashboardRepository)
                     ..add(FetchDashboard()),
-              child: new OverviewPage(),
+              child: new OverviewPage(dashboardRepository: dashboardRepository),
             ),
         //'my-sentimentZZZ': (_) => SetMySentimentPage(
         //      dashboard: _dashboard,
         //      onSentimentChange: _updateMySentiment,
         //    ),
-        'other-detail-page': (context) => OtherDetailPage(
-            dashboard: _dashboard,
-            otherUserId: ModalRoute.of(context).settings.arguments)
+        //'other-detail-page': (context) => OtherDetailPage(
+        //    dashboard: _dashboard,
+        //    otherUserId: ModalRoute.of(context).settings.arguments)
       },
     );
   }

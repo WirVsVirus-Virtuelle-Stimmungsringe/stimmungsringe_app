@@ -4,33 +4,21 @@ import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 
-class OtherDetailPage extends StatefulWidget {
+class OtherDetailPage extends StatelessWidget {
   final String otherUserId;
-
-  final Dashboard dashboard;
-
-  OtherDetailPage(
-      {@required String this.otherUserId,
-      @required Dashboard this.dashboard}) {}
-
-  @override
-  State<StatefulWidget> createState() {
-    return _OtherDetailPageState(
-        otherUserId: otherUserId, dashboard: dashboard);
-  }
-}
-
-class _OtherDetailPageState extends State<OtherDetailPage> {
-  final String otherUserId;
+  final DashboardRepository dashboardRepository;
   OtherDetail _otherDetail;
 
-  Dashboard dashboard;
+  OtherDetailPage({this.dashboardRepository, this.otherUserId})
+      : assert(otherUserId != null) {
+    // FIXME
 
-  _OtherDetailPageState(
-      {@required String this.otherUserId, @required Dashboard this.dashboard})
-      : assert(otherUserId != null) {}
+    this._otherDetail = OtherDetail(UserMinimal(otherUserId, "test test"),
+        SentimentStatus(Sentiment("windy")), []);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,13 +56,6 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
         )
       ],
     );
-  }
-
-  @override
-  void initState() {
-    loadOtherDetailPageData(otherUserId).then((otherDetail) {
-      this.setState(() => _otherDetail = otherDetail);
-    });
   }
 
   Widget makeSpinner() {
@@ -127,9 +108,12 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
     );
   }
 
+  // deprecated
   ListView buildSuggestionsList() {
-    var myAvatarImage =
-        NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
+    NetworkImage placeholder = NetworkImage(
+        'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
+    //var myAvatarImage =
+    //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
 
     return ListView.builder(
       itemCount: _otherDetail.suggestions.length,
@@ -138,7 +122,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
 
         return buildSuggestionRow(
           suggestion,
-          myAvatarImage,
+          placeholder,
           index < _otherDetail.suggestions.length - 1,
         );
       },

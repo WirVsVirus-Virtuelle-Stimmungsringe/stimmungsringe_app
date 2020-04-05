@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
@@ -10,11 +11,14 @@ import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 import '../global_constants.dart';
 
 class SetMySentimentPage extends StatelessWidget {
+  final DashboardRepository dashboardRepository;
+
   //final Dashboard dashboard;
   //final void Function(SentimentUi) onSentimentChange;
 
   SetMySentimentPage({
     Key key,
+    this.dashboardRepository,
   }) : super(key: key);
 
   @override
