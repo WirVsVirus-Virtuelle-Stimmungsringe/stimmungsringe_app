@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 
@@ -28,13 +30,15 @@ class OtherDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Wie geht es eigentlich ... '),
-      ),
-      child: SafeArea(
-        child: _otherDetail != null ? buildContent() : makeSpinner(),
-      ),
-    );
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Wie geht es eigentlich ... '),
+        ),
+        child: SafeArea(
+          child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+              builder: (context, state) {
+            return _otherDetail != null ? buildContent() : makeSpinner();
+          }),
+        ));
   }
 
   Column buildContent() {

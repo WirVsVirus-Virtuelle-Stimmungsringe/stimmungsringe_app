@@ -5,6 +5,7 @@ import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page.dart';
+import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
@@ -109,9 +110,13 @@ class OverviewPage extends StatelessWidget {
                 onTap: () => Navigator.of(context).push(CupertinoPageRoute(
                     builder: (_) => BlocProvider.value(
                           value: BlocProvider.of<DashboardBloc>(context),
-                          child: new OtherDetailPage(
-                              dashboardRepository: dashboardRepository,
-                              otherUserId: tile.user.userId),
+                          child: BlocProvider<OtherDetailPageBloc>(
+                            create: (context) => OtherDetailPageBloc()
+                              ..add(FetchOtherDetailPage()),
+                            child: new OtherDetailPage(
+                                dashboardRepository: dashboardRepository,
+                                otherUserId: tile.user.userId),
+                          ),
                         ))),
               )),
         )

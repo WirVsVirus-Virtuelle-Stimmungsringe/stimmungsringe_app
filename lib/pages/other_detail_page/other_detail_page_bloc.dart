@@ -13,5 +13,15 @@ class OtherDetailPageBloc
 
   @override
   Stream<OtherDetailPageState> mapEventToState(
-      OtherDetailPageEvent event) async* {}
+      OtherDetailPageEvent event) async* {
+    if (event is FetchOtherDetailPage) {
+      print("TODO fetch other detail page (fetch event)");
+    }
+  }
+
+  void onTransition(
+      Transition<OtherDetailPageEvent, OtherDetailPageState> transition) {
+    super.onTransition(transition);
+    print(transition);
+  }
 }
