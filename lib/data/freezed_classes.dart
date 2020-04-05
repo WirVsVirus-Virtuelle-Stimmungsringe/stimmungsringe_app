@@ -50,3 +50,10 @@ abstract class Dashboard with _$Dashboard {
   factory Dashboard.fromJson(Map<String, dynamic> json) =>
       _$DashboardFromJson(json);
 }
+
+@immutable
+abstract class SentimentUpdate with _$SentimentUpdate {
+  const factory SentimentUpdate(String sentimentCode) = _SentimentUpdate;
+  factory SentimentUpdate.fromJson(Map<String, dynamic> json) =>
+      _$SentimentUpdateFromJson(json);
+}

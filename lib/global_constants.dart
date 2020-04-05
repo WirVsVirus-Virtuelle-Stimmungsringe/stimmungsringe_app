@@ -1,7 +1,7 @@
 enum AppEnv { iOSSimulator, localNetwork, prod }
 
 // Pick your environment here
-const currentDevEnv = AppEnv.prod;
+const currentDevEnv = AppEnv.localNetwork;
 
 const backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
 const backendUrlLocalNetwork = 'http://192.168.178.20:5000/stimmungsring';

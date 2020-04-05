@@ -95,3 +95,14 @@ Map<String, dynamic> _$_$_DashboardToJson(_$_Dashboard instance) =>
       'myTile': instance.myTile,
       'otherTiles': instance.otherTiles,
     };
+
+_$_SentimentUpdate _$_$_SentimentUpdateFromJson(Map<String, dynamic> json) {
+  return _$_SentimentUpdate(
+    json['sentimentCode'] as String,
+  );
+}
+
+Map<String, dynamic> _$_$_SentimentUpdateToJson(_$_SentimentUpdate instance) =>
+    <String, dynamic>{
+      'sentimentCode': instance.sentimentCode,
+    };

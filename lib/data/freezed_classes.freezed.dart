@@ -437,3 +437,68 @@ abstract class _Dashboard implements Dashboard {
   @override
   _Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
 }
+
+SentimentUpdate _$SentimentUpdateFromJson(Map<String, dynamic> json) {
+  return _SentimentUpdate.fromJson(json);
+}
+
+abstract class _$SentimentUpdate {
+  String get sentimentCode;
+
+  SentimentUpdate copyWith({String sentimentCode});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
+class _$_SentimentUpdate implements _SentimentUpdate {
+  const _$_SentimentUpdate(this.sentimentCode);
+
+  factory _$_SentimentUpdate.fromJson(Map<String, dynamic> json) =>
+      _$_$_SentimentUpdateFromJson(json);
+
+  @override
+  final String sentimentCode;
+
+  @override
+  String toString() {
+    return 'SentimentUpdate(sentimentCode: $sentimentCode)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is _SentimentUpdate &&
+        (identical(other.sentimentCode, sentimentCode) ||
+            other.sentimentCode == sentimentCode);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode ^ sentimentCode.hashCode;
+
+  @override
+  _$_SentimentUpdate copyWith({
+    Object sentimentCode = immutable,
+  }) {
+    return _$_SentimentUpdate(
+      sentimentCode == immutable ? this.sentimentCode : sentimentCode as String,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_SentimentUpdateToJson(this);
+  }
+}
+
+abstract class _SentimentUpdate implements SentimentUpdate {
+  const factory _SentimentUpdate(String sentimentCode) = _$_SentimentUpdate;
+
+  factory _SentimentUpdate.fromJson(Map<String, dynamic> json) =
+      _$_SentimentUpdate.fromJson;
+
+  @override
+  String get sentimentCode;
+
+  @override
+  _SentimentUpdate copyWith({String sentimentCode});
+}
