@@ -27,7 +27,7 @@ class SetMySentimentPage extends StatelessWidget {
       if (state.hasDashboard) {
         final Dashboard dashboard = (state as StateWithDashboard).dashboard;
 
-        List<Widget> allSentiments = Sentiment.all.map((sentiment) {
+        List<Widget> allSentiments = Sentiment.values.map((sentiment) {
           return Center(
             child: SentimentIconButton(
               sentiment: sentiment,

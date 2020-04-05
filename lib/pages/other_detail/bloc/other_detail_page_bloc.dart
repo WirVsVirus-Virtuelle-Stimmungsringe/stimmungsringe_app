@@ -23,12 +23,10 @@ class OtherDetailPageBloc
         final otherDetail = await loadOtherDetailPageData(event.otherUserId);
         yield OtherDetailPageLoaded(otherDetail);
         return;
-      } catch (_) {
-        if (state is OtherDetailPageLoaded) {
-          yield OtherDetailPageError();
-        } else {
-          yield OtherDetailPageError();
-        }
+      } catch (ex) {
+        print(ex);
+
+        yield OtherDetailPageError();
       }
     }
   }

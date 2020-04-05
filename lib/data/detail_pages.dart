@@ -38,13 +38,13 @@ class OtherDetail {
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
-    final suggestionsJson =
-        (jsonMap['suggestions'] as List<Map<String, dynamic>>);
+    final suggestionsJson = (jsonMap['suggestions'] as List<dynamic>);
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
-        Sentiment.fromJson(jsonMap['sentiment'] as String),
+        sentimentFromJson(jsonMap['sentiment'] as String),
         suggestionsJson
-            .map((Map<String, dynamic> sugg) => Suggestion.fromJson(sugg))
+            .map((dynamic sugg) =>
+                Suggestion.fromJson(sugg as Map<String, dynamic>))
             .toList(growable: false));
   }
 

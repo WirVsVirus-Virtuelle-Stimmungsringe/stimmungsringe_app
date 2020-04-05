@@ -24,32 +24,69 @@ _$_OtherTile _$_$_OtherTileFromJson(Map<String, dynamic> json) {
     json['user'] == null
         ? null
         : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
-    json['sentiment'] == null
-        ? null
-        : Sentiment.fromJson(json['sentiment'] as String),
+    _$enumDecodeNullable(_$SentimentEnumMap, json['sentiment']),
   );
 }
 
 Map<String, dynamic> _$_$_OtherTileToJson(_$_OtherTile instance) =>
     <String, dynamic>{
       'user': instance.user,
-      'sentiment': instance.sentiment,
+      'sentiment': _$SentimentEnumMap[instance.sentiment],
     };
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$SentimentEnumMap = {
+  Sentiment.sunny: 'sunny',
+  Sentiment.sunnyWithClouds: 'sunnyWithClouds',
+  Sentiment.cloudy: 'cloudy',
+  Sentiment.windy: 'windy',
+  Sentiment.cloudyNight: 'cloudyNight',
+  Sentiment.thundery: 'thundery',
+};
 
 _$_MyTile _$_$_MyTileFromJson(Map<String, dynamic> json) {
   return _$_MyTile(
     json['user'] == null
         ? null
         : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
-    json['sentiment'] == null
-        ? null
-        : Sentiment.fromJson(json['sentiment'] as String),
+    _$enumDecodeNullable(_$SentimentEnumMap, json['sentiment']),
   );
 }
 
 Map<String, dynamic> _$_$_MyTileToJson(_$_MyTile instance) => <String, dynamic>{
       'user': instance.user,
-      'sentiment': instance.sentiment,
+      'sentiment': _$SentimentEnumMap[instance.sentiment],
     };
 
 _$_Dashboard _$_$_DashboardFromJson(Map<String, dynamic> json) {

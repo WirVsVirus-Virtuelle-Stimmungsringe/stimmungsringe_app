@@ -1,73 +1,51 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
-class Sentiment extends Equatable {
-  final String sentimentCode;
-  @JsonKey(ignore: true)
-  IconData icon;
-  @JsonKey(ignore: true)
-  _SentimentColors colors;
+enum Sentiment { sunny, sunnyWithClouds, cloudy, windy, cloudyNight, thundery }
 
-  factory Sentiment.fromJson(String json) {
-    return _fromSentimentCode(json);
+Sentiment sentimentFromJson(String sentimentCode) {
+  return Sentiment.values
+      .firstWhere((type) => type.toString().split(".").last == sentimentCode);
+}
+
+extension SentimentExtension on Sentiment {
+  IconData get icon {
+    switch (this) {
+      case Sentiment.sunny:
+        return FontAwesomeIcons.sun;
+      case Sentiment.sunnyWithClouds:
+        return FontAwesomeIcons.cloudSun;
+      case Sentiment.cloudy:
+        return FontAwesomeIcons.cloud;
+      case Sentiment.windy:
+        return FontAwesomeIcons.wind;
+      case Sentiment.cloudyNight:
+        return FontAwesomeIcons.cloudMoon;
+      default:
+        return FontAwesomeIcons.bolt;
+    }
   }
 
-  Sentiment(this.sentimentCode)
-      : assert(sentimentCode != null),
-        super() {
-    final Sentiment sentiment = _fromSentimentCode(sentimentCode);
-    icon = sentiment.icon;
-    colors = sentiment.colors;
+  _SentimentColors get colors {
+    switch (this) {
+      case Sentiment.sunny:
+        return _SentimentColors.good;
+      case Sentiment.sunnyWithClouds:
+        return _SentimentColors.good;
+      case Sentiment.cloudy:
+        return _SentimentColors.medium;
+      case Sentiment.windy:
+        return _SentimentColors.medium;
+      case Sentiment.cloudyNight:
+        return _SentimentColors.medium;
+      default:
+        return _SentimentColors.bad;
+    }
   }
 
-  Sentiment._(this.sentimentCode, this.icon, this.colors)
-      : assert(sentimentCode != null),
-        assert(icon != null),
-        assert(colors != null),
-        super();
-
-  static final Sentiment sunny =
-      Sentiment._('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
-  static final Sentiment sunnyWithClouds = Sentiment._(
-      'sunnyWithClouds', FontAwesomeIcons.cloudSun, _SentimentColors.good);
-  static final Sentiment cloudy =
-      Sentiment._('cloudy', FontAwesomeIcons.cloud, _SentimentColors.medium);
-  static final Sentiment windy =
-      Sentiment._('windy', FontAwesomeIcons.wind, _SentimentColors.medium);
-  static final Sentiment cloudyNight = Sentiment._(
-      'cloudyNight', FontAwesomeIcons.cloudMoon, _SentimentColors.medium);
-  static final Sentiment thundery =
-      Sentiment._('thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
-
-  static final List<Sentiment> all = [
-    sunny,
-    sunnyWithClouds,
-    cloudy,
-    windy,
-    cloudyNight,
-    thundery
-  ];
-
-  static Sentiment _fromSentimentCode(String sentimentCode) {
-    final Map<String, Sentiment> map = {
-      'thundery': thundery,
-      'cloudyNight': cloudyNight,
-      'windy': windy,
-      'cloudy': cloudy,
-      'sunnyWithClouds': sunnyWithClouds,
-      'sunny': sunny,
-    };
-
-    final Sentiment sentiment = map[sentimentCode];
-    assert(sentiment != null, 'Undefined sentiment code ' + sentimentCode);
-    return sentiment;
+  String get sentimentCode {
+    return toString().split('.').last;
   }
-
-  @override
-  List<Object> get props => [sentimentCode];
 }
 
 class _SentimentColors {
