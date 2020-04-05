@@ -50,15 +50,20 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       SetNewSentiment setNewSentiment) async* {
     try {
       if (state is DashboardLoaded) {
-        Dashboard prevDashboard = (state as DashboardLoaded).dashboard;
-        //prevDashboard.copyWith(
-        //   myTile:
-        //  prevDashboard.myTile.copyWith(sentimentStatus: setNewSentiment.sentiment.name)));
+        final Dashboard prevDashboard = (state as DashboardLoaded).dashboard;
+        var optimisticUpdate = prevDashboard.copyWith(
+            myTile: prevDashboard.myTile
+                .copyWith(sentiment: setNewSentiment.sentiment));
+        print("optimistic set " +
+            optimisticUpdate.myTile.sentiment.sentimentCode);
+        yield DashboardLoaded(optimisticUpdate);
       }
 
-      dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
-      Dashboard loadDashboardPageData =
+      await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
+      final Dashboard loadDashboardPageData =
           await dashboardRepository.loadDashboardPageData();
+      print("reloaded dashboard " +
+          loadDashboardPageData.myTile.sentiment.sentimentCode);
       yield DashboardLoaded(loadDashboardPageData);
     } catch (_) {
       yield DashboardError((state as DashboardLoaded).dashboard);

@@ -42,7 +42,6 @@ class SentimentApp extends StatelessWidget {
             child: SetMySentimentPage(dashboardRepository: dashboardRepository),
           );
         },
-        //    ),
         'other-detail-page': (context) {
           var arguments = (ModalRoute.of(context).settings.arguments
               as OtherDetailRouteArguments);
