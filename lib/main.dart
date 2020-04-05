@@ -5,7 +5,6 @@ import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/overview_page.dart';
-import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 void main() {
@@ -48,10 +47,10 @@ class _SentimentAppState extends State<SentimentApp> {
                     ..add(FetchDashboard()),
               child: new OverviewPage(),
             ),
-        'my-sentiment': (_) => SetMySentimentPage(
-              dashboard: _dashboard,
-              onSentimentChange: _updateMySentiment,
-            ),
+        //'my-sentimentZZZ': (_) => SetMySentimentPage(
+        //      dashboard: _dashboard,
+        //      onSentimentChange: _updateMySentiment,
+        //    ),
         'other-detail-page': (context) => OtherDetailPage(
             dashboard: _dashboard,
             otherUserId: ModalRoute.of(context).settings.arguments)

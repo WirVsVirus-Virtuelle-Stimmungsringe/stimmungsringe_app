@@ -4,6 +4,7 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
@@ -46,7 +47,12 @@ class OverviewPage extends StatelessWidget {
                   avatarSentiment:
                       SentimentUi.fromSentimentStatus(sentimentStatus),
                   onSentimentIconTap: () =>
-                      Navigator.pushNamed(context, 'my-sentiment'),
+                      Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (_) => BlocProvider.value(
+                                value: BlocProvider.of<DashboardBloc>(context),
+                                child: new SetMySentimentPage(),
+                              ))),
+                  //Navigator.pushNamed(context, 'my-sentiment'),
                 );
               } else {
                 return LoadingSpinnerWidget();
