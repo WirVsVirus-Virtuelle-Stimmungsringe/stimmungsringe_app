@@ -443,43 +443,44 @@ SentimentUpdate _$SentimentUpdateFromJson(Map<String, dynamic> json) {
 }
 
 abstract class _$SentimentUpdate {
-  Sentiment get sentiment;
+  String get sentimentCode;
 
-  SentimentUpdate copyWith({Sentiment sentiment});
+  SentimentUpdate copyWith({String sentimentCode});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_SentimentUpdate implements _SentimentUpdate {
-  const _$_SentimentUpdate(this.sentiment);
+  const _$_SentimentUpdate(this.sentimentCode);
 
   factory _$_SentimentUpdate.fromJson(Map<String, dynamic> json) =>
       _$_$_SentimentUpdateFromJson(json);
 
   @override
-  final Sentiment sentiment;
+  final String sentimentCode;
 
   @override
   String toString() {
-    return 'SentimentUpdate(sentiment: $sentiment)';
+    return 'SentimentUpdate(sentimentCode: $sentimentCode)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return other is _SentimentUpdate &&
-        (identical(other.sentiment, sentiment) || other.sentiment == sentiment);
+        (identical(other.sentimentCode, sentimentCode) ||
+            other.sentimentCode == sentimentCode);
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ sentiment.hashCode;
+  int get hashCode => runtimeType.hashCode ^ sentimentCode.hashCode;
 
   @override
   _$_SentimentUpdate copyWith({
-    Object sentiment = immutable,
+    Object sentimentCode = immutable,
   }) {
     return _$_SentimentUpdate(
-      sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      sentimentCode == immutable ? this.sentimentCode : sentimentCode as String,
     );
   }
 
@@ -490,14 +491,14 @@ class _$_SentimentUpdate implements _SentimentUpdate {
 }
 
 abstract class _SentimentUpdate implements SentimentUpdate {
-  const factory _SentimentUpdate(Sentiment sentiment) = _$_SentimentUpdate;
+  const factory _SentimentUpdate(String sentimentCode) = _$_SentimentUpdate;
 
   factory _SentimentUpdate.fromJson(Map<String, dynamic> json) =
       _$_SentimentUpdate.fromJson;
 
   @override
-  Sentiment get sentiment;
+  String get sentimentCode;
 
   @override
-  _SentimentUpdate copyWith({Sentiment sentiment});
+  _SentimentUpdate copyWith({String sentimentCode});
 }

@@ -28,7 +28,7 @@ class DashboardRepository {
           'X-User-ID': sampleUserMutti,
           "Content-Type": "application/json"
         },
-        body: json.encode(SentimentUpdate(sentiment.toSentiment())));
+        body: json.encode(SentimentUpdate(sentiment.toSentiment().sentimentCode)));
     // TODO response handling
 
     await chaosMonkeyDelayAsync();
