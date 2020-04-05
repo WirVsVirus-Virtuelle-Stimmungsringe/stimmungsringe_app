@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
 Future<OtherDetail> loadOtherDetailPageData(String userId) async {
@@ -32,14 +33,14 @@ class Suggestion {
 
 class OtherDetail {
   final UserMinimal user;
-  final Sentiment sentiment;
+  final SentimentUi sentiment;
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
     final suggestionsJson = (jsonMap['suggestions'] as List);
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user']),
-        Sentiment.fromJson(jsonMap['sentiment']),
+        SentimentUi.fromJson(jsonMap['sentiment']),
         suggestionsJson
             .map((sugg) => Suggestion.fromJson(sugg))
             .toList(growable: false));

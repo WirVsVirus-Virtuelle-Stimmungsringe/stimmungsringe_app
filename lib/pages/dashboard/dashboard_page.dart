@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
@@ -43,8 +42,7 @@ class DashboardPage extends StatelessWidget {
                 return AvatarRow(
                   name: user.displayName,
                   image: NetworkImage(avatarImageUrl(user.userId)),
-                  avatarSentiment:
-                      SentimentUi.fromSentiment(dashboard.myTile.sentiment),
+                  avatarSentiment: dashboard.myTile.sentiment,
                   onSentimentIconTap: () =>
                       Navigator.of(context).push(CupertinoPageRoute(
                           builder: (_) => BlocProvider.value(
@@ -97,7 +95,7 @@ class DashboardPage extends StatelessWidget {
                 child: AvatarRowCondensed(
                   name: tile.user.displayName,
                   image: NetworkImage(avatarImageUrl(tile.user.userId)),
-                  avatarSentiment: SentimentUi.fromSentiment(tile.sentiment),
+                  avatarSentiment: tile.sentiment,
                 ),
                 onTap: () => Navigator.of(context).push(CupertinoPageRoute(
                     builder: (_) => BlocProvider.value(

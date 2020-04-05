@@ -81,20 +81,30 @@ abstract class _UserMinimal implements UserMinimal {
   _UserMinimal copyWith({String userId, String displayName});
 }
 
-abstract class _$OtherTile {
-  UserMinimal get user;
-  Sentiment get sentiment;
-
-  OtherTile copyWith({UserMinimal user, Sentiment sentiment});
+OtherTile _$OtherTileFromJson(Map<String, dynamic> json) {
+  return _OtherTile.fromJson(json);
 }
 
+abstract class _$OtherTile {
+  UserMinimal get user;
+  SentimentUi get sentiment;
+
+  OtherTile copyWith({UserMinimal user, SentimentUi sentiment});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
 class _$_OtherTile implements _OtherTile {
   const _$_OtherTile(this.user, this.sentiment);
+
+  factory _$_OtherTile.fromJson(Map<String, dynamic> json) =>
+      _$_$_OtherTileFromJson(json);
 
   @override
   final UserMinimal user;
   @override
-  final Sentiment sentiment;
+  final SentimentUi sentiment;
 
   @override
   String toString() {
@@ -118,38 +128,56 @@ class _$_OtherTile implements _OtherTile {
   }) {
     return _$_OtherTile(
       user == immutable ? this.user : user as UserMinimal,
-      sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      sentiment == immutable ? this.sentiment : sentiment as SentimentUi,
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_OtherTileToJson(this);
   }
 }
 
 abstract class _OtherTile implements OtherTile {
-  const factory _OtherTile(UserMinimal user, Sentiment sentiment) =
+  const factory _OtherTile(UserMinimal user, SentimentUi sentiment) =
       _$_OtherTile;
+
+  factory _OtherTile.fromJson(Map<String, dynamic> json) =
+      _$_OtherTile.fromJson;
 
   @override
   UserMinimal get user;
   @override
-  Sentiment get sentiment;
+  SentimentUi get sentiment;
 
   @override
-  _OtherTile copyWith({UserMinimal user, Sentiment sentiment});
+  _OtherTile copyWith({UserMinimal user, SentimentUi sentiment});
+}
+
+MyTile _$MyTileFromJson(Map<String, dynamic> json) {
+  return _MyTile.fromJson(json);
 }
 
 abstract class _$MyTile {
   UserMinimal get user;
-  Sentiment get sentiment;
+  SentimentUi get sentiment;
 
-  MyTile copyWith({UserMinimal user, Sentiment sentiment});
+  MyTile copyWith({UserMinimal user, SentimentUi sentiment});
+
+  Map<String, dynamic> toJson();
 }
 
+@JsonSerializable()
 class _$_MyTile implements _MyTile {
   const _$_MyTile(this.user, this.sentiment);
+
+  factory _$_MyTile.fromJson(Map<String, dynamic> json) =>
+      _$_$_MyTileFromJson(json);
 
   @override
   final UserMinimal user;
   @override
-  final Sentiment sentiment;
+  final SentimentUi sentiment;
 
   @override
   String toString() {
@@ -173,21 +201,32 @@ class _$_MyTile implements _MyTile {
   }) {
     return _$_MyTile(
       user == immutable ? this.user : user as UserMinimal,
-      sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      sentiment == immutable ? this.sentiment : sentiment as SentimentUi,
     );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_MyTileToJson(this);
   }
 }
 
 abstract class _MyTile implements MyTile {
-  const factory _MyTile(UserMinimal user, Sentiment sentiment) = _$_MyTile;
+  const factory _MyTile(UserMinimal user, SentimentUi sentiment) = _$_MyTile;
+
+  factory _MyTile.fromJson(Map<String, dynamic> json) = _$_MyTile.fromJson;
 
   @override
   UserMinimal get user;
   @override
-  Sentiment get sentiment;
+  SentimentUi get sentiment;
 
   @override
-  _MyTile copyWith({UserMinimal user, Sentiment sentiment});
+  _MyTile copyWith({UserMinimal user, SentimentUi sentiment});
+}
+
+Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
+  return _Dashboard.fromJson(json);
 }
 
 abstract class _$Dashboard {
@@ -195,10 +234,16 @@ abstract class _$Dashboard {
   List<OtherTile> get otherTiles;
 
   Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
+
+  Map<String, dynamic> toJson();
 }
 
+@JsonSerializable()
 class _$_Dashboard implements _Dashboard {
   const _$_Dashboard(this.myTile, this.otherTiles);
+
+  factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
+      _$_$_DashboardFromJson(json);
 
   @override
   final MyTile myTile;
@@ -232,11 +277,19 @@ class _$_Dashboard implements _Dashboard {
       otherTiles == immutable ? this.otherTiles : otherTiles as List<OtherTile>,
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_DashboardToJson(this);
+  }
 }
 
 abstract class _Dashboard implements Dashboard {
   const factory _Dashboard(MyTile myTile, List<OtherTile> otherTiles) =
       _$_Dashboard;
+
+  factory _Dashboard.fromJson(Map<String, dynamic> json) =
+      _$_Dashboard.fromJson;
 
   @override
   MyTile get myTile;
@@ -247,14 +300,24 @@ abstract class _Dashboard implements Dashboard {
   _Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
 }
 
+SentimentUpdate _$SentimentUpdateFromJson(Map<String, dynamic> json) {
+  return _SentimentUpdate.fromJson(json);
+}
+
 abstract class _$SentimentUpdate {
   String get sentiment;
 
   SentimentUpdate copyWith({String sentiment});
+
+  Map<String, dynamic> toJson();
 }
 
+@JsonSerializable()
 class _$_SentimentUpdate implements _SentimentUpdate {
   const _$_SentimentUpdate(this.sentiment);
+
+  factory _$_SentimentUpdate.fromJson(Map<String, dynamic> json) =>
+      _$_$_SentimentUpdateFromJson(json);
 
   @override
   final String sentiment;
@@ -281,10 +344,18 @@ class _$_SentimentUpdate implements _SentimentUpdate {
       sentiment == immutable ? this.sentiment : sentiment as String,
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_SentimentUpdateToJson(this);
+  }
 }
 
 abstract class _SentimentUpdate implements SentimentUpdate {
   const factory _SentimentUpdate(String sentiment) = _$_SentimentUpdate;
+
+  factory _SentimentUpdate.fromJson(Map<String, dynamic> json) =
+      _$_SentimentUpdate.fromJson;
 
   @override
   String get sentiment;

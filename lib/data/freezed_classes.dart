@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
+import 'package:stimmungsringeapp/data/sentiment.dart';
 
 part 'freezed_classes.freezed.dart';
 part 'freezed_classes.g.dart';
@@ -15,30 +15,16 @@ abstract class UserMinimal with _$UserMinimal {
       _$UserMinimalFromJson(json);
 }
 
-@JsonSerializable()
-class Sentiment extends Equatable {
-  final String sentiment;
-
-  factory Sentiment.fromJson(String json) {
-    return Sentiment(json);
-  }
-
-  const Sentiment(this.sentiment);
-
-  @override
-  List<Object> get props => [sentiment];
-}
-
 @immutable
 abstract class OtherTile with _$OtherTile {
-  const factory OtherTile(UserMinimal user, Sentiment sentiment) = _OtherTile;
+  const factory OtherTile(UserMinimal user, SentimentUi sentiment) = _OtherTile;
   factory OtherTile.fromJson(Map<String, dynamic> json) =>
       _$OtherTileFromJson(json);
 }
 
 @immutable
 abstract class MyTile with _$MyTile {
-  const factory MyTile(UserMinimal user, Sentiment sentiment) = _MyTile;
+  const factory MyTile(UserMinimal user, SentimentUi sentiment) = _MyTile;
   factory MyTile.fromJson(Map<String, dynamic> json) => _$MyTileFromJson(json);
 }
 
