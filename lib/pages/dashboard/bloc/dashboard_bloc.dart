@@ -20,33 +20,44 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   @override
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     if (event is FetchDashboard) {
-      if (state is DashboardLoading) {
-        return;
-      }
-      try {
-        final dashboard = await dashboardRepository.loadDashboardPageData();
-        yield DashboardLoaded(dashboard);
-        return;
-      } catch (_) {
-        if (state is DashboardLoaded) {
-          yield DashboardError((state as DashboardLoaded).dashboard);
-        } else {
-          yield DashboardError(null);
-        }
+      yield* _mapFetchDashboardToState(event);
+    } else if (event is SetNewSentiment) {
+      yield* _mapSetNewSentimentToState(event);
+    }
+  }
+
+  Stream<DashboardState> _mapFetchDashboardToState(
+      FetchDashboard fetch) async* {
+    if (state is DashboardLoading) {
+      return;
+    }
+    yield DashboardLoading();
+    try {
+      final dashboard = await dashboardRepository.loadDashboardPageData();
+      yield DashboardLoaded(dashboard);
+      return;
+    } catch (_) {
+      if (state is DashboardLoaded) {
+        yield DashboardError((state as DashboardLoaded).dashboard);
+      } else {
+        yield DashboardError(null);
       }
     }
-    if (event is SetNewSentiment) {
-      // TODO
-      print("TODO update sentiment from event -> " + event.sentiment.name);
-      yield DashboardLoading();
-      try {
-        dashboardRepository.setNewStatement(event.sentiment);
-        Dashboard loadDashboardPageData =
-            await dashboardRepository.loadDashboardPageData();
-        yield DashboardLoaded(loadDashboardPageData);
-      } catch (_) {
-        yield DashboardError((state as DashboardLoaded).dashboard);
-      }
+  }
+
+  Stream<DashboardState> _mapSetNewSentimentToState(
+      SetNewSentiment setNewSentiment) async* {
+    // TODO
+    print("TODO update sentiment from event -> " +
+        setNewSentiment.sentiment.name);
+    yield DashboardLoading();
+    try {
+      dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
+      Dashboard loadDashboardPageData =
+          await dashboardRepository.loadDashboardPageData();
+      yield DashboardLoaded(loadDashboardPageData);
+    } catch (_) {
+      yield DashboardError((state as DashboardLoaded).dashboard);
     }
   }
 }

@@ -4,19 +4,18 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
-import 'package:stimmungsringeapp/pages/other_detail_page.dart';
-import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
+import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
-class OverviewPage extends StatelessWidget {
+class DashboardPage extends StatelessWidget {
   final DashboardRepository dashboardRepository;
 
-  OverviewPage({Key key, DashboardRepository this.dashboardRepository})
-      : super(key: key);
+  DashboardPage({Key key, this.dashboardRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +39,12 @@ class OverviewPage extends StatelessWidget {
               if (state.hasDashboard) {
                 final Dashboard dashboard =
                     (state as StateWithDashboard).dashboard;
-                final UserMinimal user =
-                    (state as StateWithDashboard).dashboard.myTile.user;
-                final SentimentStatus sentimentStatus =
-                    (state as StateWithDashboard)
-                        .dashboard
-                        .myTile
-                        .sentimentStatus;
+                final UserMinimal user = dashboard.myTile.user;
                 return AvatarRow(
                   name: user.displayName,
                   image: NetworkImage(avatarImageUrl(user.userId)),
-                  avatarSentiment:
-                      SentimentUi.fromSentimentStatus(sentimentStatus),
+                  avatarSentiment: SentimentUi.fromSentimentStatus(
+                      dashboard.myTile.sentimentStatus),
                   onSentimentIconTap: () =>
                       Navigator.of(context).push(CupertinoPageRoute(
                           builder: (_) => BlocProvider.value(

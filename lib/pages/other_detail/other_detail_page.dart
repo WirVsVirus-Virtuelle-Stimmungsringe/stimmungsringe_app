@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
-import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
+import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
@@ -64,6 +64,8 @@ class OtherDetailPage extends StatelessWidget {
           if (state is OtherDetailPageLoaded) {
             return buildSuggestionsList(state.otherDetail);
           }
+
+          return Container();
         }))
       ],
     );
@@ -71,8 +73,6 @@ class OtherDetailPage extends StatelessWidget {
 
   Widget buildSuggestionRow(
       Suggestion suggestion, NetworkImage myAvatarImage, bool lastItem) {
-    NetworkImage placeholder = NetworkImage(
-        'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
     Widget row = Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
