@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page.dart';
@@ -53,9 +54,11 @@ class _SentimentAppState extends State<SentimentApp> {
     });
   }
 
-  _updateMySentiment(final Sentiment sentiment) {
+  _updateMySentiment(final SentimentUi sentiment) {
     if (_dashboard.sentiment != sentiment) {
-      setState(() => _dashboard = _dashboard.withSentiment(sentiment));
+      setState(() =>
+          // _dashboard = _dashboard.withSentiment(sentiment)
+          _dashboard.copyWith({sentiment: sentiment}));
     }
   }
 }

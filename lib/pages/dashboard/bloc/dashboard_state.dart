@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/freezed_classes.dart';
 
 abstract class StateWithDashboard {
   Dashboard get dashboard;

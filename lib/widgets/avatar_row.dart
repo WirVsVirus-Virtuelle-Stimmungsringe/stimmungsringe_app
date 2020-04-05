@@ -6,7 +6,7 @@ import 'package:stimmungsringeapp/data/sentiment.dart';
 const double _avatarSize = 150;
 
 class AvatarRow extends StatelessWidget {
-  final Sentiment avatarSentiment;
+  final SentimentUi avatarSentiment;
   final String name;
   final ImageProvider image;
   final void Function() onSentimentIconTap;

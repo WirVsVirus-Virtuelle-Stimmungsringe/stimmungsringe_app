@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
@@ -36,7 +36,8 @@ class OverviewPage extends StatelessWidget {
                 return AvatarRow(
                   name: dashboard.user.displayName,
                   image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
-                  avatarSentiment: dashboard.sentiment,
+                  avatarSentiment:
+                      SentimentUi.fromSentimentStatus(dashboard.sentiment),
                   onSentimentIconTap: () =>
                       Navigator.pushNamed(context, 'my-sentiment'),
                 );
@@ -85,7 +86,7 @@ class OverviewPage extends StatelessWidget {
                   name: tile.user.displayName,
                   image: NetworkImage(avatarImageUrl(tile.user.userId)),
                   avatarSentiment:
-                      Sentiment.fromSentimentStatus(tile.sentimentStatus),
+                      SentimentUi.fromSentimentStatus(tile.sentimentStatus),
                 ),
                 onTap: () => Navigator.pushNamed(context, 'other-detail-page',
                     arguments: tile.user.userId),

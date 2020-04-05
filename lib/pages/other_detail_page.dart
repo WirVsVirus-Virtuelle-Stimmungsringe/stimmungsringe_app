@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/detail_pages.dart';
+import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
@@ -52,7 +52,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
           name: _otherDetail.user.displayName,
           image: NetworkImage(avatarImageUrl(_otherDetail.user.userId)),
           avatarSentiment:
-              Sentiment.fromSentimentStatus(_otherDetail.sentimentStatus),
+              SentimentUi.fromSentimentStatus(_otherDetail.sentimentStatus),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),

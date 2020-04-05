@@ -1,45 +1,31 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stimmungsringeapp/data/freezed_classes.dart';
 
-class SentimentStatus extends Equatable {
-  final String sentimentCode;
-
-  static fromJson(Map<String, dynamic> jsonMap) {
-    // e.g .CLOUD_RAIN
-    return SentimentStatus(jsonMap['sentiment']['sentimentCode']);
-  }
-
-  SentimentStatus(this.sentimentCode);
-
-  @override
-  List<Object> get props => [sentimentCode];
-}
-
-class Sentiment {
+class SentimentUi {
   final String name;
   final IconData icon;
   final _SentimentColors colors;
 
-  const Sentiment(this.name, this.icon, this.colors)
+  const SentimentUi(this.name, this.icon, this.colors)
       : assert(name != null),
         assert(icon != null),
         assert(colors != null);
 
-  static final Sentiment sunny =
-      const Sentiment('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
-  static final Sentiment sunnyWithClouds = const Sentiment(
+  static final SentimentUi sunny =
+      const SentimentUi('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
+  static final SentimentUi sunnyWithClouds = const SentimentUi(
       'sunnyWithClouds', FontAwesomeIcons.cloudSun, _SentimentColors.good);
-  static final Sentiment cloudy = const Sentiment(
+  static final SentimentUi cloudy = const SentimentUi(
       'cloudy', FontAwesomeIcons.cloud, _SentimentColors.medium);
-  static final Sentiment windy =
-      const Sentiment('windy', FontAwesomeIcons.wind, _SentimentColors.medium);
-  static final Sentiment cloudyNight = const Sentiment(
+  static final SentimentUi windy = const SentimentUi(
+      'windy', FontAwesomeIcons.wind, _SentimentColors.medium);
+  static final SentimentUi cloudyNight = const SentimentUi(
       'cloudyNight', FontAwesomeIcons.cloudMoon, _SentimentColors.medium);
-  static final Sentiment thundery =
-      const Sentiment('thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
+  static final SentimentUi thundery = const SentimentUi(
+      'thundery', FontAwesomeIcons.bolt, _SentimentColors.bad);
 
-  static final List<Sentiment> all = [
+  static final List<SentimentUi> all = [
     sunny,
     sunnyWithClouds,
     cloudy,
@@ -48,15 +34,15 @@ class Sentiment {
     thundery
   ];
 
-  static Sentiment fromSentimentStatus(SentimentStatus sentimentStatus) {
+  static SentimentUi fromSentimentStatus(SentimentStatus sentimentStatus) {
     var map = {
       // old compat mapping
-      'SNOWFLAKE': Sentiment.thundery,
-      'SMOG': Sentiment.cloudyNight,
-      'CLOUD_RAIN': Sentiment.windy,
-      'CLOUD': Sentiment.cloudy,
+      'SNOWFLAKE': SentimentUi.thundery,
+      'SMOG': SentimentUi.cloudyNight,
+      'CLOUD_RAIN': SentimentUi.windy,
+      'CLOUD': SentimentUi.cloudy,
       'CLOUD_SUN': sunnyWithClouds,
-      'SUN': Sentiment.sunny,
+      'SUN': SentimentUi.sunny,
       // new mapping
       'thundery': thundery,
       'cloudyNight': cloudyNight,
@@ -66,9 +52,9 @@ class Sentiment {
       'sunny': sunny,
     };
 
-    final Sentiment sentiment = map[sentimentStatus.sentimentCode];
+    final SentimentUi sentiment = map[sentimentStatus.sentiment.sentimentCode];
     assert(sentiment != null,
-        'Undefined sentiment code ' + sentimentStatus.sentimentCode);
+        'Undefined sentiment code ' + sentimentStatus.sentiment.sentimentCode);
     return sentiment;
   }
 }
