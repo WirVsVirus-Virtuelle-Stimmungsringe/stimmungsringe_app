@@ -80,22 +80,18 @@ Map<String, dynamic> _$_$_MyTileToJson(_$_MyTile instance) => <String, dynamic>{
 
 _$_Dashboard _$_$_DashboardFromJson(Map<String, dynamic> json) {
   return _$_Dashboard(
+    json['myTile'] == null
+        ? null
+        : MyTile.fromJson(json['myTile'] as Map<String, dynamic>),
     (json['otherTiles'] as List)
         ?.map((e) =>
             e == null ? null : OtherTile.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    json['user'] == null
-        ? null
-        : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
-    json['sentiment'] == null
-        ? null
-        : SentimentStatus.fromJson(json['sentiment'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$_$_DashboardToJson(_$_Dashboard instance) =>
     <String, dynamic>{
+      'myTile': instance.myTile,
       'otherTiles': instance.otherTiles,
-      'user': instance.user,
-      'sentiment': instance.sentiment,
     };

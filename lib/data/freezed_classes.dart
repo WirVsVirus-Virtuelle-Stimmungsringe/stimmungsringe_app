@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 part 'freezed_classes.freezed.dart';
 part 'freezed_classes.g.dart';
 
+// flutter pub run build_runner watch --delete-conflicting-outputs
 // on compile error "_$SentimentFromJson" -> delete *.g.dart file
 
 @immutable
@@ -44,8 +45,8 @@ abstract class MyTile with _$MyTile {
 
 @immutable
 abstract class Dashboard with _$Dashboard {
-  const factory Dashboard(List<OtherTile> otherTiles, UserMinimal user,
-      SentimentStatus sentiment) = _Dashboard;
+  const factory Dashboard(MyTile myTile, List<OtherTile> otherTiles) =
+      _Dashboard;
   factory Dashboard.fromJson(Map<String, dynamic> json) =>
       _$DashboardFromJson(json);
 }

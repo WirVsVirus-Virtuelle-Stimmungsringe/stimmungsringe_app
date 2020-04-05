@@ -34,10 +34,11 @@ class OverviewPage extends StatelessWidget {
                 final Dashboard dashboard =
                     (state as StateWithDashboard).dashboard;
                 return AvatarRow(
-                  name: dashboard.user.displayName,
-                  image: NetworkImage(avatarImageUrl(dashboard.user.userId)),
-                  avatarSentiment:
-                      SentimentUi.fromSentimentStatus(dashboard.sentiment),
+                  name: dashboard.myTile.user.displayName,
+                  image: NetworkImage(
+                      avatarImageUrl(dashboard.myTile.user.userId)),
+                  avatarSentiment: SentimentUi.fromSentimentStatus(
+                      dashboard.myTile.sentimentStatus),
                   onSentimentIconTap: () =>
                       Navigator.pushNamed(context, 'my-sentiment'),
                 );

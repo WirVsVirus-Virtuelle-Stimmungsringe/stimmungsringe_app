@@ -368,63 +368,51 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
 }
 
 abstract class _$Dashboard {
+  MyTile get myTile;
   List<OtherTile> get otherTiles;
-  UserMinimal get user;
-  SentimentStatus get sentiment;
 
-  Dashboard copyWith(
-      {List<OtherTile> otherTiles,
-      UserMinimal user,
-      SentimentStatus sentiment});
+  Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_Dashboard implements _Dashboard {
-  const _$_Dashboard(this.otherTiles, this.user, this.sentiment);
+  const _$_Dashboard(this.myTile, this.otherTiles);
 
   factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
       _$_$_DashboardFromJson(json);
 
   @override
+  final MyTile myTile;
+  @override
   final List<OtherTile> otherTiles;
-  @override
-  final UserMinimal user;
-  @override
-  final SentimentStatus sentiment;
 
   @override
   String toString() {
-    return 'Dashboard(otherTiles: $otherTiles, user: $user, sentiment: $sentiment)';
+    return 'Dashboard(myTile: $myTile, otherTiles: $otherTiles)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return other is _Dashboard &&
+        (identical(other.myTile, myTile) || other.myTile == myTile) &&
         (identical(other.otherTiles, otherTiles) ||
-            other.otherTiles == otherTiles) &&
-        (identical(other.user, user) || other.user == user) &&
-        (identical(other.sentiment, sentiment) || other.sentiment == sentiment);
+            other.otherTiles == otherTiles);
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      otherTiles.hashCode ^
-      user.hashCode ^
-      sentiment.hashCode;
+      runtimeType.hashCode ^ myTile.hashCode ^ otherTiles.hashCode;
 
   @override
   _$_Dashboard copyWith({
+    Object myTile = immutable,
     Object otherTiles = immutable,
-    Object user = immutable,
-    Object sentiment = immutable,
   }) {
     return _$_Dashboard(
+      myTile == immutable ? this.myTile : myTile as MyTile,
       otherTiles == immutable ? this.otherTiles : otherTiles as List<OtherTile>,
-      user == immutable ? this.user : user as UserMinimal,
-      sentiment == immutable ? this.sentiment : sentiment as SentimentStatus,
     );
   }
 
@@ -435,22 +423,17 @@ class _$_Dashboard implements _Dashboard {
 }
 
 abstract class _Dashboard implements Dashboard {
-  const factory _Dashboard(List<OtherTile> otherTiles, UserMinimal user,
-      SentimentStatus sentiment) = _$_Dashboard;
+  const factory _Dashboard(MyTile myTile, List<OtherTile> otherTiles) =
+      _$_Dashboard;
 
   factory _Dashboard.fromJson(Map<String, dynamic> json) =
       _$_Dashboard.fromJson;
 
   @override
+  MyTile get myTile;
+  @override
   List<OtherTile> get otherTiles;
-  @override
-  UserMinimal get user;
-  @override
-  SentimentStatus get sentiment;
 
   @override
-  _Dashboard copyWith(
-      {List<OtherTile> otherTiles,
-      UserMinimal user,
-      SentimentStatus sentiment});
+  _Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
 }

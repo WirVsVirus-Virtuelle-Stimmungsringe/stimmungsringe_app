@@ -54,11 +54,13 @@ class _SentimentAppState extends State<SentimentApp> {
     });
   }
 
-  _updateMySentiment(final SentimentUi sentiment) {
-    if (_dashboard.sentiment != sentiment) {
-      setState(() =>
-          // _dashboard = _dashboard.withSentiment(sentiment)
-          _dashboard.copyWith({sentiment: sentiment}));
+  _updateMySentiment(final SentimentUi sentimentUi) {
+    final SentimentStatus sentimentStatus =
+        SentimentStatus(Sentiment(sentimentUi.name)); // TODO extract
+    if (_dashboard.myTile.sentimentStatus != sentimentStatus) {
+      setState(() => _dashboard = _dashboard.copyWith(
+          myTile:
+              _dashboard.myTile.copyWith(sentimentStatus: sentimentStatus)));
     }
   }
 }
