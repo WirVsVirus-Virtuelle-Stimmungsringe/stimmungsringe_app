@@ -53,7 +53,7 @@ abstract class Dashboard with _$Dashboard {
 
 @immutable
 abstract class SentimentUpdate with _$SentimentUpdate {
-  const factory SentimentUpdate(String sentimentCode) = _SentimentUpdate;
+  const factory SentimentUpdate(Sentiment sentiment) = _SentimentUpdate;
   factory SentimentUpdate.fromJson(Map<String, dynamic> json) =>
       _$SentimentUpdateFromJson(json);
 }

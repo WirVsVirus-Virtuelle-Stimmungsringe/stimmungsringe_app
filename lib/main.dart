@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
@@ -17,23 +15,10 @@ void main() {
   runApp(SentimentApp(dashboardRepository: dashboardRepository));
 }
 
-class SentimentApp extends StatefulWidget {
+class SentimentApp extends StatelessWidget {
   final DashboardRepository dashboardRepository;
 
-  SentimentApp({@required this.dashboardRepository})
-      : assert(dashboardRepository != null);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _SentimentAppState(dashboardRepository: dashboardRepository);
-  }
-}
-
-class _SentimentAppState extends State<SentimentApp> {
-  Dashboard _dashboard;
-  final DashboardRepository dashboardRepository;
-
-  _SentimentAppState({@required this.dashboardRepository});
+  SentimentApp({this.dashboardRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -56,25 +41,5 @@ class _SentimentAppState extends State<SentimentApp> {
         //    otherUserId: ModalRoute.of(context).settings.arguments)
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //loadDashboardPageData().then((dashboard) {
-    //  setState(() => _dashboard = dashboard);
-    //});
-  }
-
-  _updateMySentiment(final SentimentUi sentimentUi) {
-    print("TODO should update sentiment");
-
-    final SentimentStatus sentimentStatus =
-        SentimentStatus(Sentiment(sentimentUi.name)); // TODO extract
-    if (_dashboard.myTile.sentimentStatus != sentimentStatus) {
-      setState(() => _dashboard = _dashboard.copyWith(
-          myTile:
-              _dashboard.myTile.copyWith(sentimentStatus: sentimentStatus)));
-    }
   }
 }

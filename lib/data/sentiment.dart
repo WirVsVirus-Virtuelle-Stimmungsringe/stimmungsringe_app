@@ -36,14 +36,6 @@ class SentimentUi {
 
   static SentimentUi fromSentimentStatus(SentimentStatus sentimentStatus) {
     var map = {
-      // old compat mapping
-      'SNOWFLAKE': SentimentUi.thundery,
-      'SMOG': SentimentUi.cloudyNight,
-      'CLOUD_RAIN': SentimentUi.windy,
-      'CLOUD': SentimentUi.cloudy,
-      'CLOUD_SUN': sunnyWithClouds,
-      'SUN': SentimentUi.sunny,
-      // new mapping
       'thundery': thundery,
       'cloudyNight': cloudyNight,
       'windy': windy,
@@ -56,6 +48,14 @@ class SentimentUi {
     assert(sentiment != null,
         'Undefined sentiment code ' + sentimentStatus.sentiment.sentimentCode);
     return sentiment;
+  }
+
+  Sentiment toSentiment() {
+    return Sentiment(name);
+  }
+
+  SentimentStatus toSentimentStatus() {
+    return SentimentStatus(toSentiment());
   }
 }
 

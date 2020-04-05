@@ -98,11 +98,13 @@ Map<String, dynamic> _$_$_DashboardToJson(_$_Dashboard instance) =>
 
 _$_SentimentUpdate _$_$_SentimentUpdateFromJson(Map<String, dynamic> json) {
   return _$_SentimentUpdate(
-    json['sentimentCode'] as String,
+    json['sentiment'] == null
+        ? null
+        : Sentiment.fromJson(json['sentiment'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$_$_SentimentUpdateToJson(_$_SentimentUpdate instance) =>
     <String, dynamic>{
-      'sentimentCode': instance.sentimentCode,
+      'sentiment': instance.sentiment,
     };

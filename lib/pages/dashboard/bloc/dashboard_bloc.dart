@@ -47,11 +47,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Stream<DashboardState> _mapSetNewSentimentToState(
       SetNewSentiment setNewSentiment) async* {
-    // TODO
-    print("TODO update sentiment from event -> " +
-        setNewSentiment.sentiment.name);
-    yield DashboardLoading();
     try {
+      if (state is DashboardLoaded) {
+        Dashboard prevDashboard = (state as DashboardLoaded).dashboard;
+        //prevDashboard.copyWith(
+        //   myTile:
+        //  prevDashboard.myTile.copyWith(sentimentStatus: setNewSentiment.sentiment.name)));
+      }
+
       dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
       Dashboard loadDashboardPageData =
           await dashboardRepository.loadDashboardPageData();

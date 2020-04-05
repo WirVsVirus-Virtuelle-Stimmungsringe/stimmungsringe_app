@@ -34,9 +34,8 @@ class SetMySentimentPage extends StatelessWidget {
           return Center(
             child: SentimentIconButton(
               sentiment: sentiment,
-              isSelected:
-                  dashboard.myTile.sentimentStatus.sentiment.sentimentCode ==
-                      sentiment.name,
+              isSelected: dashboard.myTile.sentimentStatus.sentiment ==
+                  sentiment.toSentiment(),
               onTap: (sentimentUi) {
                 dashboardBloc.add(SetNewSentiment(sentiment));
               },
