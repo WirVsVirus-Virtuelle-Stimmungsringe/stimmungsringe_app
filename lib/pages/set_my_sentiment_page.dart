@@ -30,12 +30,12 @@ class SetMySentimentPage extends StatelessWidget {
       if (state.hasDashboard) {
         final Dashboard dashboard = (state as StateWithDashboard).dashboard;
 
-        List<Widget> allSentiments = SentimentUi.all.map((sentiment) {
+        List<Widget> allSentiments = Sentiment.all.map((sentiment) {
           return Center(
             child: SentimentIconButton(
               sentiment: sentiment,
               isSelected: dashboard.myTile.sentiment == sentiment,
-              onTap: (sentimentUi) {
+              onTap: (sentiment) {
                 dashboardBloc.add(SetNewSentiment(sentiment));
               },
             ),

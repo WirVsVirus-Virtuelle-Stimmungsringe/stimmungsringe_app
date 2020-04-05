@@ -20,7 +20,7 @@ class DashboardRepository {
     return dashboard;
   }
 
-  void setNewSentiment(SentimentUi sentiment) async {
+  void setNewSentiment(Sentiment sentiment) async {
     final String url = restUrlStatus();
 
     http.Response response = await http.put(url,

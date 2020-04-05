@@ -7,7 +7,7 @@ const double _avatarSize = 90;
 const double _sentimentIconSize = 70;
 
 class AvatarRowCondensed extends StatelessWidget {
-  final SentimentUi avatarSentiment;
+  final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
 

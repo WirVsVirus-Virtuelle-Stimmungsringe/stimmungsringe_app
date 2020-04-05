@@ -33,14 +33,14 @@ class Suggestion {
 
 class OtherDetail {
   final UserMinimal user;
-  final SentimentUi sentiment;
+  final Sentiment sentiment;
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
     final suggestionsJson = (jsonMap['suggestions'] as List);
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user']),
-        SentimentUi.fromJson(jsonMap['sentiment']),
+        Sentiment.fromJson(jsonMap['sentiment']),
         suggestionsJson
             .map((sugg) => Suggestion.fromJson(sugg))
             .toList(growable: false));

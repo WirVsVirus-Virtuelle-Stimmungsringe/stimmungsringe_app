@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/fa_icon.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 
 class SentimentIconButton extends StatelessWidget {
-  final SentimentUi sentiment;
+  final Sentiment sentiment;
   final bool isSelected;
-  final void Function(SentimentUi) onTap;
+  final void Function(Sentiment) onTap;
 
   SentimentIconButton({
     Key key,

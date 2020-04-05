@@ -9,7 +9,7 @@ abstract class DashboardEvent extends Equatable {
 class FetchDashboard extends DashboardEvent {}
 
 class SetNewSentiment extends DashboardEvent {
-  final SentimentUi sentiment;
+  final Sentiment sentiment;
 
   SetNewSentiment(this.sentiment) : assert(sentiment != null);
 

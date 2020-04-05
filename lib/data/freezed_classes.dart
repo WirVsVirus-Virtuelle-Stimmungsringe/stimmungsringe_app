@@ -17,14 +17,14 @@ abstract class UserMinimal with _$UserMinimal {
 
 @immutable
 abstract class OtherTile with _$OtherTile {
-  const factory OtherTile(UserMinimal user, SentimentUi sentiment) = _OtherTile;
+  const factory OtherTile(UserMinimal user, Sentiment sentiment) = _OtherTile;
   factory OtherTile.fromJson(Map<String, dynamic> json) =>
       _$OtherTileFromJson(json);
 }
 
 @immutable
 abstract class MyTile with _$MyTile {
-  const factory MyTile(UserMinimal user, SentimentUi sentiment) = _MyTile;
+  const factory MyTile(UserMinimal user, Sentiment sentiment) = _MyTile;
   factory MyTile.fromJson(Map<String, dynamic> json) => _$MyTileFromJson(json);
 }
 
