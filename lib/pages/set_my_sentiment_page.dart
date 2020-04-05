@@ -13,9 +13,6 @@ import '../global_constants.dart';
 class SetMySentimentPage extends StatelessWidget {
   final DashboardRepository dashboardRepository;
 
-  //final Dashboard dashboard;
-  //final void Function(SentimentUi) onSentimentChange;
-
   SetMySentimentPage({
     Key key,
     this.dashboardRepository,
@@ -88,5 +85,6 @@ class SetMySentimentPage extends StatelessWidget {
 class MySentimentRouteArguments {
   final DashboardBloc dashboardBloc;
 
-  MySentimentRouteArguments({@required this.dashboardBloc});
+  MySentimentRouteArguments({@required this.dashboardBloc})
+      : assert(dashboardBloc != null);
 }

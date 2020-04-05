@@ -14,7 +14,8 @@ class DashboardRepository {
       headers: {'X-User-ID': sampleUserMutti},
     );
 
-    var dashboard = Dashboard.fromJson(json.decode(response.body));
+    final Dashboard dashboard =
+        Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
     await chaosMonkeyDelayAsync();
     return dashboard;

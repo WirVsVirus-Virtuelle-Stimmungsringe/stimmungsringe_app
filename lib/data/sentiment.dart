@@ -15,12 +15,19 @@ class Sentiment extends Equatable {
     return _fromSentimentCode(json);
   }
 
-  Sentiment(this.sentimentCode) : assert(sentimentCode != null);
+  Sentiment(this.sentimentCode)
+      : assert(sentimentCode != null),
+        super() {
+    final Sentiment sentiment = _fromSentimentCode(sentimentCode);
+    icon = sentiment.icon;
+    colors = sentiment.colors;
+  }
 
   Sentiment._(this.sentimentCode, this.icon, this.colors)
       : assert(sentimentCode != null),
         assert(icon != null),
-        assert(colors != null);
+        assert(colors != null),
+        super();
 
   static final Sentiment sunny =
       Sentiment._('sunny', FontAwesomeIcons.sun, _SentimentColors.good);
@@ -45,7 +52,7 @@ class Sentiment extends Equatable {
   ];
 
   static Sentiment _fromSentimentCode(String sentimentCode) {
-    var map = {
+    final Map<String, Sentiment> map = {
       'thundery': thundery,
       'cloudyNight': cloudyNight,
       'windy': windy,

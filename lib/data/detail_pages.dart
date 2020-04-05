@@ -15,7 +15,8 @@ Future<OtherDetail> loadOtherDetailPageData(String userId) async {
 
   //await new Future.delayed(const Duration(seconds: 1));
 
-  var detailPage = OtherDetail.fromJson(json.decode(response.body));
+  final OtherDetail detailPage =
+      OtherDetail.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
   await chaosMonkeyDelayAsync();
   return detailPage;
@@ -25,7 +26,7 @@ class Suggestion {
   final String text;
 
   static Suggestion fromJson(Map<String, dynamic> jsonMap) {
-    return Suggestion(jsonMap['text']);
+    return Suggestion(jsonMap['text'] as String);
   }
 
   const Suggestion(this.text);
@@ -37,12 +38,13 @@ class OtherDetail {
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
-    final suggestionsJson = (jsonMap['suggestions'] as List);
+    final suggestionsJson =
+        (jsonMap['suggestions'] as List<Map<String, dynamic>>);
     return OtherDetail(
-        UserMinimal.fromJson(jsonMap['user']),
-        Sentiment.fromJson(jsonMap['sentiment']),
+        UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
+        Sentiment.fromJson(jsonMap['sentiment'] as String),
         suggestionsJson
-            .map((sugg) => Suggestion.fromJson(sugg))
+            .map((Map<String, dynamic> sugg) => Suggestion.fromJson(sugg))
             .toList(growable: false));
   }
 

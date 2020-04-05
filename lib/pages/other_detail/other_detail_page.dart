@@ -70,9 +70,30 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
+  // deprecated
+  ListView buildSuggestionsList(OtherDetail otherDetail) {
+    final NetworkImage placeholder = NetworkImage(
+        'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
+    //final NetworkImage myAvatarImage =
+    //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
+
+    return ListView.builder(
+      itemCount: otherDetail.suggestions.length,
+      itemBuilder: (context, index) {
+        final suggestion = otherDetail.suggestions[index];
+
+        return buildSuggestionRow(
+          suggestion,
+          placeholder,
+          index < otherDetail.suggestions.length - 1,
+        );
+      },
+    );
+  }
+
   Widget buildSuggestionRow(
       Suggestion suggestion, NetworkImage myAvatarImage, bool lastItem) {
-    Widget row = Container(
+    final Widget row = Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,8 +101,7 @@ class OtherDetailPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 15),
             child: CircleAvatar(
-              backgroundImage: // placeholder
-                  myAvatarImage,
+              backgroundImage: myAvatarImage,
             ),
           ),
           Expanded(child: Text(suggestion.text))
@@ -109,27 +129,6 @@ class OtherDetailPage extends StatelessWidget {
       ],
     );
   }
-
-  // deprecated
-  ListView buildSuggestionsList(OtherDetail otherDetail) {
-    NetworkImage placeholder = NetworkImage(
-        'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
-    //var myAvatarImage =
-    //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
-
-    return ListView.builder(
-      itemCount: otherDetail.suggestions.length,
-      itemBuilder: (context, index) {
-        final suggestion = otherDetail.suggestions[index];
-
-        return buildSuggestionRow(
-          suggestion,
-          placeholder,
-          index < otherDetail.suggestions.length - 1,
-        );
-      },
-    );
-  }
 }
 
 class OtherDetailRouteArguments {
@@ -137,5 +136,7 @@ class OtherDetailRouteArguments {
   final String otherUserId;
 
   OtherDetailRouteArguments(
-      {@required this.dashboardBloc, @required this.otherUserId});
+      {@required this.dashboardBloc, @required this.otherUserId})
+      : assert(dashboardBloc != null),
+        assert(otherUserId != null);
 }

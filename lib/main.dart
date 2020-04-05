@@ -35,16 +35,18 @@ class SentimentApp extends StatelessWidget {
               child: DashboardPage(dashboardRepository: dashboardRepository),
             ),
         'my-sentiment': (context) {
-          var arguments = (ModalRoute.of(context).settings.arguments
-              as MySentimentRouteArguments);
+          final MySentimentRouteArguments arguments = (ModalRoute.of(context)
+              .settings
+              .arguments as MySentimentRouteArguments);
           return BlocProvider.value(
             value: arguments.dashboardBloc,
             child: SetMySentimentPage(dashboardRepository: dashboardRepository),
           );
         },
         'other-detail-page': (context) {
-          var arguments = (ModalRoute.of(context).settings.arguments
-              as OtherDetailRouteArguments);
+          final OtherDetailRouteArguments arguments = (ModalRoute.of(context)
+              .settings
+              .arguments as OtherDetailRouteArguments);
           return BlocProvider.value(
             value: arguments.dashboardBloc,
             child: BlocProvider<OtherDetailPageBloc>(

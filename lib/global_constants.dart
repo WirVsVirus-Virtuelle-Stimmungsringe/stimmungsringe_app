@@ -1,14 +1,15 @@
 enum AppEnv { iOSSimulator, localNetwork, prod }
 
 // Pick your environment here
-const currentDevEnv = AppEnv.localNetwork;
+final AppEnv currentDevEnv = AppEnv.iOSSimulator;
 
-const backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
-const backendUrlLocalNetwork = 'http://192.168.178.20:5000/stimmungsring';
-const backendUrlProd =
+final String backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
+final String backendUrlLocalNetwork =
+    'http://192.168.178.20:5000/stimmungsring';
+final String backendUrlProd =
     'http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring';
 
-String backendUrlForEnv(AppEnv appEnv) {
+String backendUrlForEnv(final AppEnv appEnv) {
   switch (appEnv) {
     case AppEnv.iOSSimulator:
       return backendUrlIOSSimulator;
@@ -19,12 +20,12 @@ String backendUrlForEnv(AppEnv appEnv) {
   }
 }
 
-var _backendBaseUrl = backendUrlForEnv(currentDevEnv);
+final String _backendBaseUrl = backendUrlForEnv(currentDevEnv);
 
-const sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
+final String sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
 // note available on EBS yet
-const sampleUserVatti = 'deadbeef-b855-46ba-b907-321d01010101';
-const sampleUserTimmy = '12340000-b855-46ba-b907-321d2d38feeb';
+final String sampleUserVatti = 'deadbeef-b855-46ba-b907-321d01010101';
+final String sampleUserTimmy = '12340000-b855-46ba-b907-321d2d38feeb';
 
 String restUrlDashboard() {
   return _backendBaseUrl + '/dashboard';
@@ -51,6 +52,6 @@ String restUrlStatus() {
 
 Future<void> chaosMonkeyDelayAsync() async {
   if (currentDevEnv != AppEnv.prod) {
-    await Future.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
   }
 }

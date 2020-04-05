@@ -51,7 +51,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       if (state is DashboardLoaded) {
         final Dashboard prevDashboard = (state as DashboardLoaded).dashboard;
-        var optimisticUpdate = prevDashboard.copyWith(
+        final Dashboard optimisticUpdate = prevDashboard.copyWith(
             myTile: prevDashboard.myTile
                 .copyWith(sentiment: setNewSentiment.sentiment));
         print("optimistic set " +

@@ -21,7 +21,7 @@ class DashboardPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         middle: Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () => {}, // TODO
+          onTap: () {}, // TODO
           child: Icon(
             CupertinoIcons.add,
             color: CupertinoColors.activeBlue,
@@ -33,34 +33,28 @@ class DashboardPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             BlocBuilder<DashboardBloc, DashboardState>(
-                builder: (context, state) {
-              if (state.hasDashboard) {
-                final Dashboard dashboard =
-                    (state as StateWithDashboard).dashboard;
-                final UserMinimal user = dashboard.myTile.user;
-                return AvatarRow(
-                  name: user.displayName,
-                  image: NetworkImage(avatarImageUrl(user.userId)),
-                  avatarSentiment: dashboard.myTile.sentiment,
-                  onSentimentIconTap: () => Navigator.pushNamed(
-                      context, "my-sentiment",
+              builder: (context, state) {
+                if (state.hasDashboard) {
+                  final Dashboard dashboard =
+                      (state as StateWithDashboard).dashboard;
+                  final UserMinimal user = dashboard.myTile.user;
+                  return AvatarRow(
+                    name: user.displayName,
+                    image: NetworkImage(avatarImageUrl(user.userId)),
+                    avatarSentiment: dashboard.myTile.sentiment,
+                    onSentimentIconTap: () => Navigator.pushNamed(
+                      context,
+                      "my-sentiment",
                       arguments: MySentimentRouteArguments(
-                          dashboardBloc:
-                              BlocProvider.of<DashboardBloc>(context)))
-                  /*
-                      Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (_) => BlocProvider.value(
-                                value: BlocProvider.of<DashboardBloc>(context),
-                                child: new SetMySentimentPage(
-                                    dashboardRepository: dashboardRepository),
-                              )))
-                  */
-                  ,
-                );
-              } else {
-                return LoadingSpinnerWidget();
-              }
-            }),
+                        dashboardBloc: BlocProvider.of<DashboardBloc>(context),
+                      ),
+                    ),
+                  );
+                } else {
+                  return LoadingSpinnerWidget();
+                }
+              },
+            ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 8),
               child: Title(
@@ -73,18 +67,19 @@ class DashboardPage extends StatelessWidget {
             ),
             Expanded(
               child: BlocBuilder<DashboardBloc, DashboardState>(
-                  builder: (context, state) {
-                if (state.hasDashboard) {
-                  final Dashboard dashboard =
-                      (state as StateWithDashboard).dashboard;
-                  return ListView(
-                    padding: const EdgeInsets.all(8),
-                    children: otherTiles(context, dashboard),
-                  );
-                } else {
-                  return LoadingSpinnerWidget();
-                }
-              }),
+                builder: (context, state) {
+                  if (state.hasDashboard) {
+                    final Dashboard dashboard =
+                        (state as StateWithDashboard).dashboard;
+                    return ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: otherTiles(context, dashboard),
+                    );
+                  } else {
+                    return LoadingSpinnerWidget();
+                  }
+                },
+              ),
             )
           ],
         ),
@@ -111,16 +106,6 @@ class DashboardPage extends StatelessWidget {
                     otherUserId: tile.user.userId,
                   ),
                 ),
-                /*Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (_) => BlocProvider.value(
-                          value: BlocProvider.of<DashboardBloc>(context),
-                          child: BlocProvider<OtherDetailPageBloc>(
-                            create: (context) => OtherDetailPageBloc()
-                              ..add(FetchOtherDetailPage(tile.user.userId)),
-                            child: new OtherDetailPage(
-                                dashboardRepository: dashboardRepository),
-                          ),
-                        ))),*/
               )),
         )
         .toList(growable: false);
