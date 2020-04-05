@@ -3,12 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 
 class SentimentUi {
-  final String name;
+  final String sentimentCode;
   final IconData icon;
   final _SentimentColors colors;
 
-  const SentimentUi(this.name, this.icon, this.colors)
-      : assert(name != null),
+  const SentimentUi(this.sentimentCode, this.icon, this.colors)
+      : assert(sentimentCode != null),
         assert(icon != null),
         assert(colors != null);
 
@@ -34,7 +34,7 @@ class SentimentUi {
     thundery
   ];
 
-  static SentimentUi fromSentimentStatus(SentimentStatus sentimentStatus) {
+  static SentimentUi fromSentiment(Sentiment sentiment) {
     var map = {
       'thundery': thundery,
       'cloudyNight': cloudyNight,
@@ -44,18 +44,14 @@ class SentimentUi {
       'sunny': sunny,
     };
 
-    final SentimentUi sentiment = map[sentimentStatus.sentiment.sentimentCode];
-    assert(sentiment != null,
-        'Undefined sentiment code ' + sentimentStatus.sentiment.sentimentCode);
-    return sentiment;
+    final SentimentUi sentimentUi = map[sentiment.sentiment];
+    assert(
+        sentimentUi != null, 'Undefined sentiment code ' + sentiment.sentiment);
+    return sentimentUi;
   }
 
   Sentiment toSentiment() {
-    return Sentiment(name);
-  }
-
-  SentimentStatus toSentimentStatus() {
-    return SentimentStatus(toSentiment());
+    return Sentiment(sentimentCode);
   }
 }
 

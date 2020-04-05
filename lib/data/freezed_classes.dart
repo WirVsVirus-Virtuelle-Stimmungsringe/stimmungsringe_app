@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
@@ -14,32 +15,30 @@ abstract class UserMinimal with _$UserMinimal {
       _$UserMinimalFromJson(json);
 }
 
-@immutable
-abstract class Sentiment with _$Sentiment {
-  const factory Sentiment(String sentimentCode) = _Sentiment;
-  factory Sentiment.fromJson(Map<String, dynamic> json) =>
-      _$SentimentFromJson(json);
-}
+@JsonSerializable()
+class Sentiment extends Equatable {
+  final String sentiment;
 
-@immutable
-abstract class SentimentStatus with _$SentimentStatus {
-  const factory SentimentStatus(Sentiment sentiment) = _SentimentStatus;
-  factory SentimentStatus.fromJson(Map<String, dynamic> json) =>
-      _$SentimentStatusFromJson(json);
+  factory Sentiment.fromJson(String json) {
+    return Sentiment(json);
+  }
+
+  const Sentiment(this.sentiment);
+
+  @override
+  List<Object> get props => [sentiment];
 }
 
 @immutable
 abstract class OtherTile with _$OtherTile {
-  const factory OtherTile(UserMinimal user, SentimentStatus sentimentStatus) =
-      _OtherTile;
+  const factory OtherTile(UserMinimal user, Sentiment sentiment) = _OtherTile;
   factory OtherTile.fromJson(Map<String, dynamic> json) =>
       _$OtherTileFromJson(json);
 }
 
 @immutable
 abstract class MyTile with _$MyTile {
-  const factory MyTile(UserMinimal user, SentimentStatus sentimentStatus) =
-      _MyTile;
+  const factory MyTile(UserMinimal user, Sentiment sentiment) = _MyTile;
   factory MyTile.fromJson(Map<String, dynamic> json) => _$MyTileFromJson(json);
 }
 
@@ -53,7 +52,7 @@ abstract class Dashboard with _$Dashboard {
 
 @immutable
 abstract class SentimentUpdate with _$SentimentUpdate {
-  const factory SentimentUpdate(String sentimentCode) = _SentimentUpdate;
+  const factory SentimentUpdate(String sentiment) = _SentimentUpdate;
   factory SentimentUpdate.fromJson(Map<String, dynamic> json) =>
       _$SentimentUpdateFromJson(json);
 }

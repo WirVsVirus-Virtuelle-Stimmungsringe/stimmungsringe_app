@@ -43,8 +43,8 @@ class OtherDetailPage extends StatelessWidget {
               name: state.otherDetail.user.displayName,
               image:
                   NetworkImage(avatarImageUrl(state.otherDetail.user.userId)),
-              avatarSentiment: SentimentUi.fromSentimentStatus(
-                  state.otherDetail.sentimentStatus),
+              avatarSentiment:
+                  SentimentUi.fromSentiment(state.otherDetail.sentiment),
             );
           } else {
             return LoadingSpinnerWidget();

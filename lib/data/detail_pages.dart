@@ -32,18 +32,18 @@ class Suggestion {
 
 class OtherDetail {
   final UserMinimal user;
-  final SentimentStatus sentimentStatus;
+  final Sentiment sentiment;
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
     final suggestionsJson = (jsonMap['suggestions'] as List);
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user']),
-        SentimentStatus.fromJson(jsonMap['sentimentStatus']),
+        Sentiment.fromJson(jsonMap['sentiment']),
         suggestionsJson
             .map((sugg) => Suggestion.fromJson(sugg))
             .toList(growable: false));
   }
 
-  OtherDetail(this.user, this.sentimentStatus, this.suggestions);
+  OtherDetail(this.user, this.sentiment, this.suggestions);
 }

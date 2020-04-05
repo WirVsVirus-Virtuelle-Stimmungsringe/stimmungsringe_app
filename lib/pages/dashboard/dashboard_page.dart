@@ -43,8 +43,8 @@ class DashboardPage extends StatelessWidget {
                 return AvatarRow(
                   name: user.displayName,
                   image: NetworkImage(avatarImageUrl(user.userId)),
-                  avatarSentiment: SentimentUi.fromSentimentStatus(
-                      dashboard.myTile.sentimentStatus),
+                  avatarSentiment:
+                      SentimentUi.fromSentiment(dashboard.myTile.sentiment),
                   onSentimentIconTap: () =>
                       Navigator.of(context).push(CupertinoPageRoute(
                           builder: (_) => BlocProvider.value(
@@ -97,8 +97,7 @@ class DashboardPage extends StatelessWidget {
                 child: AvatarRowCondensed(
                   name: tile.user.displayName,
                   image: NetworkImage(avatarImageUrl(tile.user.userId)),
-                  avatarSentiment:
-                      SentimentUi.fromSentimentStatus(tile.sentimentStatus),
+                  avatarSentiment: SentimentUi.fromSentiment(tile.sentiment),
                 ),
                 onTap: () => Navigator.of(context).push(CupertinoPageRoute(
                     builder: (_) => BlocProvider.value(

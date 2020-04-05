@@ -20,7 +20,7 @@ class DashboardRepository {
     return dashboard;
   }
 
-  void setNewSentiment(SentimentUi sentiment) async {
+  void setNewSentiment(SentimentUi sentimentUi) async {
     final String url = restUrlStatus();
 
     http.Response response = await http.put(url,
@@ -28,7 +28,8 @@ class DashboardRepository {
           'X-User-ID': sampleUserMutti,
           "Content-Type": "application/json"
         },
-        body: json.encode(SentimentUpdate(sentiment.toSentiment().sentimentCode)));
+        body:
+            json.encode(SentimentUpdate(sentimentUi.toSentiment().sentiment)));
     // TODO response handling
 
     await chaosMonkeyDelayAsync();
