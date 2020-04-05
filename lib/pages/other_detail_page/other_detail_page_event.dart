@@ -5,4 +5,7 @@ abstract class OtherDetailPageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchOtherDetailPage extends OtherDetailPageEvent {}
+class FetchOtherDetailPage extends OtherDetailPageEvent {
+  final String otherUserId;
+  FetchOtherDetailPage(this.otherUserId);
+}

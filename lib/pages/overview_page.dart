@@ -112,10 +112,9 @@ class OverviewPage extends StatelessWidget {
                           value: BlocProvider.of<DashboardBloc>(context),
                           child: BlocProvider<OtherDetailPageBloc>(
                             create: (context) => OtherDetailPageBloc()
-                              ..add(FetchOtherDetailPage()),
+                              ..add(FetchOtherDetailPage(tile.user.userId)),
                             child: new OtherDetailPage(
-                                dashboardRepository: dashboardRepository,
-                                otherUserId: tile.user.userId),
+                                dashboardRepository: dashboardRepository),
                           ),
                         ))),
               )),

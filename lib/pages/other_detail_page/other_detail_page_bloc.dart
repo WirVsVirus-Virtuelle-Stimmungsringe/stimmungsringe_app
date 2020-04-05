@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
@@ -15,7 +16,20 @@ class OtherDetailPageBloc
   Stream<OtherDetailPageState> mapEventToState(
       OtherDetailPageEvent event) async* {
     if (event is FetchOtherDetailPage) {
-      print("TODO fetch other detail page (fetch event)");
+      if (state is OtherDetailPageLoading) {
+        return;
+      }
+      try {
+        final otherDetail = await loadOtherDetailPageData(event.otherUserId);
+        yield OtherDetailPageLoaded(otherDetail);
+        return;
+      } catch (_) {
+        if (state is OtherDetailPageLoaded) {
+          yield OtherDetailPageError();
+        } else {
+          yield OtherDetailPageError();
+        }
+      }
     }
   }
 

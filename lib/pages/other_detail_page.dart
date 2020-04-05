@@ -2,30 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/detail_pages.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/other_detail_page/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
+import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OtherDetailPage extends StatelessWidget {
-  final String otherUserId;
   final DashboardRepository dashboardRepository;
-  OtherDetail _otherDetail;
 
-  OtherDetailPage({this.dashboardRepository, this.otherUserId})
-      : assert(otherUserId != null) {
-    // FIXME
-
-    loadOtherDetailPageData(otherUserId).then((details) {
-      print("other details loaded - not used ATM " +
-          details.user.toJson().toString());
-    });
-
-    this._otherDetail = OtherDetail(UserMinimal(otherUserId, "test test"),
-        SentimentStatus(Sentiment("windy")), []);
-  }
+  OtherDetailPage({this.dashboardRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,11 @@ class OtherDetailPage extends StatelessWidget {
         child: SafeArea(
           child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
               builder: (context, state) {
-            return _otherDetail != null ? buildContent() : makeSpinner();
+            if (state is OtherDetailPageLoaded) {
+              return buildContent();
+            } else {
+              return LoadingSpinnerWidget();
+            }
           }),
         ));
   }
@@ -45,12 +36,20 @@ class OtherDetailPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        AvatarRow(
-          name: _otherDetail.user.displayName,
-          image: NetworkImage(avatarImageUrl(_otherDetail.user.userId)),
-          avatarSentiment:
-              SentimentUi.fromSentimentStatus(_otherDetail.sentimentStatus),
-        ),
+        BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+            builder: (context, state) {
+          if (state is OtherDetailPageLoaded) {
+            return AvatarRow(
+              name: state.otherDetail.user.displayName,
+              image:
+                  NetworkImage(avatarImageUrl(state.otherDetail.user.userId)),
+              avatarSentiment: SentimentUi.fromSentimentStatus(
+                  state.otherDetail.sentimentStatus),
+            );
+          } else {
+            return LoadingSpinnerWidget();
+          }
+        }),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Title(
@@ -60,18 +59,13 @@ class OtherDetailPage extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: buildSuggestionsList(),
-        )
+        Expanded(child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+            builder: (context, state) {
+          if (state is OtherDetailPageLoaded) {
+            return buildSuggestionsList(state.otherDetail);
+          }
+        }))
       ],
-    );
-  }
-
-  Widget makeSpinner() {
-    return Center(
-      child: CupertinoActivityIndicator(
-        animating: true,
-      ),
     );
   }
 
@@ -118,21 +112,21 @@ class OtherDetailPage extends StatelessWidget {
   }
 
   // deprecated
-  ListView buildSuggestionsList() {
+  ListView buildSuggestionsList(OtherDetail otherDetail) {
     NetworkImage placeholder = NetworkImage(
         'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
     //var myAvatarImage =
     //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
 
     return ListView.builder(
-      itemCount: _otherDetail.suggestions.length,
+      itemCount: otherDetail.suggestions.length,
       itemBuilder: (context, index) {
-        final suggestion = _otherDetail.suggestions[index];
+        final suggestion = otherDetail.suggestions[index];
 
         return buildSuggestionRow(
           suggestion,
           placeholder,
-          index < _otherDetail.suggestions.length - 1,
+          index < otherDetail.suggestions.length - 1,
         );
       },
     );
