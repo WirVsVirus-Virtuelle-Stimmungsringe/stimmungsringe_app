@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
@@ -24,7 +23,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         return;
       }
       try {
-        final dashboard = await loadDashboardPageData();
+        final dashboard = await dashboardRepository.loadDashboardPageData();
         yield DashboardLoaded(dashboard);
         return;
       } catch (_) {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
@@ -63,12 +62,14 @@ class _SentimentAppState extends State<SentimentApp> {
   @override
   void initState() {
     super.initState();
-    loadDashboardPageData().then((dashboard) {
-      setState(() => _dashboard = dashboard);
-    });
+    //loadDashboardPageData().then((dashboard) {
+    //  setState(() => _dashboard = dashboard);
+    //});
   }
 
   _updateMySentiment(final SentimentUi sentimentUi) {
+    print("TODO should update sentiment");
+
     final SentimentStatus sentimentStatus =
         SentimentStatus(Sentiment(sentimentUi.name)); // TODO extract
     if (_dashboard.myTile.sentimentStatus != sentimentStatus) {
