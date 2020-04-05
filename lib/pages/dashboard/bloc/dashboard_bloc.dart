@@ -1,8 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+  final DashboardRepository dashboardRepository;
+
+  DashboardBloc({this.dashboardRepository});
+
   @override
   DashboardState get initialState => DashboardUninitialized();
 
