@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/detail_pages.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
@@ -43,8 +43,7 @@ class OtherDetailPage extends StatelessWidget {
               name: state.otherDetail.user.displayName,
               image:
                   NetworkImage(avatarImageUrl(state.otherDetail.user.userId)),
-              avatarSentiment:
-                  state.otherDetail.sentiment,
+              avatarSentiment: state.otherDetail.sentiment,
             );
           } else {
             return LoadingSpinnerWidget();
@@ -131,4 +130,12 @@ class OtherDetailPage extends StatelessWidget {
       },
     );
   }
+}
+
+class OtherDetailRouteArguments {
+  final DashboardBloc dashboardBloc;
+  final String otherUserId;
+
+  OtherDetailRouteArguments(
+      {@required this.dashboardBloc, @required this.otherUserId});
 }

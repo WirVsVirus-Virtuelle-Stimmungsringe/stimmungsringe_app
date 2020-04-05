@@ -84,3 +84,9 @@ class SetMySentimentPage extends StatelessWidget {
     });
   }
 }
+
+class MySentimentRouteArguments {
+  final DashboardBloc dashboardBloc;
+
+  MySentimentRouteArguments({@required this.dashboardBloc});
+}

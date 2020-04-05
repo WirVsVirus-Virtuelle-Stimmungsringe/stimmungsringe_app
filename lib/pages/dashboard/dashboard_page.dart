@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
-import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
@@ -43,13 +42,20 @@ class DashboardPage extends StatelessWidget {
                   name: user.displayName,
                   image: NetworkImage(avatarImageUrl(user.userId)),
                   avatarSentiment: dashboard.myTile.sentiment,
-                  onSentimentIconTap: () =>
+                  onSentimentIconTap: () => Navigator.pushNamed(
+                      context, "my-sentiment",
+                      arguments: MySentimentRouteArguments(
+                          dashboardBloc:
+                              BlocProvider.of<DashboardBloc>(context)))
+                  /*
                       Navigator.of(context).push(CupertinoPageRoute(
                           builder: (_) => BlocProvider.value(
                                 value: BlocProvider.of<DashboardBloc>(context),
                                 child: new SetMySentimentPage(
                                     dashboardRepository: dashboardRepository),
-                              ))),
+                              )))
+                  */
+                  ,
                 );
               } else {
                 return LoadingSpinnerWidget();
@@ -97,7 +103,15 @@ class DashboardPage extends StatelessWidget {
                   image: NetworkImage(avatarImageUrl(tile.user.userId)),
                   avatarSentiment: tile.sentiment,
                 ),
-                onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  "other-detail-page",
+                  arguments: OtherDetailRouteArguments(
+                    dashboardBloc: BlocProvider.of<DashboardBloc>(context),
+                    otherUserId: tile.user.userId,
+                  ),
+                ),
+                /*Navigator.of(context).push(CupertinoPageRoute(
                     builder: (_) => BlocProvider.value(
                           value: BlocProvider.of<DashboardBloc>(context),
                           child: BlocProvider<OtherDetailPageBloc>(
@@ -106,7 +120,7 @@ class DashboardPage extends StatelessWidget {
                             child: new OtherDetailPage(
                                 dashboardRepository: dashboardRepository),
                           ),
-                        ))),
+                        ))),*/
               )),
         )
         .toList(growable: false);

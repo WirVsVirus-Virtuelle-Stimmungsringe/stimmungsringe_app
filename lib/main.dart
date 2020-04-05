@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
+import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
+import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 void main() {
@@ -29,16 +32,31 @@ class SentimentApp extends StatelessWidget {
               create: (context) =>
                   DashboardBloc(dashboardRepository: dashboardRepository)
                     ..add(FetchDashboard()),
-              child:
-                  new DashboardPage(dashboardRepository: dashboardRepository),
+              child: DashboardPage(dashboardRepository: dashboardRepository),
             ),
-        //'my-sentimentZZZ': (_) => SetMySentimentPage(
-        //      dashboard: _dashboard,
-        //      onSentimentChange: _updateMySentiment,
+        'my-sentiment': (context) {
+          var arguments = (ModalRoute.of(context).settings.arguments
+              as MySentimentRouteArguments);
+          return BlocProvider.value(
+            value: arguments.dashboardBloc,
+            child: SetMySentimentPage(dashboardRepository: dashboardRepository),
+          );
+        },
         //    ),
-        //'other-detail-page': (context) => OtherDetailPage(
-        //    dashboard: _dashboard,
-        //    otherUserId: ModalRoute.of(context).settings.arguments)
+        'other-detail-page': (context) {
+          var arguments = (ModalRoute.of(context).settings.arguments
+              as OtherDetailRouteArguments);
+          return BlocProvider.value(
+            value: arguments.dashboardBloc,
+            child: BlocProvider<OtherDetailPageBloc>(
+              create: (context) => OtherDetailPageBloc()
+                ..add(
+                  FetchOtherDetailPage(arguments.otherUserId),
+                ),
+              child: OtherDetailPage(dashboardRepository: dashboardRepository),
+            ),
+          );
+        }
       },
     );
   }
