@@ -16,6 +16,7 @@ Future<OtherDetail> loadOtherDetailPageData(String userId) async {
 
   var detailPage = OtherDetail.fromJson(json.decode(response.body));
 
+  await chaosMonkeyDelayAsync();
   return detailPage;
 }
 

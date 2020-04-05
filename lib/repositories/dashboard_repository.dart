@@ -16,6 +16,7 @@ class DashboardRepository {
 
     var dashboard = Dashboard.fromJson(json.decode(response.body));
 
+    await chaosMonkeyDelayAsync();
     return dashboard;
   }
 
@@ -29,5 +30,7 @@ class DashboardRepository {
         },
         body: json.encode(SentimentUpdate(sentiment.name)));
     // TODO response handling
+
+    await chaosMonkeyDelayAsync();
   }
 }

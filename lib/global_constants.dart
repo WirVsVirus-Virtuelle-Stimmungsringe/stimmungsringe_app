@@ -48,3 +48,9 @@ String restUrlOtherStatus(String userId) {
 String restUrlStatus() {
   return _backendBaseUrl + '/mystatus';
 }
+
+void chaosMonkeyDelayAsync() async {
+  if (currentDevEnv != AppEnv.prod) {
+    await Future.delayed(Duration(seconds: 1));
+  }
+}
