@@ -56,7 +56,7 @@ class RouteGenerator {
           );
         }
         return _errorRoute();
-      case '/onboarding':
+      case '/':
         return CupertinoPageRoute<OnboardingPage>(
           builder: (_) => BlocProvider<OnboardingBloc>(
             create: (_) => OnboardingBloc(),

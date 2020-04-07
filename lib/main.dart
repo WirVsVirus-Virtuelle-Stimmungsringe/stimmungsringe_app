@@ -22,7 +22,6 @@ class SentimentApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Stimmungsringe',
-      initialRoute: '/onboarding',
       onGenerateRoute: (RouteSettings settings) =>
           RouteGenerator.generateRoute(settings, dashboardRepository),
     );

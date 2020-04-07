@@ -62,7 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         listener: (context, state) {
           if (state is GotoDashboard) {
             print("navigate from onboarding to dasboard");
-            Navigator.of(context).popAndPushNamed('/home');
+            Navigator.of(context).pushReplacementNamed('/home');
           }
 
           if (state is FindGroupSuccess) {
