@@ -10,6 +10,8 @@ abstract class OnboardingState extends Equatable {
  */
 class CheckingUser extends OnboardingState {}
 
+class GotoDashboard extends OnboardingState {}
+
 class FindGroupInitial extends OnboardingState {}
 
 class FindGroupSearching extends OnboardingState {}

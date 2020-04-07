@@ -33,7 +33,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             return Column(
               children: <Widget>[
                 CupertinoTextField(
-                  placeholder: "Gib den Gruppen-Code ein (Tip: 1234)",
+                  placeholder: "Gib den Gruppen-Code ein (Tip: 1111)",
                   controller: _groupCodeController,
                 ),
                 CupertinoButton(
@@ -54,8 +54,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }
 
           // return _errorPage(context, state);
+
+          print("Did not render state " + state.toString());
+          return Container();
         },
         listener: (context, state) {
+          if (state is GotoDashboard) {
+            print("navigate from onboarding to dasboard");
+            Navigator.of(context).popAndPushNamed('/');
+          }
+
           if (state is FindGroupSuccess) {
             print("show alert: Group found");
             _groupCodeController.clear();
@@ -117,7 +125,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
         CupertinoButton(
           child: Text('Los legen!'),
-          onPressed: () => Navigator.pushNamed(
+          onPressed: () => Navigator.pushReplacementNamed(
             context,
             "/",
             arguments: null,
