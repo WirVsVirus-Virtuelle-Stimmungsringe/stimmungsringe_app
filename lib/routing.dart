@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
+import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/onboarding/onboarding_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
@@ -54,6 +56,13 @@ class RouteGenerator {
           );
         }
         return _errorRoute();
+      case '/onboarding':
+        return CupertinoPageRoute<OnboardingPage>(
+          builder: (_) => BlocProvider<OnboardingBloc>(
+            create: (_) => OnboardingBloc(),
+            child: OnboardingPage(),
+          ),
+        );
       default:
         return _errorRoute();
     }
