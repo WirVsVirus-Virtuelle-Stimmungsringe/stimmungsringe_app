@@ -64,12 +64,24 @@ class RouteGenerator {
   }
 
   static Route<dynamic> _errorRoute() {
-    return CupertinoPageRoute<Widget>(builder: (_) {
+    return CupertinoPageRoute<Widget>(builder: (context) {
       return CupertinoPageScaffold(
         child: SafeArea(
           child: Center(
-            child: Container(
-              child: Text('Routing Error'),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: Text('Routing Error'),
+                ),
+                CupertinoButton(
+                  child: Text('zur Hauptseite'),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    "/",
+                    arguments: null,
+                  ),
+                )
+              ],
             ),
           ),
         ),
