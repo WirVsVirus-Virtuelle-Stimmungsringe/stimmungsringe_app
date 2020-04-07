@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
@@ -50,7 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }
 
           if (state is FindGroupSuccess) {
-            return buildSuccessArea(context);
+            // return buildSuccessArea(context);
           }
 
           // return _errorPage(context, state);
@@ -66,21 +67,35 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
           if (state is FindGroupSuccess) {
             print("show alert: Group found");
-            _groupCodeController.clear();
+
+            Future.delayed(const Duration(milliseconds: 800), () {
+              Fluttertoast.showToast(
+                  msg: "Erfolgreich beigetreten",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
+
+            Navigator.of(context).pushReplacementNamed('/');
           }
 
           if (state is FindGroupNotFound) {
             print("show alert: Group not found!");
             _groupCodeController.clear();
 
-            /*Fluttertoast.showToast(
-                msg: "Gruppe nicht gefunden",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0);*/
+            Future.delayed(const Duration(milliseconds: 800), () {
+              Fluttertoast.showToast(
+                  msg: "Gruppe nicht gefunden",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
           }
         },
       ),
