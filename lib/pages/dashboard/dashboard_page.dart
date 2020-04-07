@@ -44,7 +44,7 @@ class DashboardPage extends StatelessWidget {
                     avatarSentiment: dashboard.myTile.sentiment,
                     onSentimentIconTap: () => Navigator.pushNamed(
                       context,
-                      "my-sentiment",
+                      "/my-sentiment",
                       arguments: MySentimentRouteArguments(
                         dashboardBloc: BlocProvider.of<DashboardBloc>(context),
                       ),
@@ -100,7 +100,7 @@ class DashboardPage extends StatelessWidget {
                 ),
                 onTap: () => Navigator.pushNamed(
                   context,
-                  "other-detail-page",
+                  "/other-detail-page",
                   arguments: OtherDetailRouteArguments(
                     dashboardBloc: BlocProvider.of<DashboardBloc>(context),
                     otherUserId: tile.user.userId,
