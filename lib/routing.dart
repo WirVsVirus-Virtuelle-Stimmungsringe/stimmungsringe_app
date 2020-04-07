@@ -21,9 +21,8 @@ class RouteGenerator {
         return CupertinoPageRoute<DashboardPage>(
           builder: (_) => BlocProvider<DashboardBloc>(
             create: (context) =>
-                DashboardBloc(dashboardRepository: dashboardRepository)
-                  ..add(FetchDashboard()),
-            child: DashboardPage(dashboardRepository: dashboardRepository),
+                DashboardBloc(dashboardRepository: dashboardRepository),
+            child: DashboardPage(),
           ),
         );
       case '/my-sentiment':
@@ -32,8 +31,7 @@ class RouteGenerator {
             builder: (context) {
               return BlocProvider.value(
                 value: args.dashboardBloc,
-                child: SetMySentimentPage(
-                    dashboardRepository: dashboardRepository),
+                child: SetMySentimentPage(),
               );
             },
           );
@@ -46,12 +44,10 @@ class RouteGenerator {
               return BlocProvider.value(
                 value: args.dashboardBloc,
                 child: BlocProvider<OtherDetailPageBloc>(
-                  create: (context) => OtherDetailPageBloc()
-                    ..add(
-                      FetchOtherDetailPage(args.otherUserId),
-                    ),
-                  child:
-                      OtherDetailPage(dashboardRepository: dashboardRepository),
+                  create: (context) => OtherDetailPageBloc(),
+                  child: OtherDetailPage(
+                    otherUserId: args.otherUserId,
+                  ),
                 ),
               );
             },

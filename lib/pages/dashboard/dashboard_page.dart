@@ -5,15 +5,24 @@ import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
-import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
-class DashboardPage extends StatelessWidget {
-  final DashboardRepository dashboardRepository;
+class DashboardPage extends StatefulWidget {
+  DashboardPage({Key key}) : super(key: key);
 
-  DashboardPage({Key key, this.dashboardRepository}) : super(key: key);
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
+  }
 
   @override
   Widget build(BuildContext context) {

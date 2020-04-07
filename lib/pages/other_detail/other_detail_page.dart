@@ -5,14 +5,26 @@ import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
-import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
-class OtherDetailPage extends StatelessWidget {
-  final DashboardRepository dashboardRepository;
+class OtherDetailPage extends StatefulWidget {
+  final String otherUserId;
 
-  OtherDetailPage({this.dashboardRepository});
+  OtherDetailPage({this.otherUserId});
+
+  @override
+  _OtherDetailPageState createState() => _OtherDetailPageState();
+}
+
+class _OtherDetailPageState extends State<OtherDetailPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    BlocProvider.of<OtherDetailPageBloc>(context)
+        .add(FetchOtherDetailPage(widget.otherUserId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +82,6 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  // deprecated
   ListView buildSuggestionsList(OtherDetail otherDetail) {
     final NetworkImage placeholder = NetworkImage(
         'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
