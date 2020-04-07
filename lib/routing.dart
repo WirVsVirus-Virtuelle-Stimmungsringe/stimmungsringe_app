@@ -19,7 +19,7 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case '/home':
         return CupertinoPageRoute<DashboardPage>(
           builder: (_) => BlocProvider<DashboardBloc>(
             create: (context) =>

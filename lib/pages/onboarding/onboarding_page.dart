@@ -62,7 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         listener: (context, state) {
           if (state is GotoDashboard) {
             print("navigate from onboarding to dasboard");
-            Navigator.of(context).popAndPushNamed('/');
+            Navigator.of(context).popAndPushNamed('/home');
           }
 
           if (state is FindGroupSuccess) {
@@ -79,7 +79,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   fontSize: 16.0);
             });
 
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).pushReplacementNamed('/home');
           }
 
           if (state is FindGroupNotFound) {

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
@@ -8,9 +9,11 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
     if (event is CheckUser) {
-      await Future<void>.delayed(Duration(seconds: 1));
-      yield FindGroupInitial();
-      // yield GotoDashboard();
+      if (forceOnboarding) {
+        yield FindGroupInitial();
+      } else {
+        yield GotoDashboard();
+      }
     }
 
     if (event is SearchGroup) {
