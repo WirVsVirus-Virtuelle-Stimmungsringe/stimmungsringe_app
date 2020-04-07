@@ -1,7 +1,9 @@
 enum AppEnv { iOSSimulator, localNetwork, prod }
 
 // Pick your environment here
-final AppEnv currentDevEnv = AppEnv.iOSSimulator;
+final AppEnv currentDevEnv = AppEnv.prod;
+
+final bool mo = false;
 
 final String backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
 final String backendUrlLocalNetwork =
