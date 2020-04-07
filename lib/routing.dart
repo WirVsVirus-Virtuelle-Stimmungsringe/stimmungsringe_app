@@ -82,7 +82,7 @@ class RouteGenerator {
                   child: Text('zur Hauptseite'),
                   onPressed: () => Navigator.pushNamed(
                     context,
-                    "/",
+                    '/home',
                     arguments: null,
                   ),
                 )
