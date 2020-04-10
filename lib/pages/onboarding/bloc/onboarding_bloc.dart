@@ -1,24 +1,33 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/repositories.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
+  final UserRepository userRepository;
+
+  OnboardingBloc({this.userRepository}) : assert(userRepository != null);
+
   @override
   OnboardingState get initialState => CheckingUser();
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
     if (event is CheckUser) {
-      if (forceOnboarding) {
-        yield FindGroupInitial();
-      } else {
+      final bool isUserMemberOfAGroup =
+          await userRepository.isUserMemberOfGroup();
+
+      if (isUserMemberOfAGroup) {
         yield GotoDashboard();
+      } else {
+        yield FindGroupInitial();
       }
     }
 
     if (event is SearchGroup) {
-      await Future<void>.delayed(Duration(seconds: 1));
-      if (event.groupCode == "1111") {
+      final bool groupFound =
+          await userRepository.findGroupByCode(event.groupCode);
+
+      if (groupFound) {
         yield FindGroupSuccess();
       } else {
         yield FindGroupNotFound();

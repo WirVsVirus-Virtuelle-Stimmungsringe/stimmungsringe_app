@@ -8,13 +8,15 @@ import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
+import 'package:stimmungsringeapp/repositories/repositories.dart';
 
 /**
  * see https://resocoder.com/2019/04/27/flutter-routes-navigation-parameters-named-routes-ongenerateroute/
  */
 class RouteGenerator {
-  static Route<dynamic> generateRoute(
-      RouteSettings settings, DashboardRepository dashboardRepository) {
+  static Route<dynamic> generateRoute(RouteSettings settings,
+      {UserRepository userRepository,
+      DashboardRepository dashboardRepository}) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
@@ -59,7 +61,7 @@ class RouteGenerator {
       case '/':
         return CupertinoPageRoute<OnboardingPage>(
           builder: (_) => BlocProvider<OnboardingBloc>(
-            create: (_) => OnboardingBloc(),
+            create: (_) => OnboardingBloc(userRepository: userRepository),
             child: OnboardingPage(),
           ),
         );
