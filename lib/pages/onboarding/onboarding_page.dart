@@ -34,7 +34,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             return Column(
               children: <Widget>[
                 CupertinoTextField(
-                  placeholder: "Gib den Gruppen-Code ein (Tip: 1111)",
+                  placeholder:
+                      "Gib den Gruppen-Code/-Name ein (Tip: Rasselbande)",
                   controller: _groupCodeController,
                   onSubmitted: _submitGroupCode,
                 ),
@@ -66,7 +67,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }
 
           if (state is FindGroupSuccess) {
-            print("show alert: Group found");
+            print("show alert: Group found " + state.groupName);
 
             Future.delayed(const Duration(milliseconds: 800), () {
               Fluttertoast.showToast(

@@ -14,6 +14,10 @@ class FindGroupInitial extends OnboardingState {}
 
 class FindGroupSearching extends OnboardingState {}
 
-class FindGroupSuccess extends OnboardingState {}
+class FindGroupSuccess extends OnboardingState {
+  final String groupName;
+
+  FindGroupSuccess({this.groupName});
+}
 
 class FindGroupNotFound extends OnboardingState {}

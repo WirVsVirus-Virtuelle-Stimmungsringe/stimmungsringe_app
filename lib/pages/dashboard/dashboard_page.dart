@@ -5,6 +5,7 @@ import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
+import 'package:stimmungsringeapp/session.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
@@ -28,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const Text('Übersicht'),
+        middle: Text('Übersicht ' + currentGroupName),
         trailing: GestureDetector(
           onTap: () {}, // TODO
           child: Icon(

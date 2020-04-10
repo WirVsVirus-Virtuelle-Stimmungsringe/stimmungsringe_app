@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingRepository {
+  String currentGroupName = null;
+
+  // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
+
   /**
    * Unique Device Identifier
    *
@@ -16,19 +21,47 @@ class OnboardingRepository {
     // return "abba"; // Stefan
   }
 
+  Future<FindGroupResponse> findGroupByName(String groupName) async {
+    final String url = restUrlFindGroup();
+
+    final http.Response response = await http.post(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        'groupName': groupName,
+      }),
+    );
+
+    if (response.statusCode == 204) {
+      return null;
+    }
+
+    assert(response.statusCode == 200);
+
+    final FindGroupResponse findGroupResponse = FindGroupResponse.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
+
+    await chaosMonkeyDelayAsync();
+    return findGroupResponse;
+  }
+
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
     final String url = restUrlSignin();
 
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': sampleUserMutti,
         "Content-Type": "application/json",
       },
       body: json.encode({
         'deviceIdentifier': deviceIdentifier,
       }),
     );
+
+    assert(response.statusCode == 200);
 
     final SigninUserResponse signinUserResponse = SigninUserResponse.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
@@ -43,13 +76,15 @@ class OnboardingRepository {
     final http.Response response = await http.post(
       url,
       headers: {
-        'X-User-ID': sampleUserMutti,
+        'X-User-ID': currentUserId,
         "Content-Type": "application/json",
       },
       body: json.encode({
         'groupName': groupName,
       }),
     );
+
+    assert(response.statusCode == 200);
 
     await chaosMonkeyDelayAsync();
     return;
@@ -61,13 +96,15 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': sampleUserMutti,
+        'X-User-ID': currentUserId,
         "Content-Type": "application/json",
       },
       body: json.encode({
         'groupName': groupName,
       }),
     );
+
+    assert(response.statusCode == 200);
 
     await chaosMonkeyDelayAsync();
     return;
@@ -77,9 +114,5 @@ class OnboardingRepository {
     // print("checking if udid member of group: " + await udid);
     await chaosMonkeyDelayAsync();
     return !forceOnboarding;
-  }
-
-  Future<bool> findGroupByCode(String groupCode) async {
-    return groupCode == "1111";
   }
 }

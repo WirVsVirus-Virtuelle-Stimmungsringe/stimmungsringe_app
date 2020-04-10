@@ -1,26 +1,5 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
-
-Future<OtherDetail> loadOtherDetailPageData(String userId) async {
-  final String url = restUrlOtherStatus(userId);
-
-  final http.Response response = await http.get(
-    url,
-    headers: {'X-User-ID': sampleUserMutti},
-  );
-
-  //await new Future.delayed(const Duration(seconds: 1));
-
-  final OtherDetail detailPage =
-      OtherDetail.fromJson(json.decode(response.body) as Map<String, dynamic>);
-
-  await chaosMonkeyDelayAsync();
-  return detailPage;
-}
 
 class Suggestion {
   final String text;

@@ -3,6 +3,7 @@ import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/repositories.dart';
+import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final OnboardingRepository onboardingRepository;
@@ -18,6 +19,10 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     if (event is CheckUser) {
       final SigninUserResponse signinUserResponse =
           await onboardingRepository.signin(forceOnboarding ? 'abba' : '1234');
+      currentUserId = signinUserResponse.userId;
+      if (signinUserResponse.hasGroup) {
+        currentGroupName = signinUserResponse.groupName;
+      }
 
       if (signinUserResponse.hasGroup) {
         yield GotoDashboard();
@@ -27,11 +32,13 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
 
     if (event is SearchGroup) {
-      final bool groupFound =
-          await onboardingRepository.findGroupByCode(event.groupCode);
+      final FindGroupResponse findGroupResponse = await onboardingRepository
+          .findGroupByName(event.groupCode); // note groupCode==groupName
 
-      if (groupFound) {
-        yield FindGroupSuccess();
+      if (findGroupResponse != null) {
+        await onboardingRepository.joinGroup(event.groupCode);
+        currentGroupName = event.groupCode;
+        yield FindGroupSuccess(groupName: findGroupResponse.groupName);
       } else {
         yield FindGroupNotFound();
         yield FindGroupInitial();

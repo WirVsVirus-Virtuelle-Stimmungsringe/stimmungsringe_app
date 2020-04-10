@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/detail_pages.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
@@ -20,7 +19,8 @@ class OtherDetailPageBloc
         return;
       }
       try {
-        final otherDetail = await loadOtherDetailPageData(event.otherUserId);
+        final otherDetail = await dashboardRepository
+            .loadOtherDetailPageData(event.otherUserId);
         yield OtherDetailPageLoaded(otherDetail);
         return;
       } catch (ex) {

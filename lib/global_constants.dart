@@ -1,7 +1,7 @@
 enum AppEnv { iOSSimulator, localNetwork, prod }
 
 // Pick your environment here
-const AppEnv currentDevEnv = AppEnv.prod;
+const AppEnv currentDevEnv = AppEnv.localNetwork;
 
 const bool forceOnboarding = true;
 
@@ -24,10 +24,10 @@ String backendUrlForEnv(final AppEnv appEnv) {
 
 final String _backendBaseUrl = backendUrlForEnv(currentDevEnv);
 
-const String sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
+//const String sampleUserMutti = 'cafecafe-b855-46ba-b907-321d2d38beef';
 // note available on EBS yet
-const String sampleUserVatti = 'deadbeef-b855-46ba-b907-321d01010101';
-const String sampleUserTimmy = '12340000-b855-46ba-b907-321d2d38feeb';
+//const String sampleUserVatti = 'deadbeef-b855-46ba-b907-321d01010101';
+//const String sampleUserTimmy = '12340000-b855-46ba-b907-321d2d38feeb';
 
 String restUrlDashboard() {
   return '$_backendBaseUrl/dashboard';
@@ -48,6 +48,22 @@ String restUrlOtherStatus(String userId) {
 /// use to update status
 String restUrlStatus() {
   return '$_backendBaseUrl/mystatus';
+}
+
+String restUrlFindGroup() {
+  return '$_backendBaseUrl/onboarding/group-by-name';
+}
+
+String restUrlSignin() {
+  return '$_backendBaseUrl/onboarding/signin';
+}
+
+String restUrlJoinGroup() {
+  return '$_backendBaseUrl/onboarding/group/join';
+}
+
+String restUrlStartNewGroup() {
+  return '$_backendBaseUrl/onboarding/group/start';
 }
 
 Future<void> chaosMonkeyDelayAsync() async {
