@@ -7,7 +7,7 @@ class SentimentIconButton extends StatelessWidget {
   final bool isSelected;
   final void Function(Sentiment) onTap;
 
-  SentimentIconButton({
+  const SentimentIconButton({
     Key key,
     @required this.sentiment,
     @required this.isSelected,
@@ -21,7 +21,7 @@ class SentimentIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTap(this.sentiment);
+        onTap(sentiment);
       },
       child: FaIcon(
         sentiment.icon,

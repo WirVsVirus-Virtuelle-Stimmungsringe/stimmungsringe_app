@@ -5,9 +5,7 @@ abstract class OnboardingState extends Equatable {
   List<Object> get props => [];
 }
 
-/**
- * check if user is already configured
- */
+/// check if user is already configured
 class CheckingUser extends OnboardingState {}
 
 class GotoDashboard extends OnboardingState {}

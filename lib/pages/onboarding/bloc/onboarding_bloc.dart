@@ -17,7 +17,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
 
     if (event is SearchGroup) {
-      await Future<void>.delayed(Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 1));
       if (event.groupCode == "1111") {
         yield FindGroupSuccess();
       } else {

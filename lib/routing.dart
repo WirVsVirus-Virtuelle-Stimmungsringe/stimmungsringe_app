@@ -9,9 +9,7 @@ import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
-/**
- * see https://resocoder.com/2019/04/27/flutter-routes-navigation-parameters-named-routes-ongenerateroute/
- */
+/// see https://resocoder.com/2019/04/27/flutter-routes-navigation-parameters-named-routes-ongenerateroute/
 class RouteGenerator {
   static Route<dynamic> generateRoute(
       RouteSettings settings, DashboardRepository dashboardRepository) {
@@ -24,7 +22,7 @@ class RouteGenerator {
           builder: (_) => BlocProvider<DashboardBloc>(
             create: (context) =>
                 DashboardBloc(dashboardRepository: dashboardRepository),
-            child: DashboardPage(),
+            child: const DashboardPage(),
           ),
         );
       case '/my-sentiment':
@@ -33,7 +31,7 @@ class RouteGenerator {
             builder: (context) {
               return BlocProvider.value(
                 value: args.dashboardBloc,
-                child: SetMySentimentPage(),
+                child: const SetMySentimentPage(),
               );
             },
           );
@@ -75,16 +73,14 @@ class RouteGenerator {
           child: Center(
             child: Column(
               children: <Widget>[
-                Container(
-                  child: Text('Routing Error'),
-                ),
+                const Text('Routing Error'),
                 CupertinoButton(
-                  child: Text('zur Hauptseite'),
                   onPressed: () => Navigator.pushNamed(
                     context,
                     '/home',
                     arguments: null,
                   ),
+                  child: const Text('zur Hauptseite'),
                 )
               ],
             ),

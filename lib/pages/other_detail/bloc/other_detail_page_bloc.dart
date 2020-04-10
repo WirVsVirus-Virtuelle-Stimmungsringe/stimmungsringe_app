@@ -31,6 +31,7 @@ class OtherDetailPageBloc
     }
   }
 
+  @override
   void onTransition(
       Transition<OtherDetailPageEvent, OtherDetailPageState> transition) {
     super.onTransition(transition);

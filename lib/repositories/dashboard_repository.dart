@@ -9,7 +9,7 @@ class DashboardRepository {
   Future<Dashboard> loadDashboardPageData() async {
     final String url = restUrlDashboard();
 
-    http.Response response = await http.get(
+    final http.Response response = await http.get(
       url,
       headers: {'X-User-ID': sampleUserMutti},
     );
@@ -24,7 +24,7 @@ class DashboardRepository {
   Future<void> setNewSentiment(Sentiment sentiment) async {
     final String url = restUrlStatus();
 
-    http.Response response = await http.put(url,
+    final http.Response response = await http.put(url,
         headers: {
           'X-User-ID': sampleUserMutti,
           "Content-Type": "application/json"

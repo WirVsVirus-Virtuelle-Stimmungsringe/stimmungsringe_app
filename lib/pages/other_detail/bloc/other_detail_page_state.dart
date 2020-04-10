@@ -13,7 +13,10 @@ class OtherDetailPageLoading extends OtherDetailPageState {}
 class OtherDetailPageLoaded extends OtherDetailPageState {
   final OtherDetail otherDetail;
 
-  OtherDetailPageLoaded(this.otherDetail);
+  OtherDetailPageLoaded(this.otherDetail) : assert(otherDetail != null);
+
+  @override
+  List<Object> get props => [otherDetail];
 }
 
 class OtherDetailPageError extends OtherDetailPageState {}

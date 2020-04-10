@@ -50,7 +50,7 @@ class AvatarRowCondensed extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.all(
-                    const Radius.circular(_avatarSize / 2),
+                    Radius.circular(_avatarSize / 2),
                   ),
                   border: Border.all(
                     color: CupertinoColors.white,

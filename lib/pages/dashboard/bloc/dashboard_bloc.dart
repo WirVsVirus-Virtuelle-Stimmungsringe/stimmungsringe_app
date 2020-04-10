@@ -55,16 +55,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final Dashboard optimisticUpdate = prevDashboard.copyWith(
             myTile: prevDashboard.myTile
                 .copyWith(sentiment: setNewSentiment.sentiment));
-        print("optimistic set " +
-            optimisticUpdate.myTile.sentiment.sentimentCode);
+        print(
+            "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
         yield DashboardLoaded(optimisticUpdate);
       }
 
       await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
       final Dashboard loadDashboardPageData =
           await dashboardRepository.loadDashboardPageData();
-      print("reloaded dashboard " +
-          loadDashboardPageData.myTile.sentiment.sentimentCode);
+      print(
+          "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
       yield DashboardLoaded(loadDashboardPageData);
     } catch (_) {
       yield DashboardError((state as DashboardLoaded).dashboard);
