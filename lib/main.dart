@@ -11,18 +11,18 @@ void main() {
   // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
 
   final DashboardRepository dashboardRepository = DashboardRepository();
-  final UserRepository userRepository = new UserRepository();
+  final OnboardingRepository onboardingRepository = new OnboardingRepository();
 
   runApp(SentimentApp(
-      userRepository: userRepository,
+      onboardingRepository: onboardingRepository,
       dashboardRepository: dashboardRepository));
 }
 
 class SentimentApp extends StatelessWidget {
-  final UserRepository userRepository;
+  final OnboardingRepository onboardingRepository;
   final DashboardRepository dashboardRepository;
 
-  const SentimentApp({this.dashboardRepository, this.userRepository});
+  const SentimentApp({this.dashboardRepository, this.onboardingRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SentimentApp extends StatelessWidget {
       title: 'Stimmungsringe',
       onGenerateRoute: (RouteSettings settings) => RouteGenerator.generateRoute(
           settings,
-          userRepository: userRepository,
+          onboardingRepository: onboardingRepository,
           dashboardRepository: dashboardRepository),
     );
   }
