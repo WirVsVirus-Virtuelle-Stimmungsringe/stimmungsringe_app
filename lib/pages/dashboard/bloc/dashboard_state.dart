@@ -6,10 +6,10 @@ abstract class StateWithDashboard {
 }
 
 abstract class DashboardState extends Equatable {
+  bool get hasDashboard;
+
   @override
   List<Object> get props => [];
-
-  bool get hasDashboard;
 }
 
 class DashboardUninitialized extends DashboardState {
@@ -23,26 +23,28 @@ class DashboardLoading extends DashboardState {
 }
 
 class DashboardLoaded extends DashboardState implements StateWithDashboard {
+  @override
   final Dashboard dashboard;
 
   DashboardLoaded(this.dashboard) : assert(dashboard != null);
 
   @override
-  List<Object> get props => [dashboard];
+  bool get hasDashboard => true;
 
   @override
-  bool get hasDashboard => true;
+  List<Object> get props => [dashboard];
 }
 
 class DashboardError extends DashboardState implements StateWithDashboard {
   // may be null
+  @override
   final Dashboard dashboard;
 
   DashboardError(this.dashboard);
 
   @override
-  List<Object> get props => [dashboard];
+  bool get hasDashboard => dashboard != null;
 
   @override
-  bool get hasDashboard => dashboard != null;
+  List<Object> get props => [dashboard];
 }

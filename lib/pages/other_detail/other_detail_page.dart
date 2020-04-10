@@ -11,7 +11,7 @@ import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 class OtherDetailPage extends StatefulWidget {
   final String otherUserId;
 
-  OtherDetailPage({this.otherUserId});
+  const OtherDetailPage({this.otherUserId});
 
   @override
   _OtherDetailPageState createState() => _OtherDetailPageState();
@@ -29,7 +29,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
+        navigationBar: const CupertinoNavigationBar(
           middle: Text('Wie geht es eigentlich ... '),
         ),
         child: SafeArea(
@@ -65,7 +65,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Title(
             color: CupertinoColors.black,
-            child: Text(
+            child: const Text(
               '',
             ),
           ),
@@ -83,7 +83,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
   }
 
   ListView buildSuggestionsList(OtherDetail otherDetail) {
-    final NetworkImage placeholder = NetworkImage(
+    const NetworkImage placeholder = NetworkImage(
         'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
     //final NetworkImage myAvatarImage =
     //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
@@ -96,21 +96,21 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
         return buildSuggestionRow(
           suggestion,
           placeholder,
-          index < otherDetail.suggestions.length - 1,
+          lastItem: index < otherDetail.suggestions.length - 1,
         );
       },
     );
   }
 
-  Widget buildSuggestionRow(
-      Suggestion suggestion, NetworkImage myAvatarImage, bool lastItem) {
+  Widget buildSuggestionRow(Suggestion suggestion, NetworkImage myAvatarImage,
+      {bool lastItem}) {
     final Widget row = Container(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 15),
+            padding: const EdgeInsets.only(right: 15),
             child: CircleAvatar(
               backgroundImage: myAvatarImage,
             ),

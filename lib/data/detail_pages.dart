@@ -8,7 +8,7 @@ import 'package:stimmungsringeapp/global_constants.dart';
 Future<OtherDetail> loadOtherDetailPageData(String userId) async {
   final String url = restUrlOtherStatus(userId);
 
-  http.Response response = await http.get(
+  final http.Response response = await http.get(
     url,
     headers: {'X-User-ID': sampleUserMutti},
   );
@@ -38,7 +38,7 @@ class OtherDetail {
   final List<Suggestion> suggestions;
 
   static OtherDetail fromJson(Map<String, dynamic> jsonMap) {
-    final suggestionsJson = (jsonMap['suggestions'] as List<dynamic>);
+    final suggestionsJson = jsonMap['suggestions'] as List<dynamic>;
     return OtherDetail(
         UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
         sentimentFromJson(jsonMap['sentiment'] as String),

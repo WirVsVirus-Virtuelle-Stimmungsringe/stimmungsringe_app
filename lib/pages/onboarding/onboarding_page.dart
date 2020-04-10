@@ -36,11 +36,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 CupertinoTextField(
                   placeholder: "Gib den Gruppen-Code ein (Tip: 1111)",
                   controller: _groupCodeController,
+                  onSubmitted: _submitGroupCode,
                 ),
                 CupertinoButton(
-                  child: Text('beitreten'),
-                  onPressed: () => BlocProvider.of<OnboardingBloc>(context)
-                      .add(SearchGroup(_groupCodeController.text)),
+                  onPressed: () => _submitGroupCode(_groupCodeController.text),
+                  child: const Text('beitreten'),
                 ),
               ],
             );
@@ -56,7 +56,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
           // return _errorPage(context, state);
 
-          print("Did not render state " + state.toString());
+          print("Did not render state $state");
           return Container();
         },
         listener: (context, state) {
@@ -102,28 +102,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
     ));
   }
 
+  void _submitGroupCode(String code) {
+    BlocProvider.of<OnboardingBloc>(context).add(SearchGroup(code));
+  }
+
   Widget buildLoadingPage() {
     return LoadingSpinnerWidget();
   }
 
   Widget _errorPage(BuildContext context, OnboardingState state) {
-    print("Did not render state " + state.toString());
+    print("Did not render state $state");
     return LoadingSpinnerWidget();
     return CupertinoPageScaffold(
       child: SafeArea(
         child: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                child: Text('Error'),
-              ),
+              const Text('Error'),
               CupertinoButton(
-                child: Text('zur Hauptseite'),
                 onPressed: () => Navigator.pushNamed(
                   context,
                   "/",
                   arguments: null,
                 ),
+                child: const Text('zur Hauptseite'),
               )
             ],
           ),
@@ -135,16 +137,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget buildSuccessArea(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          child: Text('Gruppe gefunden'),
-        ),
+        const Text('Gruppe gefunden'),
         CupertinoButton(
-          child: Text('Los legen!'),
           onPressed: () => Navigator.pushReplacementNamed(
             context,
             "/",
             arguments: null,
           ),
+          child: const Text('Los legen!'),
         )
       ],
     );

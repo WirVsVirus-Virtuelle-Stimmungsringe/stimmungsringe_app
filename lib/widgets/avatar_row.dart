@@ -64,7 +64,7 @@ class AvatarRow extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 borderRadius: const BorderRadius.all(
-                  const Radius.circular(_avatarSize / 2),
+                  Radius.circular(_avatarSize / 2),
                 ),
                 border: Border.all(
                   color: CupertinoColors.white,
@@ -78,8 +78,8 @@ class AvatarRow extends StatelessWidget {
             left: _avatarSize + 20 + 10,
             child: Text(
               name,
-              style: TextStyle(
-                color: const Color(0x7f000000),
+              style: const TextStyle(
+                color: Color(0x7f000000),
                 fontSize: 20,
               ),
             ),
@@ -90,7 +90,7 @@ class AvatarRow extends StatelessWidget {
   }
 
   Widget _buildSentimentIcon() {
-    Widget sentimentIcon = FaIcon(
+    final Widget sentimentIcon = FaIcon(
       avatarSentiment.icon,
       size: _avatarSize / 2,
       color: CupertinoColors.white,

@@ -10,7 +10,7 @@ import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage({Key key}) : super(key: key);
+  const DashboardPage({Key key}) : super(key: key);
 
   @override
   _DashboardPageState createState() => _DashboardPageState();
@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Übersicht'),
+        middle: const Text('Übersicht'),
         trailing: GestureDetector(
           onTap: () {}, // TODO
           child: Icon(
@@ -65,7 +65,7 @@ class _DashboardPageState extends State<DashboardPage> {
               },
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: 8),
               child: Title(
                 color: CupertinoColors.black,
                 child: Text(
@@ -100,22 +100,23 @@ class _DashboardPageState extends State<DashboardPage> {
     return dashboard.otherTiles
         .map(
           (tile) => Container(
-              padding: EdgeInsets.symmetric(vertical: 4),
-              child: GestureDetector(
-                child: AvatarRowCondensed(
-                  name: tile.user.displayName,
-                  image: NetworkImage(avatarImageUrl(tile.user.userId)),
-                  avatarSentiment: tile.sentiment,
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                context,
+                "/other-detail-page",
+                arguments: OtherDetailRouteArguments(
+                  dashboardBloc: BlocProvider.of<DashboardBloc>(context),
+                  otherUserId: tile.user.userId,
                 ),
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  "/other-detail-page",
-                  arguments: OtherDetailRouteArguments(
-                    dashboardBloc: BlocProvider.of<DashboardBloc>(context),
-                    otherUserId: tile.user.userId,
-                  ),
-                ),
-              )),
+              ),
+              child: AvatarRowCondensed(
+                name: tile.user.displayName,
+                image: NetworkImage(avatarImageUrl(tile.user.userId)),
+                avatarSentiment: tile.sentiment,
+              ),
+            ),
+          ),
         )
         .toList(growable: false);
   }

@@ -57,9 +57,9 @@ class _SentimentColors {
         assert(endColor != null);
 
   static const _SentimentColors good =
-      const _SentimentColors(const Color(0xff3c9a6b), const Color(0xff377371));
+      _SentimentColors(Color(0xff3c9a6b), Color(0xff377371));
   static const _SentimentColors medium =
-      const _SentimentColors(const Color(0xffedd626), const Color(0xfff2770c));
+      _SentimentColors(Color(0xffedd626), Color(0xfff2770c));
   static const _SentimentColors bad =
-      const _SentimentColors(const Color(0xff951919), const Color(0xffd7670c));
+      _SentimentColors(Color(0xff951919), Color(0xffd7670c));
 }

@@ -10,7 +10,7 @@ void main() {
 
   // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
 
-  final DashboardRepository dashboardRepository = new DashboardRepository();
+  final DashboardRepository dashboardRepository = DashboardRepository();
   final UserRepository userRepository = new UserRepository();
 
   runApp(SentimentApp(
@@ -22,7 +22,7 @@ class SentimentApp extends StatelessWidget {
   final UserRepository userRepository;
   final DashboardRepository dashboardRepository;
 
-  SentimentApp({this.dashboardRepository, this.userRepository});
+  const SentimentApp({this.dashboardRepository, this.userRepository});
 
   @override
   Widget build(BuildContext context) {

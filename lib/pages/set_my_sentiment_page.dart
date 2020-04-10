@@ -10,7 +10,7 @@ import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 import '../global_constants.dart';
 
 class SetMySentimentPage extends StatelessWidget {
-  SetMySentimentPage({
+  const SetMySentimentPage({
     Key key,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class SetMySentimentPage extends StatelessWidget {
       if (state.hasDashboard) {
         final Dashboard dashboard = (state as StateWithDashboard).dashboard;
 
-        List<Widget> allSentiments = Sentiment.values.map((sentiment) {
+        final List<Widget> allSentiments = Sentiment.values.map((sentiment) {
           return Center(
             child: SentimentIconButton(
               sentiment: sentiment,
@@ -36,7 +36,7 @@ class SetMySentimentPage extends StatelessWidget {
         }).toList(growable: false);
 
         return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
+          navigationBar: const CupertinoNavigationBar(
             middle: Text('Persönliches Wetter'),
           ),
           child: SafeArea(
@@ -54,7 +54,7 @@ class SetMySentimentPage extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: Title(
                     color: CupertinoColors.black,
-                    child: Text(
+                    child: const Text(
                       'Wie würdest Du Dein persönliches Wetter gerade beschreiben?',
                     ),
                   ),
