@@ -4,14 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 
-void main() {
-  //OnboardingRepository().signin("1234").then((response) {
-  //  print(response.groupName);
-  //});
-  //OnboardingRepository().joinGroup("Rasselbande");
-  OnboardingRepository().startNewGroup("Cool Gang");
-}
-
 class OnboardingRepository {
   /**
    * Unique Device Identifier

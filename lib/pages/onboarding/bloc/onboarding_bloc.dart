@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stimmungsringeapp/data/onboarding.dart';
+import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/repositories.dart';
 
@@ -14,10 +16,10 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
     if (event is CheckUser) {
-      final bool isUserMemberOfAGroup =
-          await onboardingRepository.isUserMemberOfGroup();
+      final SigninUserResponse signinUserResponse =
+          await onboardingRepository.signin(forceOnboarding ? 'abba' : '1234');
 
-      if (isUserMemberOfAGroup) {
+      if (signinUserResponse.hasGroup) {
         yield GotoDashboard();
       } else {
         yield FindGroupInitial();
