@@ -6,8 +6,6 @@ import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingRepository {
-  String currentGroupName = null;
-
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
 
   /**
@@ -90,7 +88,7 @@ class OnboardingRepository {
     return;
   }
 
-  Future<void> joinGroup(String groupName) async {
+  Future<void> joinGroup(String groupId) async {
     final String url = restUrlJoinGroup();
 
     final http.Response response = await http.put(
@@ -100,7 +98,7 @@ class OnboardingRepository {
         "Content-Type": "application/json",
       },
       body: json.encode({
-        'groupName': groupName,
+        'groupId': groupId,
       }),
     );
 

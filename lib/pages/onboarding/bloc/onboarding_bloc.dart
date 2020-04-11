@@ -20,11 +20,11 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       final SigninUserResponse signinUserResponse =
           await onboardingRepository.signin(forceOnboarding ? 'abba' : '1234');
       currentUserId = signinUserResponse.userId;
-      if (signinUserResponse.hasGroup) {
-        currentGroupName = signinUserResponse.groupName;
-      }
 
       if (signinUserResponse.hasGroup) {
+        currentGroupId = signinUserResponse.groupId;
+        currentGroupName = signinUserResponse.groupName;
+
         yield GotoDashboard();
       } else {
         yield FindGroupInitial();
@@ -36,8 +36,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
           .findGroupByName(event.groupCode); // note groupCode==groupName
 
       if (findGroupResponse != null) {
-        await onboardingRepository.joinGroup(event.groupCode);
-        currentGroupName = event.groupCode;
+        await onboardingRepository.joinGroup(findGroupResponse.groupId);
+        currentGroupId = findGroupResponse.groupId;
+        currentGroupName = findGroupResponse.groupName;
         yield FindGroupSuccess(groupName: findGroupResponse.groupName);
       } else {
         yield FindGroupNotFound();
