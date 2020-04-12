@@ -98,10 +98,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   controller: _groupSearchCodeController,
                   onSubmitted: _searchGroupByCode,
                 ),
-                CupertinoButton(
+                buildBigBlueButton(
                   onPressed: () =>
                       _searchGroupByCode(_groupSearchCodeController.text),
-                  child: const Text('beitreten'),
+                  text: const Text('beitreten'),
                 ),
               ],
             );
