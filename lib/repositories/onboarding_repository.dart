@@ -82,6 +82,10 @@ class OnboardingRepository {
       }),
     );
 
+    if (response.statusCode == 409) {
+      return null;
+    }
+
     assert(response.statusCode == 200);
 
     final StartNewGroupResponse startNewGroupResponse =

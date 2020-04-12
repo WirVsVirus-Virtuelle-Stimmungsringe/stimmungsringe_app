@@ -117,6 +117,22 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Navigator.of(context).pushReplacementNamed('/home');
           }
 
+          if (state is StartNewGroupFailedConflict) {
+            print("show alert: Group not created - name conflict!");
+            _newGroupNameController.clear();
+
+            Future.delayed(const Duration(milliseconds: 800), () {
+              Fluttertoast.showToast(
+                  msg: "Gruppe-Name schon in Verwendung",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
+          }
+
           if (state is FindGroupSuccess) {
             print("show alert: Group found " + state.groupName);
 
