@@ -3,15 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
-import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
-import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
-import 'package:stimmungsringeapp/session.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key key}) : super(key: key);
+  static final String routeUri = '/home';
+
+  static MapEntry<String, WidgetBuilder> makeRoute(
+          DashboardRepository dashboardRepository) =>
+      MapEntry(
+        routeUri,
+        (BuildContext c) => BlocProvider<DashboardBloc>(
+          create: (context) =>
+              DashboardBloc(dashboardRepository: dashboardRepository),
+          child: DashboardPage(),
+        ),
+      );
 
   @override
   _DashboardPageState createState() => _DashboardPageState();
@@ -19,6 +28,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage>
     with WidgetsBindingObserver {
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -45,7 +55,7 @@ class _DashboardPageState extends State<DashboardPage>
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text('Übersicht ' + currentGroupName),
+        middle: const Text('Übersicht'),
         trailing: GestureDetector(
           onTap: () {}, // TODO
           child: Icon(
@@ -71,9 +81,7 @@ class _DashboardPageState extends State<DashboardPage>
                     onSentimentIconTap: () => Navigator.pushNamed(
                       context,
                       "/my-sentiment",
-                      arguments: MySentimentRouteArguments(
-                        dashboardBloc: BlocProvider.of<DashboardBloc>(context),
-                      ),
+                      arguments: BlocProvider.of<DashboardBloc>(context),
                     ),
                   );
                 } else {
@@ -99,7 +107,7 @@ class _DashboardPageState extends State<DashboardPage>
                         (state as StateWithDashboard).dashboard;
                     return ListView(
                       padding: const EdgeInsets.all(8),
-                      children: otherTiles(context, dashboard),
+                      children: _otherTiles(context, dashboard),
                     );
                   } else {
                     return LoadingSpinnerWidget();
@@ -113,7 +121,7 @@ class _DashboardPageState extends State<DashboardPage>
     );
   }
 
-  List<Widget> otherTiles(BuildContext context, Dashboard dashboard) {
+  List<Widget> _otherTiles(BuildContext context, Dashboard dashboard) {
     return dashboard.otherTiles
         .map(
           (tile) => Container(
@@ -122,10 +130,10 @@ class _DashboardPageState extends State<DashboardPage>
               onTap: () => Navigator.pushNamed(
                 context,
                 "/other-detail-page",
-                arguments: OtherDetailRouteArguments(
-                  dashboardBloc: BlocProvider.of<DashboardBloc>(context),
-                  otherUserId: tile.user.userId,
-                ),
+                arguments: {
+                  'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+                  'otherUserId': tile.user.userId,
+                },
               ),
               child: AvatarRowCondensed(
                 name: tile.user.displayName,

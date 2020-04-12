@@ -5,29 +5,46 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
-class OtherDetailPage extends StatefulWidget {
+class OtherDetailPage extends StatelessWidget {
+  static final String routeUri = '/other-detail-page';
+
+  static MapEntry<String, WidgetBuilder> makeRoute(
+          DashboardRepository dashboardRepository) =>
+      MapEntry(
+        routeUri,
+        (BuildContext context) {
+          final args =
+              ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+          final dashboardBloc = args['dashboardBloc'] as DashboardBloc;
+          final otherUserId = args['otherUserId'] as String;
+
+          return BlocProvider.value(
+            value: dashboardBloc,
+            child: BlocProvider<OtherDetailPageBloc>(
+              create: (context) =>
+                  OtherDetailPageBloc(dashboardRepository: dashboardRepository),
+              child: OtherDetailPage(
+                otherUserId: otherUserId,
+              ),
+            ),
+          );
+        },
+      );
+
   final String otherUserId;
 
-  const OtherDetailPage({this.otherUserId});
-
-  @override
-  _OtherDetailPageState createState() => _OtherDetailPageState();
-}
-
-class _OtherDetailPageState extends State<OtherDetailPage> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    BlocProvider.of<OtherDetailPageBloc>(context)
-        .add(FetchOtherDetailPage(widget.otherUserId));
-  }
+  const OtherDetailPage({@required this.otherUserId})
+      : assert(otherUserId != null);
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<OtherDetailPageBloc>(context)
+        .add(FetchOtherDetailPage(otherUserId));
+
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
           middle: Text('Wie geht es eigentlich ... '),
@@ -140,14 +157,4 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
       ],
     );
   }
-}
-
-class OtherDetailRouteArguments {
-  final DashboardBloc dashboardBloc;
-  final String otherUserId;
-
-  OtherDetailRouteArguments(
-      {@required this.dashboardBloc, @required this.otherUserId})
-      : assert(dashboardBloc != null),
-        assert(otherUserId != null);
 }

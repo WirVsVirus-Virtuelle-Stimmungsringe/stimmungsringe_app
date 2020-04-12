@@ -10,77 +10,80 @@ import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 import '../global_constants.dart';
 
 class SetMySentimentPage extends StatelessWidget {
-  const SetMySentimentPage({
-    Key key,
-  }) : super(key: key);
+  static final String routeUri = '/my-sentiment';
+
+  static MapEntry<String, WidgetBuilder> route = MapEntry(
+    routeUri,
+    (context) => BlocProvider<DashboardBloc>.value(
+      value: ModalRoute.of(context).settings.arguments as DashboardBloc,
+      child: SetMySentimentPage(),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    final DashboardBloc dashboardBloc = BlocProvider.of<DashboardBloc>(context);
-
     return BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
       if (state.hasDashboard) {
-        final Dashboard dashboard = (state as StateWithDashboard).dashboard;
-
-        final List<Widget> allSentiments = Sentiment.values.map((sentiment) {
-          return Center(
-            child: SentimentIconButton(
-              sentiment: sentiment,
-              isSelected: dashboard.myTile.sentiment == sentiment,
-              onTap: (sentiment) {
-                dashboardBloc.add(SetNewSentiment(sentiment));
-              },
-            ),
-          );
-        }).toList(growable: false);
-
-        return CupertinoPageScaffold(
-          navigationBar: const CupertinoNavigationBar(
-            middle: Text('Persönliches Wetter'),
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                AvatarRow(
-                  name: dashboard.myTile.user.displayName,
-                  image: NetworkImage(
-                      avatarImageUrl(dashboard.myTile.user.userId)),
-                  avatarSentiment: dashboard.myTile.sentiment,
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Title(
-                    color: CupertinoColors.black,
-                    child: const Text(
-                      'Wie würdest Du Dein persönliches Wetter gerade beschreiben?',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: GridView.count(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    children: allSentiments,
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
+        return _buildLoadedPage(context, state as StateWithDashboard);
       } else {
         return LoadingSpinnerWidget();
       }
     });
   }
-}
 
-class MySentimentRouteArguments {
-  final DashboardBloc dashboardBloc;
+  Widget _buildLoadedPage(BuildContext context, StateWithDashboard state) {
+    final Dashboard dashboard = state.dashboard;
 
-  MySentimentRouteArguments({@required this.dashboardBloc})
-      : assert(dashboardBloc != null);
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Persönliches Wetter'),
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            AvatarRow(
+              name: dashboard.myTile.user.displayName,
+              image: NetworkImage(avatarImageUrl(dashboard.myTile.user.userId)),
+              avatarSentiment: dashboard.myTile.sentiment,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              child: Title(
+                color: CupertinoColors.black,
+                child: const Text(
+                  'Wie würdest Du Dein persönliches Wetter gerade beschreiben?',
+                ),
+              ),
+            ),
+            Expanded(
+              child: GridView.count(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 3,
+                children: _allSentiments(context, dashboard.myTile),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _allSentiments(BuildContext context, MyTile myTile) {
+    return Sentiment.values.map((sentiment) {
+      return Center(
+        child: SentimentIconButton(
+          sentiment: sentiment,
+          isSelected: myTile.sentiment == sentiment,
+          onTap: (sentiment) {
+            final DashboardBloc dashboardBloc =
+                BlocProvider.of<DashboardBloc>(context);
+            dashboardBloc.add(SetNewSentiment(sentiment));
+          },
+        ),
+      );
+    }).toList(growable: false);
+  }
 }

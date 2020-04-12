@@ -1,13 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/widgets/branding_widgets.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OnboardingPage extends StatefulWidget {
+  static final String routeUri = '/';
+
+  static MapEntry<String, WidgetBuilder> makeRoute(
+          OnboardingRepository onboardingRepository) =>
+      MapEntry(
+        routeUri,
+        (_) => BlocProvider<OnboardingBloc>(
+          create: (_) =>
+              OnboardingBloc(onboardingRepository: onboardingRepository),
+          child: OnboardingPage(),
+        ),
+      );
+
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
