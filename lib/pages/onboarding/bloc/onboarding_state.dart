@@ -10,6 +10,16 @@ class CheckingUser extends OnboardingState {}
 
 class GotoDashboard extends OnboardingState {}
 
+class OnboardingIntro extends OnboardingState {}
+
+class StartNewGroupInitial extends OnboardingState {}
+
+class StartNewGroupSuccess extends OnboardingState {
+  final String groupName;
+
+  StartNewGroupSuccess({this.groupName});
+}
+
 class FindGroupInitial extends OnboardingState {}
 
 class FindGroupSearching extends OnboardingState {}

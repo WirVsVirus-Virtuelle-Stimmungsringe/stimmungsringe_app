@@ -17,6 +17,20 @@ class SigninUserResponse {
       this.userId, this.hasGroup, this.groupId, this.groupName);
 }
 
+class StartNewGroupResponse {
+  final String groupId;
+  final String groupName;
+
+  static StartNewGroupResponse fromJson(Map<String, dynamic> jsonMap) {
+    return StartNewGroupResponse(
+      jsonMap['groupId'] as String,
+      jsonMap['groupName'] as String,
+    );
+  }
+
+  const StartNewGroupResponse(this.groupId, this.groupName);
+}
+
 class FindGroupResponse {
   final String groupId;
   final String groupName;

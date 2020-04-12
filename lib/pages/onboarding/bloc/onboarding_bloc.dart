@@ -26,8 +26,25 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
         yield GotoDashboard();
       } else {
-        yield FindGroupInitial();
+        yield OnboardingIntro();
       }
+    }
+
+    if (event is BeginStartNewGroup) {
+      yield StartNewGroupInitial();
+    }
+
+    if (event is StartNewGroup) {
+      print("TODO start new group with name " + event.groupName);
+      final StartNewGroupResponse startNewGroupResponse =
+          await onboardingRepository.startNewGroup(event.groupName);
+      currentGroupId = startNewGroupResponse.groupId;
+      currentGroupName = startNewGroupResponse.groupName;
+      yield StartNewGroupSuccess(groupName: event.groupName);
+    }
+
+    if (event is BeginJoinGroup) {
+      yield FindGroupInitial();
     }
 
     if (event is SearchGroup) {

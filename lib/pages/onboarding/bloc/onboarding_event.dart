@@ -7,6 +7,16 @@ abstract class OnboardingEvent extends Equatable {
 
 class CheckUser extends OnboardingEvent {}
 
+class BeginStartNewGroup extends OnboardingEvent {}
+
+class StartNewGroup extends OnboardingEvent {
+  final String groupName;
+
+  StartNewGroup(this.groupName) : assert(groupName != null);
+}
+
+class BeginJoinGroup extends OnboardingEvent {}
+
 class SearchGroup extends OnboardingEvent {
   final String groupCode;
 

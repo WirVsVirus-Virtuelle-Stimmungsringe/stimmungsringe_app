@@ -68,7 +68,7 @@ class OnboardingRepository {
     return signinUserResponse;
   }
 
-  Future<void> startNewGroup(String groupName) async {
+  Future<StartNewGroupResponse> startNewGroup(String groupName) async {
     final String url = restUrlStartNewGroup();
 
     final http.Response response = await http.post(
@@ -84,8 +84,12 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
+    final StartNewGroupResponse startNewGroupResponse =
+        StartNewGroupResponse.fromJson(
+            json.decode(response.body) as Map<String, dynamic>);
+
     await chaosMonkeyDelayAsync();
-    return;
+    return startNewGroupResponse;
   }
 
   Future<void> joinGroup(String groupId) async {

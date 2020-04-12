@@ -11,7 +11,8 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  final _groupCodeController = TextEditingController();
+  final _newGroupNameController = TextEditingController();
+  final _groupSearchCodeController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -30,17 +31,50 @@ class _OnboardingPageState extends State<OnboardingPage> {
             return buildLoadingPage();
           }
 
+          if (state is OnboardingIntro) {
+            return Column(
+              children: <Widget>[
+                CupertinoButton(
+                  onPressed: () => BlocProvider.of<OnboardingBloc>(context)
+                      .add(BeginStartNewGroup()),
+                  child: const Text('Meine Fam-Group starten'),
+                ),
+                CupertinoButton(
+                  onPressed: () => BlocProvider.of<OnboardingBloc>(context)
+                      .add(BeginJoinGroup()),
+                  child: const Text('Fam-Group Code eingeben'),
+                ),
+              ],
+            );
+          }
+
+          if (state is StartNewGroupInitial) {
+            return Column(
+              children: <Widget>[
+                CupertinoTextField(
+                  placeholder: "Wie soll die neue Gruppe heißen?",
+                  controller: _newGroupNameController,
+                ),
+                CupertinoButton(
+                  onPressed: () => _startNewGroup(_newGroupNameController.text),
+                  child: const Text('Fam-Group starten'),
+                ),
+              ],
+            );
+          }
+
           if (state is FindGroupInitial) {
             return Column(
               children: <Widget>[
                 CupertinoTextField(
                   placeholder:
                       "Gib den Gruppen-Code/-Name ein (Tip: Rasselbande)",
-                  controller: _groupCodeController,
-                  onSubmitted: _submitGroupCode,
+                  controller: _groupSearchCodeController,
+                  onSubmitted: _searchGroupByCode,
                 ),
                 CupertinoButton(
-                  onPressed: () => _submitGroupCode(_groupCodeController.text),
+                  onPressed: () =>
+                      _searchGroupByCode(_groupSearchCodeController.text),
                   child: const Text('beitreten'),
                 ),
               ],
@@ -66,6 +100,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Navigator.of(context).pushReplacementNamed('/home');
           }
 
+          if (state is StartNewGroupSuccess) {
+            print("show alert: Started new Group " + state.groupName);
+
+            Future.delayed(const Duration(milliseconds: 800), () {
+              Fluttertoast.showToast(
+                  msg: "Erfolgreich erstellt",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            });
+
+            Navigator.of(context).pushReplacementNamed('/home');
+          }
+
           if (state is FindGroupSuccess) {
             print("show alert: Group found " + state.groupName);
 
@@ -85,7 +136,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
           if (state is FindGroupNotFound) {
             print("show alert: Group not found!");
-            _groupCodeController.clear();
+            _groupSearchCodeController.clear();
 
             Future.delayed(const Duration(milliseconds: 800), () {
               Fluttertoast.showToast(
@@ -103,7 +154,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
     ));
   }
 
-  void _submitGroupCode(String code) {
+  void _startNewGroup(String groupName) {
+    BlocProvider.of<OnboardingBloc>(context).add(StartNewGroup(groupName));
+  }
+
+  /**
+   * atm searching by group name
+   */
+  void _searchGroupByCode(String code) {
     BlocProvider.of<OnboardingBloc>(context).add(SearchGroup(code));
   }
 
