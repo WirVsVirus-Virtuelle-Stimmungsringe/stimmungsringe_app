@@ -15,6 +15,8 @@ class DashboardRepository {
       headers: {'X-User-ID': currentUserId},
     );
 
+    assert(response.statusCode == 200);
+
     final Dashboard dashboard =
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
@@ -33,6 +35,8 @@ class DashboardRepository {
         body: json.encode(SentimentUpdate(sentiment.sentimentCode)));
     // TODO response handling
 
+    assert(response.statusCode == 200);
+
     await chaosMonkeyDelayAsync();
   }
 
@@ -43,6 +47,8 @@ class DashboardRepository {
       url,
       headers: {'X-User-ID': currentUserId},
     );
+
+    assert(response.statusCode == 200);
 
     //await new Future.delayed(const Duration(seconds: 1));
 
