@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
@@ -36,16 +37,24 @@ class _OnboardingPageState extends State<OnboardingPage> {
             return Column(
               children: <Widget>[
                 largeLogo(),
-                CupertinoButton(
-                  onPressed: () => BlocProvider.of<OnboardingBloc>(context)
-                      .add(BeginStartNewGroup()),
-                  child: const Text('Meine Fam-Group starten'),
-                ),
-                CupertinoButton(
-                  onPressed: () => BlocProvider.of<OnboardingBloc>(context)
-                      .add(BeginJoinGroup()),
-                  child: const Text('Fam-Group Code eingeben'),
-                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      buildBigBlueButton(
+                          text: const Text('Meine Fam-Group starten'),
+                          onPressed: () =>
+                              BlocProvider.of<OnboardingBloc>(context)
+                                  .add(BeginStartNewGroup())),
+                      buildBigBlueButton(
+                        onPressed: () =>
+                            BlocProvider.of<OnboardingBloc>(context)
+                                .add(BeginJoinGroup()),
+                        text: const Text('Fam-Group Code eingeben'),
+                      ),
+                    ],
+                  ),
+                )
               ],
             );
           }
@@ -58,9 +67,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   placeholder: "Wie soll die neue Gruppe heißen?",
                   controller: _newGroupNameController,
                 ),
-                CupertinoButton(
+                buildBigBlueButton(
                   onPressed: () => _startNewGroup(_newGroupNameController.text),
-                  child: const Text('Fam-Group starten'),
+                  text: const Text('Fam-Group starten'),
                 ),
               ],
             );
