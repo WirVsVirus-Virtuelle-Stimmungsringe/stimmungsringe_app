@@ -35,7 +35,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
 
     if (event is StartNewGroup) {
-      print("TODO start new group with name " + event.groupName);
       final StartNewGroupResponse startNewGroupResponse =
           await onboardingRepository.startNewGroup(event.groupName);
       if (startNewGroupResponse != null) {

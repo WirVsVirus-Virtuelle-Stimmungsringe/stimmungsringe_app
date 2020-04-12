@@ -8,17 +8,6 @@ import 'package:stimmungsringeapp/session.dart';
 class OnboardingRepository {
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
 
-  /**
-   * Unique Device Identifier
-   *
-   * - persistent UDID across app reinstalls
-   */
-  Future<String> get udid async {
-    // return await FlutterUdid.consistentUdid;
-    return "1234"; // Frida
-    // return "abba"; // Stefan
-  }
-
   Future<FindGroupResponse> findGroupByName(String groupName) async {
     final String url = restUrlFindGroup();
 
