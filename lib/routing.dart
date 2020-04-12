@@ -46,7 +46,8 @@ class RouteGenerator {
               return BlocProvider.value(
                 value: args.dashboardBloc,
                 child: BlocProvider<OtherDetailPageBloc>(
-                  create: (context) => OtherDetailPageBloc(),
+                  create: (context) => OtherDetailPageBloc(
+                      dashboardRepository: dashboardRepository),
                   child: OtherDetailPage(
                     otherUserId: args.otherUserId,
                   ),

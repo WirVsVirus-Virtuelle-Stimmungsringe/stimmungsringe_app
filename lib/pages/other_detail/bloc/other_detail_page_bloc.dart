@@ -6,7 +6,8 @@ class OtherDetailPageBloc
     extends Bloc<OtherDetailPageEvent, OtherDetailPageState> {
   final DashboardRepository dashboardRepository;
 
-  OtherDetailPageBloc({this.dashboardRepository});
+  OtherDetailPageBloc({this.dashboardRepository})
+      : assert(dashboardRepository != null);
 
   @override
   OtherDetailPageState get initialState => OtherDetailPageUninitialized();

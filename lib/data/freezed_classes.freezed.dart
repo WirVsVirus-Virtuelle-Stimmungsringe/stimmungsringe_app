@@ -81,6 +81,70 @@ abstract class _UserMinimal implements UserMinimal {
   _UserMinimal copyWith({String userId, String displayName});
 }
 
+Suggestion _$SuggestionFromJson(Map<String, dynamic> json) {
+  return _Suggestion.fromJson(json);
+}
+
+abstract class _$Suggestion {
+  String get text;
+
+  Suggestion copyWith({String text});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
+class _$_Suggestion implements _Suggestion {
+  const _$_Suggestion(this.text);
+
+  factory _$_Suggestion.fromJson(Map<String, dynamic> json) =>
+      _$_$_SuggestionFromJson(json);
+
+  @override
+  final String text;
+
+  @override
+  String toString() {
+    return 'Suggestion(text: $text)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is _Suggestion &&
+        (identical(other.text, text) || other.text == text);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode ^ text.hashCode;
+
+  @override
+  _$_Suggestion copyWith({
+    Object text = immutable,
+  }) {
+    return _$_Suggestion(
+      text == immutable ? this.text : text as String,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_SuggestionToJson(this);
+  }
+}
+
+abstract class _Suggestion implements Suggestion {
+  const factory _Suggestion(String text) = _$_Suggestion;
+
+  factory _Suggestion.fromJson(Map<String, dynamic> json) =
+      _$_Suggestion.fromJson;
+
+  @override
+  String get text;
+
+  @override
+  _Suggestion copyWith({String text});
+}
+
 OtherTile _$OtherTileFromJson(Map<String, dynamic> json) {
   return _OtherTile.fromJson(json);
 }
@@ -152,6 +216,98 @@ abstract class _OtherTile implements OtherTile {
 
   @override
   _OtherTile copyWith({UserMinimal user, Sentiment sentiment});
+}
+
+OtherDetail _$OtherDetailFromJson(Map<String, dynamic> json) {
+  return _OtherDetail.fromJson(json);
+}
+
+abstract class _$OtherDetail {
+  UserMinimal get user;
+  Sentiment get sentiment;
+  List<Suggestion> get suggestions;
+
+  OtherDetail copyWith(
+      {UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
+class _$_OtherDetail implements _OtherDetail {
+  const _$_OtherDetail(this.user, this.sentiment, this.suggestions);
+
+  factory _$_OtherDetail.fromJson(Map<String, dynamic> json) =>
+      _$_$_OtherDetailFromJson(json);
+
+  @override
+  final UserMinimal user;
+  @override
+  final Sentiment sentiment;
+  @override
+  final List<Suggestion> suggestions;
+
+  @override
+  String toString() {
+    return 'OtherDetail(user: $user, sentiment: $sentiment, suggestions: $suggestions)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is _OtherDetail &&
+        (identical(other.user, user) || other.user == user) &&
+        (identical(other.sentiment, sentiment) ||
+            other.sentiment == sentiment) &&
+        (identical(other.suggestions, suggestions) ||
+            other.suggestions == suggestions);
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      user.hashCode ^
+      sentiment.hashCode ^
+      suggestions.hashCode;
+
+  @override
+  _$_OtherDetail copyWith({
+    Object user = immutable,
+    Object sentiment = immutable,
+    Object suggestions = immutable,
+  }) {
+    return _$_OtherDetail(
+      user == immutable ? this.user : user as UserMinimal,
+      sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      suggestions == immutable
+          ? this.suggestions
+          : suggestions as List<Suggestion>,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_OtherDetailToJson(this);
+  }
+}
+
+abstract class _OtherDetail implements OtherDetail {
+  const factory _OtherDetail(
+          UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions) =
+      _$_OtherDetail;
+
+  factory _OtherDetail.fromJson(Map<String, dynamic> json) =
+      _$_OtherDetail.fromJson;
+
+  @override
+  UserMinimal get user;
+  @override
+  Sentiment get sentiment;
+  @override
+  List<Suggestion> get suggestions;
+
+  @override
+  _OtherDetail copyWith(
+      {UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions});
 }
 
 MyTile _$MyTileFromJson(Map<String, dynamic> json) {

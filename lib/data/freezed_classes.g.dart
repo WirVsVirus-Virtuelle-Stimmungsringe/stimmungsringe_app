@@ -19,6 +19,17 @@ Map<String, dynamic> _$_$_UserMinimalToJson(_$_UserMinimal instance) =>
       'displayName': instance.displayName,
     };
 
+_$_Suggestion _$_$_SuggestionFromJson(Map<String, dynamic> json) {
+  return _$_Suggestion(
+    json['text'] as String,
+  );
+}
+
+Map<String, dynamic> _$_$_SuggestionToJson(_$_Suggestion instance) =>
+    <String, dynamic>{
+      'text': instance.text,
+    };
+
 _$_OtherTile _$_$_OtherTileFromJson(Map<String, dynamic> json) {
   return _$_OtherTile(
     json['user'] == null
@@ -74,6 +85,26 @@ const _$SentimentEnumMap = {
   Sentiment.cloudyNight: 'cloudyNight',
   Sentiment.thundery: 'thundery',
 };
+
+_$_OtherDetail _$_$_OtherDetailFromJson(Map<String, dynamic> json) {
+  return _$_OtherDetail(
+    json['user'] == null
+        ? null
+        : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
+    _$enumDecodeNullable(_$SentimentEnumMap, json['sentiment']),
+    (json['suggestions'] as List)
+        ?.map((e) =>
+            e == null ? null : Suggestion.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$_$_OtherDetailToJson(_$_OtherDetail instance) =>
+    <String, dynamic>{
+      'user': instance.user,
+      'sentiment': _$SentimentEnumMap[instance.sentiment],
+      'suggestions': instance.suggestions,
+    };
 
 _$_MyTile _$_$_MyTileFromJson(Map<String, dynamic> json) {
   return _$_MyTile(
