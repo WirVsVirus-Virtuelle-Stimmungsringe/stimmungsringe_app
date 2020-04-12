@@ -17,7 +17,23 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with WidgetsBindingObserver {
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  /**
+   * https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
+   */
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
