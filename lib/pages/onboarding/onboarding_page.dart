@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
+import 'package:stimmungsringeapp/widgets/branding_widgets.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -34,6 +35,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is OnboardingIntro) {
             return Column(
               children: <Widget>[
+                largeLogo(),
                 CupertinoButton(
                   onPressed: () => BlocProvider.of<OnboardingBloc>(context)
                       .add(BeginStartNewGroup()),
@@ -51,6 +53,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is StartNewGroupInitial) {
             return Column(
               children: <Widget>[
+                largeLogo(),
                 CupertinoTextField(
                   placeholder: "Wie soll die neue Gruppe heißen?",
                   controller: _newGroupNameController,
@@ -66,6 +69,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is FindGroupInitial) {
             return Column(
               children: <Widget>[
+                largeLogo(),
                 CupertinoTextField(
                   placeholder:
                       "Gib den Gruppen-Code/-Name ein (Tip: Rasselbande)",
