@@ -104,10 +104,4 @@ class OnboardingRepository {
     await chaosMonkeyDelayAsync();
     return;
   }
-
-  Future<bool> isUserMemberOfGroup() async {
-    // print("checking if udid member of group: " + await udid);
-    await chaosMonkeyDelayAsync();
-    return !forceOnboarding;
-  }
 }
