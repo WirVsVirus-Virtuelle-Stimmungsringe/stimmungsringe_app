@@ -73,7 +73,7 @@ class _OtherDetailPageState extends State<OtherDetailPage> {
         Expanded(child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
-            return buildSuggestionsList(state.otherDetail);
+            // return buildSuggestionsList(state.otherDetail);
           }
 
           return Container();
