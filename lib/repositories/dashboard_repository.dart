@@ -8,7 +8,7 @@ import 'package:stimmungsringeapp/session.dart';
 
 class DashboardRepository {
   Future<Dashboard> loadDashboardPageData() async {
-    final String url = restUrlDashboard();
+    final String url = '$backendBaseUrl/dashboard';
 
     final http.Response response = await http.get(
       url,
@@ -25,7 +25,7 @@ class DashboardRepository {
   }
 
   Future<void> setNewSentiment(Sentiment sentiment) async {
-    final String url = restUrlStatus();
+    final String url = '$backendBaseUrl/mystatus';
 
     final http.Response response = await http.put(url,
         headers: {
@@ -41,7 +41,7 @@ class DashboardRepository {
   }
 
   Future<OtherDetail> loadOtherDetailPageData(String userId) async {
-    final String url = restUrlOtherStatus(userId);
+    final String url = '$backendBaseUrl/otherstatuspage/$userId';
 
     final http.Response response = await http.get(
       url,
