@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
@@ -66,56 +67,70 @@ class _DashboardPageState extends State<DashboardPage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            BlocBuilder<DashboardBloc, DashboardState>(
-              builder: (context, state) {
-                if (state.hasDashboard) {
-                  final Dashboard dashboard =
-                      (state as StateWithDashboard).dashboard;
-                  final UserMinimal user = dashboard.myTile.user;
-                  return AvatarRow(
-                    name: user.displayName,
-                    image: NetworkImage(avatarImageUrl(user.userId)),
-                    avatarSentiment: dashboard.myTile.sentiment,
-                    onSentimentIconTap: () => Navigator.pushNamed(
-                      context,
-                      "/my-sentiment",
-                      arguments: BlocProvider.of<DashboardBloc>(context),
-                    ),
-                  );
-                } else {
-                  return LoadingSpinnerWidget();
-                }
-              },
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Title(
-                color: CupertinoColors.black,
-                child: Text(
-                  'Meine Achtgeber:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            _avatarRow(),
             Expanded(
-              child: BlocBuilder<DashboardBloc, DashboardState>(
-                builder: (context, state) {
-                  if (state.hasDashboard) {
-                    final Dashboard dashboard =
-                        (state as StateWithDashboard).dashboard;
-                    return ListView(
-                      padding: const EdgeInsets.all(8),
-                      children: _otherTiles(context, dashboard),
-                    );
-                  } else {
-                    return LoadingSpinnerWidget();
-                  }
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: _contactList(),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  Widget _avatarRow() {
+    return BlocBuilder<DashboardBloc, DashboardState>(
+      builder: (context, state) {
+        if (state.hasDashboard) {
+          final Dashboard dashboard = (state as StateWithDashboard).dashboard;
+          final UserMinimal user = dashboard.myTile.user;
+          return AvatarRow(
+            name: user.displayName,
+            image: NetworkImage(avatarImageUrl(user.userId)),
+            avatarSentiment: dashboard.myTile.sentiment,
+            onSentimentIconTap: () => Navigator.pushNamed(
+              context,
+              "/my-sentiment",
+              arguments: BlocProvider.of<DashboardBloc>(context),
+            ),
+          );
+        } else {
+          return LoadingSpinnerWidget();
+        }
+      },
+    );
+  }
+
+  Widget _contactList() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Title(
+          color: CupertinoColors.black,
+          child: Text(
+            'Meine Achtgeber:',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          child: BlocBuilder<DashboardBloc, DashboardState>(
+            builder: (context, state) {
+              if (state.hasDashboard) {
+                final Dashboard dashboard =
+                    (state as StateWithDashboard).dashboard;
+                return ListView(
+                  padding: const EdgeInsets.only(top: 8),
+                  children: _otherTiles(context, dashboard),
+                );
+              } else {
+                return LoadingSpinnerWidget();
+              }
+            },
+          ),
+        )
+      ],
     );
   }
 
