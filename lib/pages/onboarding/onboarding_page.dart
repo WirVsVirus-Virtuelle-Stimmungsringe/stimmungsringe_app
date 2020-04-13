@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
-import 'package:stimmungsringeapp/widgets/branding_widgets.dart';
+import 'package:stimmungsringeapp/widgets/action_button.dart';
+import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OnboardingPage extends StatefulWidget {
-  static final String routeUri = '/';
+  static const String routeUri = '/';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
           OnboardingRepository onboardingRepository) =>
@@ -49,24 +49,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is OnboardingIntro) {
             return Column(
               children: <Widget>[
-                largeLogo(),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      buildBigBlueButton(
-                          text: const Text('Meine Fam-Group starten'),
-                          onPressed: () =>
-                              BlocProvider.of<OnboardingBloc>(context)
-                                  .add(BeginStartNewGroup())),
-                      buildBigBlueButton(
-                        onPressed: () =>
-                            BlocProvider.of<OnboardingBloc>(context)
-                                .add(BeginJoinGroup()),
-                        text: const Text('Fam-Group Code eingeben'),
-                      ),
-                    ],
-                  ),
+                const FamiliariseLogo(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    ActionButton(
+                      text: const Text('Meine Fam-Group starten'),
+                      onPressed: () => BlocProvider.of<OnboardingBloc>(context)
+                          .add(BeginStartNewGroup()),
+                    ),
+                    ActionButton(
+                      onPressed: () => BlocProvider.of<OnboardingBloc>(context)
+                          .add(BeginJoinGroup()),
+                      text: const Text('Fam-Group Code eingeben'),
+                    ),
+                  ],
                 )
               ],
             );
@@ -75,12 +72,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is StartNewGroupInitial) {
             return Column(
               children: <Widget>[
-                largeLogo(),
+                const FamiliariseLogo(),
                 CupertinoTextField(
                   placeholder: "Wie soll die neue Gruppe heißen?",
                   controller: _newGroupNameController,
                 ),
-                buildBigBlueButton(
+                ActionButton(
                   onPressed: () => _startNewGroup(_newGroupNameController.text),
                   text: const Text('Fam-Group starten'),
                 ),
@@ -91,14 +88,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
           if (state is FindGroupInitial) {
             return Column(
               children: <Widget>[
-                largeLogo(),
+                const FamiliariseLogo(),
                 CupertinoTextField(
                   placeholder:
                       "Gib den Gruppen-Code/-Name ein (Tip: Rasselbande)",
                   controller: _groupSearchCodeController,
                   onSubmitted: _searchGroupByCode,
                 ),
-                buildBigBlueButton(
+                ActionButton(
                   onPressed: () =>
                       _searchGroupByCode(_groupSearchCodeController.text),
                   text: const Text('beitreten'),
@@ -127,7 +124,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }
 
           if (state is StartNewGroupSuccess) {
-            print("show alert: Started new Group " + state.groupName);
+            print("show alert: Started new Group ${state.groupName}");
 
             Future.delayed(const Duration(milliseconds: 800), () {
               Fluttertoast.showToast(
@@ -135,8 +132,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
+                  backgroundColor: CupertinoColors.activeGreen,
+                  textColor: CupertinoColors.white,
                   fontSize: 16.0);
             });
 
@@ -153,14 +150,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
+                  backgroundColor: CupertinoColors.destructiveRed,
+                  textColor: CupertinoColors.white,
                   fontSize: 16.0);
             });
           }
 
           if (state is FindGroupSuccess) {
-            print("show alert: Group found " + state.groupName);
+            print("show alert: Group found ${state.groupName}");
 
             Future.delayed(const Duration(milliseconds: 800), () {
               Fluttertoast.showToast(
@@ -168,8 +165,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
+                  backgroundColor: CupertinoColors.activeGreen,
+                  textColor: CupertinoColors.white,
                   fontSize: 16.0);
             });
 
@@ -186,8 +183,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
+                  backgroundColor: CupertinoColors.destructiveRed,
+                  textColor: CupertinoColors.white,
                   fontSize: 16.0);
             });
           }
@@ -200,9 +197,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     BlocProvider.of<OnboardingBloc>(context).add(StartNewGroup(groupName));
   }
 
-  /**
-   * atm searching by group name
-   */
+  /// atm searching by group name
   void _searchGroupByCode(String code) {
     BlocProvider.of<OnboardingBloc>(context).add(SearchGroup(code));
   }

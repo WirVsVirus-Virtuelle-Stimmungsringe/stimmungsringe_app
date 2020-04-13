@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
@@ -7,7 +8,7 @@ import 'package:stimmungsringeapp/session.dart';
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final OnboardingRepository onboardingRepository;
 
-  OnboardingBloc({this.onboardingRepository})
+  OnboardingBloc({@required this.onboardingRepository})
       : assert(onboardingRepository != null);
 
   @override

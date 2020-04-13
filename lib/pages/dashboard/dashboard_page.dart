@@ -9,7 +9,7 @@ import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class DashboardPage extends StatefulWidget {
-  static final String routeUri = '/home';
+  static const String routeUri = '/home';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
           DashboardRepository dashboardRepository) =>
@@ -34,9 +34,7 @@ class _DashboardPageState extends State<DashboardPage>
     WidgetsBinding.instance.addObserver(this);
   }
 
-  /**
-   * https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
-   */
+  /// https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {

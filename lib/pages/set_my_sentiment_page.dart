@@ -10,7 +10,7 @@ import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 import '../global_constants.dart';
 
 class SetMySentimentPage extends StatelessWidget {
-  static final String routeUri = '/my-sentiment';
+  static const String routeUri = '/my-sentiment';
 
   static MapEntry<String, WidgetBuilder> route = MapEntry(
     routeUri,
