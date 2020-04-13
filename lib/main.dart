@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
+import 'package:stimmungsringeapp/pages/group_settings_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/routing_error_page.dart';
@@ -38,6 +39,7 @@ class SentimentApp extends StatelessWidget {
         DashboardPage.makeRoute(dashboardRepository),
         SetMySentimentPage.route,
         OtherDetailPage.makeRoute(dashboardRepository),
+        GroupSettingsPage.makeRoute(onboardingRepository)
       ]),
       onUnknownRoute: (_) =>
           CupertinoPageRoute<Widget>(builder: (context) => RoutingErrorPage()),

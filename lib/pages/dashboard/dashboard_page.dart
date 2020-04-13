@@ -55,9 +55,13 @@ class _DashboardPageState extends State<DashboardPage>
       navigationBar: CupertinoNavigationBar(
         middle: const Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () {}, // TODO
+          onTap: () => Navigator.pushNamed(
+            context,
+            "/group-settings",
+            arguments: BlocProvider.of<DashboardBloc>(context),
+          ),
           child: Icon(
-            CupertinoIcons.add,
+            CupertinoIcons.gear,
             color: CupertinoColors.activeBlue,
           ),
         ),
