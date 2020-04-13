@@ -5,6 +5,8 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
+import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
+import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
@@ -43,20 +45,6 @@ class _DashboardPageState extends State<DashboardPage>
     if (state == AppLifecycleState.resumed) {
       BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
     }
-  }
-
-  @override
-  Future<bool> didPopRoute() {
-    print("didPopRoute");
-    // TODO: implement didPopRoute
-    return super.didPopRoute();
-  }
-
-  @override
-  Future<bool> didPushRoute(String route) {
-    print("didPushRoute called");
-    // TODO: implement didPushRoute
-    return super.didPushRoute(route);
   }
 
   @override
@@ -116,7 +104,7 @@ class _DashboardPageState extends State<DashboardPage>
               avatarSentiment: dashboard.myTile.sentiment,
               onSentimentIconTap: () => Navigator.pushNamed(
                 context,
-                "/my-sentiment",
+                SetMySentimentPage.routeUri,
                 arguments: BlocProvider.of<DashboardBloc>(context),
               ),
             ),
@@ -167,7 +155,7 @@ class _DashboardPageState extends State<DashboardPage>
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(
                 context,
-                "/other-detail-page",
+                OtherDetailPage.routeUri,
                 arguments: {
                   'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
                   'otherUserId': tile.user.userId,

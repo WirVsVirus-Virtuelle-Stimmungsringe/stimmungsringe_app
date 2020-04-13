@@ -15,7 +15,7 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
     if (event is LoadUserSettings) {
       final userSettings = await onboardingRepository.getUserSettings();
       yield ShowCurrentUserSettings(userSettings.userName);
-    } else if (event is UpdateUserSettings) {
+    } else if (event is SaveUserSettings) {
       await onboardingRepository.updateUserSettings(event.userName);
     }
   }

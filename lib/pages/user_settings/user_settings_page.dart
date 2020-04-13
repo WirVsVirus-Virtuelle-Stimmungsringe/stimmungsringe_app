@@ -44,7 +44,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
           return WillPopScope(
             onWillPop: () {
               BlocProvider.of<UserSettingsBloc>(context)
-                  .add(UpdateUserSettings(userName: _userNameController.text));
+                  .add(SaveUserSettings(userName: _userNameController.text));
               return Future.value(true);
             },
             child: CupertinoPageScaffold(

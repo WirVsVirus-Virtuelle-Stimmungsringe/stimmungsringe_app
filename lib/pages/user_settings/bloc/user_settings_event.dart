@@ -7,10 +7,10 @@ abstract class UserSettingsEvent extends Equatable {
 
 class LoadUserSettings extends UserSettingsEvent {}
 
-class UpdateUserSettings extends UserSettingsEvent {
+class SaveUserSettings extends UserSettingsEvent {
   final String userName;
 
-  UpdateUserSettings({this.userName});
+  SaveUserSettings({this.userName});
 
   @override
   List<Object> get props => [userName];

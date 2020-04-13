@@ -43,8 +43,8 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           _groupNameController.text = state.groupName;
           return WillPopScope(
             onWillPop: () {
-              BlocProvider.of<GroupSettingsBloc>(context).add(
-                  UpdateGroupSettings(groupName: _groupNameController.text));
+              BlocProvider.of<GroupSettingsBloc>(context)
+                  .add(SaveGroupSettings(groupName: _groupNameController.text));
               return Future.value(true);
             },
             child: CupertinoPageScaffold(
