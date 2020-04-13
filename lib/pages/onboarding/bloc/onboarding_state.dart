@@ -20,12 +20,16 @@ class StartNewGroupSuccess extends OnboardingState {
   final String groupName;
 
   StartNewGroupSuccess({this.groupName});
+
+  List<Object> get props => [groupName];
 }
 
 class StartNewGroupFailedConflict extends OnboardingState {
   final String groupName;
 
   StartNewGroupFailedConflict({this.groupName});
+
+  List<Object> get props => [groupName];
 }
 
 class FindGroupInitial extends OnboardingState {}
@@ -37,6 +41,8 @@ class FindGroupSuccess extends OnboardingState {
   final String groupName;
 
   FindGroupSuccess({this.groupName});
+
+  List<Object> get props => [groupName];
 }
 
 class FindGroupNotFound extends OnboardingState {}
