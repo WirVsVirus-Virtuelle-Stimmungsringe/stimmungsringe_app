@@ -10,7 +10,7 @@ import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class OtherDetailPage extends StatelessWidget {
-  static final String routeUri = '/other-detail-page';
+  static const String routeUri = '/other-detail-page';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
           DashboardRepository dashboardRepository) =>

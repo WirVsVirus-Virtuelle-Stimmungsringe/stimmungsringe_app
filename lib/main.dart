@@ -15,7 +15,7 @@ void main() {
   // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
 
   final DashboardRepository dashboardRepository = DashboardRepository();
-  final OnboardingRepository onboardingRepository = new OnboardingRepository();
+  final OnboardingRepository onboardingRepository = OnboardingRepository();
 
   runApp(SentimentApp(
       onboardingRepository: onboardingRepository,
