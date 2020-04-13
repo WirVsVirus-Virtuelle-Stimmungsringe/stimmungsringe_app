@@ -8,9 +8,8 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     Key key,
     @required this.text,
-    @required this.onPressed,
+    this.onPressed,
   })  : assert(text != null),
-        assert(onPressed != null),
         super(key: key);
 
   @override

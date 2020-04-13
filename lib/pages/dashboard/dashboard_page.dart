@@ -7,7 +7,7 @@ import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
+import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
 
 class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
@@ -114,7 +114,7 @@ class _DashboardPageState extends State<DashboardPage>
             ),
           );
         } else {
-          return LoadingSpinnerWidget();
+          return LoadingSpinner();
         }
       },
     );
@@ -142,7 +142,7 @@ class _DashboardPageState extends State<DashboardPage>
                   children: _otherTiles(context, dashboard),
                 );
               } else {
-                return LoadingSpinnerWidget();
+                return LoadingSpinner();
               }
             },
           ),

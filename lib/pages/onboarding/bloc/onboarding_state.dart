@@ -6,43 +6,39 @@ abstract class OnboardingState extends Equatable {
 }
 
 /// check if user is already configured
-class CheckingUser extends OnboardingState {}
+class CheckingUserState extends OnboardingState {}
 
-class GotoDashboard extends OnboardingState {}
+class NoOnboardingRequiredState extends OnboardingState {}
 
 // user is not configured - ask her, what to do
-class OnboardingIntro extends OnboardingState {}
+class OnboardingIntroState extends OnboardingState {}
 
-class StartNewGroupInitial extends OnboardingState {}
+class CreateNewGroupFormState extends OnboardingState {}
 
-// goto dashboard
-class StartNewGroupSuccess extends OnboardingState {
-  final String groupName;
-
-  StartNewGroupSuccess({this.groupName});
-
-  List<Object> get props => [groupName];
-}
-
-class StartNewGroupFailedConflict extends OnboardingState {
-  final String groupName;
-
-  StartNewGroupFailedConflict({this.groupName});
-
-  List<Object> get props => [groupName];
-}
-
-class FindGroupInitial extends OnboardingState {}
-
-class FindGroupSearching extends OnboardingState {}
+class CreateNewGroupPendingState extends OnboardingState {}
 
 // goto dashboard
-class FindGroupSuccess extends OnboardingState {
+class NewGroupCreatedState extends OnboardingState {
   final String groupName;
 
-  FindGroupSuccess({this.groupName});
+  NewGroupCreatedState({this.groupName});
 
+  @override
   List<Object> get props => [groupName];
 }
 
-class FindGroupNotFound extends OnboardingState {}
+class FindGroupState extends OnboardingState {}
+
+class FindGroupSearchingState extends OnboardingState {}
+
+// goto dashboard
+class GroupFoundState extends OnboardingState {
+  final String groupName;
+
+  GroupFoundState({this.groupName});
+
+  @override
+  List<Object> get props => [groupName];
+}
+
+class GroupNotFoundState extends OnboardingState {}

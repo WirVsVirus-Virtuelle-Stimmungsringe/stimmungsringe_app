@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_page.dart';
+import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
+import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/routing_error_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
@@ -33,9 +34,10 @@ class SentimentApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoApp(
       title: 'Stimmungsringe',
-      initialRoute: OnboardingPage.routeUri,
+      initialRoute: OnboardingStartPage.routeUri,
       routes: Map.fromEntries([
-        OnboardingPage.makeRoute(onboardingRepository),
+        OnboardingStartPage.makeRoute(onboardingRepository),
+        OnboardingCreateGroupPage.route,
         DashboardPage.makeRoute(dashboardRepository),
         SetMySentimentPage.route,
         OtherDetailPage.makeRoute(dashboardRepository),

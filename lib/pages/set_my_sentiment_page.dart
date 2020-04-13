@@ -4,7 +4,7 @@ import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
+import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
 import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 
 import '../global_constants.dart';
@@ -27,7 +27,7 @@ class SetMySentimentPage extends StatelessWidget {
       if (state.hasDashboard) {
         return _buildLoadedPage(context, state as StateWithDashboard);
       } else {
-        return LoadingSpinnerWidget();
+        return LoadingSpinner();
       }
     });
   }

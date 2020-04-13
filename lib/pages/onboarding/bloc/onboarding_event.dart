@@ -5,22 +5,25 @@ abstract class OnboardingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CheckUser extends OnboardingEvent {}
+class CheckUserEvent extends OnboardingEvent {}
 
-class BeginStartNewGroup extends OnboardingEvent {}
+class ShowCreateNewGroupFormEvent extends OnboardingEvent {}
 
-class StartNewGroup extends OnboardingEvent {
+class CreateNewGroupEvent extends OnboardingEvent {
   final String groupName;
 
-  StartNewGroup(this.groupName) : assert(groupName != null);
+  CreateNewGroupEvent(this.groupName) : assert(groupName != null);
+
+  @override
+  List<Object> get props => [groupName];
 }
 
-class BeginJoinGroup extends OnboardingEvent {}
+class ShowJoinGroupFormEvent extends OnboardingEvent {}
 
-class SearchGroup extends OnboardingEvent {
+class SearchGroupEvent extends OnboardingEvent {
   final String groupCode;
 
-  SearchGroup(this.groupCode) : assert(groupCode != null);
+  SearchGroupEvent(this.groupCode) : assert(groupCode != null);
 
   @override
   List<Object> get props => [groupCode];

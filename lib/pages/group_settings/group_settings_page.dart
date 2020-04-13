@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_page.dart';
+import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 class GroupSettingsPage extends StatefulWidget {
@@ -86,7 +86,8 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
       },
       listener: (context, state) {
         if (state is GotoOnboarding) {
-          Navigator.of(context).pushReplacementNamed(OnboardingPage.routeUri);
+          Navigator.of(context)
+              .pushReplacementNamed(OnboardingStartPage.routeUri);
         }
       },
     );

@@ -12,24 +12,25 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       : assert(onboardingRepository != null);
 
   @override
-  OnboardingState get initialState => CheckingUser();
+  OnboardingState get initialState => CheckingUserState();
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
-    if (event is CheckUser) {
+    if (event is CheckUserEvent) {
       yield* _mapCheckUserToState(event);
-    } else if (event is BeginStartNewGroup) {
-      yield* _mapBeginStartNewGroupToState(event);
-    } else if (event is StartNewGroup) {
-      yield* _mapStartNewGroupToState(event);
-    } else if (event is BeginJoinGroup) {
-      yield* _mapBeginJoinGroupToState(event);
-    } else if (event is SearchGroup) {
+    } else if (event is ShowCreateNewGroupFormEvent) {
+      yield* _mapShowCreateNewGroupFormEventToState(event);
+    } else if (event is CreateNewGroupEvent) {
+      yield* _mapCreateNewGroupEventToState(event);
+    } else if (event is ShowJoinGroupFormEvent) {
+      yield* _mapShowJoinGroupFormEventToState(event);
+    } else if (event is SearchGroupEvent) {
       yield* _mapSearchGroupToState(event);
     }
   }
 
-  Stream<OnboardingState> _mapCheckUserToState(CheckUser checkUser) async* {
+  Stream<OnboardingState> _mapCheckUserToState(
+      CheckUserEvent checkUser) async* {
     final SigninUserResponse signinUserResponse =
         await onboardingRepository.signin(currentDeviceIdentifier);
     currentUserId = signinUserResponse.userId;
@@ -37,47 +38,49 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     if (signinUserResponse.hasGroup) {
       currentGroupId = signinUserResponse.groupId;
 
-      yield GotoDashboard();
+      yield NoOnboardingRequiredState();
     } else {
-      yield OnboardingIntro();
+      yield OnboardingIntroState();
     }
   }
 
-  Stream<OnboardingState> _mapBeginStartNewGroupToState(
-      BeginStartNewGroup beginStartNewGroup) async* {
-    yield StartNewGroupInitial();
+  Stream<OnboardingState> _mapShowCreateNewGroupFormEventToState(
+      ShowCreateNewGroupFormEvent beginStartNewGroup) async* {
+    yield CreateNewGroupFormState();
   }
 
-  Stream<OnboardingState> _mapStartNewGroupToState(
-      StartNewGroup startNewGroup) async* {
+  Stream<OnboardingState> _mapCreateNewGroupEventToState(
+      CreateNewGroupEvent startNewGroup) async* {
+    yield CreateNewGroupPendingState();
+
     final StartNewGroupResponse startNewGroupResponse =
         await onboardingRepository.startNewGroup(startNewGroup.groupName);
+
     if (startNewGroupResponse != null) {
       currentGroupId = startNewGroupResponse.groupId;
-      yield StartNewGroupSuccess(groupName: startNewGroup.groupName);
+      yield NewGroupCreatedState(groupName: startNewGroup.groupName);
     } else {
-      yield StartNewGroupFailedConflict(groupName: startNewGroup.groupName);
-      yield StartNewGroupInitial();
+      yield OnboardingIntroState();
     }
   }
 
-  Stream<OnboardingState> _mapBeginJoinGroupToState(
-      BeginJoinGroup beginJoinGroup) async* {
-    yield FindGroupInitial();
+  Stream<OnboardingState> _mapShowJoinGroupFormEventToState(
+      ShowJoinGroupFormEvent beginJoinGroup) async* {
+    yield FindGroupState();
   }
 
   Stream<OnboardingState> _mapSearchGroupToState(
-      SearchGroup searchGroup) async* {
+      SearchGroupEvent searchGroup) async* {
     final FindGroupResponse findGroupResponse =
         await onboardingRepository.findGroupByCode(searchGroup.groupCode);
 
     if (findGroupResponse != null) {
       await onboardingRepository.joinGroup(findGroupResponse.groupId);
       currentGroupId = findGroupResponse.groupId;
-      yield FindGroupSuccess(groupName: findGroupResponse.groupName);
+      yield GroupFoundState(groupName: findGroupResponse.groupName);
     } else {
-      yield FindGroupNotFound();
-      yield FindGroupInitial();
+      yield GroupNotFoundState();
+      yield FindGroupState();
     }
   }
 
