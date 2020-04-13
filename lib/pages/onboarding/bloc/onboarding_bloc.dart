@@ -70,8 +70,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   Stream<OnboardingState> _mapSearchGroupToState(
       SearchGroup searchGroup) async* {
-    final FindGroupResponse findGroupResponse = await onboardingRepository
-        .findGroupByName(searchGroup.groupCode); // note groupCode==groupName
+    final FindGroupResponse findGroupResponse =
+        await onboardingRepository.findGroupByCode(searchGroup.groupCode);
 
     if (findGroupResponse != null) {
       await onboardingRepository.joinGroup(findGroupResponse.groupId);

@@ -8,8 +8,8 @@ import 'package:stimmungsringeapp/session.dart';
 class OnboardingRepository {
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
 
-  Future<FindGroupResponse> findGroupByName(String groupName) async {
-    final String url = '$backendBaseUrl/onboarding/group-by-name';
+  Future<FindGroupResponse> findGroupByCode(String groupCode) async {
+    final String url = '$backendBaseUrl/onboarding/group-by-code';
 
     final http.Response response = await http.post(
       url,
@@ -18,7 +18,7 @@ class OnboardingRepository {
         "Content-Type": "application/json",
       },
       body: json.encode({
-        'groupName': groupName,
+        'groupCode': groupCode,
       }),
     );
 

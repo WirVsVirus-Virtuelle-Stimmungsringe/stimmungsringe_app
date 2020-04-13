@@ -95,8 +95,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 children: <Widget>[
                   const FamiliariseLogo(),
                   CupertinoTextField(
-                    placeholder:
-                        "Gib den Gruppen-Code/-Name ein (Tip: Rasselbande)",
+                    placeholder: "Gib den Gruppen-Code ein (Tip: 12345)",
                     controller: _groupSearchCodeController,
                     onSubmitted: _searchGroupByCode,
                   ),
