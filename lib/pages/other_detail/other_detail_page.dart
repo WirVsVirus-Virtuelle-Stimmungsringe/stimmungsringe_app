@@ -7,7 +7,7 @@ import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
+import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
 
 class OtherDetailPage extends StatelessWidget {
   static const String routeUri = '/other-detail-page';
@@ -55,7 +55,7 @@ class OtherDetailPage extends StatelessWidget {
             if (state is OtherDetailPageLoaded) {
               return buildContent();
             } else {
-              return LoadingSpinnerWidget();
+              return LoadingSpinner();
             }
           }),
         ));
@@ -75,7 +75,7 @@ class OtherDetailPage extends StatelessWidget {
               avatarSentiment: state.otherDetail.sentiment,
             );
           } else {
-            return LoadingSpinnerWidget();
+            return LoadingSpinner();
           }
         }),
         Container(
