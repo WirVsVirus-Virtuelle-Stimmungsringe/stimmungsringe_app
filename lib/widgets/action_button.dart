@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:stimmungsringeapp/widgets/button_group.dart';
 
 class ActionButton extends StatelessWidget {
   final Text text;
@@ -14,8 +15,13 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ButtonGroup buttonGroup =
+        context.findAncestorWidgetOfExactType<ButtonGroup>();
+    final BorderRadius borderRadius =
+        buttonGroup == null ? BorderRadius.circular(12.0) : null;
+
     return CupertinoButton(
-      borderRadius: BorderRadius.circular(12.0),
+      borderRadius: borderRadius,
       color: CupertinoColors.activeBlue,
       onPressed: onPressed,
       child: text,

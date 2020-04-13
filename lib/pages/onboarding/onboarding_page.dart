@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/widgets/action_button.dart';
+import 'package:stimmungsringeapp/widgets/button_group.dart';
 import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
@@ -50,8 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             return Column(
               children: <Widget>[
                 const FamiliariseLogo(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                ButtonGroup(
                   children: <Widget>[
                     ActionButton(
                       text: const Text('Meine Fam-Group starten'),
@@ -64,7 +64,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       text: const Text('Fam-Group Code eingeben'),
                     ),
                   ],
-                )
+                ),
               ],
             );
           }
