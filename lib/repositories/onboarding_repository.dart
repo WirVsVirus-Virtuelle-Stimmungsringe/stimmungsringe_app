@@ -9,7 +9,7 @@ class OnboardingRepository {
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
 
   Future<FindGroupResponse> findGroupByName(String groupName) async {
-    final String url = restUrlFindGroup();
+    final String url = '$backendBaseUrl/onboarding/group-by-name';
 
     final http.Response response = await http.post(
       url,
@@ -36,7 +36,7 @@ class OnboardingRepository {
   }
 
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
-    final String url = restUrlSignin();
+    final String url = '$backendBaseUrl/onboarding/signin';
 
     final http.Response response = await http.put(
       url,
@@ -58,7 +58,7 @@ class OnboardingRepository {
   }
 
   Future<StartNewGroupResponse> startNewGroup(String groupName) async {
-    final String url = restUrlStartNewGroup();
+    final String url = '$backendBaseUrl/onboarding/group/start';
 
     final http.Response response = await http.post(
       url,
@@ -86,7 +86,27 @@ class OnboardingRepository {
   }
 
   Future<void> joinGroup(String groupId) async {
-    final String url = restUrlJoinGroup();
+    final String url = '$backendBaseUrl/onboarding/group/join';
+
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        'groupId': groupId,
+      }),
+    );
+
+    assert(response.statusCode == 200);
+
+    await chaosMonkeyDelayAsync();
+    return;
+  }
+
+  Future<void> leaveGroup(String groupId) async {
+    final String url = '$backendBaseUrl/onboarding/group/leave';
 
     final http.Response response = await http.put(
       url,
