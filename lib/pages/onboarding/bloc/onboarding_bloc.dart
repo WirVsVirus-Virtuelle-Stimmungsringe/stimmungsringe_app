@@ -36,7 +36,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
     if (signinUserResponse.hasGroup) {
       currentGroupId = signinUserResponse.groupId;
-      currentGroupName = signinUserResponse.groupName;
 
       yield GotoDashboard();
     } else {
@@ -55,7 +54,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
         await onboardingRepository.startNewGroup(startNewGroup.groupName);
     if (startNewGroupResponse != null) {
       currentGroupId = startNewGroupResponse.groupId;
-      currentGroupName = startNewGroupResponse.groupName;
       yield StartNewGroupSuccess(groupName: startNewGroup.groupName);
     } else {
       yield StartNewGroupFailedConflict(groupName: startNewGroup.groupName);
@@ -76,7 +74,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     if (findGroupResponse != null) {
       await onboardingRepository.joinGroup(findGroupResponse.groupId);
       currentGroupId = findGroupResponse.groupId;
-      currentGroupName = findGroupResponse.groupName;
       yield FindGroupSuccess(groupName: findGroupResponse.groupName);
     } else {
       yield FindGroupNotFound();

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_page.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
 
 class GroupSettingsPage extends StatefulWidget {
   static const String routeUri = '/group-settings';
@@ -34,7 +34,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
     return BlocConsumer<GroupSettingsBloc, GroupSettingsState>(
       builder: (context, state) {
         if (state is SettingsLoading) {
-          return LoadingSpinnerWidget();
+          return LoadingSpinnerPage();
         }
         if (state is ShowCurrentSettings) {
           return CupertinoPageScaffold(
@@ -62,7 +62,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
         }
 
         print("Not rendering state in group settings page " + state.toString());
-        return LoadingSpinnerWidget();
+        return LoadingSpinnerPage();
       },
       listener: (context, state) {
         if (state is GotoOnboarding) {
