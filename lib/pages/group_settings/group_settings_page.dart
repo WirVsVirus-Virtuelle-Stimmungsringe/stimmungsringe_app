@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
@@ -23,6 +24,8 @@ class GroupSettingsPage extends StatefulWidget {
 }
 
 class _GroupSettingsPageState extends State<GroupSettingsPage> {
+  final _nameController = TextEditingController();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -37,25 +40,35 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           return LoadingSpinnerPage();
         }
         if (state is ShowCurrentSettings) {
-          return CupertinoPageScaffold(
-            navigationBar: const CupertinoNavigationBar(
-              middle: Text('Einstellungen Fam-Group'),
-            ),
-            child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(state.groupName),
-                  Text("Code für die Fam-Group: " + state.groupCode),
-                  CupertinoButton(
-                    child: Text("leave group"),
-                    onPressed: () {
-                      final GroupSettingsBloc groupSettingsBloc =
-                          BlocProvider.of<GroupSettingsBloc>(context);
-                      groupSettingsBloc.add(LeaveGroup());
-                    },
-                  ),
-                ],
+          _nameController.text = state.groupName;
+          return WillPopScope(
+            onWillPop: () {
+              BlocProvider.of<GroupSettingsBloc>(context)
+                  .add(UpdateGroupSettings(groupName: _nameController.text));
+              return Future.value(true);
+            },
+            child: CupertinoPageScaffold(
+              navigationBar: const CupertinoNavigationBar(
+                middle: Text('Einstellungen Fam-Group'),
+              ),
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(state.groupName),
+                    CupertinoTextField(
+                      controller: _nameController,
+                    ),
+                    Text("Code für die Fam-Group: " + state.groupCode),
+                    CupertinoButton(
+                      child: Text("leave group"),
+                      onPressed: () {
+                        BlocProvider.of<GroupSettingsBloc>(context)
+                            .add(LeaveGroup());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

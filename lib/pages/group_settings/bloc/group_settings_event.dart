@@ -7,4 +7,13 @@ abstract class GroupSettingsEvent extends Equatable {
 
 class LoadSettings extends GroupSettingsEvent {}
 
+class UpdateGroupSettings extends GroupSettingsEvent {
+  final String groupName;
+
+  UpdateGroupSettings({this.groupName});
+
+  @override
+  List<Object> get props => [groupName];
+}
+
 class LeaveGroup extends GroupSettingsEvent {}
