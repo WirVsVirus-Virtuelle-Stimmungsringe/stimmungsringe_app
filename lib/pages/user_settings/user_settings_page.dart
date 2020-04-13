@@ -1,71 +1,63 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
-class GroupSettingsPage extends StatefulWidget {
-  static const String routeUri = '/group-settings';
+class UserSettingsPage extends StatefulWidget {
+  static const String routeUri = '/user-settings';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
           OnboardingRepository onboardingRepository) =>
       MapEntry(
         routeUri,
-        (BuildContext c) => BlocProvider<GroupSettingsBloc>(
-          create: (context) => GroupSettingsBloc(onboardingRepository),
-          child: GroupSettingsPage(),
+        (BuildContext c) => BlocProvider<UserSettingsBloc>(
+          create: (context) => UserSettingsBloc(onboardingRepository),
+          child: UserSettingsPage(),
         ),
       );
 
   @override
-  _GroupSettingsPageState createState() => _GroupSettingsPageState();
+  _UserSettingsPageState createState() => _UserSettingsPageState();
 }
 
-class _GroupSettingsPageState extends State<GroupSettingsPage> {
-  final _groupNameController = TextEditingController();
+class _UserSettingsPageState extends State<UserSettingsPage> {
+  final _userNameController = TextEditingController();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    BlocProvider.of<GroupSettingsBloc>(context).add(LoadSettings());
+    BlocProvider.of<UserSettingsBloc>(context).add(LoadUserSettings());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GroupSettingsBloc, GroupSettingsState>(
+    return BlocConsumer<UserSettingsBloc, UserSettingsState>(
       builder: (context, state) {
-        if (state is GroupSettingsLoading) {
+        if (state is UserSettingsLoading) {
           return LoadingSpinnerPage();
         }
-        if (state is ShowCurrentGroupSettings) {
-          _groupNameController.text = state.groupName;
+        if (state is ShowCurrentUserSettings) {
+          _userNameController.text = state.userName;
           return WillPopScope(
             onWillPop: () {
-              BlocProvider.of<GroupSettingsBloc>(context).add(
-                  UpdateGroupSettings(groupName: _groupNameController.text));
+              BlocProvider.of<UserSettingsBloc>(context)
+                  .add(UpdateUserSettings(userName: _userNameController.text));
               return Future.value(true);
             },
             child: CupertinoPageScaffold(
               navigationBar: const CupertinoNavigationBar(
-                middle: Text('Einstellungen Fam-Group'),
+                middle: Text('Einstellungen Benutzer'),
               ),
               child: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(state.groupName),
+                    Text(state.userName),
                     CupertinoTextField(
-                      controller: _groupNameController,
-                    ),
-                    Text("Code für die Fam-Group: " + state.groupCode),
-                    CupertinoButton(
-                      child: Text("leave group"),
-                      onPressed: () {
-                        BlocProvider.of<GroupSettingsBloc>(context)
-                            .add(LeaveGroup());
-                      },
+                      controller: _userNameController,
                     ),
                   ],
                 ),
@@ -74,7 +66,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           );
         }
 
-        print("Not rendering state in group settings page " + state.toString());
+        print("Not rendering state in user settings page " + state.toString());
         return LoadingSpinnerPage();
       },
       listener: (context, state) {

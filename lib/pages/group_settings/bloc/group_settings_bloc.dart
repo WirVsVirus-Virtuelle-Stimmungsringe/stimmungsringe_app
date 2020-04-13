@@ -9,18 +9,16 @@ class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
   GroupSettingsBloc(this.onboardingRepository);
 
   @override
-  GroupSettingsState get initialState => SettingsLoading();
+  GroupSettingsState get initialState => GroupSettingsLoading();
 
   @override
   Stream<GroupSettingsState> mapEventToState(GroupSettingsEvent event) async* {
     if (event is LoadSettings) {
       final groupSettings =
           await onboardingRepository.getGroupSettings(currentGroupId);
-      final userSettings = await onboardingRepository.getUserSettings();
-      yield ShowCurrentSettings(groupSettings.groupName,
-          groupSettings.groupCode, userSettings.userName);
+      yield ShowCurrentGroupSettings(
+          groupSettings.groupName, groupSettings.groupCode);
     } else if (event is UpdateGroupSettings) {
-      await onboardingRepository.updateUserSettings(event.userName);
       await onboardingRepository.updateGroupSettings(
           currentGroupId, event.groupName);
     } else if (event is LeaveGroup) {

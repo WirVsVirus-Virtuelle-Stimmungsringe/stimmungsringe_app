@@ -5,16 +5,15 @@ abstract class GroupSettingsState extends Equatable {
   List<Object> get props => [];
 }
 
-class SettingsLoading extends GroupSettingsState {}
+class GroupSettingsLoading extends GroupSettingsState {}
 
-class ShowCurrentSettings extends GroupSettingsState {
+class ShowCurrentGroupSettings extends GroupSettingsState {
   final String groupName;
   final String groupCode;
-  final String userName;
 
-  ShowCurrentSettings(this.groupName, this.groupCode, this.userName);
+  ShowCurrentGroupSettings(this.groupName, this.groupCode);
 
-  List<Object> get props => [groupName, groupCode, userName];
+  List<Object> get props => [groupName, groupCode];
 }
 
 class GotoOnboarding extends GroupSettingsState {}
