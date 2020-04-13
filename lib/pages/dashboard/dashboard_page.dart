@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
+import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
+import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
+import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
@@ -35,6 +39,12 @@ class _DashboardPageState extends State<DashboardPage>
     WidgetsBinding.instance.addObserver(this);
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   /// https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -56,9 +66,12 @@ class _DashboardPageState extends State<DashboardPage>
       navigationBar: CupertinoNavigationBar(
         middle: const Text('Übersicht'),
         trailing: GestureDetector(
-          onTap: () {}, // TODO
+          onTap: () => Navigator.pushNamed(
+            context,
+            GroupSettingsPage.routeUri,
+          ),
           child: Icon(
-            CupertinoIcons.add,
+            CupertinoIcons.gear,
             color: CupertinoColors.activeBlue,
           ),
         ),
@@ -86,14 +99,20 @@ class _DashboardPageState extends State<DashboardPage>
         if (state.hasDashboard) {
           final Dashboard dashboard = (state as StateWithDashboard).dashboard;
           final UserMinimal user = dashboard.myTile.user;
-          return AvatarRow(
-            name: user.displayName,
-            image: NetworkImage(avatarImageUrl(user.userId)),
-            avatarSentiment: dashboard.myTile.sentiment,
-            onSentimentIconTap: () => Navigator.pushNamed(
+          return GestureDetector(
+            onTap: () => Navigator.pushNamed(
               context,
-              "/my-sentiment",
-              arguments: BlocProvider.of<DashboardBloc>(context),
+              UserSettingsPage.routeUri,
+            ),
+            child: AvatarRow(
+              name: user.displayName,
+              image: NetworkImage(avatarImageUrl(user.userId)),
+              avatarSentiment: dashboard.myTile.sentiment,
+              onSentimentIconTap: () => Navigator.pushNamed(
+                context,
+                SetMySentimentPage.routeUri,
+                arguments: BlocProvider.of<DashboardBloc>(context),
+              ),
             ),
           );
         } else {
@@ -142,7 +161,7 @@ class _DashboardPageState extends State<DashboardPage>
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(
                 context,
-                "/other-detail-page",
+                OtherDetailPage.routeUri,
                 arguments: {
                   'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
                   'otherUserId': tile.user.userId,

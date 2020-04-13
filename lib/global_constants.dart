@@ -1,9 +1,9 @@
 enum AppEnv { iOSSimulator, localNetwork, prod }
 
 // Pick your environment here
-const AppEnv currentDevEnv = AppEnv.iOSSimulator;
+const AppEnv currentDevEnv = AppEnv.localNetwork;
 
-const bool forceOnboarding = true;
+const bool forceOnboarding = false;
 
 const String backendUrlIOSSimulator = 'http://localhost:5000/stimmungsring';
 const String backendUrlLocalNetwork =
@@ -35,6 +35,6 @@ String avatarImageUrl(String userId) {
 
 Future<void> chaosMonkeyDelayAsync() async {
   if (currentDevEnv != AppEnv.prod) {
-    await Future<void>.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
   }
 }

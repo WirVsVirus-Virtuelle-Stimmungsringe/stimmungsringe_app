@@ -1,0 +1,37 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
+import 'package:stimmungsringeapp/session.dart';
+
+class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
+  final OnboardingRepository onboardingRepository;
+
+  GroupSettingsBloc(this.onboardingRepository);
+
+  @override
+  GroupSettingsState get initialState => GroupSettingsLoading();
+
+  @override
+  Stream<GroupSettingsState> mapEventToState(GroupSettingsEvent event) async* {
+    if (event is LoadSettings) {
+      final groupSettings =
+          await onboardingRepository.getGroupSettings(currentGroupId);
+      yield ShowCurrentGroupSettings(
+          groupSettings.groupName, groupSettings.groupCode);
+    } else if (event is SaveGroupSettings) {
+      await onboardingRepository.updateGroupSettings(
+          currentGroupId, event.groupName);
+    } else if (event is LeaveGroup) {
+      await onboardingRepository.leaveGroup(currentGroupId);
+      currentGroupId = null;
+      yield GotoOnboarding();
+    }
+  }
+
+  @override
+  void onTransition(
+      Transition<GroupSettingsEvent, GroupSettingsState> transition) {
+    super.onTransition(transition);
+    print(transition);
+  }
+}

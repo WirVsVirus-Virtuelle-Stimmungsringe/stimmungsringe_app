@@ -124,4 +124,84 @@ class OnboardingRepository {
     await chaosMonkeyDelayAsync();
     return;
   }
+
+  Future<void> updateUserSettings(String name) async {
+    final String url = '$backendBaseUrl/onboarding/user/settings';
+
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        'name': name,
+      }),
+    );
+
+    assert(response.statusCode == 200);
+
+    await chaosMonkeyDelayAsync();
+    return;
+  }
+
+  Future<void> updateGroupSettings(String groupId, String groupName) async {
+    final String url = '$backendBaseUrl/onboarding/group/${groupId}/settings';
+
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        'groupName': groupName,
+      }),
+    );
+
+    assert(response.statusCode == 200);
+
+    await chaosMonkeyDelayAsync();
+    return;
+  }
+
+  Future<UserSettingsResponse> getUserSettings() async {
+    final String url = '$backendBaseUrl/onboarding/user/settings';
+
+    final http.Response response = await http.get(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+    );
+
+    assert(response.statusCode == 200);
+
+    final UserSettingsResponse userSettings = UserSettingsResponse.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
+
+    await chaosMonkeyDelayAsync();
+    return userSettings;
+  }
+
+  Future<GroupSettingsResponse> getGroupSettings(String groupId) async {
+    final String url = '$backendBaseUrl/onboarding/group/$groupId/settings';
+
+    final http.Response response = await http.get(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+    );
+
+    assert(response.statusCode == 200);
+
+    final GroupSettingsResponse groupSettings = GroupSettingsResponse.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
+
+    await chaosMonkeyDelayAsync();
+    return groupSettings;
+  }
 }
