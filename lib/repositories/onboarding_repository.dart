@@ -125,9 +125,28 @@ class OnboardingRepository {
     return;
   }
 
+  Future<void> updateUserSettings(String name) async {
+    final String url = '$backendBaseUrl/onboarding/user/settings';
+
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        'X-User-ID': currentUserId,
+        "Content-Type": "application/json",
+      },
+      body: json.encode({
+        'name': name,
+      }),
+    );
+
+    assert(response.statusCode == 200);
+
+    await chaosMonkeyDelayAsync();
+    return;
+  }
+
   Future<void> updateGroupSettings(String groupId, String groupName) async {
-    final String url =
-        Uri.encodeFull('$backendBaseUrl/onboarding/group/${groupId}/settings');
+    final String url = '$backendBaseUrl/onboarding/group/${groupId}/settings';
 
     final http.Response response = await http.put(
       url,
@@ -147,7 +166,7 @@ class OnboardingRepository {
   }
 
   Future<GroupSettingsResponse> getGroupSettings(String groupId) async {
-    final String url = '$backendBaseUrl/onboarding/group/settings';
+    final String url = '$backendBaseUrl/onboarding/group/$groupId/settings';
 
     final http.Response response = await http.get(
       url,

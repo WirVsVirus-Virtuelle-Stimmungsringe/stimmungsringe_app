@@ -49,14 +49,17 @@ class GroupSettingsResponse {
   final String groupId;
   final String groupName;
   final String groupCode;
+  final String userName;
 
   static GroupSettingsResponse fromJson(Map<String, dynamic> jsonMap) {
     return GroupSettingsResponse(
       jsonMap['groupId'] as String,
       jsonMap['groupName'] as String,
       jsonMap['groupCode'] as String,
+      jsonMap['userName'] as String,
     );
   }
 
-  const GroupSettingsResponse(this.groupId, this.groupName, this.groupCode);
+  const GroupSettingsResponse(
+      this.groupId, this.groupName, this.groupCode, this.userName);
 }

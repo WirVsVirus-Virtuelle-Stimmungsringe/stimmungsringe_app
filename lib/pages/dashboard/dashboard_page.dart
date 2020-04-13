@@ -44,6 +44,20 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   @override
+  Future<bool> didPopRoute() {
+    print("didPopRoute");
+    // TODO: implement didPopRoute
+    return super.didPopRoute();
+  }
+
+  @override
+  Future<bool> didPushRoute(String route) {
+    print("didPushRoute called");
+    // TODO: implement didPushRoute
+    return super.didPushRoute(route);
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 

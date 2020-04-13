@@ -9,11 +9,12 @@ class LoadSettings extends GroupSettingsEvent {}
 
 class UpdateGroupSettings extends GroupSettingsEvent {
   final String groupName;
+  final String userName; // TODO rename request dto
 
-  UpdateGroupSettings({this.groupName});
+  UpdateGroupSettings({this.groupName, this.userName});
 
   @override
-  List<Object> get props => [groupName];
+  List<Object> get props => [groupName, userName];
 }
 
 class LeaveGroup extends GroupSettingsEvent {}

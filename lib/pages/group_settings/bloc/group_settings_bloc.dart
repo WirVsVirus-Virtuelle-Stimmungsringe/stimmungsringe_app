@@ -16,8 +16,10 @@ class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
     if (event is LoadSettings) {
       final settings =
           await onboardingRepository.getGroupSettings(currentGroupId);
-      yield ShowCurrentSettings(settings.groupName, settings.groupCode);
+      yield ShowCurrentSettings(
+          settings.groupName, settings.groupCode, settings.userName);
     } else if (event is UpdateGroupSettings) {
+      await onboardingRepository.updateUserSettings(event.userName);
       await onboardingRepository.updateGroupSettings(
           currentGroupId, event.groupName);
     } else if (event is LeaveGroup) {

@@ -10,10 +10,11 @@ class SettingsLoading extends GroupSettingsState {}
 class ShowCurrentSettings extends GroupSettingsState {
   final String groupName;
   final String groupCode;
+  final String userName;
 
-  ShowCurrentSettings(this.groupName, this.groupCode);
+  ShowCurrentSettings(this.groupName, this.groupCode, this.userName);
 
-  List<Object> get props => [groupName, groupCode];
+  List<Object> get props => [groupName, groupCode, userName];
 }
 
 class GotoOnboarding extends GroupSettingsState {}

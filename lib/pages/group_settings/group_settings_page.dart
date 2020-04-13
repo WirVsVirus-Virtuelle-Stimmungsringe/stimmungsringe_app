@@ -24,7 +24,8 @@ class GroupSettingsPage extends StatefulWidget {
 }
 
 class _GroupSettingsPageState extends State<GroupSettingsPage> {
-  final _nameController = TextEditingController();
+  final _groupNameController = TextEditingController();
+  final _userNameController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -40,11 +41,14 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           return LoadingSpinnerPage();
         }
         if (state is ShowCurrentSettings) {
-          _nameController.text = state.groupName;
+          _groupNameController.text = state.groupName;
+          _userNameController.text = state.userName;
           return WillPopScope(
             onWillPop: () {
-              BlocProvider.of<GroupSettingsBloc>(context)
-                  .add(UpdateGroupSettings(groupName: _nameController.text));
+              BlocProvider.of<GroupSettingsBloc>(context).add(
+                  UpdateGroupSettings(
+                      groupName: _groupNameController.text,
+                      userName: _userNameController.text));
               return Future.value(true);
             },
             child: CupertinoPageScaffold(
@@ -57,7 +61,10 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                   children: <Widget>[
                     Text(state.groupName),
                     CupertinoTextField(
-                      controller: _nameController,
+                      controller: _groupNameController,
+                    ),
+                    CupertinoTextField(
+                      controller: _userNameController,
                     ),
                     Text("Code für die Fam-Group: " + state.groupCode),
                     CupertinoButton(
