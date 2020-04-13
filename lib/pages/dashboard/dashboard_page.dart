@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
+import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner_widget.dart';
@@ -13,13 +15,22 @@ class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          DashboardRepository dashboardRepository) =>
+          DashboardRepository dashboardRepository,
+          OnboardingRepository onboardingRepository) =>
       MapEntry(
         routeUri,
-        (BuildContext c) => BlocProvider<DashboardBloc>(
-          create: (context) =>
-              DashboardBloc(dashboardRepository: dashboardRepository),
+        (BuildContext c) => MultiBlocProvider(
           child: DashboardPage(),
+          providers: [
+            BlocProvider<DashboardBloc>(
+              create: (context) =>
+                  DashboardBloc(dashboardRepository: dashboardRepository),
+            ),
+            BlocProvider<OnboardingBloc>(
+              create: (context) =>
+                  OnboardingBloc(onboardingRepository: onboardingRepository),
+            ),
+          ],
         ),
       );
 
@@ -59,7 +70,7 @@ class _DashboardPageState extends State<DashboardPage>
           onTap: () => Navigator.pushNamed(
             context,
             "/group-settings",
-            arguments: BlocProvider.of<DashboardBloc>(context),
+            arguments: BlocProvider.of<OnboardingBloc>(context),
           ),
           child: Icon(
             CupertinoIcons.gear,

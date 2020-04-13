@@ -36,7 +36,7 @@ class SentimentApp extends StatelessWidget {
       initialRoute: OnboardingPage.routeUri,
       routes: Map.fromEntries([
         OnboardingPage.makeRoute(onboardingRepository),
-        DashboardPage.makeRoute(dashboardRepository),
+        DashboardPage.makeRoute(dashboardRepository, onboardingRepository),
         SetMySentimentPage.route,
         OtherDetailPage.makeRoute(dashboardRepository),
         GroupSettingsPage.makeRoute(onboardingRepository)
