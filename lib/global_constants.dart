@@ -35,6 +35,6 @@ String avatarImageUrl(String userId) {
 
 Future<void> chaosMonkeyDelayAsync() async {
   if (currentDevEnv != AppEnv.prod) {
-    await Future<void>.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
   }
 }

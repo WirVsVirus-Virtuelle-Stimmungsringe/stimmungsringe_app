@@ -26,8 +26,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       yield* _mapBeginJoinGroupToState(event);
     } else if (event is SearchGroup) {
       yield* _mapSearchGroupToState(event);
-    } else if (event is LeaveGroup) {
-      yield* _mapLeaveGroupToState(event);
     }
   }
 
@@ -72,8 +70,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   Stream<OnboardingState> _mapSearchGroupToState(
       SearchGroup searchGroup) async* {
-    final FindGroupResponse findGroupResponse = await onboardingRepository
-        .findGroupByName(searchGroup.groupCode); // note groupCode==groupName
+    final FindGroupResponse findGroupResponse =
+        await onboardingRepository.findGroupByCode(searchGroup.groupCode);
 
     if (findGroupResponse != null) {
       await onboardingRepository.joinGroup(findGroupResponse.groupId);
@@ -84,11 +82,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       yield FindGroupNotFound();
       yield FindGroupInitial();
     }
-  }
-
-  Stream<OnboardingState> _mapLeaveGroupToState(LeaveGroup leaveGroup) async* {
-    await onboardingRepository.leaveGroup(leaveGroup.groupId);
-    yield CheckingUser();
   }
 
   @override

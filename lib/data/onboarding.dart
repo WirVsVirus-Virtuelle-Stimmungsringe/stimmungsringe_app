@@ -44,3 +44,19 @@ class FindGroupResponse {
 
   const FindGroupResponse(this.groupId, this.groupName);
 }
+
+class GroupSettingsResponse {
+  final String groupId;
+  final String groupName;
+  final String groupCode;
+
+  static GroupSettingsResponse fromJson(Map<String, dynamic> jsonMap) {
+    return GroupSettingsResponse(
+      jsonMap['groupId'] as String,
+      jsonMap['groupName'] as String,
+      jsonMap['groupCode'] as String,
+    );
+  }
+
+  const GroupSettingsResponse(this.groupId, this.groupName, this.groupCode);
+}

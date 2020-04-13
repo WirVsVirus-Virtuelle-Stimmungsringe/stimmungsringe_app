@@ -25,12 +25,3 @@ class SearchGroup extends OnboardingEvent {
   @override
   List<Object> get props => [groupCode];
 }
-
-class LeaveGroup extends OnboardingEvent {
-  final String groupId;
-
-  LeaveGroup(this.groupId) : assert(groupId != null);
-
-  @override
-  List<Object> get props => [groupId];
-}
