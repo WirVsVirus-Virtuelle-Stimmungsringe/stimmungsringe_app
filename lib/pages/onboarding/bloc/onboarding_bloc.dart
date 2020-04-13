@@ -19,13 +19,13 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     if (event is CheckUserEvent) {
       yield* _mapCheckUserToState(event);
     } else if (event is ShowCreateNewGroupFormEvent) {
-      yield* _mapShowCreateNewGroupFormEventToState(event);
+      yield* _mapShowCreateNewGroupFormToState(event);
     } else if (event is CreateNewGroupEvent) {
-      yield* _mapCreateNewGroupEventToState(event);
+      yield* _mapCreateNewGroupToState(event);
     } else if (event is ShowJoinGroupFormEvent) {
-      yield* _mapShowJoinGroupFormEventToState(event);
-    } else if (event is SearchGroupEvent) {
-      yield* _mapSearchGroupToState(event);
+      yield* _mapShowJoinGroupFormToState(event);
+    } else if (event is JoinGroupEvent) {
+      yield* _mapJoinGroupToState(event);
     }
   }
 
@@ -44,12 +44,12 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
   }
 
-  Stream<OnboardingState> _mapShowCreateNewGroupFormEventToState(
+  Stream<OnboardingState> _mapShowCreateNewGroupFormToState(
       ShowCreateNewGroupFormEvent beginStartNewGroup) async* {
     yield CreateNewGroupFormState();
   }
 
-  Stream<OnboardingState> _mapCreateNewGroupEventToState(
+  Stream<OnboardingState> _mapCreateNewGroupToState(
       CreateNewGroupEvent startNewGroup) async* {
     yield CreateNewGroupPendingState();
 
@@ -64,23 +64,25 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
   }
 
-  Stream<OnboardingState> _mapShowJoinGroupFormEventToState(
+  Stream<OnboardingState> _mapShowJoinGroupFormToState(
       ShowJoinGroupFormEvent beginJoinGroup) async* {
-    yield FindGroupState();
+    yield JoinGroupFormState();
   }
 
-  Stream<OnboardingState> _mapSearchGroupToState(
-      SearchGroupEvent searchGroup) async* {
+  Stream<OnboardingState> _mapJoinGroupToState(
+      JoinGroupEvent searchGroup) async* {
+    yield JoinGroupPendingState();
+
     final FindGroupResponse findGroupResponse =
         await onboardingRepository.findGroupByCode(searchGroup.groupCode);
 
     if (findGroupResponse != null) {
       await onboardingRepository.joinGroup(findGroupResponse.groupId);
       currentGroupId = findGroupResponse.groupId;
-      yield GroupFoundState(groupName: findGroupResponse.groupName);
+      yield JoinedGroupState(groupName: findGroupResponse.groupName);
     } else {
       yield GroupNotFoundState();
-      yield FindGroupState();
+      yield JoinGroupFormState();
     }
   }
 

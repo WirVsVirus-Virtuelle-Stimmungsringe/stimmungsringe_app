@@ -6,46 +6,46 @@ import 'package:stimmungsringeapp/widgets/action_button.dart';
 import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
 import 'package:stimmungsringeapp/widgets/wait_dialog.dart';
 
-class OnboardingCreateGroupPage extends StatefulWidget {
-  static const String routeUri = '/onboarding/create-group';
+class OnboardingJoinGroupPage extends StatefulWidget {
+  static const String routeUri = '/onboarding/join-group';
 
-  const OnboardingCreateGroupPage({Key key}) : super(key: key);
+  const OnboardingJoinGroupPage({Key key}) : super(key: key);
 
   static MapEntry<String, WidgetBuilder> route = MapEntry(
     routeUri,
     (BuildContext context) => BlocProvider.value(
       value: ModalRoute.of(context).settings.arguments as OnboardingBloc,
-      child: const OnboardingCreateGroupPage(),
+      child: const OnboardingJoinGroupPage(),
     ),
   );
 
   @override
-  _OnboardingCreateGroupPageState createState() =>
-      _OnboardingCreateGroupPageState();
+  _OnboardingJoinGroupPageState createState() =>
+      _OnboardingJoinGroupPageState();
 }
 
-class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
-  final _newGroupNameController = TextEditingController();
+class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
+  final _groupCodeController = TextEditingController();
   bool waitDialogVisible = false;
 
   @override
   void initState() {
     super.initState();
 
-    _newGroupNameController.addListener(() => setState(() {}));
+    _groupCodeController.addListener(() => setState(() {}));
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    BlocProvider.of<OnboardingBloc>(context).add(ShowCreateNewGroupFormEvent());
+    BlocProvider.of<OnboardingBloc>(context).add(ShowJoinGroupFormEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final submitButtonHandler = _isGroupNameValid()
-        ? () => _startNewGroup(_newGroupNameController.text)
+    final submitButtonHandler = _isGroupCodeValid()
+        ? () => _joinGroupByCode(_groupCodeController.text)
         : null;
 
     return CupertinoPageScaffold(
@@ -59,19 +59,19 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                 children: <Widget>[
                   const FamiliariseLogo(),
                   CupertinoTextField(
-                    placeholder: "Wie soll die neue Gruppe heißen?",
-                    controller: _newGroupNameController,
-                    onSubmitted: _startNewGroup,
+                    placeholder: "Gib den Gruppen-Code ein (Tip: 12345)",
+                    controller: _groupCodeController,
+                    onSubmitted: _joinGroupByCode,
                   ),
                   ActionButton(
-                    text: const Text('Fam-Group starten'),
                     onPressed: submitButtonHandler,
+                    text: const Text('beitreten'),
                   ),
                 ],
               );
             },
             listener: (context, state) {
-              if (state is CreateNewGroupPendingState) {
+              if (state is JoinGroupPendingState) {
                 if (!waitDialogVisible) {
                   showCupertinoDialog<void>(
                     context: context,
@@ -86,12 +86,12 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                 }
               }
 
-              if (state is NewGroupCreatedState) {
-                print("show alert: Started new Group ${state.groupName}");
+              if (state is JoinedGroupState) {
+                print("show alert: joined group ${state.groupName}");
 
                 Future.delayed(const Duration(milliseconds: 800), () {
                   Fluttertoast.showToast(
-                      msg: "Erfolgreich erstellt",
+                      msg: "Erfolgreich beigetreten",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       timeInSecForIosWeb: 1,
@@ -106,6 +106,22 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                   (_) => false,
                 );
               }
+
+              if (state is GroupNotFoundState) {
+                print("show alert: Group not found!");
+                _groupCodeController.clear();
+
+                Future.delayed(const Duration(milliseconds: 800), () {
+                  Fluttertoast.showToast(
+                      msg: "Gruppe nicht gefunden",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: CupertinoColors.destructiveRed,
+                      textColor: CupertinoColors.white,
+                      fontSize: 16.0);
+                });
+              }
             },
           ),
         ),
@@ -113,14 +129,13 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
     );
   }
 
-  bool _isGroupNameValid() {
-    return _newGroupNameController.text.length >= 3;
+  bool _isGroupCodeValid() {
+    return _groupCodeController.text.length >= 3;
   }
 
-  void _startNewGroup(String groupName) {
-    if (_isGroupNameValid()) {
-      BlocProvider.of<OnboardingBloc>(context)
-          .add(CreateNewGroupEvent(groupName));
+  void _joinGroupByCode(String groupCode) {
+    if (_isGroupCodeValid()) {
+      BlocProvider.of<OnboardingBloc>(context).add(JoinGroupEvent(groupCode));
     }
   }
 }

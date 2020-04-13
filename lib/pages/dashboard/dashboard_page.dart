@@ -39,6 +39,12 @@ class _DashboardPageState extends State<DashboardPage>
     WidgetsBinding.instance.addObserver(this);
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   /// https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {

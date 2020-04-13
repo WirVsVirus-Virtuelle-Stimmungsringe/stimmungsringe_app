@@ -27,15 +27,15 @@ class NewGroupCreatedState extends OnboardingState {
   List<Object> get props => [groupName];
 }
 
-class FindGroupState extends OnboardingState {}
+class JoinGroupFormState extends OnboardingState {}
 
-class FindGroupSearchingState extends OnboardingState {}
+class JoinGroupPendingState extends OnboardingState {}
 
 // goto dashboard
-class GroupFoundState extends OnboardingState {
+class JoinedGroupState extends OnboardingState {
   final String groupName;
 
-  GroupFoundState({this.groupName});
+  JoinedGroupState({this.groupName});
 
   @override
   List<Object> get props => [groupName];

@@ -20,10 +20,10 @@ class CreateNewGroupEvent extends OnboardingEvent {
 
 class ShowJoinGroupFormEvent extends OnboardingEvent {}
 
-class SearchGroupEvent extends OnboardingEvent {
+class JoinGroupEvent extends OnboardingEvent {
   final String groupCode;
 
-  SearchGroupEvent(this.groupCode) : assert(groupCode != null);
+  JoinGroupEvent(this.groupCode) : assert(groupCode != null);
 
   @override
   List<Object> get props => [groupCode];
