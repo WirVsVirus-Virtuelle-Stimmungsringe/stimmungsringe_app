@@ -31,8 +31,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   Stream<OnboardingState> _mapCheckUserToState(
       CheckUserEvent checkUser) async* {
+    final String deviceId = await getCurrentDeviceIdentifier();
     final SigninUserResponse signinUserResponse =
-        await onboardingRepository.signin(currentDeviceIdentifier);
+        await onboardingRepository.signin(deviceId);
     currentUserId = signinUserResponse.userId;
 
     if (signinUserResponse.hasGroup) {
