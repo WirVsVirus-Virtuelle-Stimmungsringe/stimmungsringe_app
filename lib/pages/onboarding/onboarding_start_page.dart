@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_join_group_page.dart';
+import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/widgets/action_button.dart';
 import 'package:stimmungsringeapp/widgets/button_group.dart';
@@ -13,17 +15,22 @@ class OnboardingStartPage extends StatelessWidget {
   static const String routeUri = '/';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          OnboardingRepository onboardingRepository) =>
+          OnboardingRepository onboardingRepository,
+          DashboardRepository dashboardRepository) =>
       MapEntry(
         routeUri,
         (_) => BlocProvider<OnboardingBloc>(
           create: (_) =>
               OnboardingBloc(onboardingRepository: onboardingRepository),
-          child: const OnboardingStartPage(),
+          child: OnboardingStartPage(dashboardRepository: dashboardRepository),
         ),
       );
 
-  const OnboardingStartPage({Key key}) : super(key: key);
+  final DashboardRepository dashboardRepository;
+
+  const OnboardingStartPage({Key key, @required this.dashboardRepository})
+      : assert(dashboardRepository != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,8 @@ class OnboardingStartPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: BlocConsumer<OnboardingBloc, OnboardingState>(
             builder: (context, state) {
-              if (state is CheckingUserState) {
+              if (state is CheckingUserState ||
+                  state is NoOnboardingRequiredState) {
                 return LoadingSpinner();
               }
 
@@ -68,7 +76,9 @@ class OnboardingStartPage extends StatelessWidget {
             listener: (context, state) {
               if (state is NoOnboardingRequiredState) {
                 print("navigate from onboarding to dasboard");
-                Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.of(context).pushReplacement(
+                  DashboardPage.makeRouteWithoutTransition(dashboardRepository),
+                );
               }
             },
           ),

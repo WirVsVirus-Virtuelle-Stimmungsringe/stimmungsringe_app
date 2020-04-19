@@ -38,7 +38,10 @@ class SentimentApp extends StatelessWidget {
       title: 'Stimmungsringe',
       initialRoute: OnboardingStartPage.routeUri,
       routes: Map.fromEntries([
-        OnboardingStartPage.makeRoute(onboardingRepository),
+        OnboardingStartPage.makeRoute(
+          onboardingRepository,
+          dashboardRepository,
+        ),
         OnboardingCreateGroupPage.route,
         OnboardingJoinGroupPage.route,
         DashboardPage.makeRoute(dashboardRepository),

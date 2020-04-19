@@ -17,15 +17,28 @@ class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          DashboardRepository dashboardRepository) =>
-      MapEntry(
-        routeUri,
-        (BuildContext c) => BlocProvider<DashboardBloc>(
+      DashboardRepository dashboardRepository) {
+    return MapEntry(
+      routeUri,
+      _makeRouteBuilder(dashboardRepository),
+    );
+  }
+
+  static PageRouteBuilder<Widget> makeRouteWithoutTransition(
+      DashboardRepository dashboardRepository) {
+    return PageRouteBuilder<Widget>(
+        pageBuilder: (context, animation1, animation2) =>
+            _makeRouteBuilder(dashboardRepository)(context));
+  }
+
+  static WidgetBuilder _makeRouteBuilder(
+      DashboardRepository dashboardRepository) {
+    return (BuildContext c) => BlocProvider<DashboardBloc>(
           create: (context) =>
               DashboardBloc(dashboardRepository: dashboardRepository),
           child: DashboardPage(),
-        ),
-      );
+        );
+  }
 
   @override
   _DashboardPageState createState() => _DashboardPageState();
