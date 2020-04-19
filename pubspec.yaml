@@ -31,6 +31,9 @@ dependencies:
   meta: ^1.1.8
   fluttertoast: ^4.0.0
   flutter_udid: ^1.0.1
+  flutter_dotenv: ^2.1.0
+  yaml: ^2.2.0
+  basic_utils: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +56,9 @@ flutter:
   uses-material-design: false
 
   assets:
-   - assets/images/familiarise_logo_large.png
+    - config.yaml
+    - .env
+    - assets/images/familiarise_logo_large.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

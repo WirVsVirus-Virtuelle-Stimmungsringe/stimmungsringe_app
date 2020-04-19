@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
 import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
+import 'package:stimmungsringeapp/repositories/assets_repository.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row_condensed.dart';
@@ -119,7 +119,7 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: AvatarRow(
               name: user.displayName,
-              image: NetworkImage(avatarImageUrl(user.userId)),
+              image: AssetsRepository().avatarImage(user.userId),
               avatarSentiment: dashboard.myTile.sentiment,
               onSentimentIconTap: () => Navigator.pushNamed(
                 context,
@@ -182,7 +182,7 @@ class _DashboardPageState extends State<DashboardPage>
               ),
               child: AvatarRowCondensed(
                 name: tile.user.displayName,
-                image: NetworkImage(avatarImageUrl(tile.user.userId)),
+                image: AssetsRepository().avatarImage(tile.user.userId),
                 avatarSentiment: tile.sentiment,
               ),
             ),

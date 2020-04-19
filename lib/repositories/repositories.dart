@@ -1,3 +1,4 @@
+export 'assets_repository.dart';
 export 'dashboard_repository.dart';
 export 'onboarding_repository.dart';
 

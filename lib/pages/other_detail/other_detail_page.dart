@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
+import 'package:stimmungsringeapp/repositories/assets_repository.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/widgets/avatar_row.dart';
 import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
@@ -71,7 +71,7 @@ class OtherDetailPage extends StatelessWidget {
             return AvatarRow(
               name: state.otherDetail.user.displayName,
               image:
-                  NetworkImage(avatarImageUrl(state.otherDetail.user.userId)),
+                  AssetsRepository().avatarImage(state.otherDetail.user.userId),
               avatarSentiment: state.otherDetail.sentiment,
             );
           } else {

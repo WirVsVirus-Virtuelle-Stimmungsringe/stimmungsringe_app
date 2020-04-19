@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:stimmungsringeapp/config.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
 import 'package:stimmungsringeapp/session.dart';
 
 class DashboardRepository {
   Future<Dashboard> loadDashboardPageData() async {
-    final String url = '$backendBaseUrl/dashboard';
+    final String url = '${Config().backendUrl}/dashboard';
 
     final http.Response response = await http.get(
       url,
@@ -20,12 +21,12 @@ class DashboardRepository {
     final Dashboard dashboard =
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return dashboard;
   }
 
   Future<void> setNewSentiment(Sentiment sentiment) async {
-    final String url = '$backendBaseUrl/mystatus';
+    final String url = '${Config().backendUrl}/mystatus';
 
     final http.Response response = await http.put(url,
         headers: {
@@ -37,11 +38,11 @@ class DashboardRepository {
 
     assert(response.statusCode == 200);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
   }
 
   Future<OtherDetail> loadOtherDetailPageData(String userId) async {
-    final String url = '$backendBaseUrl/otherstatuspage/$userId';
+    final String url = '${Config().backendUrl}/otherstatuspage/$userId';
 
     final http.Response response = await http.get(
       url,
@@ -55,7 +56,7 @@ class DashboardRepository {
     final OtherDetail detailPage = OtherDetail.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return detailPage;
   }
 }

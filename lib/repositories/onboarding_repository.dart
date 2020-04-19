@@ -1,15 +1,16 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:stimmungsringeapp/config.dart';
 import 'package:stimmungsringeapp/data/onboarding.dart';
-import 'package:stimmungsringeapp/global_constants.dart';
+import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
 import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingRepository {
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
 
   Future<FindGroupResponse> findGroupByCode(String groupCode) async {
-    final String url = '$backendBaseUrl/onboarding/group-by-code';
+    final String url = '${Config().backendUrl}/onboarding/group-by-code';
 
     final http.Response response = await http.post(
       url,
@@ -31,12 +32,12 @@ class OnboardingRepository {
     final FindGroupResponse findGroupResponse = FindGroupResponse.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return findGroupResponse;
   }
 
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
-    final String url = '$backendBaseUrl/onboarding/signin';
+    final String url = '${Config().backendUrl}/onboarding/signin';
 
     final http.Response response = await http.put(
       url,
@@ -53,12 +54,12 @@ class OnboardingRepository {
     final SigninUserResponse signinUserResponse = SigninUserResponse.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return signinUserResponse;
   }
 
   Future<StartNewGroupResponse> startNewGroup(String groupName) async {
-    final String url = '$backendBaseUrl/onboarding/group/start';
+    final String url = '${Config().backendUrl}/onboarding/group/start';
 
     final http.Response response = await http.post(
       url,
@@ -81,12 +82,12 @@ class OnboardingRepository {
         StartNewGroupResponse.fromJson(
             json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return startNewGroupResponse;
   }
 
   Future<void> joinGroup(String groupId) async {
-    final String url = '$backendBaseUrl/onboarding/group/join';
+    final String url = '${Config().backendUrl}/onboarding/group/join';
 
     final http.Response response = await http.put(
       url,
@@ -101,12 +102,12 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return;
   }
 
   Future<void> leaveGroup(String groupId) async {
-    final String url = '$backendBaseUrl/onboarding/group/leave';
+    final String url = '${Config().backendUrl}/onboarding/group/leave';
 
     final http.Response response = await http.put(
       url,
@@ -121,12 +122,12 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return;
   }
 
   Future<void> updateUserSettings(String name) async {
-    final String url = '$backendBaseUrl/onboarding/user/settings';
+    final String url = '${Config().backendUrl}/onboarding/user/settings';
 
     final http.Response response = await http.put(
       url,
@@ -141,12 +142,13 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return;
   }
 
   Future<void> updateGroupSettings(String groupId, String groupName) async {
-    final String url = '$backendBaseUrl/onboarding/group/$groupId/settings';
+    final String url =
+        '${Config().backendUrl}/onboarding/group/$groupId/settings';
 
     final http.Response response = await http.put(
       url,
@@ -161,12 +163,12 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return;
   }
 
   Future<UserSettingsResponse> getUserSettings() async {
-    final String url = '$backendBaseUrl/onboarding/user/settings';
+    final String url = '${Config().backendUrl}/onboarding/user/settings';
 
     final http.Response response = await http.get(
       url,
@@ -181,12 +183,13 @@ class OnboardingRepository {
     final UserSettingsResponse userSettings = UserSettingsResponse.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return userSettings;
   }
 
   Future<GroupSettingsResponse> getGroupSettings(String groupId) async {
-    final String url = '$backendBaseUrl/onboarding/group/$groupId/settings';
+    final String url =
+        '${Config().backendUrl}/onboarding/group/$groupId/settings';
 
     final http.Response response = await http.get(
       url,
@@ -201,7 +204,7 @@ class OnboardingRepository {
     final GroupSettingsResponse groupSettings = GroupSettingsResponse.fromJson(
         json.decode(response.body) as Map<String, dynamic>);
 
-    await chaosMonkeyDelayAsync();
+    await ChaosMonkey.delayAsync();
     return groupSettings;
   }
 }

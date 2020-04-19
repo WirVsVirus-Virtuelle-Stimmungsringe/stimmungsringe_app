@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:stimmungsringeapp/config.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
@@ -11,12 +12,14 @@ import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/repositories/repositories.dart';
 
-void main() {
+Future<void> main() async {
   // TODO: throws exceptions on start
 //  SystemChrome.setPreferredOrientations(
 //      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
+
+  await Config().loaded;
 
   final DashboardRepository dashboardRepository = DashboardRepository();
   final OnboardingRepository onboardingRepository = OnboardingRepository();
