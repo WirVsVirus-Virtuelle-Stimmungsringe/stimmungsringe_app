@@ -146,7 +146,7 @@ class OnboardingRepository {
   }
 
   Future<void> updateGroupSettings(String groupId, String groupName) async {
-    final String url = '$backendBaseUrl/onboarding/group/${groupId}/settings';
+    final String url = '$backendBaseUrl/onboarding/group/$groupId/settings';
 
     final http.Response response = await http.put(
       url,

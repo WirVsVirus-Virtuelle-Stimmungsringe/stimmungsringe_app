@@ -1,6 +1,6 @@
 import 'package:stimmungsringeapp/global_constants.dart';
 
-String currentUserId = null;
-String currentGroupId = null;
+String currentUserId;
+String currentGroupId;
 
 String currentDeviceIdentifier = forceOnboarding ? '0000' : 's002';

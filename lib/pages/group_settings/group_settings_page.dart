@@ -59,13 +59,13 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                     CupertinoTextField(
                       controller: _groupNameController,
                     ),
-                    Text("Code für die Fam-Group: " + state.groupCode),
+                    Text("Code für die Fam-Group: ${state.groupCode}"),
                     CupertinoButton(
-                      child: Text("leave group"),
                       onPressed: () {
                         BlocProvider.of<GroupSettingsBloc>(context)
                             .add(LeaveGroup());
                       },
+                      child: const Text("leave group"),
                     ),
                   ],
                 ),
@@ -74,7 +74,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           );
         }
 
-        print("Not rendering state in group settings page " + state.toString());
+        print("Not rendering state in group settings page ${state.toString()}");
         return LoadingSpinnerPage();
       },
       listener: (context, state) {

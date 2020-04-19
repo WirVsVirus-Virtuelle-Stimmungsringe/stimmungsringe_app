@@ -12,6 +12,7 @@ class ShowCurrentUserSettings extends UserSettingsState {
 
   ShowCurrentUserSettings(this.userName);
 
+  @override
   List<Object> get props => [userName];
 }
 

@@ -66,7 +66,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
           );
         }
 
-        print("Not rendering state in user settings page " + state.toString());
+        print("Not rendering state in user settings page ${state.toString()}");
         return LoadingSpinnerPage();
       },
       listener: (context, state) {

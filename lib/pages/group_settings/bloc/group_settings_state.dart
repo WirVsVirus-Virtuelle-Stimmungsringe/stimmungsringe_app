@@ -13,6 +13,7 @@ class ShowCurrentGroupSettings extends GroupSettingsState {
 
   ShowCurrentGroupSettings(this.groupName, this.groupCode);
 
+  @override
   List<Object> get props => [groupName, groupCode];
 }
 
