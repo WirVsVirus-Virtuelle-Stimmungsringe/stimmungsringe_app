@@ -22,6 +22,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     if (event is FetchDashboard) {
       yield* _mapFetchDashboardToState(event);
+    } else if (event is RefreshDashboard) {
+      yield* _mapRefreshDashboardToState(event);
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
     }
@@ -35,7 +37,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     yield DashboardLoading();
     try {
       final dashboard = await dashboardRepository.loadDashboardPageData();
+      final String dashboardHash = dashboardRepository.getHash(dashboard);
       yield DashboardLoaded(dashboard);
+
+      Future.delayed(const Duration(seconds: 3), () {
+        add(RefreshDashboard(dashboardHash));
+      });
+
       return;
     } catch (ex) {
       print(ex);
@@ -44,6 +52,26 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       } else {
         yield DashboardError(null);
       }
+    }
+  }
+
+  Stream<DashboardState> _mapRefreshDashboardToState(
+      RefreshDashboard refresh) async* {
+    final Dashboard dashboard =
+        await dashboardRepository.loadDashboardPageData();
+    final String dashboardHash = dashboardRepository.getHash(dashboard);
+
+    if (dashboardHash == refresh.prevDashboardHashCode) {
+      print("Dashboard did not change");
+      Future.delayed(const Duration(seconds: 3), () {
+        add(RefreshDashboard(refresh.prevDashboardHashCode));
+      });
+    } else {
+      yield DashboardLoaded(dashboard);
+      print("Dashboard refreshed");
+      Future.delayed(const Duration(seconds: 3), () {
+        add(RefreshDashboard(dashboardHash));
+      });
     }
   }
 
