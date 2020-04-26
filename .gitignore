@@ -8,8 +8,8 @@
 .buildlog/
 .history
 .svn/
-.env*
-!.env.example
+config/.env*
+!config/.env.example
 
 # IntelliJ related
 *.iml

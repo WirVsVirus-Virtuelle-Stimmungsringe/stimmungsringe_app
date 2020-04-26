@@ -56,8 +56,7 @@ flutter:
   uses-material-design: false
 
   assets:
-    - config.yaml
-    - .env
+    - config/
     - assets/images/familiarise_logo_large.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

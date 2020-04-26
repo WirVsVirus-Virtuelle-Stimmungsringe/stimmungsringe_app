@@ -2,8 +2,8 @@
 
 ## Configuration
 
-- Configuration for development may be set via `.env` file. For starters you can copy the template from `.env.example`.
-- Configuration for production may be changed in file `config.yaml`.
+- Configuration for development may be set via `config/.env` file. For starters you can copy the template from `.env.example`.
+- Configuration for production may be changed in file `config/config.yaml`.
 
 ## BloC:
 

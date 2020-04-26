@@ -6,12 +6,13 @@ import 'package:yaml/yaml.dart';
 
 Future<Map> _loadConfig() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final String configYamlStr = await rootBundle.loadString('config.yaml');
+  final String configYamlStr =
+      await rootBundle.loadString('config/config.yaml');
   return loadYaml(configYamlStr) as Map;
 }
 
 Future<Map<String, String>> _loadEnv() async {
-  await DotEnv().load();
+  await DotEnv().load('config/.env');
   return DotEnv().env;
 }
 
