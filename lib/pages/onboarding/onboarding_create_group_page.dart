@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/widgets/action_button.dart';
+import 'package:stimmungsringeapp/widgets/button_group.dart';
 import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
+import 'package:stimmungsringeapp/widgets/headline.dart';
+import 'package:stimmungsringeapp/widgets/paragraph.dart';
 import 'package:stimmungsringeapp/widgets/wait_dialog.dart';
 
 class OnboardingCreateGroupPage extends StatefulWidget {
@@ -55,19 +59,34 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: BlocConsumer<OnboardingBloc, OnboardingState>(
             builder: (context, state) {
-              return Column(
-                children: <Widget>[
-                  const FamiliariseLogo(),
-                  CupertinoTextField(
-                    placeholder: "Wie soll die neue Gruppe heißen?",
-                    controller: _newGroupNameController,
-                    onSubmitted: _startNewGroup,
-                  ),
-                  ActionButton(
-                    text: const Text('Fam-Group starten'),
-                    onPressed: submitButtonHandler,
-                  ),
-                ],
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    const FamiliariseLogo(),
+                    const Paragraph(
+                      child:
+                          Headline('Vergebe einen Namen für deine Fam-Group'),
+                    ),
+                    Paragraph(
+                      child: CupertinoTextField(
+                        placeholder: "Wie soll die neue Gruppe heißen?",
+                        controller: _newGroupNameController,
+                        onSubmitted: _startNewGroup,
+                        autofocus: true,
+                      ),
+                    ),
+                    Paragraph(
+                      child: ButtonGroup(
+                        children: [
+                          ActionButton(
+                            text: const Text('Fam-Group starten'),
+                            onPressed: submitButtonHandler,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
             listener: (context, state) {
@@ -102,7 +121,7 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/home',
+                  DashboardPage.routeUri,
                   (_) => false,
                 );
               }

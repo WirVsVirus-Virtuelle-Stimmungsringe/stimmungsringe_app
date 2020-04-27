@@ -22,6 +22,7 @@ class ActionButton extends StatelessWidget {
     return CupertinoButton(
       borderRadius: borderRadius,
       color: CupertinoColors.activeBlue,
+      disabledColor: CupertinoColors.systemGrey4,
       onPressed: onPressed,
       child: text,
     );
