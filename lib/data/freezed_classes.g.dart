@@ -36,6 +36,9 @@ _$_OtherTile _$_$_OtherTileFromJson(Map<String, dynamic> json) {
         ? null
         : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
     _$enumDecodeNullable(_$SentimentEnumMap, json['sentiment']),
+    json['lastUpdated'] == null
+        ? null
+        : DateTime.parse(json['lastUpdated'] as String),
   );
 }
 
@@ -43,6 +46,7 @@ Map<String, dynamic> _$_$_OtherTileToJson(_$_OtherTile instance) =>
     <String, dynamic>{
       'user': instance.user,
       'sentiment': _$SentimentEnumMap[instance.sentiment],
+      'lastUpdated': instance.lastUpdated?.toIso8601String(),
     };
 
 T _$enumDecode<T>(
@@ -112,12 +116,16 @@ _$_MyTile _$_$_MyTileFromJson(Map<String, dynamic> json) {
         ? null
         : UserMinimal.fromJson(json['user'] as Map<String, dynamic>),
     _$enumDecodeNullable(_$SentimentEnumMap, json['sentiment']),
+    json['lastUpdated'] == null
+        ? null
+        : DateTime.parse(json['lastUpdated'] as String),
   );
 }
 
 Map<String, dynamic> _$_$_MyTileToJson(_$_MyTile instance) => <String, dynamic>{
       'user': instance.user,
       'sentiment': _$SentimentEnumMap[instance.sentiment],
+      'lastUpdated': instance.lastUpdated?.toIso8601String(),
     };
 
 _$_Dashboard _$_$_DashboardFromJson(Map<String, dynamic> json) {

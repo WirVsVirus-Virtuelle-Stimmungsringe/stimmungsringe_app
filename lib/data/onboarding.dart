@@ -72,3 +72,16 @@ class GroupSettingsResponse {
 
   const GroupSettingsResponse(this.groupId, this.groupName, this.groupCode);
 }
+
+String formatLastUpdateTimestamp(DateTime lastUpdated) {
+  if (lastUpdated.isAfter(DateTime.now().add(const Duration(seconds: -120)))) {
+    return "gerade eben";
+  } else if (lastUpdated
+      .isAfter(DateTime.now().add(const Duration(hours: -2)))) {
+    final minutes = (DateTime.now().difference(lastUpdated).inMinutes);
+    return "$minutes Minuten";
+  } else {
+    final hours = DateTime.now().difference(lastUpdated).inHours;
+    return "$hours Stunden";
+  }
+}

@@ -152,15 +152,17 @@ OtherTile _$OtherTileFromJson(Map<String, dynamic> json) {
 abstract class _$OtherTile {
   UserMinimal get user;
   Sentiment get sentiment;
+  DateTime get lastUpdated;
 
-  OtherTile copyWith({UserMinimal user, Sentiment sentiment});
+  OtherTile copyWith(
+      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_OtherTile implements _OtherTile {
-  const _$_OtherTile(this.user, this.sentiment);
+  const _$_OtherTile(this.user, this.sentiment, this.lastUpdated);
 
   factory _$_OtherTile.fromJson(Map<String, dynamic> json) =>
       _$_$_OtherTileFromJson(json);
@@ -169,30 +171,41 @@ class _$_OtherTile implements _OtherTile {
   final UserMinimal user;
   @override
   final Sentiment sentiment;
+  @override
+  final DateTime lastUpdated;
 
   @override
   String toString() {
-    return 'OtherTile(user: $user, sentiment: $sentiment)';
+    return 'OtherTile(user: $user, sentiment: $sentiment, lastUpdated: $lastUpdated)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return other is _OtherTile &&
         (identical(other.user, user) || other.user == user) &&
-        (identical(other.sentiment, sentiment) || other.sentiment == sentiment);
+        (identical(other.sentiment, sentiment) ||
+            other.sentiment == sentiment) &&
+        (identical(other.lastUpdated, lastUpdated) ||
+            other.lastUpdated == lastUpdated);
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ user.hashCode ^ sentiment.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      user.hashCode ^
+      sentiment.hashCode ^
+      lastUpdated.hashCode;
 
   @override
   _$_OtherTile copyWith({
     Object user = immutable,
     Object sentiment = immutable,
+    Object lastUpdated = immutable,
   }) {
     return _$_OtherTile(
       user == immutable ? this.user : user as UserMinimal,
       sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      lastUpdated == immutable ? this.lastUpdated : lastUpdated as DateTime,
     );
   }
 
@@ -203,7 +216,8 @@ class _$_OtherTile implements _OtherTile {
 }
 
 abstract class _OtherTile implements OtherTile {
-  const factory _OtherTile(UserMinimal user, Sentiment sentiment) =
+  const factory _OtherTile(
+          UserMinimal user, Sentiment sentiment, DateTime lastUpdated) =
       _$_OtherTile;
 
   factory _OtherTile.fromJson(Map<String, dynamic> json) =
@@ -213,9 +227,12 @@ abstract class _OtherTile implements OtherTile {
   UserMinimal get user;
   @override
   Sentiment get sentiment;
+  @override
+  DateTime get lastUpdated;
 
   @override
-  _OtherTile copyWith({UserMinimal user, Sentiment sentiment});
+  _OtherTile copyWith(
+      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
 }
 
 OtherDetail _$OtherDetailFromJson(Map<String, dynamic> json) {
@@ -317,15 +334,17 @@ MyTile _$MyTileFromJson(Map<String, dynamic> json) {
 abstract class _$MyTile {
   UserMinimal get user;
   Sentiment get sentiment;
+  DateTime get lastUpdated;
 
-  MyTile copyWith({UserMinimal user, Sentiment sentiment});
+  MyTile copyWith(
+      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_MyTile implements _MyTile {
-  const _$_MyTile(this.user, this.sentiment);
+  const _$_MyTile(this.user, this.sentiment, this.lastUpdated);
 
   factory _$_MyTile.fromJson(Map<String, dynamic> json) =>
       _$_$_MyTileFromJson(json);
@@ -334,30 +353,41 @@ class _$_MyTile implements _MyTile {
   final UserMinimal user;
   @override
   final Sentiment sentiment;
+  @override
+  final DateTime lastUpdated;
 
   @override
   String toString() {
-    return 'MyTile(user: $user, sentiment: $sentiment)';
+    return 'MyTile(user: $user, sentiment: $sentiment, lastUpdated: $lastUpdated)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return other is _MyTile &&
         (identical(other.user, user) || other.user == user) &&
-        (identical(other.sentiment, sentiment) || other.sentiment == sentiment);
+        (identical(other.sentiment, sentiment) ||
+            other.sentiment == sentiment) &&
+        (identical(other.lastUpdated, lastUpdated) ||
+            other.lastUpdated == lastUpdated);
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ user.hashCode ^ sentiment.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^
+      user.hashCode ^
+      sentiment.hashCode ^
+      lastUpdated.hashCode;
 
   @override
   _$_MyTile copyWith({
     Object user = immutable,
     Object sentiment = immutable,
+    Object lastUpdated = immutable,
   }) {
     return _$_MyTile(
       user == immutable ? this.user : user as UserMinimal,
       sentiment == immutable ? this.sentiment : sentiment as Sentiment,
+      lastUpdated == immutable ? this.lastUpdated : lastUpdated as DateTime,
     );
   }
 
@@ -368,7 +398,8 @@ class _$_MyTile implements _MyTile {
 }
 
 abstract class _MyTile implements MyTile {
-  const factory _MyTile(UserMinimal user, Sentiment sentiment) = _$_MyTile;
+  const factory _MyTile(
+      UserMinimal user, Sentiment sentiment, DateTime lastUpdated) = _$_MyTile;
 
   factory _MyTile.fromJson(Map<String, dynamic> json) = _$_MyTile.fromJson;
 
@@ -376,9 +407,12 @@ abstract class _MyTile implements MyTile {
   UserMinimal get user;
   @override
   Sentiment get sentiment;
+  @override
+  DateTime get lastUpdated;
 
   @override
-  _MyTile copyWith({UserMinimal user, Sentiment sentiment});
+  _MyTile copyWith(
+      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
 }
 
 Dashboard _$DashboardFromJson(Map<String, dynamic> json) {

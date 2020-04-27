@@ -184,6 +184,7 @@ class _DashboardPageState extends State<DashboardPage>
                 name: tile.user.displayName,
                 image: AssetsRepository().avatarImage(tile.user.userId),
                 avatarSentiment: tile.sentiment,
+                lastUpdated: tile.lastUpdated,
               ),
             ),
           ),
