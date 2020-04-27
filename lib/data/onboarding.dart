@@ -78,7 +78,7 @@ String formatLastUpdateTimestamp(DateTime lastUpdated) {
     return "gerade eben";
   } else if (lastUpdated
       .isAfter(DateTime.now().add(const Duration(hours: -2)))) {
-    final minutes = (DateTime.now().difference(lastUpdated).inMinutes);
+    final minutes = DateTime.now().difference(lastUpdated).inMinutes;
     return "$minutes Minuten";
   } else {
     final hours = DateTime.now().difference(lastUpdated).inHours;
