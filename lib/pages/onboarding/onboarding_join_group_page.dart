@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/widgets/action_button.dart';
 import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
@@ -102,7 +103,7 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
 
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/home',
+                  DashboardPage.routeUri,
                   (_) => false,
                 );
               }
