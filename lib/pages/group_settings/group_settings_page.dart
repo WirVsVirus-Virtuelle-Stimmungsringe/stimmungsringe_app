@@ -79,8 +79,11 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
       },
       listener: (context, state) {
         if (state is GotoOnboarding) {
-          Navigator.of(context)
-              .pushReplacementNamed(OnboardingStartPage.routeUri);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            OnboardingStartPage.routeUri,
+            (_) => false,
+          );
         }
       },
     );

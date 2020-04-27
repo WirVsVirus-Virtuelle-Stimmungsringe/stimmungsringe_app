@@ -8,15 +8,7 @@ abstract class DashboardEvent extends Equatable {
 
 class FetchDashboard extends DashboardEvent {}
 
-class RefreshDashboard extends DashboardEvent {
-  final String prevDashboardHashCode;
-
-  RefreshDashboard(this.prevDashboardHashCode)
-      : assert(prevDashboardHashCode != null);
-
-  @override
-  List<Object> get props => [prevDashboardHashCode];
-}
+class RefreshDashboard extends DashboardEvent {}
 
 class SetNewSentiment extends DashboardEvent {
   final Sentiment sentiment;

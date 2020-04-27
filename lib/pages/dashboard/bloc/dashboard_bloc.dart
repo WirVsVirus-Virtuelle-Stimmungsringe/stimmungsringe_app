@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
@@ -6,8 +8,14 @@ import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
+  StreamSubscription<void> _refreshSubscription;
 
-  DashboardBloc({this.dashboardRepository});
+  DashboardBloc({this.dashboardRepository}) {
+    _refreshSubscription =
+        Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
+      add(RefreshDashboard());
+    });
+  }
 
   @override
   DashboardState get initialState => DashboardUninitialized();
@@ -40,8 +48,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final String dashboardHash = dashboardRepository.getHash(dashboard);
       yield DashboardLoaded(dashboard);
 
-      Future.delayed(const Duration(seconds: 3), () {
-        add(RefreshDashboard(dashboardHash));
+      this.prevDashboardHash = dashboardHash;
+
+      _refreshSubscription ??=
+          Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
+        add(RefreshDashboard());
       });
 
       return;
@@ -55,6 +66,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
+  String prevDashboardHash;
+
   Stream<DashboardState> _mapRefreshDashboardToState(
       RefreshDashboard refresh) async* {
     try {
@@ -62,24 +75,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           await dashboardRepository.loadDashboardPageData();
       final String dashboardHash = dashboardRepository.getHash(dashboard);
 
-      if (dashboardHash == refresh.prevDashboardHashCode) {
+      if (dashboardHash == this.prevDashboardHash) {
         print("Dashboard did not change");
-        Future.delayed(const Duration(seconds: 3), () {
-          add(RefreshDashboard(refresh.prevDashboardHashCode));
-        });
       } else {
         // TODO animation
         yield DashboardLoaded(dashboard);
         print("Dashboard refreshed");
-        Future.delayed(const Duration(seconds: 3), () {
-          add(RefreshDashboard(dashboardHash));
-        });
       }
     } catch (ex) {
       print(ex);
-      Future.delayed(const Duration(seconds: 3), () {
-        add(RefreshDashboard(refresh.prevDashboardHashCode));
-      });
     }
   }
 
@@ -105,5 +109,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } catch (_) {
       yield DashboardError((state as DashboardLoaded).dashboard);
     }
+  }
+
+  @override
+  Future<void> close() {
+    if (_refreshSubscription != null) {
+      _refreshSubscription.cancel();
+      _refreshSubscription = null;
+    }
+    return super.close();
   }
 }
