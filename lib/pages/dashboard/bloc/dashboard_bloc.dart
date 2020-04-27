@@ -57,20 +57,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Stream<DashboardState> _mapRefreshDashboardToState(
       RefreshDashboard refresh) async* {
-    final Dashboard dashboard =
-        await dashboardRepository.loadDashboardPageData();
-    final String dashboardHash = dashboardRepository.getHash(dashboard);
+    try {
+      final Dashboard dashboard =
+          await dashboardRepository.loadDashboardPageData();
+      final String dashboardHash = dashboardRepository.getHash(dashboard);
 
-    if (dashboardHash == refresh.prevDashboardHashCode) {
-      print("Dashboard did not change");
+      if (dashboardHash == refresh.prevDashboardHashCode) {
+        print("Dashboard did not change");
+        Future.delayed(const Duration(seconds: 3), () {
+          add(RefreshDashboard(refresh.prevDashboardHashCode));
+        });
+      } else {
+        // TODO animation
+        yield DashboardLoaded(dashboard);
+        print("Dashboard refreshed");
+        Future.delayed(const Duration(seconds: 3), () {
+          add(RefreshDashboard(dashboardHash));
+        });
+      }
+    } catch (ex) {
+      print(ex);
       Future.delayed(const Duration(seconds: 3), () {
         add(RefreshDashboard(refresh.prevDashboardHashCode));
-      });
-    } else {
-      yield DashboardLoaded(dashboard);
-      print("Dashboard refreshed");
-      Future.delayed(const Duration(seconds: 3), () {
-        add(RefreshDashboard(dashboardHash));
       });
     }
   }
