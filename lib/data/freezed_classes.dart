@@ -10,7 +10,8 @@ part 'freezed_classes.g.dart';
 
 @immutable
 abstract class UserMinimal with _$UserMinimal {
-  const factory UserMinimal(String userId, String displayName) = _UserMinimal;
+  const factory UserMinimal(String userId, String displayName, bool hasName) =
+      _UserMinimal;
   factory UserMinimal.fromJson(Map<String, dynamic> json) =>
       _$UserMinimalFromJson(json);
 }
@@ -45,8 +46,16 @@ abstract class MyTile with _$MyTile {
 }
 
 @immutable
+abstract class GroupData with _$GroupData {
+  const factory GroupData(String groupName, String groupCode) = _GroupData;
+  factory GroupData.fromJson(Map<String, dynamic> json) =>
+      _$GroupDataFromJson(json);
+}
+
+@immutable
 abstract class Dashboard with _$Dashboard {
-  const factory Dashboard(MyTile myTile, List<OtherTile> otherTiles) =
+  const factory Dashboard(
+          MyTile myTile, List<OtherTile> otherTiles, GroupData groupData) =
       _Dashboard;
   factory Dashboard.fromJson(Map<String, dynamic> json) =>
       _$DashboardFromJson(json);
