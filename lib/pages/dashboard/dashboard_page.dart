@@ -242,7 +242,7 @@ class _DashboardPageState extends State<DashboardPage>
               name: contactName,
               image: AssetsRepository().avatarImage(tile.user.userId),
               avatarSentiment: tile.sentiment,
-              lastUpdated: tile.lastUpdated,
+              lastStatusUpdate: tile.lastStatusUpdate,
             ),
           ),
         );

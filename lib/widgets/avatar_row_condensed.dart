@@ -11,18 +11,18 @@ class AvatarRowCondensed extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
-  final DateTime lastUpdated;
+  final DateTime lastStatusUpdate;
 
   const AvatarRowCondensed({
     Key key,
     @required this.avatarSentiment,
     @required this.name,
     @required this.image,
-    @required this.lastUpdated,
+    @required this.lastStatusUpdate,
   })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
-        assert(lastUpdated != null),
+        assert(lastStatusUpdate != null),
         super(key: key);
 
   @override
@@ -82,7 +82,7 @@ class AvatarRowCondensed extends StatelessWidget {
                 ),
                 Center(
                     child: Text(
-                  formatLastUpdateTimestamp(lastUpdated),
+                  formatLastUpdateTimestamp(lastStatusUpdate),
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 12,

@@ -8,6 +8,7 @@ part 'freezed_classes.g.dart';
 // flutter pub run build_runner watch --delete-conflicting-outputs
 // on compile error "_$SentimentFromJson" -> delete *.g.dart file
 // on compile error touch *.freezed.dart
+// close all generated files -> Dart Analysis -> Restart Analysis Server
 
 @immutable
 abstract class UserMinimal with _$UserMinimal {
@@ -16,7 +17,6 @@ abstract class UserMinimal with _$UserMinimal {
   factory UserMinimal.fromJson(Map<String, dynamic> json) =>
       _$UserMinimalFromJson(json);
 }
-
 
 @immutable
 abstract class Suggestion with _$Suggestion {
@@ -28,7 +28,8 @@ abstract class Suggestion with _$Suggestion {
 @immutable
 abstract class OtherTile with _$OtherTile {
   const factory OtherTile(
-      UserMinimal user, Sentiment sentiment, DateTime lastUpdated) = _OtherTile;
+          UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate) =
+      _OtherTile;
   factory OtherTile.fromJson(Map<String, dynamic> json) =>
       _$OtherTileFromJson(json);
 }
@@ -45,7 +46,8 @@ abstract class OtherDetail with _$OtherDetail {
 @immutable
 abstract class MyTile with _$MyTile {
   const factory MyTile(
-      UserMinimal user, Sentiment sentiment, DateTime lastUpdated) = _MyTile;
+          UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate) =
+      _MyTile;
   factory MyTile.fromJson(Map<String, dynamic> json) => _$MyTileFromJson(json);
 }
 

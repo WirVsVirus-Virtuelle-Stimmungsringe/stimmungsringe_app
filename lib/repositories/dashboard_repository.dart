@@ -16,7 +16,8 @@ class DashboardRepository {
       headers: {'X-User-ID': currentUserId},
     );
 
-    assert(response.statusCode == 200);
+    assert(
+        response.statusCode == 200, "load dashboard -> ${response.statusCode}");
 
     final Dashboard dashboard =
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);

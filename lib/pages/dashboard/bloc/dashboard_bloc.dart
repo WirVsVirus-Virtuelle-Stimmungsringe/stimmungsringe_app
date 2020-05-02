@@ -88,6 +88,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final Dashboard dashboardReloaded =
           await dashboardRepository.loadDashboardPageData();
 
+      var moonLanding1 = DateTime.parse("1969-07-20 20:18:04Z");
+      var moonLanding2 = DateTime.parse("1969-07-20 20:18:04Z");
+
+      final Dashboard da = (state as DashboardLoaded).dashboard;
+
       yield DashboardLoaded(dashboardReloaded);
     } catch (ex) {
       print(ex);

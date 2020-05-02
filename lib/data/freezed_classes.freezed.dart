@@ -21,7 +21,7 @@ abstract class _$UserMinimal {
 }
 
 @JsonSerializable()
-class _$_UserMinimal implements _UserMinimal {
+class _$_UserMinimal with DiagnosticableTreeMixin implements _UserMinimal {
   const _$_UserMinimal(this.userId, this.displayName, this.hasName);
 
   factory _$_UserMinimal.fromJson(Map<String, dynamic> json) =>
@@ -35,8 +35,18 @@ class _$_UserMinimal implements _UserMinimal {
   final bool hasName;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'UserMinimal(userId: $userId, displayName: $displayName, hasName: $hasName)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserMinimal'))
+      ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('displayName', displayName))
+      ..add(DiagnosticsProperty('hasName', hasName));
   }
 
   @override
@@ -92,31 +102,29 @@ abstract class _UserMinimal implements UserMinimal {
   _UserMinimal copyWith({String userId, String displayName, bool hasName});
 }
 
-Suggestion _$SuggestionFromJson(Map<String, dynamic> json) {
-  return _Suggestion.fromJson(json);
-}
-
 abstract class _$Suggestion {
   String get text;
 
   Suggestion copyWith({String text});
-
-  Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
-class _$_Suggestion implements _Suggestion {
+class _$_Suggestion with DiagnosticableTreeMixin implements _Suggestion {
   const _$_Suggestion(this.text);
-
-  factory _$_Suggestion.fromJson(Map<String, dynamic> json) =>
-      _$_$_SuggestionFromJson(json);
 
   @override
   final String text;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'Suggestion(text: $text)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Suggestion'))
+      ..add(DiagnosticsProperty('text', text));
   }
 
   @override
@@ -136,18 +144,10 @@ class _$_Suggestion implements _Suggestion {
       text == immutable ? this.text : text as String,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_SuggestionToJson(this);
-  }
 }
 
 abstract class _Suggestion implements Suggestion {
   const factory _Suggestion(String text) = _$_Suggestion;
-
-  factory _Suggestion.fromJson(Map<String, dynamic> json) =
-      _$_Suggestion.fromJson;
 
   @override
   String get text;
@@ -156,38 +156,38 @@ abstract class _Suggestion implements Suggestion {
   _Suggestion copyWith({String text});
 }
 
-OtherTile _$OtherTileFromJson(Map<String, dynamic> json) {
-  return _OtherTile.fromJson(json);
-}
-
 abstract class _$OtherTile {
   UserMinimal get user;
   Sentiment get sentiment;
-  DateTime get lastUpdated;
+  DateTime get lastStatusUpdate;
 
   OtherTile copyWith(
-      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
-
-  Map<String, dynamic> toJson();
+      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate});
 }
 
-@JsonSerializable()
-class _$_OtherTile implements _OtherTile {
-  const _$_OtherTile(this.user, this.sentiment, this.lastUpdated);
-
-  factory _$_OtherTile.fromJson(Map<String, dynamic> json) =>
-      _$_$_OtherTileFromJson(json);
+class _$_OtherTile with DiagnosticableTreeMixin implements _OtherTile {
+  const _$_OtherTile(this.user, this.sentiment, this.lastStatusUpdate);
 
   @override
   final UserMinimal user;
   @override
   final Sentiment sentiment;
   @override
-  final DateTime lastUpdated;
+  final DateTime lastStatusUpdate;
 
   @override
-  String toString() {
-    return 'OtherTile(user: $user, sentiment: $sentiment, lastUpdated: $lastUpdated)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    return 'OtherTile(user: $user, sentiment: $sentiment, lastStatusUpdate: $lastStatusUpdate)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OtherTile'))
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('sentiment', sentiment))
+      ..add(DiagnosticsProperty('lastStatusUpdate', lastStatusUpdate));
   }
 
   @override
@@ -196,8 +196,8 @@ class _$_OtherTile implements _OtherTile {
         (identical(other.user, user) || other.user == user) &&
         (identical(other.sentiment, sentiment) ||
             other.sentiment == sentiment) &&
-        (identical(other.lastUpdated, lastUpdated) ||
-            other.lastUpdated == lastUpdated);
+        (identical(other.lastStatusUpdate, lastStatusUpdate) ||
+            other.lastStatusUpdate == lastStatusUpdate);
   }
 
   @override
@@ -205,49 +205,39 @@ class _$_OtherTile implements _OtherTile {
       runtimeType.hashCode ^
       user.hashCode ^
       sentiment.hashCode ^
-      lastUpdated.hashCode;
+      lastStatusUpdate.hashCode;
 
   @override
   _$_OtherTile copyWith({
     Object user = immutable,
     Object sentiment = immutable,
-    Object lastUpdated = immutable,
+    Object lastStatusUpdate = immutable,
   }) {
     return _$_OtherTile(
       user == immutable ? this.user : user as UserMinimal,
       sentiment == immutable ? this.sentiment : sentiment as Sentiment,
-      lastUpdated == immutable ? this.lastUpdated : lastUpdated as DateTime,
+      lastStatusUpdate == immutable
+          ? this.lastStatusUpdate
+          : lastStatusUpdate as DateTime,
     );
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_OtherTileToJson(this);
   }
 }
 
 abstract class _OtherTile implements OtherTile {
   const factory _OtherTile(
-          UserMinimal user, Sentiment sentiment, DateTime lastUpdated) =
+          UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate) =
       _$_OtherTile;
-
-  factory _OtherTile.fromJson(Map<String, dynamic> json) =
-      _$_OtherTile.fromJson;
 
   @override
   UserMinimal get user;
   @override
   Sentiment get sentiment;
   @override
-  DateTime get lastUpdated;
+  DateTime get lastStatusUpdate;
 
   @override
   _OtherTile copyWith(
-      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
-}
-
-OtherDetail _$OtherDetailFromJson(Map<String, dynamic> json) {
-  return _OtherDetail.fromJson(json);
+      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate});
 }
 
 abstract class _$OtherDetail {
@@ -257,16 +247,10 @@ abstract class _$OtherDetail {
 
   OtherDetail copyWith(
       {UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions});
-
-  Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
-class _$_OtherDetail implements _OtherDetail {
+class _$_OtherDetail with DiagnosticableTreeMixin implements _OtherDetail {
   const _$_OtherDetail(this.user, this.sentiment, this.suggestions);
-
-  factory _$_OtherDetail.fromJson(Map<String, dynamic> json) =>
-      _$_$_OtherDetailFromJson(json);
 
   @override
   final UserMinimal user;
@@ -276,8 +260,18 @@ class _$_OtherDetail implements _OtherDetail {
   final List<Suggestion> suggestions;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'OtherDetail(user: $user, sentiment: $sentiment, suggestions: $suggestions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OtherDetail'))
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('sentiment', sentiment))
+      ..add(DiagnosticsProperty('suggestions', suggestions));
   }
 
   @override
@@ -311,20 +305,12 @@ class _$_OtherDetail implements _OtherDetail {
           : suggestions as List<Suggestion>,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_OtherDetailToJson(this);
-  }
 }
 
 abstract class _OtherDetail implements OtherDetail {
   const factory _OtherDetail(
           UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions) =
       _$_OtherDetail;
-
-  factory _OtherDetail.fromJson(Map<String, dynamic> json) =
-      _$_OtherDetail.fromJson;
 
   @override
   UserMinimal get user;
@@ -338,38 +324,38 @@ abstract class _OtherDetail implements OtherDetail {
       {UserMinimal user, Sentiment sentiment, List<Suggestion> suggestions});
 }
 
-MyTile _$MyTileFromJson(Map<String, dynamic> json) {
-  return _MyTile.fromJson(json);
-}
-
 abstract class _$MyTile {
   UserMinimal get user;
   Sentiment get sentiment;
-  DateTime get lastUpdated;
+  DateTime get lastStatusUpdate;
 
   MyTile copyWith(
-      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
-
-  Map<String, dynamic> toJson();
+      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate});
 }
 
-@JsonSerializable()
-class _$_MyTile implements _MyTile {
-  const _$_MyTile(this.user, this.sentiment, this.lastUpdated);
-
-  factory _$_MyTile.fromJson(Map<String, dynamic> json) =>
-      _$_$_MyTileFromJson(json);
+class _$_MyTile with DiagnosticableTreeMixin implements _MyTile {
+  const _$_MyTile(this.user, this.sentiment, this.lastStatusUpdate);
 
   @override
   final UserMinimal user;
   @override
   final Sentiment sentiment;
   @override
-  final DateTime lastUpdated;
+  final DateTime lastStatusUpdate;
 
   @override
-  String toString() {
-    return 'MyTile(user: $user, sentiment: $sentiment, lastUpdated: $lastUpdated)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    return 'MyTile(user: $user, sentiment: $sentiment, lastStatusUpdate: $lastStatusUpdate)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'MyTile'))
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('sentiment', sentiment))
+      ..add(DiagnosticsProperty('lastStatusUpdate', lastStatusUpdate));
   }
 
   @override
@@ -378,8 +364,8 @@ class _$_MyTile implements _MyTile {
         (identical(other.user, user) || other.user == user) &&
         (identical(other.sentiment, sentiment) ||
             other.sentiment == sentiment) &&
-        (identical(other.lastUpdated, lastUpdated) ||
-            other.lastUpdated == lastUpdated);
+        (identical(other.lastStatusUpdate, lastStatusUpdate) ||
+            other.lastStatusUpdate == lastStatusUpdate);
   }
 
   @override
@@ -387,47 +373,39 @@ class _$_MyTile implements _MyTile {
       runtimeType.hashCode ^
       user.hashCode ^
       sentiment.hashCode ^
-      lastUpdated.hashCode;
+      lastStatusUpdate.hashCode;
 
   @override
   _$_MyTile copyWith({
     Object user = immutable,
     Object sentiment = immutable,
-    Object lastUpdated = immutable,
+    Object lastStatusUpdate = immutable,
   }) {
     return _$_MyTile(
       user == immutable ? this.user : user as UserMinimal,
       sentiment == immutable ? this.sentiment : sentiment as Sentiment,
-      lastUpdated == immutable ? this.lastUpdated : lastUpdated as DateTime,
+      lastStatusUpdate == immutable
+          ? this.lastStatusUpdate
+          : lastStatusUpdate as DateTime,
     );
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_MyTileToJson(this);
   }
 }
 
 abstract class _MyTile implements MyTile {
   const factory _MyTile(
-      UserMinimal user, Sentiment sentiment, DateTime lastUpdated) = _$_MyTile;
-
-  factory _MyTile.fromJson(Map<String, dynamic> json) = _$_MyTile.fromJson;
+          UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate) =
+      _$_MyTile;
 
   @override
   UserMinimal get user;
   @override
   Sentiment get sentiment;
   @override
-  DateTime get lastUpdated;
+  DateTime get lastStatusUpdate;
 
   @override
   _MyTile copyWith(
-      {UserMinimal user, Sentiment sentiment, DateTime lastUpdated});
-}
-
-GroupData _$GroupDataFromJson(Map<String, dynamic> json) {
-  return _GroupData.fromJson(json);
+      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate});
 }
 
 abstract class _$GroupData {
@@ -435,16 +413,10 @@ abstract class _$GroupData {
   String get groupCode;
 
   GroupData copyWith({String groupName, String groupCode});
-
-  Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
-class _$_GroupData implements _GroupData {
+class _$_GroupData with DiagnosticableTreeMixin implements _GroupData {
   const _$_GroupData(this.groupName, this.groupCode);
-
-  factory _$_GroupData.fromJson(Map<String, dynamic> json) =>
-      _$_$_GroupDataFromJson(json);
 
   @override
   final String groupName;
@@ -452,8 +424,17 @@ class _$_GroupData implements _GroupData {
   final String groupCode;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'GroupData(groupName: $groupName, groupCode: $groupCode)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GroupData'))
+      ..add(DiagnosticsProperty('groupName', groupName))
+      ..add(DiagnosticsProperty('groupCode', groupCode));
   }
 
   @override
@@ -478,18 +459,10 @@ class _$_GroupData implements _GroupData {
       groupCode == immutable ? this.groupCode : groupCode as String,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_GroupDataToJson(this);
-  }
 }
 
 abstract class _GroupData implements GroupData {
   const factory _GroupData(String groupName, String groupCode) = _$_GroupData;
-
-  factory _GroupData.fromJson(Map<String, dynamic> json) =
-      _$_GroupData.fromJson;
 
   @override
   String get groupName;
@@ -500,10 +473,6 @@ abstract class _GroupData implements GroupData {
   _GroupData copyWith({String groupName, String groupCode});
 }
 
-Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
-  return _Dashboard.fromJson(json);
-}
-
 abstract class _$Dashboard {
   MyTile get myTile;
   List<OtherTile> get otherTiles;
@@ -511,16 +480,10 @@ abstract class _$Dashboard {
 
   Dashboard copyWith(
       {MyTile myTile, List<OtherTile> otherTiles, GroupData groupData});
-
-  Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
-class _$_Dashboard implements _Dashboard {
+class _$_Dashboard with DiagnosticableTreeMixin implements _Dashboard {
   const _$_Dashboard(this.myTile, this.otherTiles, this.groupData);
-
-  factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
-      _$_$_DashboardFromJson(json);
 
   @override
   final MyTile myTile;
@@ -530,8 +493,18 @@ class _$_Dashboard implements _Dashboard {
   final GroupData groupData;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'Dashboard(myTile: $myTile, otherTiles: $otherTiles, groupData: $groupData)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Dashboard'))
+      ..add(DiagnosticsProperty('myTile', myTile))
+      ..add(DiagnosticsProperty('otherTiles', otherTiles))
+      ..add(DiagnosticsProperty('groupData', groupData));
   }
 
   @override
@@ -562,20 +535,12 @@ class _$_Dashboard implements _Dashboard {
       groupData == immutable ? this.groupData : groupData as GroupData,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_DashboardToJson(this);
-  }
 }
 
 abstract class _Dashboard implements Dashboard {
   const factory _Dashboard(
           MyTile myTile, List<OtherTile> otherTiles, GroupData groupData) =
       _$_Dashboard;
-
-  factory _Dashboard.fromJson(Map<String, dynamic> json) =
-      _$_Dashboard.fromJson;
 
   @override
   MyTile get myTile;
@@ -589,31 +554,31 @@ abstract class _Dashboard implements Dashboard {
       {MyTile myTile, List<OtherTile> otherTiles, GroupData groupData});
 }
 
-SentimentUpdate _$SentimentUpdateFromJson(Map<String, dynamic> json) {
-  return _SentimentUpdate.fromJson(json);
-}
-
 abstract class _$SentimentUpdate {
   String get sentiment;
 
   SentimentUpdate copyWith({String sentiment});
-
-  Map<String, dynamic> toJson();
 }
 
-@JsonSerializable()
-class _$_SentimentUpdate implements _SentimentUpdate {
+class _$_SentimentUpdate
+    with DiagnosticableTreeMixin
+    implements _SentimentUpdate {
   const _$_SentimentUpdate(this.sentiment);
-
-  factory _$_SentimentUpdate.fromJson(Map<String, dynamic> json) =>
-      _$_$_SentimentUpdateFromJson(json);
 
   @override
   final String sentiment;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     return 'SentimentUpdate(sentiment: $sentiment)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SentimentUpdate'))
+      ..add(DiagnosticsProperty('sentiment', sentiment));
   }
 
   @override
@@ -633,18 +598,10 @@ class _$_SentimentUpdate implements _SentimentUpdate {
       sentiment == immutable ? this.sentiment : sentiment as String,
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_SentimentUpdateToJson(this);
-  }
 }
 
 abstract class _SentimentUpdate implements SentimentUpdate {
   const factory _SentimentUpdate(String sentiment) = _$_SentimentUpdate;
-
-  factory _SentimentUpdate.fromJson(Map<String, dynamic> json) =
-      _$_SentimentUpdate.fromJson;
 
   @override
   String get sentiment;
