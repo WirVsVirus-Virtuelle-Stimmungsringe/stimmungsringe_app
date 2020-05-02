@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -9,9 +8,6 @@ import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
 import 'package:stimmungsringeapp/session.dart';
 
 class DashboardRepository {
-  // TODO hack to attach hash to dashboard
-  HashMap<int, String> hashByHashCode = new HashMap();
-
   Future<Dashboard> loadDashboardPageData() async {
     final String url = '${Config().backendUrl}/dashboard';
 
@@ -25,17 +21,8 @@ class DashboardRepository {
     final Dashboard dashboard =
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
-    final String dashboardHash = response.headers['x-dashboard-hash'];
-    assert(dashboardHash != null);
-
-    hashByHashCode[dashboard.hashCode] = dashboardHash;
-
     await ChaosMonkey.delayAsync();
     return dashboard;
-  }
-
-  String getHash(Dashboard dashboard) {
-    return hashByHashCode[dashboard.hashCode];
   }
 
   Future<void> setNewSentiment(Sentiment sentiment) async {
