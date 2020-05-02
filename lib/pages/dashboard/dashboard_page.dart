@@ -122,6 +122,10 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _emptyGroupInfo(GroupData groupData) {
+    if (groupData == null) {
+      return Container();
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
