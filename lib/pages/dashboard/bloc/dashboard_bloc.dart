@@ -12,6 +12,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
   StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
 
+  StreamSubscription<void> _refreshSubscription;
+
   DashboardBloc({
     @required this.dashboardRepository,
     @required UserSettingsBloc userSettingsBloc,
@@ -22,6 +24,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       if (state is ShowCurrentUserSettings) {
         add(FetchDashboard());
       }
+    });
+
+    _refreshSubscription =
+        Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
+      add(RefreshDashboard());
     });
   }
 
@@ -38,6 +45,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     if (event is FetchDashboard) {
       yield* _mapFetchDashboardToState(event);
+    } else if (event is RefreshDashboard) {
+      yield* _mapRefreshDashboardToState(event);
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
     }
@@ -58,6 +67,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final dashboard = await dashboardRepository.loadDashboardPageData();
       yield DashboardLoaded(dashboard);
+
       return;
     } catch (ex) {
       print(ex);
@@ -66,6 +76,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       } else {
         yield DashboardError(null);
       }
+    }
+  }
+
+  Stream<DashboardState> _mapRefreshDashboardToState(
+      RefreshDashboard refresh) async* {
+    if (state is! DashboardLoaded) {
+      return;
+    }
+    try {
+      final Dashboard dashboardReloaded =
+          await dashboardRepository.loadDashboardPageData();
+
+      yield DashboardLoaded(dashboardReloaded);
+    } catch (ex) {
+      print(ex);
     }
   }
 
@@ -96,6 +121,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   @override
   Future<void> close() {
     userSettingsBlocSubscription.cancel();
+    if (_refreshSubscription != null) {
+      _refreshSubscription.cancel();
+      _refreshSubscription = null;
+    }
     return super.close();
   }
 }
