@@ -17,9 +17,17 @@ class DashboardUninitialized extends DashboardState {
   bool get hasDashboard => false;
 }
 
-class DashboardLoading extends DashboardState {
+class DashboardLoading extends DashboardState implements StateWithDashboard {
   @override
-  bool get hasDashboard => false;
+  final Dashboard dashboard;
+
+  DashboardLoading([this.dashboard]);
+
+  @override
+  bool get hasDashboard => dashboard != null;
+
+  @override
+  List<Object> get props => [dashboard];
 }
 
 class DashboardLoaded extends DashboardState implements StateWithDashboard {

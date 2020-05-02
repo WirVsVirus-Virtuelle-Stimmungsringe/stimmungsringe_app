@@ -5,8 +5,8 @@ String currentUserId;
 String currentGroupId;
 
 Future<String> getCurrentDeviceIdentifier() async {
-  if (Config().forceOnboarding) {
-    return '0000';
+  if (Config().useFakeDeviceId) {
+    return Config().fakeDeviceId;
   } else {
     return FlutterUdid.consistentUdid;
   }

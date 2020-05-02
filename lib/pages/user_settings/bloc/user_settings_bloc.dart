@@ -8,16 +8,26 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
   UserSettingsBloc(this.onboardingRepository);
 
   @override
-  UserSettingsState get initialState => UserSettingsLoading();
+  UserSettingsState get initialState => UserSettingsUninitialized();
 
   @override
   Stream<UserSettingsState> mapEventToState(UserSettingsEvent event) async* {
     if (event is LoadUserSettings) {
-      final userSettings = await onboardingRepository.getUserSettings();
-      yield ShowCurrentUserSettings(userSettings.userName);
+      yield* mapLoadUserSettingsToState(event);
     } else if (event is SaveUserSettings) {
       await onboardingRepository.updateUserSettings(event.userName);
+      yield* mapLoadUserSettingsToState(LoadUserSettings());
     }
+  }
+
+  Stream<UserSettingsState> mapLoadUserSettingsToState(
+      LoadUserSettings loadUserSettingsEvent) async* {
+    if (state is UserSettingsLoading) {
+      return;
+    }
+    yield UserSettingsLoading();
+    final userSettings = await onboardingRepository.getUserSettings();
+    yield ShowCurrentUserSettings(userSettings.userName, userSettings.hasName);
   }
 
   @override

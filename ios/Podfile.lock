@@ -6,11 +6,14 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
   - SAMKeychain (1.5.3)
+  - share (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_udid (from `.symlinks/plugins/flutter_udid/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
 
 SPEC REPOS:
   trunk:
@@ -23,12 +26,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_udid/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_udid: c9d59b0a440e137882faa5cf53a3501e906fb8c2
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 

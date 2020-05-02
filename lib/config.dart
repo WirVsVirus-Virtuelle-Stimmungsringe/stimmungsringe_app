@@ -26,7 +26,11 @@ extension AppEnvExtension on AppEnv {
 
 class Config {
   Future<void> loaded;
-  final Map<String, dynamic> _config = <String, dynamic>{};
+
+  AppEnv _env;
+  String _backendUrl;
+  bool _useFakeDeviceId;
+  String _fakeDeviceId;
 
   static final Config _singleton = Config._internal();
 
@@ -39,22 +43,27 @@ class Config {
       final Map config = configData[0];
       final Map<String, String> env = configData[1] as Map<String, String>;
 
-      _config['env'] = _getString('env', config, env);
-      _config['backendUrl'] = _getString('backendUrl', config, env);
-      _config['forceOnboarding'] = _getBool('forceOnboarding', config, env);
+      _env = AppEnvExtension.fromString(_getString('env', config, env));
+      _backendUrl = _getString('backendUrl', config, env);
+      _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
+      _fakeDeviceId = _getString('fakeDeviceId', config, env);
     });
   }
 
   AppEnv get env {
-    return AppEnvExtension.fromString(_config['env'] as String);
+    return _env;
   }
 
   String get backendUrl {
-    return _config['backendUrl'] as String;
+    return _backendUrl;
   }
 
-  bool get forceOnboarding {
-    return _config['forceOnboarding'] as bool;
+  bool get useFakeDeviceId {
+    return _useFakeDeviceId;
+  }
+
+  String get fakeDeviceId {
+    return _fakeDeviceId;
   }
 
   String _getString(String configKey, Map config, Map<String, String> env) {

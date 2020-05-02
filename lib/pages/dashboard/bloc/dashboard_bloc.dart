@@ -1,13 +1,36 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/freezed_classes.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
+  StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
 
-  DashboardBloc({this.dashboardRepository});
+  StreamSubscription<void> _refreshSubscription;
+
+  DashboardBloc({
+    @required this.dashboardRepository,
+    @required UserSettingsBloc userSettingsBloc,
+  })  : assert(dashboardRepository != null),
+        assert(userSettingsBloc != null),
+        super() {
+    userSettingsBlocSubscription = userSettingsBloc.listen((state) {
+      if (state is ShowCurrentUserSettings) {
+        add(FetchDashboard());
+      }
+    });
+
+    _refreshSubscription =
+        Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
+      add(RefreshDashboard());
+    });
+  }
 
   @override
   DashboardState get initialState => DashboardUninitialized();
@@ -22,6 +45,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     if (event is FetchDashboard) {
       yield* _mapFetchDashboardToState(event);
+    } else if (event is RefreshDashboard) {
+      yield* _mapRefreshDashboardToState(event);
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
     }
@@ -32,10 +57,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     if (state is DashboardLoading) {
       return;
     }
-    yield DashboardLoading();
+
+    if (state.hasDashboard) {
+      yield DashboardLoading((state as StateWithDashboard).dashboard);
+    } else {
+      yield DashboardLoading();
+    }
+
     try {
       final dashboard = await dashboardRepository.loadDashboardPageData();
       yield DashboardLoaded(dashboard);
+
       return;
     } catch (ex) {
       print(ex);
@@ -44,6 +76,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       } else {
         yield DashboardError(null);
       }
+    }
+  }
+
+  Stream<DashboardState> _mapRefreshDashboardToState(
+      RefreshDashboard refresh) async* {
+    if (state is! DashboardLoaded) {
+      return;
+    }
+    try {
+      final Dashboard dashboardReloaded =
+          await dashboardRepository.loadDashboardPageData();
+
+      yield DashboardLoaded(dashboardReloaded);
+    } catch (ex) {
+      print(ex);
     }
   }
 
@@ -69,5 +116,15 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } catch (_) {
       yield DashboardError((state as DashboardLoaded).dashboard);
     }
+  }
+
+  @override
+  Future<void> close() {
+    userSettingsBlocSubscription.cancel();
+    if (_refreshSubscription != null) {
+      _refreshSubscription.cancel();
+      _refreshSubscription = null;
+    }
+    return super.close();
   }
 }

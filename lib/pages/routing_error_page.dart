@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 
 class RoutingErrorPage extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class RoutingErrorPage extends StatelessWidget {
               CupertinoButton(
                 onPressed: () => Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/home',
+                  DashboardPage.routeUri,
                   (_) => false,
                   arguments: null,
                 ),
