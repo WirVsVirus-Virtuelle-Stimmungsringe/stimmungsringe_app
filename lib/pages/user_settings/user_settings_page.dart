@@ -4,17 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
 import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 class UserSettingsPage extends StatefulWidget {
   static const String routeUri = '/user-settings';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          OnboardingRepository onboardingRepository) =>
+          UserSettingsBloc userSettingsBloc) =>
       MapEntry(
         routeUri,
-        (BuildContext c) => BlocProvider<UserSettingsBloc>(
-          create: (context) => UserSettingsBloc(onboardingRepository),
+        (BuildContext c) => BlocProvider<UserSettingsBloc>.value(
+          value: userSettingsBloc,
           child: UserSettingsPage(),
         ),
       );
@@ -55,7 +54,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(state.userName),
+                    Text(state.hasName ? state.userName : 'kein Name vergeben'),
                     CupertinoTextField(
                       controller: _userNameController,
                     ),

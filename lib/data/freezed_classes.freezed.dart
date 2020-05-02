@@ -13,15 +13,16 @@ UserMinimal _$UserMinimalFromJson(Map<String, dynamic> json) {
 abstract class _$UserMinimal {
   String get userId;
   String get displayName;
+  bool get hasName;
 
-  UserMinimal copyWith({String userId, String displayName});
+  UserMinimal copyWith({String userId, String displayName, bool hasName});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_UserMinimal implements _UserMinimal {
-  const _$_UserMinimal(this.userId, this.displayName);
+  const _$_UserMinimal(this.userId, this.displayName, this.hasName);
 
   factory _$_UserMinimal.fromJson(Map<String, dynamic> json) =>
       _$_$_UserMinimalFromJson(json);
@@ -30,10 +31,12 @@ class _$_UserMinimal implements _UserMinimal {
   final String userId;
   @override
   final String displayName;
+  @override
+  final bool hasName;
 
   @override
   String toString() {
-    return 'UserMinimal(userId: $userId, displayName: $displayName)';
+    return 'UserMinimal(userId: $userId, displayName: $displayName, hasName: $hasName)';
   }
 
   @override
@@ -41,21 +44,27 @@ class _$_UserMinimal implements _UserMinimal {
     return other is _UserMinimal &&
         (identical(other.userId, userId) || other.userId == userId) &&
         (identical(other.displayName, displayName) ||
-            other.displayName == displayName);
+            other.displayName == displayName) &&
+        (identical(other.hasName, hasName) || other.hasName == hasName);
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ userId.hashCode ^ displayName.hashCode;
+      runtimeType.hashCode ^
+      userId.hashCode ^
+      displayName.hashCode ^
+      hasName.hashCode;
 
   @override
   _$_UserMinimal copyWith({
     Object userId = immutable,
     Object displayName = immutable,
+    Object hasName = immutable,
   }) {
     return _$_UserMinimal(
       userId == immutable ? this.userId : userId as String,
       displayName == immutable ? this.displayName : displayName as String,
+      hasName == immutable ? this.hasName : hasName as bool,
     );
   }
 
@@ -66,7 +75,7 @@ class _$_UserMinimal implements _UserMinimal {
 }
 
 abstract class _UserMinimal implements UserMinimal {
-  const factory _UserMinimal(String userId, String displayName) =
+  const factory _UserMinimal(String userId, String displayName, bool hasName) =
       _$_UserMinimal;
 
   factory _UserMinimal.fromJson(Map<String, dynamic> json) =
@@ -76,9 +85,11 @@ abstract class _UserMinimal implements UserMinimal {
   String get userId;
   @override
   String get displayName;
+  @override
+  bool get hasName;
 
   @override
-  _UserMinimal copyWith({String userId, String displayName});
+  _UserMinimal copyWith({String userId, String displayName, bool hasName});
 }
 
 Suggestion _$SuggestionFromJson(Map<String, dynamic> json) {
@@ -381,6 +392,80 @@ abstract class _MyTile implements MyTile {
   _MyTile copyWith({UserMinimal user, Sentiment sentiment});
 }
 
+GroupData _$GroupDataFromJson(Map<String, dynamic> json) {
+  return _GroupData.fromJson(json);
+}
+
+abstract class _$GroupData {
+  String get groupName;
+  String get groupCode;
+
+  GroupData copyWith({String groupName, String groupCode});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
+class _$_GroupData implements _GroupData {
+  const _$_GroupData(this.groupName, this.groupCode);
+
+  factory _$_GroupData.fromJson(Map<String, dynamic> json) =>
+      _$_$_GroupDataFromJson(json);
+
+  @override
+  final String groupName;
+  @override
+  final String groupCode;
+
+  @override
+  String toString() {
+    return 'GroupData(groupName: $groupName, groupCode: $groupCode)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is _GroupData &&
+        (identical(other.groupName, groupName) ||
+            other.groupName == groupName) &&
+        (identical(other.groupCode, groupCode) || other.groupCode == groupCode);
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ groupName.hashCode ^ groupCode.hashCode;
+
+  @override
+  _$_GroupData copyWith({
+    Object groupName = immutable,
+    Object groupCode = immutable,
+  }) {
+    return _$_GroupData(
+      groupName == immutable ? this.groupName : groupName as String,
+      groupCode == immutable ? this.groupCode : groupCode as String,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_GroupDataToJson(this);
+  }
+}
+
+abstract class _GroupData implements GroupData {
+  const factory _GroupData(String groupName, String groupCode) = _$_GroupData;
+
+  factory _GroupData.fromJson(Map<String, dynamic> json) =
+      _$_GroupData.fromJson;
+
+  @override
+  String get groupName;
+  @override
+  String get groupCode;
+
+  @override
+  _GroupData copyWith({String groupName, String groupCode});
+}
+
 Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
   return _Dashboard.fromJson(json);
 }
@@ -388,15 +473,17 @@ Dashboard _$DashboardFromJson(Map<String, dynamic> json) {
 abstract class _$Dashboard {
   MyTile get myTile;
   List<OtherTile> get otherTiles;
+  GroupData get groupData;
 
-  Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
+  Dashboard copyWith(
+      {MyTile myTile, List<OtherTile> otherTiles, GroupData groupData});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_Dashboard implements _Dashboard {
-  const _$_Dashboard(this.myTile, this.otherTiles);
+  const _$_Dashboard(this.myTile, this.otherTiles, this.groupData);
 
   factory _$_Dashboard.fromJson(Map<String, dynamic> json) =>
       _$_$_DashboardFromJson(json);
@@ -405,10 +492,12 @@ class _$_Dashboard implements _Dashboard {
   final MyTile myTile;
   @override
   final List<OtherTile> otherTiles;
+  @override
+  final GroupData groupData;
 
   @override
   String toString() {
-    return 'Dashboard(myTile: $myTile, otherTiles: $otherTiles)';
+    return 'Dashboard(myTile: $myTile, otherTiles: $otherTiles, groupData: $groupData)';
   }
 
   @override
@@ -416,21 +505,27 @@ class _$_Dashboard implements _Dashboard {
     return other is _Dashboard &&
         (identical(other.myTile, myTile) || other.myTile == myTile) &&
         (identical(other.otherTiles, otherTiles) ||
-            other.otherTiles == otherTiles);
+            other.otherTiles == otherTiles) &&
+        (identical(other.groupData, groupData) || other.groupData == groupData);
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ myTile.hashCode ^ otherTiles.hashCode;
+      runtimeType.hashCode ^
+      myTile.hashCode ^
+      otherTiles.hashCode ^
+      groupData.hashCode;
 
   @override
   _$_Dashboard copyWith({
     Object myTile = immutable,
     Object otherTiles = immutable,
+    Object groupData = immutable,
   }) {
     return _$_Dashboard(
       myTile == immutable ? this.myTile : myTile as MyTile,
       otherTiles == immutable ? this.otherTiles : otherTiles as List<OtherTile>,
+      groupData == immutable ? this.groupData : groupData as GroupData,
     );
   }
 
@@ -441,7 +536,8 @@ class _$_Dashboard implements _Dashboard {
 }
 
 abstract class _Dashboard implements Dashboard {
-  const factory _Dashboard(MyTile myTile, List<OtherTile> otherTiles) =
+  const factory _Dashboard(
+          MyTile myTile, List<OtherTile> otherTiles, GroupData groupData) =
       _$_Dashboard;
 
   factory _Dashboard.fromJson(Map<String, dynamic> json) =
@@ -451,9 +547,12 @@ abstract class _Dashboard implements Dashboard {
   MyTile get myTile;
   @override
   List<OtherTile> get otherTiles;
+  @override
+  GroupData get groupData;
 
   @override
-  _Dashboard copyWith({MyTile myTile, List<OtherTile> otherTiles});
+  _Dashboard copyWith(
+      {MyTile myTile, List<OtherTile> otherTiles, GroupData groupData});
 }
 
 SentimentUpdate _$SentimentUpdateFromJson(Map<String, dynamic> json) {

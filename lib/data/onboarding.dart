@@ -47,14 +47,16 @@ class FindGroupResponse {
 
 class UserSettingsResponse {
   final String userName;
+  final bool hasName;
 
   static UserSettingsResponse fromJson(Map<String, dynamic> jsonMap) {
     return UserSettingsResponse(
       jsonMap['userName'] as String,
+      jsonMap['hasName'] as bool,
     );
   }
 
-  const UserSettingsResponse(this.userName);
+  const UserSettingsResponse(this.userName, this.hasName);
 }
 
 class GroupSettingsResponse {

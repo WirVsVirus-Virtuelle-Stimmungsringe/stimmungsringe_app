@@ -26,6 +26,7 @@ class DashboardRepository {
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
 
     final String dashboardHash = response.headers['x-dashboard-hash'];
+    assert(dashboardHash != null);
 
     hashByHashCode[dashboard.hashCode] = dashboardHash;
 

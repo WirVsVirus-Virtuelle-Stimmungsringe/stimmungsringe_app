@@ -10,6 +10,7 @@ _$_UserMinimal _$_$_UserMinimalFromJson(Map<String, dynamic> json) {
   return _$_UserMinimal(
     json['userId'] as String,
     json['displayName'] as String,
+    json['hasName'] as bool,
   );
 }
 
@@ -17,6 +18,7 @@ Map<String, dynamic> _$_$_UserMinimalToJson(_$_UserMinimal instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'displayName': instance.displayName,
+      'hasName': instance.hasName,
     };
 
 _$_Suggestion _$_$_SuggestionFromJson(Map<String, dynamic> json) {
@@ -120,6 +122,19 @@ Map<String, dynamic> _$_$_MyTileToJson(_$_MyTile instance) => <String, dynamic>{
       'sentiment': _$SentimentEnumMap[instance.sentiment],
     };
 
+_$_GroupData _$_$_GroupDataFromJson(Map<String, dynamic> json) {
+  return _$_GroupData(
+    json['groupName'] as String,
+    json['groupCode'] as String,
+  );
+}
+
+Map<String, dynamic> _$_$_GroupDataToJson(_$_GroupData instance) =>
+    <String, dynamic>{
+      'groupName': instance.groupName,
+      'groupCode': instance.groupCode,
+    };
+
 _$_Dashboard _$_$_DashboardFromJson(Map<String, dynamic> json) {
   return _$_Dashboard(
     json['myTile'] == null
@@ -129,6 +144,9 @@ _$_Dashboard _$_$_DashboardFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : OtherTile.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    json['groupData'] == null
+        ? null
+        : GroupData.fromJson(json['groupData'] as Map<String, dynamic>),
   );
 }
 
@@ -136,6 +154,7 @@ Map<String, dynamic> _$_$_DashboardToJson(_$_Dashboard instance) =>
     <String, dynamic>{
       'myTile': instance.myTile,
       'otherTiles': instance.otherTiles,
+      'groupData': instance.groupData,
     };
 
 _$_SentimentUpdate _$_$_SentimentUpdateFromJson(Map<String, dynamic> json) {
