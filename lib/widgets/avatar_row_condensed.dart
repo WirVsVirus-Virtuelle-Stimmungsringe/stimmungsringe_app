@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 
 const double _avatarSize = 90;
@@ -10,15 +11,21 @@ class AvatarRowCondensed extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
+  final DateTime lastStatusUpdate;
+  final DateTime now;
 
   const AvatarRowCondensed({
     Key key,
     @required this.avatarSentiment,
     @required this.name,
     @required this.image,
+    @required this.lastStatusUpdate,
+    @required this.now,
   })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
+        assert(lastStatusUpdate != null),
+        assert(now != null),
         super(key: key);
 
   @override
@@ -67,12 +74,24 @@ class AvatarRowCondensed extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-            Center(
-              child: FaIcon(
-                avatarSentiment.icon,
-                size: _sentimentIconSize,
-                color: CupertinoColors.white,
-              ),
+            Column(
+              children: <Widget>[
+                Center(
+                  child: FaIcon(
+                    avatarSentiment.icon,
+                    size: _sentimentIconSize,
+                    color: CupertinoColors.white,
+                  ),
+                ),
+                Center(
+                    child: Text(
+                  formatLastUpdateTimestamp(lastStatusUpdate, now),
+                  style: const TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 12,
+                  ),
+                )),
+              ],
             ),
           ],
         ),
