@@ -69,7 +69,9 @@ class OtherDetailPage extends StatelessWidget {
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
             return AvatarRow(
-              name: state.otherDetail.user.displayName,
+              name: state.otherDetail.user.hasName
+                  ? state.otherDetail.user.displayName
+                  : '',
               image:
                   AssetsRepository().avatarImage(state.otherDetail.user.userId),
               avatarSentiment: state.otherDetail.sentiment,
