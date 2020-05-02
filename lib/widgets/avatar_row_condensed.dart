@@ -35,30 +35,30 @@ class AvatarRowCondensed extends StatelessWidget {
         ),
       ),
       padding: const EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: _avatarSize,
-                height: _avatarSize,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: image,
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(_avatarSize / 2),
-                  ),
-                  border: Border.all(
-                    color: CupertinoColors.white,
-                    width: 4.0,
-                  ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: _avatarSize,
+              height: _avatarSize,
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: image,
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(_avatarSize / 2),
+                ),
+                border: Border.all(
+                  color: CupertinoColors.white,
+                  width: 4.0,
                 ),
               ),
-              Text(
+            ),
+            Expanded(
+              child: Text(
                 name,
                 style: const TextStyle(
                   color: CupertinoColors.white,
@@ -66,24 +66,16 @@ class AvatarRowCondensed extends StatelessWidget {
                 ),
                 softWrap: true,
               ),
-            ],
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(right: 20),
-                  child: FaIcon(
-                    avatarSentiment.icon,
-                    size: _sentimentIconSize,
-                    color: CupertinoColors.white,
-                  ),
-                ),
-              ],
             ),
-          )
-        ],
+            Center(
+              child: FaIcon(
+                avatarSentiment.icon,
+                size: _sentimentIconSize,
+                color: CupertinoColors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
