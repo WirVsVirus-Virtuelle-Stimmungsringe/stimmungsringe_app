@@ -92,14 +92,14 @@ class GroupSettingsResponse extends Equatable {
   List<Object> get props => [groupId, groupName, groupCode];
 }
 
-String formatLastUpdateTimestamp(DateTime timestamp) {
-  if (timestamp.isAfter(DateTime.now().add(const Duration(seconds: -120)))) {
+String formatLastUpdateTimestamp(DateTime timestamp, DateTime now) {
+  if (timestamp.isAfter(now.add(const Duration(seconds: -120)))) {
     return "gerade eben";
-  } else if (timestamp.isAfter(DateTime.now().add(const Duration(hours: -2)))) {
-    final minutes = DateTime.now().difference(timestamp).inMinutes;
+  } else if (timestamp.isAfter(now.add(const Duration(hours: -2)))) {
+    final minutes = now.difference(timestamp).inMinutes;
     return "$minutes Minuten";
   } else {
-    final hours = DateTime.now().difference(timestamp).inHours;
+    final hours = now.difference(timestamp).inHours;
     return "$hours Stunden";
   }
 }

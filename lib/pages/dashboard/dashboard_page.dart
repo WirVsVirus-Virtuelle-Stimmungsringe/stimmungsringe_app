@@ -106,11 +106,11 @@ class _DashboardPageState extends State<DashboardPage>
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: _widgetWithDashboardBloc((dashboard) {
+                child: _widgetWithDashboardBloc((dashboard, now) {
                   if (dashboard.otherTiles.isEmpty) {
                     return _emptyGroupInfo(dashboard.groupData);
                   } else {
-                    return _contactList(dashboard);
+                    return _contactList(dashboard, now);
                   }
                 }),
               ),
@@ -173,7 +173,7 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _avatarRow() {
-    return _widgetWithDashboardBloc((dashboard) {
+    return _widgetWithDashboardBloc((dashboard, now) {
       final String nameInRow = dashboard.myTile.user.hasName
           ? dashboard.myTile.user.displayName
           : 'Namen ändern...';
@@ -205,7 +205,7 @@ class _DashboardPageState extends State<DashboardPage>
     });
   }
 
-  Widget _contactList(Dashboard dashboard) {
+  Widget _contactList(Dashboard dashboard, DateTime now) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -216,7 +216,7 @@ class _DashboardPageState extends State<DashboardPage>
         Expanded(
           child: Paragraph(
             child: ListView(
-              children: _otherTiles(context, dashboard),
+              children: _otherTiles(context, dashboard, now),
             ),
           ),
         )
@@ -224,7 +224,8 @@ class _DashboardPageState extends State<DashboardPage>
     );
   }
 
-  List<Widget> _otherTiles(BuildContext context, Dashboard dashboard) {
+  List<Widget> _otherTiles(
+      BuildContext context, Dashboard dashboard, DateTime now) {
     return dashboard.otherTiles.map(
       (tile) {
         final String contactName = tile.user.hasName
@@ -247,6 +248,7 @@ class _DashboardPageState extends State<DashboardPage>
               image: AssetsRepository().avatarImage(tile.user.userId),
               avatarSentiment: tile.sentiment,
               lastStatusUpdate: tile.lastStatusUpdate,
+              now: now,
             ),
           ),
         );
@@ -255,12 +257,13 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _widgetWithDashboardBloc(
-      Widget Function(Dashboard dashboard) widgetFactory) {
+      Widget Function(Dashboard dashboard, DateTime now) widgetFactory) {
     return BlocBuilder<DashboardBloc, DashboardState>(
       builder: (context, state) {
         if (state.hasDashboard) {
-          final Dashboard dashboard = (state as StateWithDashboard).dashboard;
-          return widgetFactory(dashboard);
+          final stateWithDashboard = state as StateWithDashboard;
+          return widgetFactory(
+              stateWithDashboard.dashboard, stateWithDashboard.now);
         } else {
           return LoadingSpinner();
         }
