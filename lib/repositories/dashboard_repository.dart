@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/config.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
 import 'package:stimmungsringeapp/session.dart';
@@ -34,7 +34,7 @@ class DashboardRepository {
           'X-User-ID': currentUserId,
           "Content-Type": "application/json"
         },
-        body: json.encode(SentimentUpdate(sentiment.sentimentCode)));
+        body: json.encode({'sentiment': sentiment.sentimentCode}));
     // TODO response handling
 
     assert(response.statusCode == 200);

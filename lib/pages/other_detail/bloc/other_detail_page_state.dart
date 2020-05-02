@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 
 abstract class OtherDetailPageState extends Equatable {
   @override

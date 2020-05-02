@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/assets_repository.dart';
@@ -43,7 +43,9 @@ class SetMySentimentPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
-              name: dashboard.myTile.user.displayName,
+              name: dashboard.myTile.user.hasName
+                  ? dashboard.myTile.user.displayName
+                  : '',
               image:
                   AssetsRepository().avatarImage(dashboard.myTile.user.userId),
               avatarSentiment: dashboard.myTile.sentiment,

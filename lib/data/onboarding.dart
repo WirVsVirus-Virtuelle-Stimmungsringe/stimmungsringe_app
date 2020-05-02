@@ -1,4 +1,6 @@
-class SigninUserResponse {
+import 'package:equatable/equatable.dart';
+
+class SigninUserResponse extends Equatable {
   final String userId;
   final bool hasGroup;
   final String groupId;
@@ -15,9 +17,12 @@ class SigninUserResponse {
 
   const SigninUserResponse(
       this.userId, this.hasGroup, this.groupId, this.groupName);
+
+  @override
+  List<Object> get props => [userId, hasGroup, groupId, groupName];
 }
 
-class StartNewGroupResponse {
+class StartNewGroupResponse extends Equatable {
   final String groupId;
   final String groupName;
 
@@ -29,9 +34,12 @@ class StartNewGroupResponse {
   }
 
   const StartNewGroupResponse(this.groupId, this.groupName);
+
+  @override
+  List<Object> get props => [groupId, groupName];
 }
 
-class FindGroupResponse {
+class FindGroupResponse extends Equatable {
   final String groupId;
   final String groupName;
 
@@ -43,9 +51,12 @@ class FindGroupResponse {
   }
 
   const FindGroupResponse(this.groupId, this.groupName);
+
+  @override
+  List<Object> get props => [groupId, groupName];
 }
 
-class UserSettingsResponse {
+class UserSettingsResponse extends Equatable {
   final String userName;
   final bool hasName;
 
@@ -57,9 +68,12 @@ class UserSettingsResponse {
   }
 
   const UserSettingsResponse(this.userName, this.hasName);
+
+  @override
+  List<Object> get props => [userName, hasName];
 }
 
-class GroupSettingsResponse {
+class GroupSettingsResponse extends Equatable {
   final String groupId;
   final String groupName;
   final String groupCode;
@@ -73,6 +87,9 @@ class GroupSettingsResponse {
   }
 
   const GroupSettingsResponse(this.groupId, this.groupName, this.groupCode);
+
+  @override
+  List<Object> get props => [groupId, groupName, groupCode];
 }
 
 String formatLastUpdateTimestamp(DateTime timestamp) {

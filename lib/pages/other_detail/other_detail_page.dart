@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/freezed_classes.dart';
+import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/other_detail/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/assets_repository.dart';
@@ -69,7 +69,9 @@ class OtherDetailPage extends StatelessWidget {
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
             return AvatarRow(
-              name: state.otherDetail.user.displayName,
+              name: state.otherDetail.user.hasName
+                  ? state.otherDetail.user.displayName
+                  : '',
               image:
                   AssetsRepository().avatarImage(state.otherDetail.user.userId),
               avatarSentiment: state.otherDetail.sentiment,
