@@ -221,28 +221,32 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   List<Widget> _otherTiles(BuildContext context, Dashboard dashboard) {
-    return dashboard.otherTiles
-        .map(
-          (tile) => Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                OtherDetailPage.routeUri,
-                arguments: {
-                  'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-                  'otherUserId': tile.user.userId,
-                },
-              ),
-              child: AvatarRowCondensed(
-                name: tile.user.displayName,
-                image: AssetsRepository().avatarImage(tile.user.userId),
-                avatarSentiment: tile.sentiment,
-              ),
+    return dashboard.otherTiles.map(
+      (tile) {
+        final String contactName = tile.user.hasName
+            ? tile.user.displayName
+            : 'Kontakt hat noch keinen Namen vergeben 😟';
+
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: GestureDetector(
+            onTap: () => Navigator.pushNamed(
+              context,
+              OtherDetailPage.routeUri,
+              arguments: {
+                'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+                'otherUserId': tile.user.userId,
+              },
+            ),
+            child: AvatarRowCondensed(
+              name: contactName,
+              image: AssetsRepository().avatarImage(tile.user.userId),
+              avatarSentiment: tile.sentiment,
             ),
           ),
-        )
-        .toList(growable: false);
+        );
+      },
+    ).toList(growable: false);
   }
 
   Widget _widgetWithDashboardBloc(
