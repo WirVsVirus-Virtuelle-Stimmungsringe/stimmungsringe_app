@@ -48,12 +48,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final String dashboardHash = dashboardRepository.getHash(dashboard);
       yield DashboardLoaded(dashboard);
 
-      this.prevDashboardHash = dashboardHash;
-
-      _refreshSubscription ??=
-          Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
-        add(RefreshDashboard());
-      });
+      prevDashboardHash = dashboardHash;
 
       return;
     } catch (ex) {
