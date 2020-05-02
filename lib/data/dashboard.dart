@@ -39,18 +39,20 @@ class Suggestion extends Equatable {
 class OtherTile extends Equatable {
   final UserMinimal user;
   final Sentiment sentiment;
+  final DateTime lastStatusUpdate;
 
   @override
-  List<Object> get props => [user, sentiment];
+  List<Object> get props => [user, sentiment, lastStatusUpdate];
 
   static OtherTile fromJson(Map<String, dynamic> jsonMap) {
     return OtherTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       sentimentFromJson(jsonMap['sentiment'] as String),
+      DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }
 
-  const OtherTile(this.user, this.sentiment);
+  const OtherTile(this.user, this.sentiment, this.lastStatusUpdate);
 }
 
 class OtherDetail extends Equatable {
@@ -80,23 +82,27 @@ class OtherDetail extends Equatable {
 class MyTile extends Equatable {
   final UserMinimal user;
   final Sentiment sentiment;
+  final DateTime lastStatusUpdate;
 
   @override
-  List<Object> get props => [user, sentiment];
+  List<Object> get props => [user, sentiment, lastStatusUpdate];
 
   static MyTile fromJson(Map<String, dynamic> jsonMap) {
     return MyTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       sentimentFromJson(jsonMap['sentiment'] as String),
+      DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }
 
-  const MyTile(this.user, this.sentiment);
+  const MyTile(this.user, this.sentiment, this.lastStatusUpdate);
 
-  MyTile copyWith({UserMinimal user, Sentiment sentiment}) {
+  MyTile copyWith(
+      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate}) {
     return MyTile(
       user ?? this.user,
       sentiment ?? this.sentiment,
+      lastStatusUpdate ?? this.lastStatusUpdate,
     );
   }
 }
