@@ -71,14 +71,25 @@ class AvatarRowCondensed extends StatelessWidget {
                 softWrap: true,
               ),
             ),
-            Center(
-              child: FaIcon(
-                avatarSentiment.icon,
-                size: _sentimentIconSize,
-                color: CupertinoColors.white,
-              ),
+            Column(
+              children: <Widget>[
+                Center(
+                  child: FaIcon(
+                    avatarSentiment.icon,
+                    size: _sentimentIconSize,
+                    color: CupertinoColors.white,
+                  ),
+                ),
+                Center(
+                    child: Text(
+                  formatLastUpdateTimestamp(lastUpdated),
+                  style: const TextStyle(
+                    color: CupertinoColors.white,
+                    fontSize: 12,
+                  ),
+                )),
+              ],
             ),
-            Center(child: Text(formatLastUpdateTimestamp(lastUpdated)))
           ],
         ),
       ),
