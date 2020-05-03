@@ -3,12 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum Sentiment { sunny, sunnyWithClouds, cloudy, windy, cloudyNight, thundery }
 
-Sentiment sentimentFromJson(String sentimentCode) {
-  return Sentiment.values
-      .firstWhere((type) => type.toString().split(".").last == sentimentCode);
-}
-
 extension SentimentExtension on Sentiment {
+  static Sentiment fromJson(String sentimentCode) {
+    return Sentiment.values
+        .firstWhere((type) => type.toString().split(".").last == sentimentCode);
+  }
+
   IconData get icon {
     switch (this) {
       case Sentiment.sunny:

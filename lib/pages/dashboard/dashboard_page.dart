@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/group_data.dart';
+import 'package:stimmungsringeapp/data/user_minimal.dart';
 import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
 import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
@@ -106,11 +108,16 @@ class _DashboardPageState extends State<DashboardPage>
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: _widgetWithDashboardBloc((dashboard, now) {
-                  if (dashboard.otherTiles.isEmpty) {
-                    return _emptyGroupInfo(dashboard.groupData);
+                child: _widgetWithDashboardBloc((stateWithDashboard) {
+                  if (stateWithDashboard.dashboard.otherTiles.isEmpty) {
+                    return _emptyGroupInfo(
+                      stateWithDashboard.dashboard.groupData,
+                    );
                   } else {
-                    return _contactList(dashboard, now);
+                    return _contactList(
+                      stateWithDashboard.dashboard,
+                      stateWithDashboard.now,
+                    );
                   }
                 }),
               ),
@@ -173,7 +180,8 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _avatarRow() {
-    return _widgetWithDashboardBloc((dashboard, now) {
+    return _widgetWithDashboardBloc((stateWithDashboard) {
+      final Dashboard dashboard = stateWithDashboard.dashboard;
       final String nameInRow = dashboard.myTile.user.hasName
           ? dashboard.myTile.user.displayName
           : 'Namen ändern...';
@@ -257,13 +265,11 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _widgetWithDashboardBloc(
-      Widget Function(Dashboard dashboard, DateTime now) widgetFactory) {
+      Widget Function(StateWithDashboard state) widgetFactory) {
     return BlocBuilder<DashboardBloc, DashboardState>(
       builder: (context, state) {
         if (state.hasDashboard) {
-          final stateWithDashboard = state as StateWithDashboard;
-          return widgetFactory(
-              stateWithDashboard.dashboard, stateWithDashboard.now);
+          return widgetFactory(state as StateWithDashboard);
         } else {
           return LoadingSpinner();
         }

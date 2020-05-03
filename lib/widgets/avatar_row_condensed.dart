@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:stimmungsringeapp/data/onboarding.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
+import 'package:stimmungsringeapp/utils/format_last_update_timestamp.dart';
 
 const double _avatarSize = 90;
 const double _sentimentIconSize = 70;

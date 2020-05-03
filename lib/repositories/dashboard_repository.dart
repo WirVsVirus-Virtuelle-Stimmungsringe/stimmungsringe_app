@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:stimmungsringeapp/config.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
+import 'package:stimmungsringeapp/data/other_detail.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
 import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
 import 'package:stimmungsringeapp/session.dart';

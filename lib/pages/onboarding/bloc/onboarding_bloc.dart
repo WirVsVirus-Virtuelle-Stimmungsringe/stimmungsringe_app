@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/onboarding.dart';
+import 'package:stimmungsringeapp/data/group_data.dart';
+import 'package:stimmungsringeapp/data/signin_user_response.dart';
 import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
 import 'package:stimmungsringeapp/repositories/repositories.dart';
 import 'package:stimmungsringeapp/session.dart';
@@ -54,7 +55,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       CreateNewGroupEvent startNewGroup) async* {
     yield CreateNewGroupPendingState();
 
-    final StartNewGroupResponse startNewGroupResponse =
+    final GroupData startNewGroupResponse =
         await onboardingRepository.startNewGroup(startNewGroup.groupName);
 
     if (startNewGroupResponse != null) {
@@ -74,7 +75,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       JoinGroupEvent searchGroup) async* {
     yield JoinGroupPendingState();
 
-    final FindGroupResponse findGroupResponse =
+    final GroupData findGroupResponse =
         await onboardingRepository.findGroupByCode(searchGroup.groupCode);
 
     if (findGroupResponse != null) {
