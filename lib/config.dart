@@ -16,21 +16,13 @@ Future<Map<String, String>> _loadEnv() async {
   return DotEnv().env;
 }
 
-enum AppEnv { dev, prod }
-
-extension AppEnvExtension on AppEnv {
-  static AppEnv fromString(String value) {
-    return AppEnv.values.firstWhere((e) => e.toString().split('.')[1] == value);
-  }
-}
-
 class Config {
   Future<void> loaded;
 
-  AppEnv _env;
   String _backendUrl;
   bool _useFakeDeviceId;
   String _fakeDeviceId;
+  bool _chaosMonkeyEnabled;
 
   static final Config _singleton = Config._internal();
 
@@ -43,15 +35,11 @@ class Config {
       final Map config = configData[0];
       final Map<String, String> env = configData[1] as Map<String, String>;
 
-      _env = AppEnvExtension.fromString(_getString('env', config, env));
       _backendUrl = _getString('backendUrl', config, env);
       _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
       _fakeDeviceId = _getString('fakeDeviceId', config, env);
+      _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
     });
-  }
-
-  AppEnv get env {
-    return _env;
   }
 
   String get backendUrl {
@@ -64,6 +52,10 @@ class Config {
 
   String get fakeDeviceId {
     return _fakeDeviceId;
+  }
+
+  bool get chaosMonkeyEnabled {
+    return _chaosMonkeyEnabled;
   }
 
   String _getString(String configKey, Map config, Map<String, String> env) {
