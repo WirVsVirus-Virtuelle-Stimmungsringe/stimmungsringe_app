@@ -18,7 +18,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'groupCode': groupCode,
@@ -44,7 +44,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'deviceIdentifier': deviceIdentifier,
@@ -67,7 +67,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'groupName': groupName,
@@ -94,7 +94,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'groupId': groupId,
@@ -114,7 +114,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'groupId': groupId,
@@ -134,7 +134,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'name': name,
@@ -155,7 +155,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: json.encode({
         'groupName': groupName,
@@ -175,7 +175,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     );
 
@@ -196,7 +196,7 @@ class OnboardingRepository {
       url,
       headers: {
         'X-User-ID': currentUserId,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     );
 

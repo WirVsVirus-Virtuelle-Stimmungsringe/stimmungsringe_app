@@ -8,10 +8,10 @@ import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
 import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
 import 'package:stimmungsringeapp/pages/routing_error_page.dart';
 import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
-import 'package:stimmungsringeapp/repositories/repositories.dart';
+import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 Future<void> main() async {
   // TODO: throws exceptions on start

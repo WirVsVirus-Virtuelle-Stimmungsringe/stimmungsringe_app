@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_event.dart';
+import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_state.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/session.dart';
 

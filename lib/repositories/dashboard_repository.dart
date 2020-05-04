@@ -18,7 +18,7 @@ class DashboardRepository {
     );
 
     assert(
-        response.statusCode == 200, "load dashboard -> ${response.statusCode}");
+        response.statusCode == 200, 'load dashboard -> ${response.statusCode}');
 
     final Dashboard dashboard =
         Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
@@ -33,7 +33,7 @@ class DashboardRepository {
     final http.Response response = await http.put(url,
         headers: {
           'X-User-ID': currentUserId,
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
         body: json.encode({'sentiment': sentiment.sentimentCode}));
     // TODO response handling

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_event.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {

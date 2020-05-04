@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_bloc.dart';
+import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_event.dart';
+import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_state.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
 import 'package:stimmungsringeapp/pages/onboarding/onboarding_join_group_page.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 import 'package:stimmungsringeapp/widgets/action_button.dart';

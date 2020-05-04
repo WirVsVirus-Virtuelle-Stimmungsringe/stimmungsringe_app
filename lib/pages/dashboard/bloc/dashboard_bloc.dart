@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stimmungsringeapp/data/dashboard.dart';
 import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/pages/dashboard/bloc/bloc.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/bloc.dart';
+import 'package:stimmungsringeapp/pages/dashboard/bloc/dashboard_event.dart';
+import 'package:stimmungsringeapp/pages/dashboard/bloc/dashboard_state.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
+import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
