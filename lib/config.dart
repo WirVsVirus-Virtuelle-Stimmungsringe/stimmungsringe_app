@@ -39,6 +39,14 @@ class Config {
       _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
       _fakeDeviceId = _getString('fakeDeviceId', config, env);
       _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
+
+      debugPrint(
+        """loaded config:
+        backendUrl: $_backendUrl
+        useFakeDeviceId: $_useFakeDeviceId
+        fakeDeviceId: $_fakeDeviceId
+        chaosMonkeyEnabled: $_chaosMonkeyEnabled""",
+      );
     });
   }
 
