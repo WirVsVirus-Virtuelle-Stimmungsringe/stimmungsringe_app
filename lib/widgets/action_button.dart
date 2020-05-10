@@ -1,5 +1,5 @@
+import 'package:familiarise/widgets/button_group.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:stimmungsringeapp/widgets/button_group.dart';
 
 class ActionButton extends StatelessWidget {
   final Text text;

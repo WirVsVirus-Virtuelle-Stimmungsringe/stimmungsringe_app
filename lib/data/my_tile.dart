@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/data/user_minimal.dart';
+import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/data/user_minimal.dart';
 
 class MyTile extends Equatable {
   final UserMinimal user;

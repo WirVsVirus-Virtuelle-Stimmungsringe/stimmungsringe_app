@@ -1,17 +1,17 @@
+import 'package:familiarise/config.dart';
+import 'package:familiarise/pages/dashboard/dashboard_page.dart';
+import 'package:familiarise/pages/group_settings/group_settings_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_create_group_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_join_group_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
+import 'package:familiarise/pages/other_detail/other_detail_page.dart';
+import 'package:familiarise/pages/routing_error_page.dart';
+import 'package:familiarise/pages/set_my_sentiment_page.dart';
+import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
+import 'package:familiarise/pages/user_settings/user_settings_page.dart';
+import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:stimmungsringeapp/config.dart';
-import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
-import 'package:stimmungsringeapp/pages/group_settings/group_settings_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_join_group_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
-import 'package:stimmungsringeapp/pages/other_detail/other_detail_page.dart';
-import 'package:stimmungsringeapp/pages/routing_error_page.dart';
-import 'package:stimmungsringeapp/pages/set_my_sentiment_page.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
-import 'package:stimmungsringeapp/pages/user_settings/user_settings_page.dart';
-import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 Future<void> main() async {
   // TODO: throws exceptions on start
@@ -50,7 +50,7 @@ class SentimentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      title: 'Stimmungsringe',
+      title: 'Familiarise',
       initialRoute: OnboardingStartPage.routeUri,
       routes: Map.fromEntries([
         OnboardingStartPage.makeRoute(

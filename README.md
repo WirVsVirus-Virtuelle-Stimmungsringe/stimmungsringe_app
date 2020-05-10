@@ -1,4 +1,4 @@
-# stimmungsringe-app
+# Familiarise App
 
 ## Configuration
 

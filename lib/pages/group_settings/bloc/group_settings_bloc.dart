@@ -1,8 +1,8 @@
+import 'package:familiarise/pages/group_settings/bloc/group_settings_event.dart';
+import 'package:familiarise/pages/group_settings/bloc/group_settings_state.dart';
+import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/session.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_event.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_state.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
-import 'package:stimmungsringeapp/session.dart';
 
 class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
   final OnboardingRepository onboardingRepository;

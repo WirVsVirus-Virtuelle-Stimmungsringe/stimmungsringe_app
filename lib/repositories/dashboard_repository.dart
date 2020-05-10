@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:familiarise/config.dart';
+import 'package:familiarise/data/dashboard.dart';
+import 'package:familiarise/data/other_detail.dart';
+import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/repositories/chaos_monkey.dart';
+import 'package:familiarise/session.dart';
 import 'package:http/http.dart' as http;
-import 'package:stimmungsringeapp/config.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
-import 'package:stimmungsringeapp/data/other_detail.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
-import 'package:stimmungsringeapp/session.dart';
 
 class DashboardRepository {
   Future<Dashboard> loadDashboardPageData() async {

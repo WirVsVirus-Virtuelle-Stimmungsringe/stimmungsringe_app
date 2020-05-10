@@ -1,20 +1,20 @@
+import 'package:familiarise/pages/dashboard/dashboard_page.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_bloc.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
+import 'package:familiarise/pages/onboarding/onboarding_create_group_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_join_group_page.dart';
+import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
+import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/widgets/action_button.dart';
+import 'package:familiarise/widgets/button_group.dart';
+import 'package:familiarise/widgets/familiarise_logo.dart';
+import 'package:familiarise/widgets/headline.dart';
+import 'package:familiarise/widgets/loading_spinner.dart';
+import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_bloc.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_event.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_state.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_create_group_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_join_group_page.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
-import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
-import 'package:stimmungsringeapp/widgets/action_button.dart';
-import 'package:stimmungsringeapp/widgets/button_group.dart';
-import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
-import 'package:stimmungsringeapp/widgets/headline.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
-import 'package:stimmungsringeapp/widgets/paragraph.dart';
 
 class OnboardingStartPage extends StatelessWidget {
   static const String routeUri = '/';

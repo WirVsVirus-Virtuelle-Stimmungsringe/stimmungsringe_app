@@ -1,11 +1,11 @@
+import 'package:familiarise/pages/loading_spinner_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
+import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
+import 'package:familiarise/pages/user_settings/bloc/user_settings_event.dart';
+import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_bloc.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_event.dart';
-import 'package:stimmungsringeapp/pages/user_settings/bloc/user_settings_state.dart';
 
 class UserSettingsPage extends StatefulWidget {
   static const String routeUri = '/user-settings';

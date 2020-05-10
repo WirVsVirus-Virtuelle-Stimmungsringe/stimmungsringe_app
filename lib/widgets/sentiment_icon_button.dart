@@ -1,6 +1,6 @@
+import 'package:familiarise/data/sentiment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
 
 class SentimentIconButton extends StatelessWidget {
   final Sentiment sentiment;

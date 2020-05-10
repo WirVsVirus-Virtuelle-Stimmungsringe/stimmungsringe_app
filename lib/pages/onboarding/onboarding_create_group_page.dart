@@ -1,16 +1,16 @@
+import 'package:familiarise/pages/dashboard/dashboard_page.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_bloc.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
+import 'package:familiarise/widgets/action_button.dart';
+import 'package:familiarise/widgets/button_group.dart';
+import 'package:familiarise/widgets/familiarise_logo.dart';
+import 'package:familiarise/widgets/headline.dart';
+import 'package:familiarise/widgets/paragraph.dart';
+import 'package:familiarise/widgets/wait_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_bloc.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_event.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_state.dart';
-import 'package:stimmungsringeapp/widgets/action_button.dart';
-import 'package:stimmungsringeapp/widgets/button_group.dart';
-import 'package:stimmungsringeapp/widgets/familiarise_logo.dart';
-import 'package:stimmungsringeapp/widgets/headline.dart';
-import 'package:stimmungsringeapp/widgets/paragraph.dart';
-import 'package:stimmungsringeapp/widgets/wait_dialog.dart';
 
 class OnboardingCreateGroupPage extends StatefulWidget {
   static const String routeUri = '/onboarding/create-group';

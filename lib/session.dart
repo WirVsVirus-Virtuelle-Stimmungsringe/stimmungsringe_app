@@ -1,5 +1,5 @@
+import 'package:familiarise/config.dart';
 import 'package:flutter_udid/flutter_udid.dart';
-import 'package:stimmungsringeapp/config.dart';
 
 String currentUserId;
 String currentGroupId;

@@ -1,12 +1,12 @@
+import 'package:familiarise/pages/group_settings/bloc/group_settings_bloc.dart';
+import 'package:familiarise/pages/group_settings/bloc/group_settings_event.dart';
+import 'package:familiarise/pages/group_settings/bloc/group_settings_state.dart';
+import 'package:familiarise/pages/loading_spinner_page.dart';
+import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
+import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_bloc.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_event.dart';
-import 'package:stimmungsringeapp/pages/group_settings/bloc/group_settings_state.dart';
-import 'package:stimmungsringeapp/pages/loading_spinner_page.dart';
-import 'package:stimmungsringeapp/pages/onboarding/onboarding_start_page.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
 
 class GroupSettingsPage extends StatefulWidget {
   static const String routeUri = '/group-settings';

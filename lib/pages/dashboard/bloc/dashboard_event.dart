@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
+import 'package:familiarise/data/sentiment.dart';
 
 abstract class DashboardEvent extends Equatable {
   @override

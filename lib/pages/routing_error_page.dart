@@ -1,5 +1,5 @@
+import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:stimmungsringeapp/pages/dashboard/dashboard_page.dart';
 
 class RoutingErrorPage extends StatelessWidget {
   @override

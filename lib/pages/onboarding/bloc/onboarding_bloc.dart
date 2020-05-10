@@ -1,11 +1,11 @@
+import 'package:familiarise/data/group_data.dart';
+import 'package:familiarise/data/signin_user_response.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
+import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
+import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/session.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/group_data.dart';
-import 'package:stimmungsringeapp/data/signin_user_response.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_event.dart';
-import 'package:stimmungsringeapp/pages/onboarding/bloc/onboarding_state.dart';
-import 'package:stimmungsringeapp/repositories/onboarding_repository.dart';
-import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final OnboardingRepository onboardingRepository;

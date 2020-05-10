@@ -1,12 +1,12 @@
 import 'dart:convert';
 
+import 'package:familiarise/config.dart';
+import 'package:familiarise/data/group_data.dart';
+import 'package:familiarise/data/signin_user_response.dart';
+import 'package:familiarise/data/user_settings.dart';
+import 'package:familiarise/repositories/chaos_monkey.dart';
+import 'package:familiarise/session.dart';
 import 'package:http/http.dart' as http;
-import 'package:stimmungsringeapp/config.dart';
-import 'package:stimmungsringeapp/data/group_data.dart';
-import 'package:stimmungsringeapp/data/signin_user_response.dart';
-import 'package:stimmungsringeapp/data/user_settings.dart';
-import 'package:stimmungsringeapp/repositories/chaos_monkey.dart';
-import 'package:stimmungsringeapp/session.dart';
 
 class OnboardingRepository {
   // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);

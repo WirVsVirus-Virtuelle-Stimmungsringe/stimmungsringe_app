@@ -1,4 +1,4 @@
-import 'package:stimmungsringeapp/config.dart';
+import 'package:familiarise/config.dart';
 
 class ChaosMonkey {
   static Future<void> delayAsync() async {

@@ -1,5 +1,5 @@
+import 'package:familiarise/config.dart';
 import 'package:flutter/painting.dart';
-import 'package:stimmungsringeapp/config.dart';
 
 class AssetsRepository {
   ImageProvider<NetworkImage> avatarImage(String userId) {

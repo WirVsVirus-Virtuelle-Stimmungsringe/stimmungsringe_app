@@ -1,4 +1,4 @@
-package org.wirvsvirus.stimmungsringeapp
+package de.familiarise.app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

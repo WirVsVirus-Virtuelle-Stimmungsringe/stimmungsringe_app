@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/data/suggestion.dart';
-import 'package:stimmungsringeapp/data/user_minimal.dart';
+import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/data/suggestion.dart';
+import 'package:familiarise/data/user_minimal.dart';
 
 class OtherDetail extends Equatable {
   final UserMinimal user;

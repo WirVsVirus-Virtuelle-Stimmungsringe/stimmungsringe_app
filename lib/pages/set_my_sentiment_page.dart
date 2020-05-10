@@ -1,15 +1,15 @@
+import 'package:familiarise/data/dashboard.dart';
+import 'package:familiarise/data/my_tile.dart';
+import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
+import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
+import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
+import 'package:familiarise/repositories/assets_repository.dart';
+import 'package:familiarise/widgets/avatar_row.dart';
+import 'package:familiarise/widgets/loading_spinner.dart';
+import 'package:familiarise/widgets/sentiment_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/data/dashboard.dart';
-import 'package:stimmungsringeapp/data/my_tile.dart';
-import 'package:stimmungsringeapp/data/sentiment.dart';
-import 'package:stimmungsringeapp/pages/dashboard/bloc/dashboard_bloc.dart';
-import 'package:stimmungsringeapp/pages/dashboard/bloc/dashboard_event.dart';
-import 'package:stimmungsringeapp/pages/dashboard/bloc/dashboard_state.dart';
-import 'package:stimmungsringeapp/repositories/assets_repository.dart';
-import 'package:stimmungsringeapp/widgets/avatar_row.dart';
-import 'package:stimmungsringeapp/widgets/loading_spinner.dart';
-import 'package:stimmungsringeapp/widgets/sentiment_icon_button.dart';
 
 class SetMySentimentPage extends StatelessWidget {
   static const String routeUri = '/my-sentiment';

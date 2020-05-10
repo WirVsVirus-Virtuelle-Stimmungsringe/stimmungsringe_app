@@ -1,8 +1,8 @@
+import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart';
+import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
+import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stimmungsringeapp/pages/other_detail/bloc/other_detail_page_event.dart';
-import 'package:stimmungsringeapp/pages/other_detail/bloc/other_detail_page_state.dart';
-import 'package:stimmungsringeapp/repositories/dashboard_repository.dart';
 
 class OtherDetailPageBloc
     extends Bloc<OtherDetailPageEvent, OtherDetailPageState> {

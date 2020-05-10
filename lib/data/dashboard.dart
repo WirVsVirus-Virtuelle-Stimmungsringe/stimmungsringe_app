@@ -1,8 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
-import 'package:stimmungsringeapp/data/group_data.dart';
-import 'package:stimmungsringeapp/data/my_tile.dart';
-import 'package:stimmungsringeapp/data/other_tile.dart';
+import 'package:familiarise/data/group_data.dart';
+import 'package:familiarise/data/my_tile.dart';
+import 'package:familiarise/data/other_tile.dart';
 
 class Dashboard extends Equatable {
   final MyTile myTile;
