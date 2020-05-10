@@ -6,9 +6,7 @@ class LoadingSpinnerPage extends StatelessWidget {
     return const CupertinoPageScaffold(
       child: SafeArea(
         child: Center(
-          child: CupertinoActivityIndicator(
-            animating: true,
-          ),
+          child: CupertinoActivityIndicator(),
         ),
       ),
     );

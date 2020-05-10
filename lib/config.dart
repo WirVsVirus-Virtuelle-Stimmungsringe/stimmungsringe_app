@@ -41,7 +41,8 @@ class Config {
       _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
 
       debugPrint(
-        """loaded config:
+        """
+loaded config:
         backendUrl: $_backendUrl
         useFakeDeviceId: $_useFakeDeviceId
         fakeDeviceId: $_fakeDeviceId
