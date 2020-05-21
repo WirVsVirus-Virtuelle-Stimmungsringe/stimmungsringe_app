@@ -4,7 +4,7 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
-import 'package:familiarise/repositories/assets_repository.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
@@ -15,9 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class OtherDetailPage extends StatelessWidget {
   static const String routeUri = '/other-detail-page';
 
-  static MapEntry<String, WidgetBuilder> makeRoute(
-          DashboardRepository dashboardRepository) =>
-      MapEntry(
+  static MapEntry<String, WidgetBuilder> makeRoute() => MapEntry(
         routeUri,
         (BuildContext context) {
           final args =
@@ -28,8 +26,8 @@ class OtherDetailPage extends StatelessWidget {
           return BlocProvider.value(
             value: dashboardBloc,
             child: BlocProvider<OtherDetailPageBloc>(
-              create: (context) =>
-                  OtherDetailPageBloc(dashboardRepository: dashboardRepository),
+              create: (context) => OtherDetailPageBloc(
+                  dashboardRepository: DashboardRepository()),
               child: OtherDetailPage(
                 otherUserId: otherUserId,
               ),
@@ -76,7 +74,7 @@ class OtherDetailPage extends StatelessWidget {
                   ? state.otherDetail.user.displayName
                   : '',
               image:
-                  AssetsRepository().avatarImage(state.otherDetail.user.userId),
+                  AvatarRepository().avatarImage(state.otherDetail.user.userId),
               avatarSentiment: state.otherDetail.sentiment,
             );
           } else {

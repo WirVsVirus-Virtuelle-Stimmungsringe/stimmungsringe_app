@@ -5,7 +5,6 @@ import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
 import 'package:familiarise/pages/onboarding/onboarding_create_group_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_join_group_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
-import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:familiarise/widgets/action_button.dart';
 import 'package:familiarise/widgets/button_group.dart';
@@ -20,30 +19,22 @@ class OnboardingStartPage extends StatelessWidget {
   static const String routeUri = '/';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          OnboardingRepository onboardingRepository,
-          DashboardRepository dashboardRepository,
           UserSettingsBloc userSettingsBloc) =>
       MapEntry(
         routeUri,
         (_) => BlocProvider<OnboardingBloc>(
           create: (_) =>
-              OnboardingBloc(onboardingRepository: onboardingRepository),
+              OnboardingBloc(onboardingRepository: OnboardingRepository()),
           child: OnboardingStartPage(
-            dashboardRepository: dashboardRepository,
             userSettingsBloc: userSettingsBloc,
           ),
         ),
       );
 
-  final DashboardRepository dashboardRepository;
   final UserSettingsBloc userSettingsBloc;
 
-  const OnboardingStartPage(
-      {Key key,
-      @required this.dashboardRepository,
-      @required this.userSettingsBloc})
-      : assert(dashboardRepository != null),
-        assert(userSettingsBloc != null),
+  const OnboardingStartPage({Key key, @required this.userSettingsBloc})
+      : assert(userSettingsBloc != null),
         super(key: key);
 
   @override
@@ -132,7 +123,6 @@ class OnboardingStartPage extends StatelessWidget {
                 print("navigate from onboarding to dasboard");
                 Navigator.of(context).pushReplacement(
                   DashboardPage.makeRouteWithoutTransition(
-                    dashboardRepository,
                     userSettingsBloc,
                   ),
                 );

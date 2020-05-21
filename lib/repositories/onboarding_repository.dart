@@ -9,7 +9,14 @@ import 'package:familiarise/session.dart';
 import 'package:http/http.dart' as http;
 
 class OnboardingRepository {
-  // final client = new HttpClient()..connectionTimeout = Duration(seconds: 5);
+  static final OnboardingRepository _singleton =
+      OnboardingRepository._internal();
+
+  factory OnboardingRepository() {
+    return _singleton;
+  }
+
+  OnboardingRepository._internal();
 
   Future<GroupData> findGroupByCode(String groupCode) async {
     final String url = '${Config().backendUrl}/onboarding/group-by-code';

@@ -9,7 +9,7 @@ import 'package:familiarise/pages/other_detail/other_detail_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
-import 'package:familiarise/repositories/assets_repository.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
@@ -25,28 +25,24 @@ class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-      DashboardRepository dashboardRepository,
       UserSettingsBloc userSettingsBloc) {
     return MapEntry(
       routeUri,
-      _makeRouteBuilder(dashboardRepository, userSettingsBloc),
+      _makeRouteBuilder(userSettingsBloc),
     );
   }
 
   static PageRouteBuilder<Widget> makeRouteWithoutTransition(
-      DashboardRepository dashboardRepository,
       UserSettingsBloc userSettingsBloc) {
     return PageRouteBuilder<Widget>(
         pageBuilder: (context, animation1, animation2) =>
-            _makeRouteBuilder(dashboardRepository, userSettingsBloc)(context));
+            _makeRouteBuilder(userSettingsBloc)(context));
   }
 
-  static WidgetBuilder _makeRouteBuilder(
-      DashboardRepository dashboardRepository,
-      UserSettingsBloc userSettingsBloc) {
+  static WidgetBuilder _makeRouteBuilder(UserSettingsBloc userSettingsBloc) {
     return (BuildContext c) => BlocProvider<DashboardBloc>(
           create: (context) => DashboardBloc(
-            dashboardRepository: dashboardRepository,
+            dashboardRepository: DashboardRepository(),
             userSettingsBloc: userSettingsBloc,
           ),
           child: DashboardPage(),
@@ -199,7 +195,7 @@ class _DashboardPageState extends State<DashboardPage>
         },
         child: AvatarRow(
           name: nameInRow,
-          image: AssetsRepository().avatarImage(user.userId),
+          image: AvatarRepository().avatarImage(user.userId),
           avatarSentiment: dashboard.myTile.sentiment,
           onSentimentIconTap: () {
             print('AvatarRow open SetMySentiment');
@@ -255,7 +251,7 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: AvatarRowCondensed(
               name: contactName,
-              image: AssetsRepository().avatarImage(tile.user.userId),
+              image: AvatarRepository().avatarImage(tile.user.userId),
               avatarSentiment: tile.sentiment,
               lastStatusUpdate: tile.lastStatusUpdate,
               now: now,

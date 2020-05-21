@@ -4,7 +4,7 @@ import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
-import 'package:familiarise/repositories/assets_repository.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/sentiment_icon_button.dart';
@@ -50,7 +50,7 @@ class SetMySentimentPage extends StatelessWidget {
                   ? dashboard.myTile.user.displayName
                   : '',
               image:
-                  AssetsRepository().avatarImage(dashboard.myTile.user.userId),
+                  AvatarRepository().avatarImage(dashboard.myTile.user.userId),
               avatarSentiment: dashboard.myTile.sentiment,
             ),
             Container(

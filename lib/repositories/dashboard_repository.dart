@@ -9,6 +9,14 @@ import 'package:familiarise/session.dart';
 import 'package:http/http.dart' as http;
 
 class DashboardRepository {
+  static final DashboardRepository _singleton = DashboardRepository._internal();
+
+  factory DashboardRepository() {
+    return _singleton;
+  }
+
+  DashboardRepository._internal();
+
   Future<Dashboard> loadDashboardPageData() async {
     final String url = '${Config().backendUrl}/dashboard';
 

@@ -11,12 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GroupSettingsPage extends StatefulWidget {
   static const String routeUri = '/group-settings';
 
-  static MapEntry<String, WidgetBuilder> makeRoute(
-          OnboardingRepository onboardingRepository) =>
-      MapEntry(
+  static MapEntry<String, WidgetBuilder> makeRoute() => MapEntry(
         routeUri,
         (BuildContext c) => BlocProvider<GroupSettingsBloc>(
-          create: (context) => GroupSettingsBloc(onboardingRepository),
+          create: (context) => GroupSettingsBloc(OnboardingRepository()),
           child: GroupSettingsPage(),
         ),
       );
