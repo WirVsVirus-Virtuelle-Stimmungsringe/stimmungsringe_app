@@ -6,20 +6,27 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/src/painting/image_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../session.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
+  final AvatarRepository avatarRepository;
   StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
 
   StreamSubscription<void> _refreshSubscription;
 
   DashboardBloc({
     @required this.dashboardRepository,
+    @required this.avatarRepository,
     @required UserSettingsBloc userSettingsBloc,
   })  : assert(dashboardRepository != null),
+        assert(avatarRepository != null),
         assert(userSettingsBloc != null),
         super() {
     userSettingsBlocSubscription = userSettingsBloc.listen((state) {
@@ -89,6 +96,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
     try {
+      final ImageProvider<NetworkImage> avatarImage =
+          avatarRepository.avatarImage(currentUserId);
       final Dashboard dashboardReloaded =
           await dashboardRepository.loadDashboardPageData();
 
