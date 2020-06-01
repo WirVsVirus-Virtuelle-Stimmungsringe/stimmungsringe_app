@@ -13,3 +13,12 @@ class FetchOtherDetailPage extends OtherDetailPageEvent {
   @override
   List<Object> get props => [otherUserId];
 }
+
+class SendMessage extends OtherDetailPageEvent {
+  final String otherUserId;
+
+  SendMessage(this.otherUserId) : assert(otherUserId != null);
+
+  @override
+  List<Object> get props => [otherUserId];
+}

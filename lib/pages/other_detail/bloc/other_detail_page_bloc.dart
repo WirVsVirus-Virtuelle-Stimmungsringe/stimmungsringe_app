@@ -36,6 +36,10 @@ class OtherDetailPageBloc
         yield OtherDetailPageError();
       }
     }
+    if (event is SendMessage) {
+      print("send message to " + event.otherUserId);
+      messageRepository.sendMessage(event.otherUserId);
+    }
   }
 
   @override

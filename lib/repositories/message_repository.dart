@@ -16,7 +16,7 @@ class MessageRepository {
   MessageRepository._internal();
 
   Future<MessageInbox> loadInbox() async {
-    final String url = '${Config().backendUrl}/inbox';
+    final String url = '${Config().backendUrl}/message/inbox';
 
     final http.Response response = await http.get(
       url,
@@ -33,7 +33,7 @@ class MessageRepository {
   }
 
   void sendMessage(String recipientId) async {
-    final String url = '${Config().backendUrl}/send/${recipientId}';
+    final String url = '${Config().backendUrl}/message/send/${recipientId}';
 
     final http.Response response = await http.post(
       url,

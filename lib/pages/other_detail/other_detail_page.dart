@@ -1,5 +1,6 @@
 import 'package:familiarise/data/other_detail.dart';
 import 'package:familiarise/data/suggestion.dart';
+import 'package:familiarise/data/user_minimal.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart';
@@ -96,7 +97,7 @@ class OtherDetailPage extends StatelessWidget {
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
             // return buildSuggestionsList(state.otherDetail);
-            return buildMessagePushItems();
+            return buildMessagePushItems(state.otherDetail.user);
           }
 
           return Container();
@@ -105,7 +106,7 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  BlocBuilder buildMessagePushItems() {
+  BlocBuilder buildMessagePushItems(UserMinimal otherUser) {
     return BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
         builder: (context, state) {
       return ListView.builder(
@@ -116,7 +117,7 @@ class OtherDetailPage extends StatelessWidget {
               onPressed: () {
                 print("foo");
                 BlocProvider.of<OtherDetailPageBloc>(context)
-                    .add(SendMessageOtherDetailPage(otherUserId));
+                    .add(SendMessage(otherUser.userId));
               });
         },
       );
