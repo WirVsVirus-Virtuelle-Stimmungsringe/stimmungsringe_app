@@ -9,7 +9,8 @@ class OtherDetailPageBloc
   final DashboardRepository dashboardRepository;
 
   OtherDetailPageBloc({@required this.dashboardRepository})
-      : assert(dashboardRepository != null);
+      : assert(dashboardRepository != null),
+        super();
 
   @override
   OtherDetailPageState get initialState => OtherDetailPageUninitialized();

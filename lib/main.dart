@@ -9,6 +9,7 @@ import 'package:familiarise/pages/routing_error_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,7 +23,7 @@ Future<void> main() async {
   await Config().loaded;
 
   final UserSettingsBloc userSettingsBloc =
-      UserSettingsBloc(OnboardingRepository());
+      UserSettingsBloc(OnboardingRepository(), AvatarRepository());
 
   runApp(SentimentApp(
     userSettingsBloc: userSettingsBloc,

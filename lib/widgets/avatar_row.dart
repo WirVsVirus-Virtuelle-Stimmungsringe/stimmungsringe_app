@@ -1,4 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -53,26 +54,13 @@ class AvatarRow extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 20,
-            left: 20,
-            child: Container(
-              width: _avatarSize,
-              height: _avatarSize,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(_avatarSize / 2),
-                ),
-                border: Border.all(
-                  color: CupertinoColors.white,
-                  width: 4.0,
-                ),
-              ),
-            ),
-          ),
+              top: 20,
+              left: 20,
+              child: Avatar(
+                image: image,
+                borderColor: CupertinoColors.white,
+                size: _avatarSize,
+              )),
           Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,

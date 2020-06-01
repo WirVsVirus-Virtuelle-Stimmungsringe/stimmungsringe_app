@@ -23,8 +23,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         assert(userSettingsBloc != null),
         super() {
     userSettingsBlocSubscription = userSettingsBloc.listen((state) {
-      if (state is ShowCurrentUserSettings) {
-        add(FetchDashboard());
+      if (state is UserSettingsLoaded) {
+        add(RefreshDashboard());
       }
     });
 

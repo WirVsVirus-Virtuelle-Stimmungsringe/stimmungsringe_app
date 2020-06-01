@@ -22,6 +22,6 @@ class UserMinimal extends Equatable {
       this.userId, this.displayName, this.hasName, this._avatarUrl);
 
   String get avatarUrl {
-    return "${Config().backendUrl}$_avatarUrl";
+    return Config().backendUrl + _avatarUrl;
   }
 }
