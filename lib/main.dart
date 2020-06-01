@@ -1,6 +1,7 @@
 import 'package:familiarise/config.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
+import 'package:familiarise/pages/inbox/inbox_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_create_group_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_join_group_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
@@ -50,6 +51,7 @@ class SentimentApp extends StatelessWidget {
         OtherDetailPage.makeRoute(),
         GroupSettingsPage.makeRoute(),
         UserSettingsPage.makeRoute(userSettingsBloc),
+        InboxPage.makeRoute(),
       ]),
       onUnknownRoute: (_) =>
           CupertinoPageRoute<Widget>(builder: (context) => RoutingErrorPage()),

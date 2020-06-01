@@ -5,6 +5,7 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
+import 'package:familiarise/pages/inbox/inbox_page.dart';
 import 'package:familiarise/pages/other_detail/other_detail_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
@@ -107,7 +108,15 @@ class _DashboardPageState extends State<DashboardPage>
           children: <Widget>[
             _avatarRow(),
             _widgetWithDashboardBloc((stateWithDashboard) {
-              return Text("inbox " + stateWithDashboard.inbox.messages.length.toString());
+              return CupertinoButton(
+                child: Text("inbox " +
+                    stateWithDashboard.inbox.messages.length.toString()),
+                onPressed: () => Navigator.pushNamed(
+                    context, InboxPage.routeUri,
+                    arguments: {
+                      'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+                    }),
+              );
             }),
             Expanded(
               child: Padding(
