@@ -109,8 +109,11 @@ class _DashboardPageState extends State<DashboardPage>
             _avatarRow(),
             _widgetWithDashboardBloc((stateWithDashboard) {
               return CupertinoButton(
-                child: Text("inbox " +
-                    stateWithDashboard.inbox.messages.length.toString()),
+                child: Image.asset(
+                  'assets/images/heart.png',
+                  width: 57,
+                  color: Color.fromRGBO(255, 0, 0, 1.0),
+                ),
                 onPressed: () => Navigator.pushNamed(
                     context, InboxPage.routeUri,
                     arguments: {

@@ -74,6 +74,25 @@ class AvatarRow extends StatelessWidget {
             ),
           ),
           Positioned(
+            left: _avatarSize - 20,
+            bottom: _avatarSize - 50,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Image.asset(
+                  'assets/images/heart.png',
+                  width: 50,
+                  color: Color.fromRGBO(236, 56, 56, 1.0),
+                ),
+                Text("4",
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 20,
+                    )),
+              ],
+            ),
+          ),
+          Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,
             child: Text(
