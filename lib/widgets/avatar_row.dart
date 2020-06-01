@@ -9,6 +9,7 @@ class AvatarRow extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
+  final void Function() onAvatarImageTap;
   final void Function() onSentimentIconTap;
   final void Function() onInboxIconTap;
   final int inboxMessageCount;
@@ -18,6 +19,7 @@ class AvatarRow extends StatelessWidget {
     @required this.avatarSentiment,
     @required this.name,
     @required this.image,
+    this.onAvatarImageTap,
     this.onSentimentIconTap,
     this.onInboxIconTap,
     this.inboxMessageCount,
@@ -56,55 +58,8 @@ class AvatarRow extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Container(
-              width: _avatarSize,
-              height: _avatarSize,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(_avatarSize / 2),
-                ),
-                border: Border.all(
-                  color: CupertinoColors.white,
-                  width: 4.0,
-                ),
-              ),
-            ),
-          ),
-          (inboxMessageCount != null)
-              ? Positioned(
-                  left: _avatarSize - 40,
-                  bottom: _avatarSize - 70,
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      wrapGestureDetector(
-                        onTap: onInboxIconTap,
-                        child: Container(
-                          color: Color.fromRGBO(236, 56, 156, .3),
-                          padding: const EdgeInsets.all(20.0),
-                          child: Image.asset(
-                            'assets/images/heart.png',
-                            width: 50,
-                            color: Color.fromRGBO(236, 56, 56, 1.0),
-                          ),
-                        ),
-                      ),
-                      Text(inboxMessageCount.toString(),
-                          style: const TextStyle(
-                            color: CupertinoColors.white,
-                            fontSize: 20,
-                          )),
-                    ],
-                  ),
-                )
-              : Container(),
+          buildAvatarImage(),
+          buildInboxIndicator(),
           Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,
@@ -116,6 +71,71 @@ class AvatarRow extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  /**
+   * circular image
+   */
+  Widget buildAvatarImage() {
+    return Positioned(
+      top: 20,
+      left: 20,
+      child: wrapGestureDetector(
+        onTap: onAvatarImageTap,
+        child: Container(
+          width: _avatarSize,
+          height: _avatarSize,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: image,
+              fit: BoxFit.cover,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(_avatarSize / 2),
+            ),
+            border: Border.all(
+              color: CupertinoColors.white,
+              width: 4.0,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /**
+   * show heart symbol with message count
+   */
+  Widget buildInboxIndicator() {
+    if (inboxMessageCount == null) {
+      return Container();
+    }
+    return Positioned(
+      left: _avatarSize - 40,
+      bottom: _avatarSize - 70,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          wrapGestureDetector(
+            onTap: onInboxIconTap,
+            child: Container(
+              color: Color.fromRGBO(236, 56, 156, .3),
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(
+                'assets/images/heart.png',
+                width: 50,
+                color: Color.fromRGBO(236, 56, 56, 1.0),
+              ),
+            ),
+          ),
+          Text(inboxMessageCount.toString(),
+              style: const TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 20,
+              )),
         ],
       ),
     );

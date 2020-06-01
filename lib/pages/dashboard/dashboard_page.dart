@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/group_data.dart';
 import 'package:familiarise/data/user_minimal.dart';
@@ -189,35 +191,29 @@ class _DashboardPageState extends State<DashboardPage>
           : 'Namen ändern...';
 
       final UserMinimal user = dashboard.myTile.user;
-      // TODO move to avatar_row
-      return GestureDetector(
-        onTap: () {
-          print('AvatarRow open userSettings');
+      return AvatarRow(
+        name: nameInRow,
+        image: AvatarRepository().avatarImage(user.userId),
+        avatarSentiment: dashboard.myTile.sentiment,
+        onAvatarImageTap: () {
           Navigator.pushNamed(
             context,
             UserSettingsPage.routeUri,
           );
         },
-        child: AvatarRow(
-          name: nameInRow,
-          image: AvatarRepository().avatarImage(user.userId),
-          avatarSentiment: dashboard.myTile.sentiment,
-          onSentimentIconTap: () {
-            print('AvatarRow open SetMySentiment');
-
-            Navigator.pushNamed(
-              context,
-              SetMySentimentPage.routeUri,
-              arguments: BlocProvider.of<DashboardBloc>(context),
-            );
-          },
-          inboxMessageCount: stateWithDashboard.inbox.messages.length,
-          onInboxIconTap: () {
-            Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
-              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-            });
-          },
-        ),
+        onSentimentIconTap: () {
+          Navigator.pushNamed(
+            context,
+            SetMySentimentPage.routeUri,
+            arguments: BlocProvider.of<DashboardBloc>(context),
+          );
+        },
+        inboxMessageCount: min(stateWithDashboard.inbox.messages.length, 99),
+        onInboxIconTap: () {
+          Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
+            'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+          });
+        },
       );
     });
   }
