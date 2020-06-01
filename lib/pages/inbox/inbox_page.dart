@@ -3,11 +3,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+const double _avatarSize = 150;
 
 class InboxPage extends StatefulWidget {
   static const String routeUri = '/inbox';
@@ -32,16 +35,55 @@ class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text('Inbox')),
-      child: SafeArea(child: BlocBuilder<DashboardBloc, DashboardState>(
-        builder: (context, state) {
-          if (state.hasDashboard) {
-            return widgetFactory(state as StateWithDashboard);
-          } else {
-            return LoadingSpinner();
-          }
-        },
-      )),
+      navigationBar: CupertinoNavigationBar(middle: Text('Nachrichten')),
+      child: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color.fromRGBO(195, 11, 159, 0.8),
+            const Color.fromRGBO(219, 106, 11, 0.8)
+          ],
+        )),
+        child: foobar(),
+      ),
+    );
+  }
+
+  Widget foobar() {
+    return BlocBuilder<DashboardBloc, DashboardState>(
+      builder: (context, state) {
+        if (state.hasDashboard) {
+          return widgetFactory(state as StateWithDashboard);
+        } else {
+          return LoadingSpinner();
+        }
+      },
+    );
+  }
+
+  Widget avatarImage(String senderUserId) {
+    // FIXME
+    final ImageProvider image = AvatarRepository().avatarImage(senderUserId);
+
+    return Container(
+      width: _avatarSize,
+      height: _avatarSize,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: image,
+          fit: BoxFit.cover,
+        ),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(_avatarSize / 2),
+        ),
+        border: Border.all(
+          color: CupertinoColors.white,
+          width: 4.0,
+        ),
+      ),
     );
   }
 
@@ -51,34 +93,39 @@ class _InboxPageState extends State<InboxPage> {
 
     return Column(
       mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                CarouselSlider(
-                  items: state.inbox.messages.map((message) {
-                    return Text("text: " + message.text);
-                  }).toList(growable: false),
-                  options: CarouselOptions(
-                      //height: height,
-                      //autoPlay: true,
-                      //enlargeCenterPage: true,
-                      //viewportFraction: 1.0,
-                      onPageChanged: (index, reason) {
-                    setState(() {
-                      _current = index;
-                    });
-                  }),
+        Container(
+          //constraints: BoxConstraints.expand(height: 0.8),
+          child: CarouselSlider(
+            items: state.inbox.messages.map((message) {
+              return Column(children: [
+                Text("text: " + message.text),
+                avatarImage(message.senderUserId),
+                Text("sender userid: " + message.senderUserId),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Image.asset(
+                    'assets/images/heart.png',
+                    width: 57,
+                    color: Color.fromRGBO(255, 255, 255, 1.0),
+                  ),
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: renderDots(state.inbox.messages)),
-              ],
-            ),
+              ]);
+            }).toList(growable: false),
+            options: CarouselOptions(
+                height: 400,
+                //autoPlay: true,
+                //enlargeCenterPage: true,
+                //viewportFraction: 1.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                }),
           ),
         ),
+        Row(children: renderDots(state.inbox.messages)),
       ],
     );
   }

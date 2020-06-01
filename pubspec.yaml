@@ -61,6 +61,7 @@ flutter:
   assets:
     - config/
     - assets/images/familiarise_logo_large.png
+    - assets/images/heart.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
