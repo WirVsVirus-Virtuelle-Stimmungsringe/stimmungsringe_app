@@ -2,23 +2,26 @@ import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
 
 class Message extends Equatable {
+  final DateTime createdAt;
   final String senderUserId;
   final String text;
 
   @override
-  List<Object> get props => [senderUserId, text];
+  List<Object> get props => [createdAt, senderUserId, text];
 
   static Message fromJson(Map<String, dynamic> jsonMap) {
     return Message(
+      DateTime.parse(jsonMap['createdAt'] as String),
       jsonMap['senderUserId'] as String,
       jsonMap['text'] as String,
     );
   }
 
-  const Message(this.senderUserId, this.text);
+  const Message(this.createdAt, this.senderUserId, this.text);
 
-  Message copyWith({String senderUserId, String text}) {
+  Message copyWith({DateTime createdAt, String senderUserId, String text}) {
     return Message(
+      createdAt ?? this.createdAt,
       senderUserId ?? this.senderUserId,
       text ?? this.text,
     );

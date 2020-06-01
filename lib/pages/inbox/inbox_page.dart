@@ -102,6 +102,7 @@ class _InboxPageState extends State<InboxPage> {
               return Column(children: [
                 Text("text: " + message.text),
                 avatarImage(message.senderUserId),
+                Text("timestamp: " + message.createdAt.toString()),
                 Text("sender userid: " + message.senderUserId),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
