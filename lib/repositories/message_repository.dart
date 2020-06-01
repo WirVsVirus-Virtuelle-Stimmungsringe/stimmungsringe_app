@@ -32,15 +32,39 @@ class MessageRepository {
     return inbox;
   }
 
-  void sendMessage(String recipientId) async {
+  Future<AvailableMessages> loadAvailableMessages(String recipientId) async {
+    final String url =
+        '${Config().backendUrl}/message/available-messages/${recipientId}';
+
+    final http.Response response = await http.get(
+      url,
+      headers: {'X-User-ID': currentUserId},
+    );
+
+    assert(response.statusCode == 200);
+
+    final AvailableMessages availableMessages = AvailableMessages.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
+
+    await ChaosMonkey.delayAsync();
+    return availableMessages;
+  }
+
+  Future<AvailableMessages> sendMessage(String recipientId, String text) async {
     final String url = '${Config().backendUrl}/message/send/${recipientId}';
 
     final http.Response response = await http.post(
       url,
-      headers: {'X-User-ID': currentUserId},
-      body: json.encode(null),
+      headers: {'Content-Type': 'application/json', 'X-User-ID': currentUserId},
+      body: json.encode({'text': text}),
     );
 
     assert(response.statusCode == 200);
+
+    final AvailableMessages availableMessages = AvailableMessages.fromJson(
+        json.decode(response.body) as Map<String, dynamic>);
+
+    await ChaosMonkey.delayAsync();
+    return availableMessages;
   }
 }

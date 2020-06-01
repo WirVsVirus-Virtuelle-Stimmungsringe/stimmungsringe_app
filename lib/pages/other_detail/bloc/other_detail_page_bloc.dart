@@ -28,7 +28,13 @@ class OtherDetailPageBloc
       try {
         final otherDetail = await dashboardRepository
             .loadOtherDetailPageData(event.otherUserId);
-        yield OtherDetailPageLoaded(otherDetail);
+        final availableMessages =
+            await messageRepository.loadAvailableMessages(event.otherUserId);
+        print("available messages:");
+        for (var template in availableMessages.messageTemplates) {
+          print("- " + template.text);
+        }
+        yield OtherDetailPageLoaded(otherDetail, availableMessages);
         return;
       } catch (ex) {
         print(ex);
@@ -36,9 +42,19 @@ class OtherDetailPageBloc
         yield OtherDetailPageError();
       }
     }
+
     if (event is SendMessage) {
       print("send message to " + event.otherUserId);
-      messageRepository.sendMessage(event.otherUserId);
+      final availableMessages =
+          await messageRepository.sendMessage(event.otherUserId, event.text);
+      if (state is OtherDetailPageLoaded) {
+        print("available messages after send:");
+        for (var template in availableMessages.messageTemplates) {
+          print("- " + template.text);
+        }
+        yield OtherDetailPageLoaded(
+            (state as OtherDetailPageLoaded).otherDetail, availableMessages);
+      }
     }
   }
 

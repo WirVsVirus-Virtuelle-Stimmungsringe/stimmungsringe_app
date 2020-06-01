@@ -1,3 +1,4 @@
+import 'package:familiarise/data/message.dart';
 import 'package:familiarise/data/other_detail.dart';
 import 'package:familiarise/data/suggestion.dart';
 import 'package:familiarise/data/user_minimal.dart';
@@ -97,7 +98,8 @@ class OtherDetailPage extends StatelessWidget {
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
             // return buildSuggestionsList(state.otherDetail);
-            return buildMessagePushItems(state.otherDetail.user);
+            return buildMessagePushItems(
+                state.otherDetail.user, state.availableMessages);
           }
 
           return Container();
@@ -106,22 +108,21 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  BlocBuilder buildMessagePushItems(UserMinimal otherUser) {
-    return BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
-        builder: (context, state) {
-      return ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return CupertinoButton(
-              child: Text("click ${index}"),
-              onPressed: () {
-                print("foo");
-                BlocProvider.of<OtherDetailPageBloc>(context)
-                    .add(SendMessage(otherUser.userId));
-              });
-        },
-      );
-    });
+  ListView buildMessagePushItems(
+      UserMinimal otherUser, AvailableMessages availableMessages) {
+    return ListView.builder(
+      itemCount: availableMessages.messageTemplates.length,
+      itemBuilder: (context, index) {
+        final MessageTemplate messageTemplate =
+            availableMessages.messageTemplates[index];
+        return CupertinoButton(
+            child: Text("#${index} " + messageTemplate.text),
+            onPressed: () {
+              BlocProvider.of<OtherDetailPageBloc>(context)
+                  .add(SendMessage(otherUser.userId, messageTemplate.text));
+            });
+      },
+    );
   }
 
   ListView buildSuggestionsList(OtherDetail otherDetail) {
