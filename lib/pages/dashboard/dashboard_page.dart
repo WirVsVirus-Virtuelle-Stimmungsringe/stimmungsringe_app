@@ -107,20 +107,6 @@ class _DashboardPageState extends State<DashboardPage>
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _avatarRow(),
-            _widgetWithDashboardBloc((stateWithDashboard) {
-              return CupertinoButton(
-                child: Image.asset(
-                  'assets/images/heart.png',
-                  width: 57,
-                  color: Color.fromRGBO(255, 0, 0, 1.0),
-                ),
-                onPressed: () => Navigator.pushNamed(
-                    context, InboxPage.routeUri,
-                    arguments: {
-                      'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-                    }),
-              );
-            }),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -203,6 +189,7 @@ class _DashboardPageState extends State<DashboardPage>
           : 'Namen ändern...';
 
       final UserMinimal user = dashboard.myTile.user;
+      // TODO move to avatar_row
       return GestureDetector(
         onTap: () {
           print('AvatarRow open userSettings');
@@ -223,6 +210,12 @@ class _DashboardPageState extends State<DashboardPage>
               SetMySentimentPage.routeUri,
               arguments: BlocProvider.of<DashboardBloc>(context),
             );
+          },
+          inboxMessageCount: stateWithDashboard.inbox.messages.length,
+          onInboxIconTap: () {
+            Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
+              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+            });
           },
         ),
       );

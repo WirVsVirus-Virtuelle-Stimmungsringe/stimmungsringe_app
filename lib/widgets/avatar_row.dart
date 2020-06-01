@@ -10,6 +10,8 @@ class AvatarRow extends StatelessWidget {
   final String name;
   final ImageProvider image;
   final void Function() onSentimentIconTap;
+  final void Function() onInboxIconTap;
+  final int inboxMessageCount;
 
   const AvatarRow({
     Key key,
@@ -17,6 +19,8 @@ class AvatarRow extends StatelessWidget {
     @required this.name,
     @required this.image,
     this.onSentimentIconTap,
+    this.onInboxIconTap,
+    this.inboxMessageCount,
   })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
@@ -73,25 +77,34 @@ class AvatarRow extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: _avatarSize - 20,
-            bottom: _avatarSize - 50,
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Image.asset(
-                  'assets/images/heart.png',
-                  width: 50,
-                  color: Color.fromRGBO(236, 56, 56, 1.0),
-                ),
-                Text("4",
-                    style: const TextStyle(
-                      color: CupertinoColors.white,
-                      fontSize: 20,
-                    )),
-              ],
-            ),
-          ),
+          (inboxMessageCount != null)
+              ? Positioned(
+                  left: _avatarSize - 40,
+                  bottom: _avatarSize - 70,
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      wrapGestureDetector(
+                        onTap: onInboxIconTap,
+                        child: Container(
+                          color: Color.fromRGBO(236, 56, 156, .3),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Image.asset(
+                            'assets/images/heart.png',
+                            width: 50,
+                            color: Color.fromRGBO(236, 56, 56, 1.0),
+                          ),
+                        ),
+                      ),
+                      Text(inboxMessageCount.toString(),
+                          style: const TextStyle(
+                            color: CupertinoColors.white,
+                            fontSize: 20,
+                          )),
+                    ],
+                  ),
+                )
+              : Container(),
           Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,
@@ -107,6 +120,16 @@ class AvatarRow extends StatelessWidget {
       ),
     );
   }
+
+  static Widget wrapGestureDetector({Widget child, void Function() onTap}) =>
+      (onTap != null)
+          ? GestureDetector(
+              onTap: () {
+                onTap();
+              },
+              child: child,
+            )
+          : child;
 
   Widget _buildSentimentIcon() {
     final Widget sentimentIcon = FaIcon(
