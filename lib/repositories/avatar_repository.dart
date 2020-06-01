@@ -15,13 +15,6 @@ class AvatarRepository {
 
   AvatarRepository._internal();
 
-  ImageProvider<NetworkImage> avatarImage(String userId) {
-    return NetworkImage(
-      '${Config().backendUrl}/avatar/$userId',
-      headers: {'X-User-ID': userId},
-    );
-  }
-
   Future<List<ImageProvider<CachedNetworkImageProvider>>> stockAvatars(
       String userId) async {
     final http.Response response = await http.get(

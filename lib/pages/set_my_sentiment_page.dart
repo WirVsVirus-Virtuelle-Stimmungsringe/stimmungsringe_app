@@ -4,9 +4,9 @@ import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
-import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
+import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/sentiment_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,8 +49,10 @@ class SetMySentimentPage extends StatelessWidget {
               name: dashboard.myTile.user.hasName
                   ? dashboard.myTile.user.displayName
                   : '',
-              image:
-                  AvatarRepository().avatarImage(dashboard.myTile.user.userId),
+              image: makeProtectedNetworkImage(
+                dashboard.myTile.user.userId,
+                dashboard.myTile.user.avatarUrl,
+              ),
               avatarSentiment: dashboard.myTile.sentiment,
             ),
             Container(

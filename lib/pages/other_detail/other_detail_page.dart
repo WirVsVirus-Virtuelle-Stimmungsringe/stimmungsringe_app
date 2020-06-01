@@ -4,10 +4,10 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
-import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
+import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +38,9 @@ class OtherDetailPage extends StatelessWidget {
 
   final String otherUserId;
 
-  const OtherDetailPage({@required this.otherUserId})
-      : assert(otherUserId != null);
+  const OtherDetailPage({@required this.otherUserId, Key key})
+      : assert(otherUserId != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +74,10 @@ class OtherDetailPage extends StatelessWidget {
               name: state.otherDetail.user.hasName
                   ? state.otherDetail.user.displayName
                   : '',
-              image:
-                  AvatarRepository().avatarImage(state.otherDetail.user.userId),
+              image: makeProtectedNetworkImage(
+                state.otherDetail.user.userId,
+                state.otherDetail.user.avatarUrl,
+              ),
               avatarSentiment: state.otherDetail.sentiment,
             );
           } else {

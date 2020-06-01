@@ -9,13 +9,13 @@ import 'package:familiarise/pages/other_detail/other_detail_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
-import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
 import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
+import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -195,7 +195,10 @@ class _DashboardPageState extends State<DashboardPage>
         },
         child: AvatarRow(
           name: nameInRow,
-          image: AvatarRepository().avatarImage(user.userId),
+          image: makeProtectedNetworkImage(
+            user.userId,
+            user.avatarUrl,
+          ),
           avatarSentiment: dashboard.myTile.sentiment,
           onSentimentIconTap: () {
             print('AvatarRow open SetMySentiment');
@@ -251,7 +254,10 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: AvatarRowCondensed(
               name: contactName,
-              image: AvatarRepository().avatarImage(tile.user.userId),
+              image: makeProtectedNetworkImage(
+                tile.user.userId,
+                tile.user.avatarUrl,
+              ),
               avatarSentiment: tile.sentiment,
               lastStatusUpdate: tile.lastStatusUpdate,
               now: now,
