@@ -8,6 +8,7 @@ import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/message_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/painting/image_provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ import '../../../session.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
   final AvatarRepository avatarRepository;
+  final MessageRepository messageRepository;
   StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
 
   StreamSubscription<void> _refreshSubscription;
@@ -24,9 +26,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc({
     @required this.dashboardRepository,
     @required this.avatarRepository,
+    @required this.messageRepository,
     @required UserSettingsBloc userSettingsBloc,
   })  : assert(dashboardRepository != null),
         assert(avatarRepository != null),
+        assert(messageRepository != null),
         assert(userSettingsBloc != null),
         super() {
     userSettingsBlocSubscription = userSettingsBloc.listen((state) {
@@ -68,24 +72,25 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
 
     if (state.hasDashboard) {
-      yield DashboardLoading(
-          (state as StateWithDashboard).dashboard, DateTime.now());
+      yield DashboardLoading((state as StateWithDashboard).dashboard,
+          (state as DashboardLoaded).inbox, DateTime.now());
     } else {
-      yield DashboardLoading(null, null);
+      yield DashboardLoading(null, null, null);
     }
 
     try {
       final dashboard = await dashboardRepository.loadDashboardPageData();
-      yield DashboardLoaded(dashboard, DateTime.now());
+      final inbox = await messageRepository.loadInbox();
+      yield DashboardLoaded(dashboard, inbox, DateTime.now());
 
       return;
     } catch (ex) {
       print(ex);
       if (state is DashboardLoaded) {
-        yield DashboardError(
-            (state as DashboardLoaded).dashboard, DateTime.now());
+        yield DashboardError((state as DashboardLoaded).dashboard,
+            (state as DashboardLoaded).inbox, DateTime.now());
       } else {
-        yield DashboardError(null, null);
+        yield DashboardError(null, null, null);
       }
     }
   }
@@ -100,8 +105,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           avatarRepository.avatarImage(currentUserId);
       final Dashboard dashboardReloaded =
           await dashboardRepository.loadDashboardPageData();
+      final inbox = await messageRepository.loadInbox();
 
-      yield DashboardLoaded(dashboardReloaded, DateTime.now());
+      yield DashboardLoaded(dashboardReloaded, inbox, DateTime.now());
     } catch (ex) {
       print(ex);
     }
@@ -117,7 +123,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
                 .copyWith(sentiment: setNewSentiment.sentiment));
         print(
             "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
-        yield DashboardLoaded(optimisticUpdate, DateTime.now());
+        yield DashboardLoaded(
+            optimisticUpdate, (state as DashboardLoaded).inbox, DateTime.now());
       }
 
       await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
@@ -125,10 +132,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           await dashboardRepository.loadDashboardPageData();
       print(
           "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
-      yield DashboardLoaded(loadDashboardPageData, DateTime.now());
+      yield DashboardLoaded(loadDashboardPageData,
+          (state as DashboardLoaded).inbox, DateTime.now());
     } catch (_) {
-      yield DashboardError(
-          (state as DashboardLoaded).dashboard, DateTime.now());
+      yield DashboardError((state as DashboardLoaded).dashboard,
+          (state as DashboardLoaded).inbox, DateTime.now());
     }
   }
 

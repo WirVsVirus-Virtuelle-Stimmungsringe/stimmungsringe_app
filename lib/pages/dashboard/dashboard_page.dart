@@ -11,6 +11,7 @@ import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
 import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
 import 'package:familiarise/widgets/headline.dart';
@@ -43,6 +44,8 @@ class DashboardPage extends StatefulWidget {
     return (BuildContext c) => BlocProvider<DashboardBloc>(
           create: (context) => DashboardBloc(
             dashboardRepository: DashboardRepository(),
+            avatarRepository: AvatarRepository(),
+            messageRepository: MessageRepository(),
             userSettingsBloc: userSettingsBloc,
           ),
           child: DashboardPage(),
@@ -103,6 +106,9 @@ class _DashboardPageState extends State<DashboardPage>
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _avatarRow(),
+            _widgetWithDashboardBloc((stateWithDashboard) {
+              return Text("inbox " + stateWithDashboard.inbox.messages.length.toString());
+            }),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),

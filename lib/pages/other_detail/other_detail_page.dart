@@ -94,11 +94,25 @@ class OtherDetailPage extends StatelessWidget {
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
             // return buildSuggestionsList(state.otherDetail);
+            return buildMessagePushItems();
           }
 
           return Container();
         }))
       ],
+    );
+  }
+
+  ListView buildMessagePushItems() {
+    return ListView.builder(
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return CupertinoButton(
+            child: Text("click ${index}"),
+            onPressed: () {
+              print("foo");
+            });
+      },
     );
   }
 
