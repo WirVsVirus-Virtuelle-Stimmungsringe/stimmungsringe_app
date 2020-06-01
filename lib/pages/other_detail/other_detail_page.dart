@@ -6,6 +6,7 @@ import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
 import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,8 @@ class OtherDetailPage extends StatelessWidget {
             value: dashboardBloc,
             child: BlocProvider<OtherDetailPageBloc>(
               create: (context) => OtherDetailPageBloc(
-                  dashboardRepository: DashboardRepository()),
+                  dashboardRepository: DashboardRepository(),
+                  messageRepository: MessageRepository()),
               child: OtherDetailPage(
                 otherUserId: otherUserId,
               ),
@@ -103,17 +105,22 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  ListView buildMessagePushItems() {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return CupertinoButton(
-            child: Text("click ${index}"),
-            onPressed: () {
-              print("foo");
-            });
-      },
-    );
+  BlocBuilder buildMessagePushItems() {
+    return BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+        builder: (context, state) {
+      return ListView.builder(
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return CupertinoButton(
+              child: Text("click ${index}"),
+              onPressed: () {
+                print("foo");
+                BlocProvider.of<OtherDetailPageBloc>(context)
+                    .add(SendMessageOtherDetailPage(otherUserId));
+              });
+        },
+      );
+    });
   }
 
   ListView buildSuggestionsList(OtherDetail otherDetail) {

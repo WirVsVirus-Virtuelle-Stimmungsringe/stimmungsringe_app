@@ -31,4 +31,16 @@ class MessageRepository {
     await ChaosMonkey.delayAsync();
     return inbox;
   }
+
+  void sendMessage(String recipientId) async {
+    final String url = '${Config().backendUrl}/send/${recipientId}';
+
+    final http.Response response = await http.post(
+      url,
+      headers: {'X-User-ID': currentUserId},
+      body: json.encode(null),
+    );
+
+    assert(response.statusCode == 200);
+  }
 }
