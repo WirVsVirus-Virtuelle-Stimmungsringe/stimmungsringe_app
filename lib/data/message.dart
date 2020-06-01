@@ -32,7 +32,8 @@ class MessageInbox extends Equatable {
     return MessageInbox(
       BuiltList.of(
         (jsonMap['messages'] as List<dynamic>).map(
-          (dynamic message) => Message.fromJson(message as Map<String, dynamic>),
+          (dynamic message) =>
+              Message.fromJson(message as Map<String, dynamic>),
         ),
       ),
     );
@@ -42,21 +43,24 @@ class MessageInbox extends Equatable {
 }
 
 class MessageTemplate extends Equatable {
+  final bool used;
   final String text;
 
   @override
-  List<Object> get props => [text];
+  List<Object> get props => [used, text];
 
   static MessageTemplate fromJson(Map<String, dynamic> jsonMap) {
     return MessageTemplate(
+      jsonMap['used'] as bool,
       jsonMap['text'] as String,
     );
   }
 
-  const MessageTemplate(this.text);
+  const MessageTemplate(this.used, this.text);
 
   MessageTemplate copyWith({String text}) {
     return MessageTemplate(
+      used ?? this.used,
       text ?? this.text,
     );
   }

@@ -110,14 +110,31 @@ class OtherDetailPage extends StatelessWidget {
 
   ListView buildMessagePushItems(
       UserMinimal otherUser, AvailableMessages availableMessages) {
+    final TextStyle availableStyle = const TextStyle(
+      color: Color.fromRGBO(50, 200, 50, 1),
+      fontSize: 20,
+    );
+
+    final TextStyle usedStyle = const TextStyle(
+      color: Color.fromRGBO(180, 200, 180, .8),
+      fontSize: 20,
+    );
+
     return ListView.builder(
       itemCount: availableMessages.messageTemplates.length,
       itemBuilder: (context, index) {
         final MessageTemplate messageTemplate =
             availableMessages.messageTemplates[index];
         return CupertinoButton(
-            child: Text("#${index} " + messageTemplate.text),
+            child: Text(
+              "#${index} " + messageTemplate.text,
+              style: messageTemplate.used ? usedStyle : availableStyle,
+            ),
             onPressed: () {
+              if (messageTemplate.used) {
+                print("cannot send - already used");
+                return;
+              }
               BlocProvider.of<OtherDetailPageBloc>(context)
                   .add(SendMessage(otherUser.userId, messageTemplate.text));
             });
