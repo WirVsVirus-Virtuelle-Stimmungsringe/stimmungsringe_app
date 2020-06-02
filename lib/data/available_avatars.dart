@@ -39,6 +39,6 @@ class StockAvatar extends Equatable {
   const StockAvatar(this.avatarName, this._avatarUrl);
 
   String get avatarUrl {
-    return Config().backendUrl + _avatarUrl;
+    return _avatarUrl == null ? null : Config().backendUrl + _avatarUrl;
   }
 }
