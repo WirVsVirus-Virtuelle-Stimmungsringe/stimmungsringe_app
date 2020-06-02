@@ -1,5 +1,6 @@
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/utils/format_last_update_timestamp.dart';
+import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,22 +47,12 @@ class AvatarRowCondensed extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              width: _avatarSize,
-              height: _avatarSize,
-              margin: const EdgeInsets.only(right: 20),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(_avatarSize / 2),
-                ),
-                border: Border.all(
-                  color: CupertinoColors.white,
-                  width: 4.0,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Avatar(
+                image: image,
+                borderColor: CupertinoColors.white,
+                size: _avatarSize,
               ),
             ),
             Expanded(

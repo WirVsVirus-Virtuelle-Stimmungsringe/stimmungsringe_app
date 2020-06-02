@@ -11,7 +11,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final OnboardingRepository onboardingRepository;
 
   OnboardingBloc({@required this.onboardingRepository})
-      : assert(onboardingRepository != null);
+      : assert(onboardingRepository != null),
+        super();
 
   @override
   OnboardingState get initialState => CheckingUserState();

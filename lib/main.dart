@@ -9,7 +9,7 @@ import 'package:familiarise/pages/routing_error_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
-import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,30 +22,20 @@ Future<void> main() async {
 
   await Config().loaded;
 
-  final DashboardRepository dashboardRepository = DashboardRepository();
-  final OnboardingRepository onboardingRepository = OnboardingRepository();
   final UserSettingsBloc userSettingsBloc =
-      UserSettingsBloc(onboardingRepository);
+      UserSettingsBloc(OnboardingRepository(), AvatarRepository());
 
   runApp(SentimentApp(
-    onboardingRepository: onboardingRepository,
-    dashboardRepository: dashboardRepository,
     userSettingsBloc: userSettingsBloc,
   ));
 }
 
 class SentimentApp extends StatelessWidget {
-  final OnboardingRepository onboardingRepository;
-  final DashboardRepository dashboardRepository;
   final UserSettingsBloc userSettingsBloc;
 
   const SentimentApp({
-    @required this.dashboardRepository,
-    @required this.onboardingRepository,
     @required this.userSettingsBloc,
-  })  : assert(dashboardRepository != null),
-        assert(onboardingRepository != null),
-        assert(userSettingsBloc != null);
+  }) : assert(userSettingsBloc != null);
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +43,13 @@ class SentimentApp extends StatelessWidget {
       title: 'Familiarise',
       initialRoute: OnboardingStartPage.routeUri,
       routes: Map.fromEntries([
-        OnboardingStartPage.makeRoute(
-            onboardingRepository, dashboardRepository, userSettingsBloc),
+        OnboardingStartPage.makeRoute(userSettingsBloc),
         OnboardingCreateGroupPage.route,
         OnboardingJoinGroupPage.route,
-        DashboardPage.makeRoute(dashboardRepository, userSettingsBloc),
+        DashboardPage.makeRoute(userSettingsBloc),
         SetMySentimentPage.route,
-        OtherDetailPage.makeRoute(dashboardRepository),
-        GroupSettingsPage.makeRoute(onboardingRepository),
+        OtherDetailPage.makeRoute(),
+        GroupSettingsPage.makeRoute(),
         UserSettingsPage.makeRoute(userSettingsBloc),
       ]),
       onUnknownRoute: (_) =>
