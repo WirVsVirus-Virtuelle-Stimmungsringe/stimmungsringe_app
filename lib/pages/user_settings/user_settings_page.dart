@@ -1,8 +1,15 @@
+import 'dart:async';
+
+import 'package:familiarise/data/available_avatars.dart';
 import 'package:familiarise/pages/loading_spinner_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_event.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
+import 'package:familiarise/session.dart';
+import 'package:familiarise/widgets/avatar_button.dart';
+import 'package:familiarise/widgets/paragraph.dart';
+import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +21,7 @@ class UserSettingsPage extends StatefulWidget {
           UserSettingsBloc userSettingsBloc) =>
       MapEntry(
         routeUri,
-        (BuildContext c) => BlocProvider<UserSettingsBloc>.value(
+        (BuildContext context) => BlocProvider<UserSettingsBloc>.value(
           value: userSettingsBloc,
           child: UserSettingsPage(),
         ),
@@ -26,6 +33,7 @@ class UserSettingsPage extends StatefulWidget {
 
 class _UserSettingsPageState extends State<UserSettingsPage> {
   final _userNameController = TextEditingController();
+  String _selectedAvatar;
 
   @override
   void didChangeDependencies() {
@@ -40,30 +48,18 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
         if (state is UserSettingsLoading) {
           return LoadingSpinnerPage();
         }
-        if (state is ShowCurrentUserSettings) {
-          _userNameController.text = state.userName;
+        if (state is UserSettingsLoaded) {
           return WillPopScope(
             onWillPop: () {
-              BlocProvider.of<UserSettingsBloc>(context)
-                  .add(SaveUserSettings(userName: _userNameController.text));
+              BlocProvider.of<UserSettingsBloc>(context).add(
+                SaveUserSettings(
+                  userName: _userNameController.text,
+                  stockAvatar: _selectedAvatar,
+                ),
+              );
               return Future.value(true);
             },
-            child: CupertinoPageScaffold(
-              navigationBar: const CupertinoNavigationBar(
-                middle: Text('Einstellungen Benutzer'),
-              ),
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(state.hasName ? state.userName : 'kein Name vergeben'),
-                    CupertinoTextField(
-                      controller: _userNameController,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child: _buildPageContent(state),
           );
         }
 
@@ -71,10 +67,94 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
         return LoadingSpinnerPage();
       },
       listener: (context, state) {
+        if (state is UserSettingsLoaded) {
+          setState(() {
+            _userNameController.text = state.userName;
+            _selectedAvatar = state.stockAvatar;
+          });
+        }
+
         if (state is GotoOnboarding) {
           Navigator.of(context)
               .pushReplacementNamed(OnboardingStartPage.routeUri);
         }
+      },
+    );
+  }
+
+  Widget _buildPageContent(UserSettingsLoaded state) {
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Benutzereinstellungen'),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: CustomScrollView(
+            physics: const ClampingScrollPhysics(),
+            slivers: <Widget>[
+              _buildInputField(),
+              _buildAvatarGrid(state),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInputField() {
+    return SliverToBoxAdapter(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Padding(
+            padding: EdgeInsets.only(top: 16),
+            child: Text(
+              'Dein Name',
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Paragraph(
+            child: CupertinoTextField(
+              placeholder: 'Lasse andere wissen, wie du heißt!',
+              controller: _userNameController,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAvatarGrid(UserSettingsLoaded state) {
+    return SliverPadding(
+      padding: const EdgeInsets.only(top: 24),
+      sliver: SliverGrid(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final avatar = state.availableAvatars.elementAt(index);
+
+            return _buildAvatar(avatar);
+          },
+          childCount: state.availableAvatars.length,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAvatar(StockAvatar avatar) {
+    return AvatarButton(
+      image: makeProtectedNetworkImage(currentUserId, avatar.avatarUrl),
+      selected: avatar.avatarName == _selectedAvatar,
+      onAvatarTap: () {
+        setState(() {
+          _selectedAvatar = avatar.avatarName;
+        });
       },
     );
   }

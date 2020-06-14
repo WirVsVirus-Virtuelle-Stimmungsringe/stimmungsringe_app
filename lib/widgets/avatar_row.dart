@@ -1,4 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
+import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -85,22 +86,10 @@ class AvatarRow extends StatelessWidget {
       left: 20,
       child: wrapGestureDetector(
         onTap: onAvatarImageTap,
-        child: Container(
-          width: _avatarSize,
-          height: _avatarSize,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: image,
-              fit: BoxFit.cover,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(_avatarSize / 2),
-            ),
-            border: Border.all(
-              color: CupertinoColors.white,
-              width: 4.0,
-            ),
-          ),
+        child: Avatar(
+          image: image,
+          borderColor: CupertinoColors.white,
+          size: _avatarSize,
         ),
       ),
     );
@@ -141,16 +130,6 @@ class AvatarRow extends StatelessWidget {
     );
   }
 
-  static Widget wrapGestureDetector({Widget child, void Function() onTap}) =>
-      (onTap != null)
-          ? GestureDetector(
-              onTap: () {
-                onTap();
-              },
-              child: child,
-            )
-          : child;
-
   Widget _buildSentimentIcon() {
     final Widget sentimentIcon = FaIcon(
       avatarSentiment.icon,
@@ -177,4 +156,14 @@ class AvatarRow extends StatelessWidget {
             child: sentimentIcon,
           );
   }
+
+  static Widget wrapGestureDetector({Widget child, void Function() onTap}) =>
+      (onTap != null)
+          ? GestureDetector(
+              onTap: () {
+                onTap();
+              },
+              child: child,
+            )
+          : child;
 }

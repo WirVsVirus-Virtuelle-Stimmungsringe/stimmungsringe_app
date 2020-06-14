@@ -9,11 +9,12 @@ class LoadUserSettings extends UserSettingsEvent {}
 
 class SaveUserSettings extends UserSettingsEvent {
   final String userName;
+  final String stockAvatar;
 
-  SaveUserSettings({this.userName});
+  SaveUserSettings({this.userName, this.stockAvatar});
 
   @override
-  List<Object> get props => [userName];
+  List<Object> get props => [userName, stockAvatar];
 }
 
 class LeaveGroup extends UserSettingsEvent {}

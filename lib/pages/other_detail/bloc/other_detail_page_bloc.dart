@@ -13,7 +13,8 @@ class OtherDetailPageBloc
   OtherDetailPageBloc(
       {@required this.dashboardRepository, @required this.messageRepository})
       : assert(dashboardRepository != null),
-        assert(messageRepository != null);
+        assert(messageRepository != null),
+        super();
 
   @override
   OtherDetailPageState get initialState => OtherDetailPageUninitialized();

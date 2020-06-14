@@ -134,7 +134,7 @@ class OnboardingRepository {
     return;
   }
 
-  Future<void> updateUserSettings(String name) async {
+  Future<void> updateUserSettings(String name, String stockAvatar) async {
     final String url = '${Config().backendUrl}/onboarding/user/settings';
 
     final http.Response response = await http.put(
@@ -145,6 +145,7 @@ class OnboardingRepository {
       },
       body: json.encode({
         'name': name,
+        'stockAvatar': stockAvatar,
       }),
     );
 

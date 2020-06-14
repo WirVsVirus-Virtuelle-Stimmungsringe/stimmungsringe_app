@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
-import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +65,8 @@ class _InboxPageState extends State<InboxPage> {
 
   Widget avatarImage(String senderUserId) {
     // FIXME
-    final ImageProvider image = AvatarRepository().avatarImage(senderUserId);
+    //final ImageProvider image = AvatarRepository().avatarImage(senderUserId);
+    final ImageProvider image = NetworkImage("");
 
     return Container(
       width: _avatarSize,
