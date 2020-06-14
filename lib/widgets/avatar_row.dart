@@ -105,19 +105,16 @@ class AvatarRow extends StatelessWidget {
     return Positioned(
       left: _avatarSize - 40,
       bottom: _avatarSize - 70,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          wrapGestureDetector(
-            onTap: onInboxIconTap,
-            child: Container(
-              color: Color.fromRGBO(236, 56, 156, .3),
-              padding: const EdgeInsets.all(20.0),
-              child: Image.asset(
-                'assets/images/heart.png',
-                width: 50,
-                color: Color.fromRGBO(236, 56, 56, 1.0),
-              ),
+      child: wrapGestureDetector(
+        onTap: onInboxIconTap,
+        child: Stack(alignment: AlignmentDirectional.center, children: [
+          Container(
+            color: Color.fromRGBO(236, 56, 156, .3),
+            padding: const EdgeInsets.all(20.0),
+            child: Image.asset(
+              'assets/images/heart.png',
+              width: 50,
+              color: Color.fromRGBO(236, 56, 56, 1.0),
             ),
           ),
           Text(inboxMessageCount.toString(),
@@ -125,7 +122,7 @@ class AvatarRow extends StatelessWidget {
                 color: CupertinoColors.white,
                 fontSize: 20,
               )),
-        ],
+        ]),
       ),
     );
   }
