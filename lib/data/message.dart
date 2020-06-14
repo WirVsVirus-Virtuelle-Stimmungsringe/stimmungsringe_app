@@ -1,28 +1,29 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:familiarise/data/user_minimal.dart';
 
 class Message extends Equatable {
   final DateTime createdAt;
-  final String senderUserId;
+  final UserMinimal senderUser;
   final String text;
 
   @override
-  List<Object> get props => [createdAt, senderUserId, text];
+  List<Object> get props => [createdAt, senderUser, text];
 
   static Message fromJson(Map<String, dynamic> jsonMap) {
     return Message(
       DateTime.parse(jsonMap['createdAt'] as String),
-      jsonMap['senderUserId'] as String,
+      UserMinimal.fromJson(jsonMap['senderUser'] as Map<String, dynamic>),
       jsonMap['text'] as String,
     );
   }
 
-  const Message(this.createdAt, this.senderUserId, this.text);
+  const Message(this.createdAt, this.senderUser, this.text);
 
-  Message copyWith({DateTime createdAt, String senderUserId, String text}) {
+  Message copyWith({DateTime createdAt, UserMinimal senderUser, String text}) {
     return Message(
       createdAt ?? this.createdAt,
-      senderUserId ?? this.senderUserId,
+      senderUser ?? this.senderUser,
       text ?? this.text,
     );
   }

@@ -1,9 +1,11 @@
 import 'package:built_collection/src/list.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
+import 'package:familiarise/data/user_minimal.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
+import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -63,10 +65,11 @@ class _InboxPageState extends State<InboxPage> {
     );
   }
 
-  Widget avatarImage(String senderUserId) {
-    // FIXME
-    //final ImageProvider image = AvatarRepository().avatarImage(senderUserId);
-    final ImageProvider image = NetworkImage("");
+  Widget avatarImage(UserMinimal senderUser) {
+    final ImageProvider image = makeProtectedNetworkImage(
+      senderUser.userId,
+      senderUser.avatarUrl,
+    );
 
     return Container(
       width: _avatarSize,
@@ -101,9 +104,8 @@ class _InboxPageState extends State<InboxPage> {
             items: state.inbox.messages.map((message) {
               return Column(children: [
                 Text("text: " + message.text),
-                avatarImage(message.senderUserId),
+                avatarImage(message.senderUser),
                 Text("timestamp: " + message.createdAt.toString()),
-                Text("sender userid: " + message.senderUserId),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Image.asset(
