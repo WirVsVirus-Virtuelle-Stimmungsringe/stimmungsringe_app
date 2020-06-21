@@ -105,7 +105,6 @@ class AvatarRow extends StatelessWidget {
         onTap: onInboxIconTap,
         child: Stack(alignment: AlignmentDirectional.center, children: [
           Container(
-            color: const Color.fromRGBO(236, 56, 156, .3),
             padding: const EdgeInsets.all(20.0),
             child: Icon(
               FontAwesomeIcons.solidHeart,

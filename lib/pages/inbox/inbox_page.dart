@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
@@ -33,6 +34,7 @@ class InboxPage extends StatefulWidget {
 class _InboxPageState extends State<InboxPage> {
   static const _colorTransparent = Color(0x00000000);
   int _currentSlideIndex = 0;
+  final _carouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,20 +82,7 @@ class _InboxPageState extends State<InboxPage> {
         children: <Widget>[
           Flexible(
             child: Center(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: 500,
-                  enableInfiniteScroll: false,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _currentSlideIndex = index;
-                    });
-                  },
-                ),
-                items: state.inbox.messages
-                    .map(_carouselEntry)
-                    .toList(growable: false),
-              ),
+              child: _carousel(state.inbox.messages),
             ),
           ),
           Row(
@@ -105,8 +94,25 @@ class _InboxPageState extends State<InboxPage> {
     );
   }
 
+  Widget _carousel(BuiltList<Message> messages) {
+    return CarouselSlider(
+      carouselController: _carouselController,
+      options: CarouselOptions(
+        height: 500,
+        enableInfiniteScroll: false,
+        onPageChanged: (index, reason) {
+          setState(() {
+            _currentSlideIndex = index;
+          });
+        },
+      ),
+      items: messages.map(_carouselEntry).toList(growable: false),
+    );
+  }
+
   Widget _carouselEntry(Message message) {
     return Column(
+      key: ObjectKey(message.createdAt),
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
@@ -146,15 +152,20 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   Widget _dot(int index) {
-    return Container(
-      width: 12.0,
-      height: 12.0,
-      margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: _currentSlideIndex == index
-            ? const Color.fromRGBO(255, 255, 255, 0.9)
-            : const Color.fromRGBO(255, 255, 255, 0.4),
+    return GestureDetector(
+      onTap: () {
+        _carouselController.animateToPage(index);
+      },
+      child: Container(
+        width: 12.0,
+        height: 12.0,
+        margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: _currentSlideIndex == index
+              ? const Color.fromRGBO(255, 255, 255, 0.9)
+              : const Color.fromRGBO(255, 255, 255, 0.4),
+        ),
       ),
     );
   }
