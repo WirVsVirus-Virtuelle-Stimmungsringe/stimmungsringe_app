@@ -77,9 +77,7 @@ class AvatarRow extends StatelessWidget {
     );
   }
 
-  /**
-   * circular image
-   */
+  /// circular image
   Widget buildAvatarImage() {
     return Positioned(
       top: 20,
@@ -95,9 +93,7 @@ class AvatarRow extends StatelessWidget {
     );
   }
 
-  /**
-   * show heart symbol with message count
-   */
+  /// show heart symbol with message count
   Widget buildInboxIndicator() {
     if (inboxMessageCount == null) {
       return Container();
@@ -109,12 +105,12 @@ class AvatarRow extends StatelessWidget {
         onTap: onInboxIconTap,
         child: Stack(alignment: AlignmentDirectional.center, children: [
           Container(
-            color: Color.fromRGBO(236, 56, 156, .3),
+            color: const Color.fromRGBO(236, 56, 156, .3),
             padding: const EdgeInsets.all(20.0),
-            child: Image.asset(
-              'assets/images/heart.png',
-              width: 50,
-              color: Color.fromRGBO(236, 56, 56, 1.0),
+            child: Icon(
+              FontAwesomeIcons.solidHeart,
+              size: 50,
+              color: const Color.fromRGBO(236, 56, 56, 1.0),
             ),
           ),
           Text(inboxMessageCount.toString(),
