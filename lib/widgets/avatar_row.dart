@@ -103,21 +103,26 @@ class AvatarRow extends StatelessWidget {
       bottom: _avatarSize - 70,
       child: wrapGestureDetector(
         onTap: onInboxIconTap,
-        child: Stack(alignment: AlignmentDirectional.center, children: [
-          Container(
-            padding: const EdgeInsets.all(20.0),
-            child: Icon(
-              FontAwesomeIcons.solidHeart,
-              size: 50,
-              color: const Color.fromRGBO(236, 56, 56, 1.0),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20.0),
+              child: FaIcon(
+                FontAwesomeIcons.solidHeart,
+                size: 50,
+                color: const Color.fromRGBO(236, 56, 56, 1.0),
+              ),
             ),
-          ),
-          Text(inboxMessageCount.toString(),
+            Text(
+              inboxMessageCount.toString(),
               style: const TextStyle(
                 color: CupertinoColors.white,
                 fontSize: 20,
-              )),
-        ]),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

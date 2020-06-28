@@ -34,7 +34,7 @@ class MessageRepository {
 
   Future<AvailableMessages> loadAvailableMessages(String recipientId) async {
     final String url =
-        '${Config().backendUrl}/message/available-messages/${recipientId}';
+        '${Config().backendUrl}/message/available-messages/$recipientId';
 
     final http.Response response = await http.get(
       url,
@@ -51,7 +51,7 @@ class MessageRepository {
   }
 
   Future<AvailableMessages> sendMessage(String recipientId, String text) async {
-    final String url = '${Config().backendUrl}/message/send/${recipientId}';
+    final String url = '${Config().backendUrl}/message/send/$recipientId';
 
     final http.Response response = await http.post(
       url,

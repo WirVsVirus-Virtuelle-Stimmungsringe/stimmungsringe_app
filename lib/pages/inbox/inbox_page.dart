@@ -9,7 +9,6 @@ import 'package:familiarise/widgets/avatar.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -134,7 +133,7 @@ class _InboxPageState extends State<InboxPage> {
             size: 200,
           ),
         ),
-        Icon(
+        FaIcon(
           FontAwesomeIcons.solidHeart,
           size: 60,
           color: CupertinoColors.white,

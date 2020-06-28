@@ -67,7 +67,7 @@ class MessageTemplate extends Equatable {
 
   MessageTemplate copyWith({String text}) {
     return MessageTemplate(
-      used ?? this.used,
+      used,
       text ?? this.text,
     );
   }

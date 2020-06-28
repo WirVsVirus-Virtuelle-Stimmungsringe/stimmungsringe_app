@@ -23,35 +23,48 @@ class OtherDetailPageBloc
   Stream<OtherDetailPageState> mapEventToState(
       OtherDetailPageEvent event) async* {
     if (event is FetchOtherDetailPage) {
-      if (state is OtherDetailPageLoading) {
-        return;
-      }
-      try {
-        final otherDetail = await dashboardRepository
-            .loadOtherDetailPageData(event.otherUserId);
-        final availableMessages =
-            await messageRepository.loadAvailableMessages(event.otherUserId);
-        yield OtherDetailPageLoaded(otherDetail, availableMessages);
-        return;
-      } catch (ex) {
-        print(ex);
+      yield* _mapFetchOtherDetailEventToState(event);
+    } else if (event is SendMessage) {
+      yield* _mapSendMessageEventToState(event);
+    }
+  }
 
-        yield OtherDetailPageError();
-      }
+  Stream<OtherDetailPageState> _mapFetchOtherDetailEventToState(
+      FetchOtherDetailPage fetchOtherDetailPageEvent) async* {
+    if (state is OtherDetailPageLoading) {
+      return;
+    }
+    try {
+      final otherDetail = await dashboardRepository
+          .loadOtherDetailPageData(fetchOtherDetailPageEvent.otherUserId);
+      final availableMessages = await messageRepository
+          .loadAvailableMessages(fetchOtherDetailPageEvent.otherUserId);
+      yield OtherDetailPageLoaded(otherDetail, availableMessages);
+      return;
+    } catch (ex) {
+      print(ex);
+
+      yield OtherDetailPageError();
+    }
+  }
+
+  Stream<OtherDetailPageState> _mapSendMessageEventToState(
+      SendMessage sendMessageEvent) async* {
+    if (state is! OtherDetailPageLoaded) {
+      return;
     }
 
-    if (event is SendMessage) {
-      final availableMessages =
-          await messageRepository.sendMessage(event.otherUserId, event.text);
-      if (state is OtherDetailPageLoaded) {
-        // TODO optimistic update?
-        // final Dashboard optimisticUpdate = prevDashboard.copyWith(
-        //     myTile: prevDashboard.myTile
-        //        .copyWith(sentiment: setNewSentiment.sentiment));
-        yield OtherDetailPageLoaded(
-            (state as OtherDetailPageLoaded).otherDetail, availableMessages);
-      }
-    }
+    final loadedState = state as OtherDetailPageLoaded;
+
+    yield OtherDetailPageSendingMessage.fromOtherDetailPageLoaded(
+      loadedState,
+      sendMessageEvent.text,
+    );
+
+    final availableMessages = await messageRepository.sendMessage(
+        sendMessageEvent.otherUserId, sendMessageEvent.text);
+
+    yield loadedState.copyWith(availableMessages: availableMessages);
   }
 
   @override
