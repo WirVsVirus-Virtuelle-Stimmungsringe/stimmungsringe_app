@@ -28,12 +28,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         super() {
     userSettingsBlocSubscription = userSettingsBloc.listen((state) {
       if (state is UserSettingsLoaded) {
+        print("settings sub");
         add(RefreshDashboard());
       }
     });
 
     _refreshSubscription =
-        Stream<void>.periodic(const Duration(seconds: 3)).listen((_) {
+        Stream<void>.periodic(const Duration(seconds: 6)).listen((_) {
+      print("queue refresh");
       add(RefreshDashboard());
     });
   }
@@ -116,15 +118,20 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
             "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
         yield DashboardLoaded(
             optimisticUpdate, (state as DashboardLoaded).inbox, DateTime.now());
+
+        await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
+        final Dashboard loadDashboardPageData =
+            await dashboardRepository.loadDashboardPageData();
+        print(
+            "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
+        yield DashboardLoaded(loadDashboardPageData,
+            (state as DashboardLoaded).inbox, DateTime.now());
       }
 
-      await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
-      final Dashboard loadDashboardPageData =
-          await dashboardRepository.loadDashboardPageData();
-      print(
-          "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
-      yield DashboardLoaded(loadDashboardPageData,
-          (state as DashboardLoaded).inbox, DateTime.now());
+      if (state is DashboardError) {
+        yield DashboardError((state as DashboardLoaded).dashboard,
+            (state as DashboardLoaded).inbox, DateTime.now());
+      }
     } catch (_) {
       yield DashboardError((state as DashboardLoaded).dashboard,
           (state as DashboardLoaded).inbox, DateTime.now());
