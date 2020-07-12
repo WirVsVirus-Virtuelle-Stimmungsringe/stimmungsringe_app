@@ -158,12 +158,15 @@ class OtherDetailPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: isSendingMessage
-                  ? const CupertinoActivityIndicator()
-                  : FaIcon(
+                  ? const CupertinoActivityIndicator(
+                      radius: 18,
+                    )
+                  : Icon(
                       FontAwesomeIcons.solidPaperPlane,
                       color: messageTemplate.used
                           ? CupertinoColors.inactiveGray
                           : CupertinoColors.activeBlue,
+                      size: 35,
                     ),
             ),
           )
