@@ -211,9 +211,11 @@ class _DashboardPageState extends State<DashboardPage>
         },
         inboxMessageCount: min(stateWithDashboard.inbox.messages.length, 99),
         onInboxIconTap: () {
-          Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
-            'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-          });
+          if (stateWithDashboard.inbox.messages.isNotEmpty) {
+            Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
+              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+            });
+          }
         },
       );
     });
