@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:familiarise/data/dashboard.dart';
+import 'package:familiarise/data/message.dart';
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
@@ -12,11 +13,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+  static const _refreshInterval = Duration(seconds: 3);
+
   final DashboardRepository dashboardRepository;
   final MessageRepository messageRepository;
-  StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
-  int dashboardHash = 4242;
 
+  StreamSubscription<UserSettingsState> _userSettingsBlocSubscription;
+  int _dashboardHash = 4242;
+  bool _isIdle = true;
   StreamSubscription<void> _refreshSubscription;
 
   DashboardBloc({
@@ -27,7 +31,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         assert(messageRepository != null),
         assert(userSettingsBloc != null),
         super() {
-    userSettingsBlocSubscription = userSettingsBloc.listen((state) {
+    _userSettingsBlocSubscription = userSettingsBloc.listen((state) {
       if (state is UserSettingsLoaded) {
         print("settings sub");
         add(RefreshDashboard());
@@ -35,14 +39,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     });
 
     _refreshSubscription =
-        Stream<void>.periodic(const Duration(seconds: 6)).listen((_) {
-      dashboardRepository.loadDashboardPageData().then((value) {
-        if (dashboardHash != value.hashCode) {
-          dashboardHash = value.hashCode;
-          print("queue refresh");
-          add(RefreshDashboard());
-        }
-      });
+        Stream<void>.periodic(_refreshInterval).listen((_) async {
+      final value = await dashboardRepository.loadDashboardPageData();
+
+      if (_dashboardHash != value.hashCode) {
+        _dashboardHash = value.hashCode;
+        print("queue refresh");
+        add(RefreshDashboard());
+      }
     });
   }
 
@@ -56,7 +60,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   @override
+  void add(DashboardEvent event) {
+    if (event is RefreshDashboard && !_isIdle) {
+      return;
+    }
+
+    super.add(event);
+  }
+
+  @override
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
+    _isIdle = false;
     if (event is FetchDashboard) {
       yield* _mapFetchDashboardToState(event);
     } else if (event is RefreshDashboard) {
@@ -64,6 +78,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
     }
+    _isIdle = true;
   }
 
   Stream<DashboardState> _mapFetchDashboardToState(
@@ -74,17 +89,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     if (state.hasDashboard) {
       yield DashboardLoading((state as StateWithDashboard).dashboard,
-          (state as DashboardLoaded).inbox, DateTime.now());
+          (state as StateWithDashboard).inbox, DateTime.now());
     } else {
       yield DashboardLoading(null, null, null);
     }
 
     try {
-      final dashboard = await dashboardRepository.loadDashboardPageData();
-      final inbox = await messageRepository.loadInbox();
+      final futures = await Future.wait([
+        dashboardRepository.loadDashboardPageData(),
+        messageRepository.loadInbox()
+      ]);
+      final dashboard = futures[0] as Dashboard;
+      final inbox = futures[1] as MessageInbox;
       yield DashboardLoaded(dashboard, inbox, DateTime.now());
-
-      return;
     } catch (ex) {
       print(ex);
       if (state is DashboardLoaded) {
@@ -102,11 +119,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
     try {
-      final Dashboard dashboardReloaded =
-          await dashboardRepository.loadDashboardPageData();
-      final inbox = await messageRepository.loadInbox();
-
-      yield DashboardLoaded(dashboardReloaded, inbox, DateTime.now());
+      final futures = await Future.wait([
+        dashboardRepository.loadDashboardPageData(),
+        messageRepository.loadInbox()
+      ]);
+      final dashboard = futures[0] as Dashboard;
+      final inbox = futures[1] as MessageInbox;
+      yield DashboardLoaded(dashboard, inbox, DateTime.now());
     } catch (ex) {
       print(ex);
     }
@@ -114,39 +133,49 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Stream<DashboardState> _mapSetNewSentimentToState(
       SetNewSentiment setNewSentiment) async* {
+    if (state is! DashboardLoaded) {
+      return;
+    }
+
+    final dashboardLoadedState = state as DashboardLoaded;
+
     try {
-      if (state is DashboardLoaded) {
-        final Dashboard prevDashboard = (state as DashboardLoaded).dashboard;
-        final Dashboard optimisticUpdate = prevDashboard.copyWith(
-            myTile: prevDashboard.myTile
-                .copyWith(sentiment: setNewSentiment.sentiment));
-        print(
-            "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
-        yield DashboardLoaded(
-            optimisticUpdate, (state as DashboardLoaded).inbox, DateTime.now());
+      final Dashboard prevDashboard = dashboardLoadedState.dashboard;
+      final Dashboard optimisticUpdate = prevDashboard.copyWith(
+          myTile: prevDashboard.myTile
+              .copyWith(sentiment: setNewSentiment.sentiment));
+      print(
+          "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
+      yield DashboardLoaded(
+        optimisticUpdate,
+        dashboardLoadedState.inbox,
+        DateTime.now(),
+      );
 
-        await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
-        final Dashboard loadDashboardPageData =
-            await dashboardRepository.loadDashboardPageData();
-        print(
-            "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
-        yield DashboardLoaded(loadDashboardPageData,
-            (state as DashboardLoaded).inbox, DateTime.now());
-      }
+      await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
+      final Dashboard loadDashboardPageData =
+          await dashboardRepository.loadDashboardPageData();
+      print(
+          "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
+      yield DashboardLoaded(
+        loadDashboardPageData,
+        dashboardLoadedState.inbox,
+        DateTime.now(),
+      );
+    } catch (ex) {
+      print(ex);
 
-      if (state is DashboardError) {
-        yield DashboardError((state as DashboardLoaded).dashboard,
-            (state as DashboardLoaded).inbox, DateTime.now());
-      }
-    } catch (_) {
-      yield DashboardError((state as DashboardLoaded).dashboard,
-          (state as DashboardLoaded).inbox, DateTime.now());
+      yield DashboardError(
+        dashboardLoadedState.dashboard,
+        dashboardLoadedState.inbox,
+        DateTime.now(),
+      );
     }
   }
 
   @override
   Future<void> close() {
-    userSettingsBlocSubscription.cancel();
+    _userSettingsBlocSubscription.cancel();
     if (_refreshSubscription != null) {
       _refreshSubscription.cancel();
       _refreshSubscription = null;
