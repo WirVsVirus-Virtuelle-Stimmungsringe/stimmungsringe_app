@@ -36,8 +36,6 @@ class DashboardRepository {
   }
 
   Future<void> setNewSentiment(Sentiment sentiment) async {
-    final stopwatch = Stopwatch()..start();
-
     final String url = '${Config().backendUrl}/mystatus';
 
     final http.Response response = await http.put(url,
@@ -49,8 +47,7 @@ class DashboardRepository {
     // TODO response handling
 
     assert(response.statusCode == 200);
-
-    print("updatestatus " + stopwatch.elapsedMilliseconds.toString());
+    await ChaosMonkey.delayAsync();
   }
 
   Future<OtherDetail> loadOtherDetailPageData(String userId) async {

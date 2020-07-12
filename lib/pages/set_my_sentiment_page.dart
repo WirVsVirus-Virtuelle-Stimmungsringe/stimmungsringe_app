@@ -87,7 +87,6 @@ class SetMySentimentPage extends StatelessWidget {
           onTap: (sentiment) {
             final DashboardBloc dashboardBloc =
                 BlocProvider.of<DashboardBloc>(context);
-            print("clicked");
             dashboardBloc.add(SetNewSentiment(sentiment));
           },
         ),
