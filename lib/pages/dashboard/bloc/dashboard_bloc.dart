@@ -15,6 +15,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
   final MessageRepository messageRepository;
   StreamSubscription<UserSettingsState> userSettingsBlocSubscription;
+  int dashboardHash = 4242;
 
   StreamSubscription<void> _refreshSubscription;
 
@@ -35,8 +36,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     _refreshSubscription =
         Stream<void>.periodic(const Duration(seconds: 6)).listen((_) {
-      print("queue refresh");
-      add(RefreshDashboard());
+      dashboardRepository.loadDashboardPageData().then((value) {
+        if (dashboardHash != value.hashCode) {
+          dashboardHash = value.hashCode;
+          print("queue refresh");
+          add(RefreshDashboard());
+        }
+      });
     });
   }
 
