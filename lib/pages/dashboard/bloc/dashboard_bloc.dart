@@ -19,7 +19,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final MessageRepository messageRepository;
 
   StreamSubscription<UserSettingsState> _userSettingsBlocSubscription;
-  int _dashboardHash = 4242;
+  int _dashboardHash = 0;
+  int _messageInboxHash = 0;
   bool _isIdle = true;
   StreamSubscription<void> _refreshSubscription;
 
@@ -40,12 +41,20 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     _refreshSubscription =
         Stream<void>.periodic(_refreshInterval).listen((_) async {
-      final value = await dashboardRepository.loadDashboardPageData();
+      final futures = await Future.wait([
+        dashboardRepository.loadDashboardPageData(),
+        messageRepository.loadInbox()
+      ]);
+      final dashboard = futures[0] as Dashboard;
+      final messageInbox = futures[1] as MessageInbox;
 
-      if (_dashboardHash != value.hashCode) {
-        _dashboardHash = value.hashCode;
+      if (_dashboardHash != dashboard.hashCode ||
+          _messageInboxHash != messageInbox.hashCode) {
+        _dashboardHash = dashboard.hashCode;
+        _messageInboxHash = messageInbox.hashCode;
         print("queue refresh");
-        add(RefreshDashboard());
+        add(RefreshDashboard(
+            newDashboard: dashboard, newMessageInbox: messageInbox));
       }
     });
   }
@@ -119,12 +128,20 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
     try {
-      final futures = await Future.wait([
-        dashboardRepository.loadDashboardPageData(),
-        messageRepository.loadInbox()
-      ]);
-      final dashboard = futures[0] as Dashboard;
-      final inbox = futures[1] as MessageInbox;
+      Dashboard dashboard;
+      MessageInbox inbox;
+      if (refresh.newDashboard != null) {
+        dashboard = refresh.newDashboard;
+        inbox = refresh.newMessageInbox;
+      } else {
+        final futures = await Future.wait([
+          dashboardRepository.loadDashboardPageData(),
+          messageRepository.loadInbox()
+        ]);
+        dashboard = futures[0] as Dashboard;
+        inbox = futures[1] as MessageInbox;
+      }
+
       yield DashboardLoaded(dashboard, inbox, DateTime.now());
     } catch (ex) {
       print(ex);
