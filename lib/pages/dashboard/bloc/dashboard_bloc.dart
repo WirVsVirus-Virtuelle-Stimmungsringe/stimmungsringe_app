@@ -53,8 +53,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         _dashboardHash = dashboard.hashCode;
         _messageInboxHash = messageInbox.hashCode;
         print("queue refresh");
-        add(RefreshDashboard(
-            newDashboard: dashboard, newMessageInbox: messageInbox));
+        add(RefreshDashboard());
       }
     });
   }
@@ -128,19 +127,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
     try {
-      Dashboard dashboard;
-      MessageInbox inbox;
-      if (refresh.newDashboard != null) {
-        dashboard = refresh.newDashboard;
-        inbox = refresh.newMessageInbox;
-      } else {
-        final futures = await Future.wait([
-          dashboardRepository.loadDashboardPageData(),
-          messageRepository.loadInbox()
-        ]);
-        dashboard = futures[0] as Dashboard;
-        inbox = futures[1] as MessageInbox;
-      }
+      final futures = await Future.wait([
+        dashboardRepository.loadDashboardPageData(),
+        messageRepository.loadInbox()
+      ]);
+      final dashboard = futures[0] as Dashboard;
+      final inbox = futures[1] as MessageInbox;
 
       yield DashboardLoaded(dashboard, inbox, DateTime.now());
     } catch (ex) {
