@@ -47,7 +47,6 @@ class DashboardRepository {
     // TODO response handling
 
     assert(response.statusCode == 200);
-
     await ChaosMonkey.delayAsync();
   }
 

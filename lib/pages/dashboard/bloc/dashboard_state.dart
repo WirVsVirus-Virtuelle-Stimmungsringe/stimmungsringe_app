@@ -4,7 +4,9 @@ import 'package:familiarise/data/message.dart';
 
 abstract class StateWithDashboard {
   Dashboard get dashboard;
+
   MessageInbox get inbox;
+
   DateTime get now;
 }
 
@@ -29,13 +31,14 @@ class DashboardLoading extends DashboardState implements StateWithDashboard {
   final DateTime now;
 
   DashboardLoading(this.dashboard, this.inbox, this.now)
-      : assert(dashboard == null || inbox != null && now != null);
+      : assert((dashboard == null && inbox == null && now == null) ||
+            (dashboard != null && inbox != null && now != null));
 
   @override
   bool get hasDashboard => dashboard != null;
 
   @override
-  List<Object> get props => [dashboard, now];
+  List<Object> get props => [dashboard, inbox, now];
 }
 
 class DashboardLoaded extends DashboardState implements StateWithDashboard {
@@ -68,7 +71,8 @@ class DashboardError extends DashboardState implements StateWithDashboard {
   final DateTime now;
 
   DashboardError(this.dashboard, this.inbox, this.now)
-      : assert(dashboard == null || inbox != null && now != null);
+      : assert((dashboard == null && inbox == null && now == null) ||
+            (dashboard != null && inbox != null && now != null));
 
   @override
   bool get hasDashboard => dashboard != null;
