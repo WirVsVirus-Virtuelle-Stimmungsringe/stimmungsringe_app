@@ -49,7 +49,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
       _dashboardHash = dashboard.hashCode;
       _messageInboxHash = messageInbox.hashCode;
-      print("queue refresh");
       add(RefreshDashboardIfNecessary());
     });
   }
@@ -116,6 +115,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final stateWithDashboard = state as StateWithDashboard;
         if (stateWithDashboard.dashboard.hashCode == _dashboardHash &&
             stateWithDashboard.inbox.hashCode == _messageInboxHash) {
+          print("skip refresh");
           return;
         }
       }
