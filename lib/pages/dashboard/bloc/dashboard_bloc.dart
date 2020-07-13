@@ -21,7 +21,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   StreamSubscription<UserSettingsState> _userSettingsBlocSubscription;
   int _dashboardHash = 0;
   int _messageInboxHash = 0;
-  bool _isIdle = true;
   StreamSubscription<void> _refreshSubscription;
 
   DashboardBloc({
@@ -35,7 +34,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     _userSettingsBlocSubscription = userSettingsBloc.listen((state) {
       if (state is UserSettingsLoaded) {
         print("settings sub");
-        add(RefreshDashboard());
+        add(RefreshDashboardIfNecessary());
       }
     });
 
@@ -48,13 +47,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final dashboard = futures[0] as Dashboard;
       final messageInbox = futures[1] as MessageInbox;
 
-      if (_dashboardHash != dashboard.hashCode ||
-          _messageInboxHash != messageInbox.hashCode) {
-        _dashboardHash = dashboard.hashCode;
-        _messageInboxHash = messageInbox.hashCode;
-        print("queue refresh");
-        add(RefreshDashboard());
-      }
+      _dashboardHash = dashboard.hashCode;
+      _messageInboxHash = messageInbox.hashCode;
+      print("queue refresh");
+      add(RefreshDashboardIfNecessary());
     });
   }
 
@@ -68,25 +64,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   @override
-  void add(DashboardEvent event) {
-    if (event is RefreshDashboard && !_isIdle) {
-      return;
-    }
-
-    super.add(event);
-  }
-
-  @override
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
-    _isIdle = false;
     if (event is FetchDashboard) {
       yield* _mapFetchDashboardToState(event);
-    } else if (event is RefreshDashboard) {
+    } else if (event is RefreshDashboardIfNecessary) {
       yield* _mapRefreshDashboardToState(event);
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
     }
-    _isIdle = true;
   }
 
   Stream<DashboardState> _mapFetchDashboardToState(
@@ -122,17 +107,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   Stream<DashboardState> _mapRefreshDashboardToState(
-      RefreshDashboard refresh) async* {
+      RefreshDashboardIfNecessary refresh) async* {
     if (state is! DashboardLoaded) {
       return;
     }
     try {
+      if (state.hasDashboard) {
+        final stateWithDashboard = state as StateWithDashboard;
+        if (stateWithDashboard.dashboard.hashCode == _dashboardHash &&
+            stateWithDashboard.inbox.hashCode == _messageInboxHash) {
+          return;
+        }
+      }
+
       final futures = await Future.wait([
         dashboardRepository.loadDashboardPageData(),
         messageRepository.loadInbox()
       ]);
       final dashboard = futures[0] as Dashboard;
       final inbox = futures[1] as MessageInbox;
+
+      _dashboardHash = dashboard.hashCode;
+      _messageInboxHash = inbox.hashCode;
 
       yield DashboardLoaded(dashboard, inbox, DateTime.now());
     } catch (ex) {

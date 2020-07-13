@@ -8,7 +8,7 @@ abstract class DashboardEvent extends Equatable {
 
 class FetchDashboard extends DashboardEvent {}
 
-class RefreshDashboard extends DashboardEvent {}
+class RefreshDashboardIfNecessary extends DashboardEvent {}
 
 class SetNewSentiment extends DashboardEvent {
   final Sentiment sentiment;
