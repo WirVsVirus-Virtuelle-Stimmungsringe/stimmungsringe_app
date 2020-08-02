@@ -116,7 +116,7 @@ class _InboxPageState extends State<InboxPage> {
       children: [
         Text(
           message.text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 35,
             fontWeight: FontWeight.bold,
             color: CupertinoColors.white,

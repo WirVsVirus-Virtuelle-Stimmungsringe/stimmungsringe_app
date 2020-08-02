@@ -5,10 +5,16 @@ const double _avatarSize = 150;
 class Avatar extends StatelessWidget {
   final ImageProvider image;
   final Color borderColor;
+  final Color backgroundColor;
   final double size;
 
-  const Avatar({Key key, @required this.image, this.borderColor, this.size})
-      : assert(image != null),
+  const Avatar({
+    Key key,
+    @required this.image,
+    this.borderColor,
+    this.backgroundColor,
+    this.size,
+  })  : assert(image != null),
         super(key: key);
 
   @override
@@ -19,7 +25,7 @@ class Avatar extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(110, 137, 131, 1.0),
+        color: backgroundColor ?? const Color(0xff6e8983),
         image: DecorationImage(
           image: image,
           fit: BoxFit.contain,
