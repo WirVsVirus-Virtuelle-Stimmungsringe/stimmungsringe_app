@@ -61,10 +61,15 @@ class OtherDetailPageBloc
       sendMessageEvent.text,
     );
 
-    final availableMessages = await messageRepository.sendMessage(
-        sendMessageEvent.otherUserId, sendMessageEvent.text);
+    try {
+      final availableMessages = await messageRepository.sendMessage(
+          sendMessageEvent.otherUserId, sendMessageEvent.text);
 
-    yield loadedState.copyWith(availableMessages: availableMessages);
+      yield loadedState.copyWith(availableMessages: availableMessages);
+    } catch (ex) {
+      print(ex);
+      // swallow the error
+    }
   }
 
   @override
