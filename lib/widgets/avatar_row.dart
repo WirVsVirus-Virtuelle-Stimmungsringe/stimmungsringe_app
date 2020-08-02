@@ -87,6 +87,7 @@ class AvatarRow extends StatelessWidget {
         child: Avatar(
           image: image,
           borderColor: CupertinoColors.white,
+          backgroundColor: avatarSentiment.avatarIconBackgroundColor,
           size: _avatarSize,
         ),
       ),

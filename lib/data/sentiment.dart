@@ -29,17 +29,34 @@ extension SentimentExtension on Sentiment {
   _SentimentColors get colors {
     switch (this) {
       case Sentiment.sunny:
-        return _SentimentColors.good;
+        return const _SentimentColors(Color(0xfff1db30), Color(0xfff78a07));
       case Sentiment.sunnyWithClouds:
-        return _SentimentColors.good;
+        return const _SentimentColors(Color(0xfff78a07), Color(0xffd55a38));
       case Sentiment.cloudy:
-        return _SentimentColors.medium;
+        return const _SentimentColors(Color(0xffd55a38), Color(0xffd95ae6));
       case Sentiment.windy:
-        return _SentimentColors.medium;
+        return const _SentimentColors(Color(0xffd95ae6), Color(0xff8e3ecd));
       case Sentiment.cloudyNight:
-        return _SentimentColors.medium;
+        return const _SentimentColors(Color(0xff8e3ecd), Color(0xff324398));
       default:
-        return _SentimentColors.bad;
+        return const _SentimentColors(Color(0xff324398), Color(0xff05114d));
+    }
+  }
+
+  Color get avatarIconBackgroundColor {
+    switch (this) {
+      case Sentiment.sunny:
+        return const Color(0xfff78a07);
+      case Sentiment.sunnyWithClouds:
+        return const Color(0xffd55a38);
+      case Sentiment.cloudy:
+        return const Color(0xffd95ae6);
+      case Sentiment.windy:
+        return const Color(0xff903fce);
+      case Sentiment.cloudyNight:
+        return const Color(0xff324398);
+      default:
+        return const Color(0xff05114d);
     }
   }
 
@@ -55,11 +72,4 @@ class _SentimentColors {
   const _SentimentColors(this.startColor, this.endColor)
       : assert(startColor != null),
         assert(endColor != null);
-
-  static const _SentimentColors good =
-      _SentimentColors(Color(0xff3c9a6b), Color(0xff377371));
-  static const _SentimentColors medium =
-      _SentimentColors(Color(0xffedd626), Color(0xfff2770c));
-  static const _SentimentColors bad =
-      _SentimentColors(Color(0xff951919), Color(0xffd7670c));
 }
