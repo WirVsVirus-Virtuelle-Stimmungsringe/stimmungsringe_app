@@ -1,3 +1,4 @@
+# production config - see README.md
 backendUrl:
   http://wvsvhackvirtuellestimmungsringe-env.eba-eug7bzt6.eu-central-1.elasticbeanstalk.com/stimmungsring
 useFakeDeviceId: false

@@ -11,7 +11,6 @@ import 'package:familiarise/widgets/avatar_button.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserSettingsPage extends StatefulWidget {

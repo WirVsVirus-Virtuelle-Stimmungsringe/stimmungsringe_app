@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class WaitDialog extends StatelessWidget {
   const WaitDialog({Key key}) : super(key: key);

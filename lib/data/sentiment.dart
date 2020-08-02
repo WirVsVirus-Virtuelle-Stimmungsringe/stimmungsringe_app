@@ -12,7 +12,7 @@ extension SentimentExtension on Sentiment {
   IconData get icon {
     switch (this) {
       case Sentiment.sunny:
-        return FontAwesomeIcons.sun;
+        return FontAwesomeIcons.solidSun;
       case Sentiment.sunnyWithClouds:
         return FontAwesomeIcons.cloudSun;
       case Sentiment.cloudy:

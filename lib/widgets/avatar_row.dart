@@ -10,14 +10,20 @@ class AvatarRow extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
+  final void Function() onAvatarImageTap;
   final void Function() onSentimentIconTap;
+  final void Function() onInboxIconTap;
+  final int inboxMessageCount;
 
   const AvatarRow({
     Key key,
     @required this.avatarSentiment,
     @required this.name,
     @required this.image,
+    this.onAvatarImageTap,
     this.onSentimentIconTap,
+    this.onInboxIconTap,
+    this.inboxMessageCount,
   })  : assert(avatarSentiment != null),
         assert(name != null),
         assert(image != null),
@@ -53,14 +59,8 @@ class AvatarRow extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-              top: 20,
-              left: 20,
-              child: Avatar(
-                image: image,
-                borderColor: CupertinoColors.white,
-                size: _avatarSize,
-              )),
+          buildAvatarImage(),
+          buildInboxIndicator(),
           Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,
@@ -73,6 +73,56 @@ class AvatarRow extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  /// circular image
+  Widget buildAvatarImage() {
+    return Positioned(
+      top: 20,
+      left: 20,
+      child: wrapGestureDetector(
+        onTap: onAvatarImageTap,
+        child: Avatar(
+          image: image,
+          borderColor: CupertinoColors.white,
+          size: _avatarSize,
+        ),
+      ),
+    );
+  }
+
+  /// show heart symbol with message count
+  Widget buildInboxIndicator() {
+    if (inboxMessageCount == null) {
+      return Container();
+    }
+    return Positioned(
+      left: _avatarSize - 40,
+      bottom: _avatarSize - 70,
+      child: wrapGestureDetector(
+        onTap: onInboxIconTap,
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20.0),
+              child: FaIcon(
+                FontAwesomeIcons.solidHeart,
+                size: 50,
+                color: const Color.fromRGBO(236, 56, 56, 1.0),
+              ),
+            ),
+            Text(
+              inboxMessageCount.toString(),
+              style: const TextStyle(
+                color: CupertinoColors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -103,4 +153,14 @@ class AvatarRow extends StatelessWidget {
             child: sentimentIcon,
           );
   }
+
+  static Widget wrapGestureDetector({Widget child, void Function() onTap}) =>
+      (onTap != null)
+          ? GestureDetector(
+              onTap: () {
+                onTap();
+              },
+              child: child,
+            )
+          : child;
 }

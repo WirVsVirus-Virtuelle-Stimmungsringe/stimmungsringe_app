@@ -1,16 +1,19 @@
+import 'package:familiarise/data/message.dart';
 import 'package:familiarise/data/other_detail.dart';
-import 'package:familiarise/data/suggestion.dart';
+import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_bloc.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart';
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/push_message_icon.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OtherDetailPage extends StatelessWidget {
   static const String routeUri = '/other-detail-page';
@@ -27,7 +30,8 @@ class OtherDetailPage extends StatelessWidget {
             value: dashboardBloc,
             child: BlocProvider<OtherDetailPageBloc>(
               create: (context) => OtherDetailPageBloc(
-                  dashboardRepository: DashboardRepository()),
+                  dashboardRepository: DashboardRepository(),
+                  messageRepository: MessageRepository()),
               child: OtherDetailPage(
                 otherUserId: otherUserId,
               ),
@@ -55,7 +59,7 @@ class OtherDetailPage extends StatelessWidget {
           child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
               builder: (context, state) {
             if (state is OtherDetailPageLoaded) {
-              return buildContent();
+              return _buildContent();
             } else {
               return LoadingSpinner();
             }
@@ -63,7 +67,7 @@ class OtherDetailPage extends StatelessWidget {
         ));
   }
 
-  Column buildContent() {
+  Column _buildContent() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -84,66 +88,93 @@ class OtherDetailPage extends StatelessWidget {
             return LoadingSpinner();
           }
         }),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Title(
-            color: CupertinoColors.black,
-            child: const Text(
-              '',
-            ),
-          ),
-        ),
-        Expanded(child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+        Expanded(
+          child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
             builder: (context, state) {
-          if (state is OtherDetailPageLoaded) {
-            // return buildSuggestionsList(state.otherDetail);
-          }
+              if (state is OtherDetailPageLoaded) {
+                String sendingMessage;
+                if (state is OtherDetailPageSendingMessage) {
+                  sendingMessage = state.sendingForMessage;
+                }
+                return _buildPushMessageList(
+                    state.otherDetail, state.availableMessages, sendingMessage);
+              }
 
-          return Container();
-        }))
+              return Container();
+            },
+          ),
+        )
       ],
     );
   }
 
-  ListView buildSuggestionsList(OtherDetail otherDetail) {
-    const NetworkImage placeholder = NetworkImage(
-        'https://1s83z11vs1os1aeaj31io68i-wpengine.netdna-ssl.com/wp-content/themes/mobsquad/img/avatar-fallback.jpg');
-    //final NetworkImage myAvatarImage =
-    //    NetworkImage(avatarImageUrl(dashboard.myTile.user.userId));
-
+  ListView _buildPushMessageList(
+    OtherDetail otherUserDetails,
+    AvailableMessages availableMessages,
+    String sendingMessage,
+  ) {
     return ListView.builder(
-      itemCount: otherDetail.suggestions.length,
+      itemCount: availableMessages.messageTemplates.length,
       itemBuilder: (context, index) {
-        final suggestion = otherDetail.suggestions[index];
+        final MessageTemplate messageTemplate =
+            availableMessages.messageTemplates[index];
 
-        return buildSuggestionRow(
-          suggestion,
-          placeholder,
-          lastItem: index < otherDetail.suggestions.length - 1,
+        return _buildPushMessageRow(
+          context,
+          otherUserDetails,
+          messageTemplate,
+          isSendingMessage: messageTemplate.text == sendingMessage,
+          isLastItem: index < availableMessages.messageTemplates.length - 1,
         );
       },
     );
   }
 
-  Widget buildSuggestionRow(Suggestion suggestion, NetworkImage myAvatarImage,
-      {bool lastItem}) {
+  Widget _buildPushMessageRow(BuildContext context,
+      OtherDetail otherUserDetails, MessageTemplate messageTemplate,
+      {bool isSendingMessage, bool isLastItem}) {
     final Widget row = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: CircleAvatar(
-              backgroundImage: myAvatarImage,
-            ),
+          const Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: PushMessageIcon(),
           ),
-          Expanded(child: Text(suggestion.text))
+          Expanded(
+            child: _buildMessageText(messageTemplate, otherUserDetails),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (messageTemplate.used) {
+                return;
+              }
+
+              BlocProvider.of<OtherDetailPageBloc>(context).add(
+                SendMessage(otherUserDetails.user.userId, messageTemplate.text),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: isSendingMessage
+                  ? const CupertinoActivityIndicator(
+                      radius: 18,
+                    )
+                  : Icon(
+                      FontAwesomeIcons.solidPaperPlane,
+                      color: messageTemplate.used
+                          ? CupertinoColors.inactiveGray
+                          : CupertinoColors.activeBlue,
+                      size: 35,
+                    ),
+            ),
+          )
         ],
       ),
     );
 
-    if (!lastItem) {
+    if (!isLastItem) {
       return row;
     }
 
@@ -161,6 +192,49 @@ class OtherDetailPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildMessageText(
+      MessageTemplate messageTemplate, OtherDetail otherUserDetails) {
+    final messageText = Text(messageTemplate.text);
+
+    if (messageTemplate.used) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          messageText,
+          _buildMessageUsedText(otherUserDetails)
+        ],
+      );
+    } else {
+      return messageText;
+    }
+  }
+
+  Widget _buildMessageUsedText(OtherDetail otherUserDetails) {
+    return RichText(
+      text: TextSpan(
+        text: 'Diese Nachricht wurde für den Status',
+        style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 12),
+        children: <InlineSpan>[
+          WidgetSpan(
+            alignment: PlaceholderAlignment.baseline,
+            baseline: TextBaseline.alphabetic,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: FaIcon(
+                otherUserDetails.sentiment.icon,
+                size: 12,
+                color: CupertinoColors.secondaryLabel,
+              ),
+            ),
+          ),
+          const TextSpan(
+            text: 'bereits versendet.',
+          )
+        ],
+      ),
     );
   }
 }

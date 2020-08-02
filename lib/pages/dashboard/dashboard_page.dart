@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/group_data.dart';
 import 'package:familiarise/data/user_minimal.dart';
@@ -5,11 +7,13 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
+import 'package:familiarise/pages/inbox/inbox_page.dart';
 import 'package:familiarise/pages/other_detail/other_detail_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
+import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
 import 'package:familiarise/widgets/headline.dart';
@@ -17,7 +21,6 @@ import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share/share.dart';
 
@@ -43,6 +46,7 @@ class DashboardPage extends StatefulWidget {
     return (BuildContext c) => BlocProvider<DashboardBloc>(
           create: (context) => DashboardBloc(
             dashboardRepository: DashboardRepository(),
+            messageRepository: MessageRepository(),
             userSettingsBloc: userSettingsBloc,
           ),
           child: DashboardPage(),
@@ -185,31 +189,34 @@ class _DashboardPageState extends State<DashboardPage>
           : 'Namen ändern...';
 
       final UserMinimal user = dashboard.myTile.user;
-      return GestureDetector(
-        onTap: () {
-          print('AvatarRow open userSettings');
+      return AvatarRow(
+        name: nameInRow,
+        image: makeProtectedNetworkImage(
+          user.userId,
+          user.avatarUrl,
+        ),
+        avatarSentiment: dashboard.myTile.sentiment,
+        onAvatarImageTap: () {
           Navigator.pushNamed(
             context,
             UserSettingsPage.routeUri,
           );
         },
-        child: AvatarRow(
-          name: nameInRow,
-          image: makeProtectedNetworkImage(
-            user.userId,
-            user.avatarUrl,
-          ),
-          avatarSentiment: dashboard.myTile.sentiment,
-          onSentimentIconTap: () {
-            print('AvatarRow open SetMySentiment');
-
-            Navigator.pushNamed(
-              context,
-              SetMySentimentPage.routeUri,
-              arguments: BlocProvider.of<DashboardBloc>(context),
-            );
-          },
-        ),
+        onSentimentIconTap: () {
+          Navigator.pushNamed(
+            context,
+            SetMySentimentPage.routeUri,
+            arguments: BlocProvider.of<DashboardBloc>(context),
+          );
+        },
+        inboxMessageCount: min(stateWithDashboard.inbox.messages.length, 99),
+        onInboxIconTap: () {
+          if (stateWithDashboard.inbox.messages.isNotEmpty) {
+            Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
+              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+            });
+          }
+        },
       );
     });
   }
