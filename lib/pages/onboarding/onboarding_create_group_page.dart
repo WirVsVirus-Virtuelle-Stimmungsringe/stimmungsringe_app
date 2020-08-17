@@ -112,13 +112,12 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
 
                 Future.delayed(const Duration(milliseconds: 800), () {
                   Fluttertoast.showToast(
-                      msg: "Erfolgreich erstellt",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: CupertinoColors.activeGreen,
-                      textColor: CupertinoColors.white,
-                      fontSize: 16.0);
+                    msg: "Erfolgreich erstellt",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: CupertinoColors.activeGreen,
+                    textColor: CupertinoColors.white,
+                  );
                 });
 
                 Navigator.pushNamedAndRemoveUntil(

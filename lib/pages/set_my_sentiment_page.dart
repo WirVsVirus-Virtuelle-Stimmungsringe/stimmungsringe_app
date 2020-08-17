@@ -43,7 +43,6 @@ class SetMySentimentPage extends StatelessWidget {
       ),
       child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             AvatarRow(
               name: dashboard.myTile.user.hasName

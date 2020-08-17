@@ -120,13 +120,12 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
 
                   Future.delayed(const Duration(milliseconds: 800), () {
                     Fluttertoast.showToast(
-                        msg: "Erfolgreich beigetreten",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: CupertinoColors.activeGreen,
-                        textColor: CupertinoColors.white,
-                        fontSize: 16.0);
+                      msg: "Erfolgreich beigetreten",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      backgroundColor: CupertinoColors.activeGreen,
+                      textColor: CupertinoColors.white,
+                    );
                   });
 
                   Navigator.pushNamedAndRemoveUntil(
@@ -142,13 +141,12 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
 
                   Future.delayed(const Duration(milliseconds: 800), () {
                     Fluttertoast.showToast(
-                        msg: "Gruppe nicht gefunden",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: CupertinoColors.destructiveRed,
-                        textColor: CupertinoColors.white,
-                        fontSize: 16.0);
+                      msg: "Gruppe nicht gefunden",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                      backgroundColor: CupertinoColors.destructiveRed,
+                      textColor: CupertinoColors.white,
+                    );
                   });
                 }
               },

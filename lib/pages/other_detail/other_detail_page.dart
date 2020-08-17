@@ -69,7 +69,6 @@ class OtherDetailPage extends StatelessWidget {
 
   Column _buildContent() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
             builder: (context, state) {
@@ -136,7 +135,6 @@ class OtherDetailPage extends StatelessWidget {
     final Widget row = Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           const Padding(
             padding: EdgeInsets.only(right: 16),
@@ -216,7 +214,10 @@ class OtherDetailPage extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: 'Diese Nachricht wurde für den Status',
-        style: TextStyle(color: CupertinoColors.secondaryLabel, fontSize: 12),
+        style: const TextStyle(
+          color: CupertinoColors.secondaryLabel,
+          fontSize: 12,
+        ),
         children: <InlineSpan>[
           WidgetSpan(
             alignment: PlaceholderAlignment.baseline,

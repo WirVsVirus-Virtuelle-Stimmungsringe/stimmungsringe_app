@@ -12,10 +12,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
   OnboardingBloc({@required this.onboardingRepository})
       : assert(onboardingRepository != null),
-        super();
-
-  @override
-  OnboardingState get initialState => CheckingUserState();
+        super(CheckingUserState());
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {

@@ -30,7 +30,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   })  : assert(dashboardRepository != null),
         assert(messageRepository != null),
         assert(userSettingsBloc != null),
-        super() {
+        super(DashboardUninitialized()) {
     _userSettingsBlocSubscription = userSettingsBloc.listen((state) {
       if (state is UserSettingsLoaded) {
         print("settings sub");
@@ -52,9 +52,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       add(RefreshDashboardIfNecessary());
     });
   }
-
-  @override
-  DashboardState get initialState => DashboardUninitialized();
 
   @override
   void onTransition(Transition<DashboardEvent, DashboardState> transition) {

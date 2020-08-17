@@ -48,7 +48,6 @@ class AvatarRow extends StatelessWidget {
               ),
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Container(),
@@ -109,10 +108,10 @@ class AvatarRow extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(20.0),
-              child: FaIcon(
+              child: const FaIcon(
                 FontAwesomeIcons.solidHeart,
                 size: 50,
-                color: const Color.fromRGBO(236, 56, 56, 1.0),
+                color: Color.fromRGBO(236, 56, 56, 1.0),
               ),
             ),
             Text(
@@ -143,7 +142,7 @@ class AvatarRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 sentimentIcon,
-                Icon(
+                const Icon(
                   CupertinoIcons.pen,
                   color: CupertinoColors.white,
                 ),

@@ -12,12 +12,12 @@ class PushMessageIcon extends StatelessWidget {
       alignment: Alignment.center,
       width: size,
       height: size,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: const [
+          colors: [
             Color.fromRGBO(213, 0, 163, 1),
             Color.fromRGBO(235, 102, 0, 1)
           ],

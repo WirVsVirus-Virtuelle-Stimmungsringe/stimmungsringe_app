@@ -10,10 +10,8 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
   final OnboardingRepository onboardingRepository;
   final AvatarRepository avatarRepository;
 
-  UserSettingsBloc(this.onboardingRepository, this.avatarRepository) : super();
-
-  @override
-  UserSettingsState get initialState => UserSettingsUninitialized();
+  UserSettingsBloc(this.onboardingRepository, this.avatarRepository)
+      : super(UserSettingsUninitialized());
 
   @override
   Stream<UserSettingsState> mapEventToState(UserSettingsEvent event) async* {

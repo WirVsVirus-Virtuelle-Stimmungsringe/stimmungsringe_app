@@ -52,7 +52,6 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
               ),
               child: SafeArea(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(state.groupName),
                     CupertinoTextField(

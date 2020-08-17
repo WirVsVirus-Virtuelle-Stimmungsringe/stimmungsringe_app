@@ -7,10 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
   final OnboardingRepository onboardingRepository;
 
-  GroupSettingsBloc(this.onboardingRepository) : super();
-
-  @override
-  GroupSettingsState get initialState => GroupSettingsLoading();
+  GroupSettingsBloc(this.onboardingRepository) : super(GroupSettingsLoading());
 
   @override
   Stream<GroupSettingsState> mapEventToState(GroupSettingsEvent event) async* {

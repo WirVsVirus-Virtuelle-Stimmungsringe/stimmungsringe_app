@@ -96,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage>
             context,
             GroupSettingsPage.routeUri,
           ),
-          child: Icon(
+          child: const Icon(
             CupertinoIcons.gear,
             color: CupertinoColors.activeBlue,
           ),
@@ -104,7 +104,6 @@ class _DashboardPageState extends State<DashboardPage>
       ),
       child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _avatarRow(),
             Expanded(
@@ -136,7 +135,6 @@ class _DashboardPageState extends State<DashboardPage>
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         const Paragraph(
           child: Text(
@@ -169,7 +167,7 @@ class _DashboardPageState extends State<DashboardPage>
                   Share.share(
                       'Trete bei FAMILIARISE der Fam-Group bei: ${groupData.groupCode}');
                 },
-                child: Icon(
+                child: const Icon(
                   CupertinoIcons.share,
                   color: CupertinoColors.link,
                 ),
@@ -223,7 +221,6 @@ class _DashboardPageState extends State<DashboardPage>
 
   Widget _contactList(Dashboard dashboard, DateTime now) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Paragraph(
           child: Headline(

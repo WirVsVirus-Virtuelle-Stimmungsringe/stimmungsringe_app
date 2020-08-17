@@ -38,11 +38,11 @@ class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: const [
+          colors: [
             Color.fromRGBO(213, 0, 163, 1),
             Color.fromRGBO(235, 102, 0, 1)
           ],
@@ -112,7 +112,6 @@ class _InboxPageState extends State<InboxPage> {
   Widget _carouselEntry(Message message) {
     return Column(
       key: ObjectKey(message.createdAt),
-      mainAxisSize: MainAxisSize.max,
       children: [
         Text(
           message.text,
@@ -133,7 +132,7 @@ class _InboxPageState extends State<InboxPage> {
             size: 200,
           ),
         ),
-        FaIcon(
+        const FaIcon(
           FontAwesomeIcons.solidHeart,
           size: 60,
           color: CupertinoColors.white,

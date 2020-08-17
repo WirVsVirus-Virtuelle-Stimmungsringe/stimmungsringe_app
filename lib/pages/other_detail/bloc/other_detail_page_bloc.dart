@@ -14,10 +14,7 @@ class OtherDetailPageBloc
       {@required this.dashboardRepository, @required this.messageRepository})
       : assert(dashboardRepository != null),
         assert(messageRepository != null),
-        super();
-
-  @override
-  OtherDetailPageState get initialState => OtherDetailPageUninitialized();
+        super(OtherDetailPageUninitialized());
 
   @override
   Stream<OtherDetailPageState> mapEventToState(

@@ -17,9 +17,8 @@ class WaitDialog extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const CupertinoActivityIndicator(
+              children: const [
+                CupertinoActivityIndicator(
                   radius: activityIndicatorRadius,
                 ),
                 Expanded(
@@ -31,7 +30,7 @@ class WaitDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: activityIndicatorSize,
                   height: activityIndicatorSize,
                 ),
