@@ -23,6 +23,7 @@ class MessageRepository {
       headers: {'X-User-ID': currentUserId},
     );
 
+    // note: fetching inbox is subject to race condition, e.g. if user leaves group
     assert(response.statusCode == 200);
 
     final MessageInbox inbox = MessageInbox.fromJson(

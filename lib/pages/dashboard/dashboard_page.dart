@@ -20,9 +20,9 @@ import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:share/share.dart';
 
 class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
@@ -150,30 +150,8 @@ class _DashboardPageState extends State<DashboardPage>
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        Paragraph(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                groupData.groupCode,
-                style: const TextStyle(
-                  color: Color.fromRGBO(0x95, 0x19, 0x19, 1),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              CupertinoButton(
-                onPressed: () {
-                  Share.share(
-                      'Trete bei FAMILIARISE der Fam-Group bei: ${groupData.groupCode}');
-                },
-                child: const Icon(
-                  CupertinoIcons.share,
-                  color: CupertinoColors.link,
-                ),
-              )
-            ],
-          ),
+        ShareGroupCode(
+          groupCode: groupData.groupCode,
         ),
       ],
     );
