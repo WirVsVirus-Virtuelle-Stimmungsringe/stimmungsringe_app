@@ -29,34 +29,34 @@ extension SentimentExtension on Sentiment {
   _SentimentColors get colors {
     switch (this) {
       case Sentiment.sunny:
-        return const _SentimentColors(Color(0xfff1db30), Color(0xfff78a07));
+        return const _SentimentColors(Color(0xfffcd16f), Color(0xfff85600));
       case Sentiment.sunnyWithClouds:
-        return const _SentimentColors(Color(0xfff78a07), Color(0xffd55a38));
+        return const _SentimentColors(Color(0xfffcd16f), Color(0xffb1beca));
       case Sentiment.cloudy:
-        return const _SentimentColors(Color(0xffd55a38), Color(0xffd95ae6));
+        return const _SentimentColors(Color(0xffc0dff5), Color(0xffb1beca));
       case Sentiment.windy:
-        return const _SentimentColors(Color(0xffd95ae6), Color(0xff8e3ecd));
+        return const _SentimentColors(Color(0xff8a919b), Color(0xff23262d));
       case Sentiment.cloudyNight:
-        return const _SentimentColors(Color(0xff8e3ecd), Color(0xff324398));
+        return const _SentimentColors(Color(0xff09436f), Color(0xff00223b));
       default:
-        return const _SentimentColors(Color(0xff324398), Color(0xff05114d));
+        return const _SentimentColors(Color(0xff1e2848), Color(0xff5c2f57));
     }
   }
 
   Color get avatarIconBackgroundColor {
     switch (this) {
       case Sentiment.sunny:
-        return const Color(0xfff78a07);
+        return const Color(0xff7494ab);
       case Sentiment.sunnyWithClouds:
-        return const Color(0xffd55a38);
+        return const Color(0xff7494ab);
       case Sentiment.cloudy:
-        return const Color(0xffd95ae6);
+        return const Color(0xff7494ab);
       case Sentiment.windy:
-        return const Color(0xff903fce);
+        return const Color(0xff7494ab);
       case Sentiment.cloudyNight:
-        return const Color(0xff324398);
+        return const Color(0xff7494ab);
       default:
-        return const Color(0xff05114d);
+        return const Color(0xff7494ab);
     }
   }
 
