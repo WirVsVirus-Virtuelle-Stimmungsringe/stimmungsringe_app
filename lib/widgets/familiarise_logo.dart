@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 class FamiliariseLogo extends StatelessWidget {
-  const FamiliariseLogo({Key key}) : super(key: key);
+  final double width;
+
+  const FamiliariseLogo({Key key, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Brightness brightnessValue =
-        MediaQuery.of(context).platformBrightness;
-    final bool isDarkTheme = brightnessValue == Brightness.dark;
+    final bool isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -15,7 +16,7 @@ class FamiliariseLogo extends StatelessWidget {
         isDarkTheme
             ? 'assets/images/familiarise_logo_dark_bg.png'
             : 'assets/images/familiarise_logo_light_bg.png',
-        width: 250,
+        width: width ?? 250,
       ),
     );
   }

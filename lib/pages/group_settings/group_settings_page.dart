@@ -4,6 +4,10 @@ import 'package:familiarise/pages/group_settings/bloc/group_settings_state.dart'
 import 'package:familiarise/pages/loading_spinner_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/widgets/familiarise_logo.dart';
+import 'package:familiarise/widgets/full_size_scroll_area.dart';
+import 'package:familiarise/widgets/paragraph.dart';
+import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,24 +52,11 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             },
             child: CupertinoPageScaffold(
               navigationBar: const CupertinoNavigationBar(
-                middle: Text('Einstellungen Fam-Group'),
+                middle: Text('Fam-Group Einstellungen'),
               ),
               child: SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    Text(state.groupName),
-                    CupertinoTextField(
-                      controller: _groupNameController,
-                    ),
-                    Text("Code für die Fam-Group: ${state.groupCode}"),
-                    CupertinoButton(
-                      onPressed: () {
-                        BlocProvider.of<GroupSettingsBloc>(context)
-                            .add(LeaveGroup());
-                      },
-                      child: const Text("leave group"),
-                    ),
-                  ],
+                child: FullSizeScrollArea(
+                  child: buildContent(state, context),
                 ),
               ),
             ),
@@ -84,6 +75,90 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           );
         }
       },
+    );
+  }
+
+  Widget buildContent(ShowCurrentGroupSettings state, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: [
+              const FamiliariseLogo(
+                width: 200,
+              ),
+              const Paragraph(
+                child: Text(
+                  'Dein FAMILIARISE Fam-Group Code lautet:',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              ShareGroupCode(
+                groupCode: state.groupCode,
+              ),
+              const Paragraph(
+                child: Text(
+                  'Gruppen-Name:',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Paragraph(
+                  child: CupertinoTextField(
+                    placeholder: "Wie soll die neue Gruppe heißen?",
+                    controller: _groupNameController,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: _buildLeaveGroupArea(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLeaveGroupArea(BuildContext context) {
+    return Container(
+      color: CupertinoColors.lightBackgroundGray,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: <Widget>[
+          const Paragraph(
+            isFirstWidget: true,
+            child: Text(
+              'Diese Gruppe verlassen:',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          CupertinoButton(
+            borderRadius: BorderRadius.circular(12.0),
+            color: CupertinoColors.white,
+            onPressed: () {
+              BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
+            },
+            child: const Text(
+              'Abmelden',
+              style: TextStyle(
+                color: Color(0xff951919),
+              ),
+            ),
+          ),
+          const Paragraph(
+            child: Text(
+              'Du kannst dich jederzeit wieder mit dem Fam-Group Code anmelden.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
