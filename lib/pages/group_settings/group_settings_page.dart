@@ -56,7 +56,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
               ),
               child: SafeArea(
                 child: FullSizeScrollArea(
-                  child: buildContent(state, context),
+                  builder: (context) => buildContent(state, context),
                 ),
               ),
             ),
@@ -80,13 +80,14 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
 
   Widget buildContent(ShowCurrentGroupSettings state, BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
               const FamiliariseLogo(
-                width: 200,
+                height: 200,
               ),
               const Paragraph(
                 child: Text(
@@ -117,9 +118,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             ],
           ),
         ),
-        Expanded(
-          child: _buildLeaveGroupArea(context),
-        ),
+        _buildLeaveGroupArea(context),
       ],
     );
   }
@@ -135,7 +134,8 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             child: Text(
               'Diese Gruppe verlassen:',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: CupertinoColors.black, fontWeight: FontWeight.bold),
             ),
           ),
           CupertinoButton(
@@ -155,6 +155,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             child: Text(
               'Du kannst dich jederzeit wieder mit dem Fam-Group Code anmelden.',
               textAlign: TextAlign.center,
+              style: TextStyle(color: CupertinoColors.black),
             ),
           ),
         ],

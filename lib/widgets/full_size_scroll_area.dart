@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
 class FullSizeScrollArea extends StatelessWidget {
-  final Widget child;
+  final WidgetBuilder builder;
 
-  const FullSizeScrollArea({Key key, @required this.child})
-      : assert(child != null),
+  const FullSizeScrollArea({
+    Key key,
+    @required this.builder,
+  })  : assert(builder != null),
         super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class FullSizeScrollArea extends StatelessWidget {
             constraints:
                 BoxConstraints(minHeight: viewportConstraints.maxHeight),
             child: IntrinsicHeight(
-              child: child,
+              child: builder(buildContext),
             ),
           ),
         );
