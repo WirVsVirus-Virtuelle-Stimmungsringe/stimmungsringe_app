@@ -56,6 +56,7 @@ class OtherDetailPage extends StatelessWidget {
           middle: Text('Wie geht es eigentlich ... '),
         ),
         child: SafeArea(
+          bottom: false,
           child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
               builder: (context, state) {
             if (state is OtherDetailPageLoaded) {
@@ -141,7 +142,8 @@ class OtherDetailPage extends StatelessWidget {
             child: PushMessageIcon(),
           ),
           Expanded(
-            child: _buildMessageText(messageTemplate, otherUserDetails),
+            child:
+                _buildMessageText(context, messageTemplate, otherUserDetails),
           ),
           GestureDetector(
             onTap: () {
@@ -193,7 +195,7 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMessageText(
+  Widget _buildMessageText(BuildContext context,
       MessageTemplate messageTemplate, OtherDetail otherUserDetails) {
     final messageText = Text(messageTemplate.text);
 
@@ -202,7 +204,7 @@ class OtherDetailPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           messageText,
-          _buildMessageUsedText(otherUserDetails)
+          _buildMessageUsedText(context, otherUserDetails)
         ],
       );
     } else {
@@ -210,12 +212,19 @@ class OtherDetailPage extends StatelessWidget {
     }
   }
 
-  Widget _buildMessageUsedText(OtherDetail otherUserDetails) {
+  Widget _buildMessageUsedText(
+      BuildContext context, OtherDetail otherUserDetails) {
+    final bool isDarkTheme =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final Color textColor = isDarkTheme
+        ? CupertinoColors.inactiveGray
+        : CupertinoColors.secondaryLabel;
+
     return RichText(
       text: TextSpan(
-        text: 'Diese Nachricht wurde für den Status',
-        style: const TextStyle(
-          color: CupertinoColors.secondaryLabel,
+        text: 'Nachricht für den Status',
+        style: TextStyle(
+          color: textColor,
           fontSize: 12,
         ),
         children: <InlineSpan>[
@@ -227,12 +236,12 @@ class OtherDetailPage extends StatelessWidget {
               child: FaIcon(
                 otherUserDetails.sentiment.icon,
                 size: 12,
-                color: CupertinoColors.secondaryLabel,
+                color: textColor,
               ),
             ),
           ),
           const TextSpan(
-            text: 'bereits versendet.',
+            text: 'versendet.',
           )
         ],
       ),

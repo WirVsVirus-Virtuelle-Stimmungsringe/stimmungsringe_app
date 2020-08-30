@@ -55,6 +55,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 middle: Text('Fam-Group Einstellungen'),
               ),
               child: SafeArea(
+                bottom: false,
                 child: FullSizeScrollArea(
                   builder: (context) => buildContent(state, context),
                 ),
@@ -101,7 +102,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
               ),
               const Paragraph(
                 child: Text(
-                  'Gruppen-Name:',
+                  'Name der Fam-Group:',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -110,7 +111,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 padding: const EdgeInsets.only(bottom: 16),
                 child: Paragraph(
                   child: CupertinoTextField(
-                    placeholder: "Wie soll die neue Gruppe heißen?",
+                    placeholder: "Wie soll die Fam-Group heißen?",
                     controller: _groupNameController,
                   ),
                 ),
@@ -124,9 +125,11 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
   }
 
   Widget _buildLeaveGroupArea(BuildContext context) {
+    final EdgeInsets safeAreaPadding = MediaQuery.of(context).padding;
     return Container(
       color: CupertinoColors.lightBackgroundGray,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding:
+          EdgeInsets.only(left: 12, right: 12, bottom: safeAreaPadding.bottom),
       child: Column(
         children: <Widget>[
           const Paragraph(
@@ -145,7 +148,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
               BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
             },
             child: const Text(
-              'Abmelden',
+              'Gruppe verlassen',
               style: TextStyle(
                 color: Color(0xff951919),
               ),
@@ -153,7 +156,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           ),
           const Paragraph(
             child: Text(
-              'Du kannst dich jederzeit wieder mit dem Fam-Group Code anmelden.',
+              'Notiere dir den Fam-Group Code. Du kannst jederzeit wieder der Fam-Group mit diesem Code beitreten.',
               textAlign: TextAlign.center,
               style: TextStyle(color: CupertinoColors.black),
             ),

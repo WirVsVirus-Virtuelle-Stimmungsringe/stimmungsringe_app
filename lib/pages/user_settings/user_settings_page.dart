@@ -87,6 +87,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
         middle: Text('Benutzereinstellungen'),
       ),
       child: SafeArea(
+        bottom: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: CustomScrollView(
@@ -127,7 +128,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
 
   Widget _buildAvatarGrid(UserSettingsLoaded state) {
     return SliverPadding(
-      padding: const EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.only(top: 24, bottom: 8),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,

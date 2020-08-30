@@ -103,6 +103,7 @@ class _DashboardPageState extends State<DashboardPage>
         ),
       ),
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: <Widget>[
             _avatarRow(),
@@ -206,6 +207,7 @@ class _DashboardPageState extends State<DashboardPage>
         ),
         Expanded(
           child: Paragraph(
+            isLastWidget: true,
             child: ListView(
               children: _otherTiles(context, dashboard, now),
             ),

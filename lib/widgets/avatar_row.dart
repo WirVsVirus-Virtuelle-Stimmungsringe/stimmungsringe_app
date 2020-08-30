@@ -66,7 +66,6 @@ class AvatarRow extends StatelessWidget {
             child: Text(
               name,
               style: const TextStyle(
-                color: Color(0x7f000000),
                 fontSize: 20,
               ),
             ),
