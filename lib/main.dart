@@ -10,9 +10,12 @@ import 'package:familiarise/pages/routing_error_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
+import 'package:familiarise/push_notifications.dart';
 import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
+
+PushNotificationsManager pnm;
 
 Future<void> main() async {
   // TODO: throws exceptions on start
@@ -22,6 +25,9 @@ Future<void> main() async {
   // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
 
   await Config().loaded;
+
+  pnm = PushNotificationsManager();
+  pnm.init();
 
   final UserSettingsBloc userSettingsBloc =
       UserSettingsBloc(OnboardingRepository(), AvatarRepository());

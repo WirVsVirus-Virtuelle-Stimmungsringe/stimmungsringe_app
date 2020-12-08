@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "991896350276",
+    "firebase_url": "https://familiarise-5b39d.firebaseio.com",
+    "project_id": "familiarise-5b39d",
+    "storage_bucket": "familiarise-5b39d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991896350276:android:1637122a9b35deacc19611",
+        "android_client_info": {
+          "package_name": "de.familiarise.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991896350276-gnk7nnl3fiokh4s4qj2bf17p5vcmkt15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsjRqR4lGqCFr0I7DDbjmQWVlTumDgn4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991896350276-gnk7nnl3fiokh4s4qj2bf17p5vcmkt15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
