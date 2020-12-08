@@ -27,14 +27,14 @@ class SetMySentimentPage extends StatelessWidget {
     return BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
       if (state.hasDashboard) {
-        return _buildLoadedPage(context, state as StateWithDashboard);
+        return _buildLoadedPage(context, state as StateWithData);
       } else {
         return LoadingSpinner();
       }
     });
   }
 
-  Widget _buildLoadedPage(BuildContext context, StateWithDashboard state) {
+  Widget _buildLoadedPage(BuildContext context, StateWithData state) {
     final Dashboard dashboard = state.dashboard;
 
     return CupertinoPageScaffold(

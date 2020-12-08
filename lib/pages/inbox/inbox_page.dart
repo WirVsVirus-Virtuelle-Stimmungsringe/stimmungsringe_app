@@ -66,7 +66,7 @@ class _InboxPageState extends State<InboxPage> {
     return BlocBuilder<DashboardBloc, DashboardState>(
       builder: (context, state) {
         if (state.hasDashboard) {
-          return _bodyContent(state as StateWithDashboard);
+          return _bodyContent(state as StateWithData);
         } else {
           return LoadingSpinner();
         }
@@ -74,7 +74,7 @@ class _InboxPageState extends State<InboxPage> {
     );
   }
 
-  Widget _bodyContent(StateWithDashboard state) {
+  Widget _bodyContent(StateWithData state) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(

@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/message.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class StateWithDashboard {
+abstract class StateWithData {
   Dashboard get dashboard;
 
   MessageInbox get inbox;
@@ -22,7 +23,7 @@ class DashboardUninitialized extends DashboardState {
   bool get hasDashboard => false;
 }
 
-class DashboardLoading extends DashboardState implements StateWithDashboard {
+class DashboardLoading extends DashboardState implements StateWithData {
   @override
   final Dashboard dashboard;
   @override
@@ -30,9 +31,26 @@ class DashboardLoading extends DashboardState implements StateWithDashboard {
   @override
   final DateTime now;
 
-  DashboardLoading(this.dashboard, this.inbox, this.now)
-      : assert((dashboard == null && inbox == null && now == null) ||
+  DashboardLoading({
+    this.dashboard,
+    this.inbox,
+    this.now,
+  }) : assert((dashboard == null && inbox == null && now == null) ||
             (dashboard != null && inbox != null && now != null));
+
+  factory DashboardLoading.fromDashboardState(DashboardState dashboardState,
+      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+    if (dashboardState.hasDashboard) {
+      final StateWithData stateWithData = dashboardState as StateWithData;
+      return DashboardLoading(
+        dashboard: dashboard ?? stateWithData.dashboard,
+        inbox: inbox ?? stateWithData.inbox,
+        now: now ?? stateWithData.now,
+      );
+    } else {
+      return DashboardLoading();
+    }
+  }
 
   @override
   bool get hasDashboard => dashboard != null;
@@ -41,7 +59,7 @@ class DashboardLoading extends DashboardState implements StateWithDashboard {
   List<Object> get props => [dashboard, inbox, now];
 }
 
-class DashboardLoaded extends DashboardState implements StateWithDashboard {
+class DashboardLoaded extends DashboardState implements StateWithData {
   @override
   final Dashboard dashboard;
   @override
@@ -49,10 +67,25 @@ class DashboardLoaded extends DashboardState implements StateWithDashboard {
   @override
   final DateTime now;
 
-  DashboardLoaded(this.dashboard, this.inbox, this.now)
-      : assert(dashboard != null),
+  DashboardLoaded({
+    @required this.dashboard,
+    @required this.inbox,
+    @required this.now,
+  })  : assert(dashboard != null),
         assert(inbox != null),
         assert(now != null);
+
+  factory DashboardLoaded.fromDashboardState(DashboardState dashboardState,
+      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+    assert(dashboardState.hasDashboard);
+
+    final StateWithData stateWithData = dashboardState as StateWithData;
+    return DashboardLoaded(
+      dashboard: dashboard ?? stateWithData.dashboard,
+      inbox: inbox ?? stateWithData.inbox,
+      now: now ?? stateWithData.now,
+    );
+  }
 
   @override
   bool get hasDashboard => true;
@@ -61,7 +94,7 @@ class DashboardLoaded extends DashboardState implements StateWithDashboard {
   List<Object> get props => [dashboard, inbox, now];
 }
 
-class DashboardError extends DashboardState implements StateWithDashboard {
+class DashboardError extends DashboardState implements StateWithData {
   // may be null
   @override
   final Dashboard dashboard;
@@ -70,9 +103,23 @@ class DashboardError extends DashboardState implements StateWithDashboard {
   @override
   final DateTime now;
 
-  DashboardError(this.dashboard, this.inbox, this.now)
+  DashboardError({this.dashboard, this.inbox, this.now})
       : assert((dashboard == null && inbox == null && now == null) ||
             (dashboard != null && inbox != null && now != null));
+
+  factory DashboardError.fromDashboardState(DashboardState dashboardState,
+      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+    if (dashboardState.hasDashboard) {
+      final StateWithData stateWithData = dashboardState as StateWithData;
+      return DashboardError(
+        dashboard: dashboard ?? stateWithData.dashboard,
+        inbox: inbox ?? stateWithData.inbox,
+        now: now ?? stateWithData.now,
+      );
+    } else {
+      return DashboardError();
+    }
+  }
 
   @override
   bool get hasDashboard => dashboard != null;

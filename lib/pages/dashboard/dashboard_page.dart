@@ -89,44 +89,96 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text('Übersicht'),
-        trailing: GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            GroupSettingsPage.routeUri,
-          ),
-          child: const Icon(
-            CupertinoIcons.gear,
-            color: CupertinoColors.activeBlue,
-          ),
-        ),
-      ),
+      navigationBar: buildNavigationBar(context),
       child: SafeArea(
         bottom: false,
-        child: Column(
-          children: <Widget>[
-            _avatarRow(),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: _widgetWithDashboardBloc((stateWithDashboard) {
-                  if (stateWithDashboard.dashboard.otherTiles.isEmpty) {
-                    return _emptyGroupInfo(
-                      stateWithDashboard.dashboard.groupData,
-                    );
-                  } else {
-                    return _contactList(
-                      stateWithDashboard.dashboard,
-                      stateWithDashboard.now,
-                    );
-                  }
-                }),
-              ),
-            )
-          ],
+        child: BlocBuilder<DashboardBloc, DashboardState>(
+          builder: (context, state) {
+            if (!state.hasDashboard) {
+              return LoadingSpinner();
+            }
+
+            final StateWithData stateWithData = state as StateWithData;
+
+            return Column(
+              children: <Widget>[
+                _avatarRow(stateWithData),
+                Expanded(
+                  child: buildDashboardBody(stateWithData),
+                )
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+
+  CupertinoNavigationBar buildNavigationBar(BuildContext context) {
+    return CupertinoNavigationBar(
+      middle: const Text('Übersicht'),
+      trailing: GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          GroupSettingsPage.routeUri,
+        ),
+        child: const Icon(
+          CupertinoIcons.gear,
+          color: CupertinoColors.activeBlue,
+        ),
+      ),
+    );
+  }
+
+  Widget _avatarRow(StateWithData stateWithData) {
+    final Dashboard dashboard = stateWithData.dashboard;
+    final String nameInRow = dashboard.myTile.user.hasName
+        ? dashboard.myTile.user.displayName
+        : 'Namen ändern...';
+
+    final UserMinimal user = dashboard.myTile.user;
+    return AvatarRow(
+      name: nameInRow,
+      image: makeProtectedNetworkImage(
+        user.userId,
+        user.avatarUrl,
+      ),
+      avatarSentiment: dashboard.myTile.sentiment,
+      onAvatarImageTap: () {
+        Navigator.pushNamed(
+          context,
+          UserSettingsPage.routeUri,
+        );
+      },
+      onSentimentIconTap: () {
+        Navigator.pushNamed(
+          context,
+          SetMySentimentPage.routeUri,
+          arguments: BlocProvider.of<DashboardBloc>(context),
+        );
+      },
+      inboxMessageCount: min(stateWithData.inbox.messages.length, 99),
+      onInboxIconTap: () {
+        if (stateWithData.inbox.messages.isNotEmpty) {
+          Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
+            'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+          });
+        }
+      },
+    );
+  }
+
+  Padding buildDashboardBody(StateWithData stateWithData) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: stateWithData.dashboard.otherTiles.isEmpty
+          ? _emptyGroupInfo(
+              stateWithData.dashboard.groupData,
+            )
+          : _contactList(
+              stateWithData.dashboard,
+              stateWithData.now,
+            ),
     );
   }
 
@@ -156,46 +208,6 @@ class _DashboardPageState extends State<DashboardPage>
         ),
       ],
     );
-  }
-
-  Widget _avatarRow() {
-    return _widgetWithDashboardBloc((stateWithDashboard) {
-      final Dashboard dashboard = stateWithDashboard.dashboard;
-      final String nameInRow = dashboard.myTile.user.hasName
-          ? dashboard.myTile.user.displayName
-          : 'Namen ändern...';
-
-      final UserMinimal user = dashboard.myTile.user;
-      return AvatarRow(
-        name: nameInRow,
-        image: makeProtectedNetworkImage(
-          user.userId,
-          user.avatarUrl,
-        ),
-        avatarSentiment: dashboard.myTile.sentiment,
-        onAvatarImageTap: () {
-          Navigator.pushNamed(
-            context,
-            UserSettingsPage.routeUri,
-          );
-        },
-        onSentimentIconTap: () {
-          Navigator.pushNamed(
-            context,
-            SetMySentimentPage.routeUri,
-            arguments: BlocProvider.of<DashboardBloc>(context),
-          );
-        },
-        inboxMessageCount: min(stateWithDashboard.inbox.messages.length, 99),
-        onInboxIconTap: () {
-          if (stateWithDashboard.inbox.messages.isNotEmpty) {
-            Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
-              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-            });
-          }
-        },
-      );
-    });
   }
 
   Widget _contactList(Dashboard dashboard, DateTime now) {
@@ -250,18 +262,5 @@ class _DashboardPageState extends State<DashboardPage>
         );
       },
     ).toList(growable: false);
-  }
-
-  Widget _widgetWithDashboardBloc(
-      Widget Function(StateWithDashboard state) widgetFactory) {
-    return BlocBuilder<DashboardBloc, DashboardState>(
-      builder: (context, state) {
-        if (state.hasDashboard) {
-          return widgetFactory(state as StateWithDashboard);
-        } else {
-          return LoadingSpinner();
-        }
-      },
-    );
   }
 }

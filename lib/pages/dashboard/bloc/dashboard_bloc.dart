@@ -76,12 +76,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
 
-    if (state.hasDashboard) {
-      yield DashboardLoading((state as StateWithDashboard).dashboard,
-          (state as StateWithDashboard).inbox, DateTime.now());
-    } else {
-      yield DashboardLoading(null, null, null);
-    }
+    yield DashboardLoading.fromDashboardState(state, now: DateTime.now());
 
     try {
       final futures = await Future.wait([
@@ -90,15 +85,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       ]);
       final dashboard = futures[0] as Dashboard;
       final inbox = futures[1] as MessageInbox;
-      yield DashboardLoaded(dashboard, inbox, DateTime.now());
+      yield DashboardLoaded(
+        dashboard: dashboard,
+        inbox: inbox,
+        now: DateTime.now(),
+      );
     } catch (ex) {
       print(ex);
-      if (state is DashboardLoaded) {
-        yield DashboardError((state as DashboardLoaded).dashboard,
-            (state as DashboardLoaded).inbox, DateTime.now());
-      } else {
-        yield DashboardError(null, null, null);
-      }
+      yield DashboardError.fromDashboardState(state, now: DateTime.now());
     }
   }
 
@@ -109,9 +103,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
     try {
       if (state.hasDashboard) {
-        final stateWithDashboard = state as StateWithDashboard;
-        if (stateWithDashboard.dashboard.hashCode == _dashboardHash &&
-            stateWithDashboard.inbox.hashCode == _messageInboxHash) {
+        final stateWithData = state as StateWithData;
+        if (stateWithData.dashboard.hashCode == _dashboardHash &&
+            stateWithData.inbox.hashCode == _messageInboxHash) {
           print("skip refresh");
           return;
         }
@@ -127,7 +121,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       _dashboardHash = dashboard.hashCode;
       _messageInboxHash = inbox.hashCode;
 
-      yield DashboardLoaded(dashboard, inbox, DateTime.now());
+      yield DashboardLoaded(
+        dashboard: dashboard,
+        inbox: inbox,
+        now: DateTime.now(),
+      );
     } catch (ex) {
       print(ex);
     }
@@ -148,10 +146,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
               .copyWith(sentiment: setNewSentiment.sentiment));
       print(
           "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
-      yield DashboardLoaded(
-        optimisticUpdate,
-        dashboardLoadedState.inbox,
-        DateTime.now(),
+      yield DashboardLoaded.fromDashboardState(
+        dashboardLoadedState,
+        dashboard: optimisticUpdate,
+        now: DateTime.now(),
       );
 
       await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
@@ -159,18 +157,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           await dashboardRepository.loadDashboardPageData();
       print(
           "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
-      yield DashboardLoaded(
-        loadDashboardPageData,
-        dashboardLoadedState.inbox,
-        DateTime.now(),
+      yield DashboardLoaded.fromDashboardState(
+        dashboardLoadedState,
+        dashboard: loadDashboardPageData,
+        now: DateTime.now(),
       );
     } catch (ex) {
       print(ex);
 
-      yield DashboardError(
-        dashboardLoadedState.dashboard,
-        dashboardLoadedState.inbox,
-        DateTime.now(),
+      yield DashboardError.fromDashboardState(
+        dashboardLoadedState,
+        now: DateTime.now(),
       );
     }
   }
