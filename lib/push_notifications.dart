@@ -53,9 +53,6 @@ class PushNotificationsManager {
   }
 
   void _onMessage(MessageEvent event, RemoteMessage message) {
-    if (message == null) {
-      print('Error! Got a null message via: $event');
-    }
     print('Got a message via: $event');
     print('Message data: ${message.data}');
 
