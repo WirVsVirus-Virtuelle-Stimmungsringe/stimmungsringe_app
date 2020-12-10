@@ -38,7 +38,8 @@ dependencies:
   built_collection: ^4.3.2
   cached_network_image: 2.2.0+1
   carousel_slider: ^2.2.0
-  firebase_messaging: ^7.0.3
+  firebase_core: ^0.5.3
+  firebase_messaging: ^8.0.0-dev.10
 
 dev_dependencies:
   flutter_test:

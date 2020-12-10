@@ -24,8 +24,6 @@ import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../main.dart';
-
 class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
 
@@ -191,10 +189,6 @@ class _DashboardPageState extends State<DashboardPage>
 
     return Column(
       children: <Widget>[
-        CupertinoButton(
-          child: Text('Push me!'),
-          onPressed: () => pnm.sendAndRetrieveMessage(),
-        ),
         const Paragraph(
           child: Text(
             'Du hast leider noch keine Mitglieder in deiner Gruppe. Gebe doch '

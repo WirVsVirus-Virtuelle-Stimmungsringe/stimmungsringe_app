@@ -1,88 +1,89 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:familiarise/config.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:http/http.dart' as http;
+
+enum MessageEvent {
+  appStartedOnMessageClick,
+  appResumedOnMessageClick,
+  receivedMessageWhileInForeground,
+}
 
 class PushNotificationsManager {
-  PushNotificationsManager._();
-
   factory PushNotificationsManager() => _instance;
+
+  PushNotificationsManager._();
 
   static final PushNotificationsManager _instance =
       PushNotificationsManager._();
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   bool _initialized = false;
-  String _token;
 
   Future<void> init() async {
     if (!_initialized) {
-      // For iOS request permission first.
-      _firebaseMessaging.requestNotificationPermissions();
-      _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          print("onMessage: $message");
-        },
-        onBackgroundMessage: myBackgroundMessageHandler,
-        onLaunch: (Map<String, dynamic> message) async {
-          print("onLaunch: $message");
-        },
-        onResume: (Map<String, dynamic> message) async {
-          print("onResume: $message");
-        },
-      );
+      await Firebase.initializeApp();
+      final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-      // For testing purposes print the Firebase Messaging token
-      _token = await _firebaseMessaging.getToken();
-      print("FirebaseMessaging token: $_token");
+      // For iOS request permission first.
+      final notificationSettings = await messaging.requestPermission();
+
+      if (notificationSettings.authorizationStatus !=
+          AuthorizationStatus.authorized) {
+        return;
+      }
+
+      _printToken();
+
+      final RemoteMessage initialMessage = await messaging.getInitialMessage();
+
+      if (initialMessage != null) {
+        _onMessage(MessageEvent.appStartedOnMessageClick, initialMessage);
+      }
+
+      FirebaseMessaging.onMessage.listen((message) =>
+          _onMessage(MessageEvent.receivedMessageWhileInForeground, message));
+      FirebaseMessaging.onMessageOpenedApp.listen((message) =>
+          _onMessage(MessageEvent.appResumedOnMessageClick, message));
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
 
       _initialized = true;
     }
   }
 
-  Future<void> sendAndRetrieveMessage() async {
-    const String serverToken = 'TODO';
+  void _onMessage(MessageEvent event, RemoteMessage message) {
+    if (message == null) {
+      print('Error! Got a null message via: $event');
+    }
+    print('Got a message via: $event');
+    print('Message data: ${message.data}');
 
-    await Future<void>.delayed(const Duration(seconds: 2));
-    final body = jsonEncode(<String, dynamic>{
-      'notification': <String, dynamic>{
-        'body': 'this is a body',
-        'title': 'this is a title'
-      },
-      'priority': 'high',
-      'data': <String, dynamic>{
-        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-        'id': '1',
-        'status': 'done'
-      },
-      'to': _token,
-    });
-    final response = await http.post(
-      'https://fcm.googleapis.com/fcm/send',
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'key=$serverToken',
-      },
-      body: body,
-    );
+    if (message.notification != null) {
+      print(
+          'Message also contained a notification, title: ${message.notification.title}, body: ${message.notification.body}');
+    }
+  }
 
-    print(body);
+  // For testing purposes print the Firebase Messaging token
+  Future<void> _printToken() async {
+    if (!Config().debug) {
+      return;
+    }
 
-    print('Sent notification with statusCode: ${response.statusCode}');
+    print(
+        "FirebaseMessaging token: ${await FirebaseMessaging.instance.getToken()}");
   }
 }
 
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-  }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
 
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-  }
+  print('Got a message whilst in the background/stopped!');
+  print('Message data: ${message.data}');
 
-  // Or do other work.
+  if (message.notification != null) {
+    print(
+        'Message also contained a notification, title: ${message.notification.title}, body: ${message.notification.body}');
+  }
 }
