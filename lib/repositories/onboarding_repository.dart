@@ -4,6 +4,7 @@ import 'package:familiarise/config.dart';
 import 'package:familiarise/data/group_data.dart';
 import 'package:familiarise/data/signin_user_response.dart';
 import 'package:familiarise/data/user_settings.dart';
+import 'package:familiarise/main.dart';
 import 'package:familiarise/repositories/chaos_monkey.dart';
 import 'package:familiarise/session.dart';
 import 'package:http/http.dart' as http;
@@ -48,14 +49,18 @@ class OnboardingRepository {
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
     final String url = '${Config().backendUrl}/onboarding/signin';
 
+    String fcmToken;
+    if (pushNotificationsManager != null) {
+      fcmToken = await pushNotificationsManager.getFcmToken();
+    }
+
     final http.Response response = await http.put(
       url,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: json.encode({
-        'deviceIdentifier': deviceIdentifier,
-      }),
+      body: json
+          .encode({'deviceIdentifier': deviceIdentifier, 'fcmToken': fcmToken}),
     );
 
     assert(response.statusCode == 200);

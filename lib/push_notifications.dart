@@ -62,6 +62,11 @@ class PushNotificationsManager {
     }
   }
 
+  Future<String> getFcmToken() async {
+    assert(_initialized);
+    return FirebaseMessaging.instance.getToken();
+  }
+
   // For testing purposes print the Firebase Messaging token
   Future<void> _printToken() async {
     if (!Config().debug) {

@@ -18,6 +18,8 @@ import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+PushNotificationsManager pushNotificationsManager;
+
 Future<void> main() async {
   await Config().loaded;
 
@@ -26,7 +28,8 @@ Future<void> main() async {
 
   // TODO: remove platform check as soon as we have an apple developer account
   if (Platform.isAndroid) {
-    PushNotificationsManager().init();
+    pushNotificationsManager = PushNotificationsManager();
+    await pushNotificationsManager.init();
   }
 
   final UserSettingsBloc userSettingsBloc =
