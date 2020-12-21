@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:familiarise/config.dart';
 import 'package:familiarise/data/group_data.dart';
@@ -54,13 +55,25 @@ class OnboardingRepository {
       fcmToken = await pushNotificationsManager.getFcmToken();
     }
 
+    String deviceType;
+    if (Platform.isAndroid) {
+      deviceType = 'ANDROID';
+    } else if (Platform.isIOS) {
+      deviceType = 'IOS';
+    } else {
+      deviceType = 'UNKNOWN_DEVICE';
+    }
+
     final http.Response response = await http.put(
       url,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: json
-          .encode({'deviceIdentifier': deviceIdentifier, 'fcmToken': fcmToken}),
+      body: json.encode({
+        'deviceIdentifier': deviceIdentifier,
+        'deviceType': deviceType,
+        'fcmToken': fcmToken
+      }),
     );
 
     assert(response.statusCode == 200);
