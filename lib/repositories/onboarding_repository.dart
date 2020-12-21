@@ -8,6 +8,7 @@ import 'package:familiarise/data/user_settings.dart';
 import 'package:familiarise/main.dart';
 import 'package:familiarise/repositories/chaos_monkey.dart';
 import 'package:familiarise/session.dart';
+import 'package:familiarise/utils/response.dart';
 import 'package:http/http.dart' as http;
 
 class OnboardingRepository {
@@ -40,8 +41,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData findGroupResponse = GroupData.fromJson(
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+    final GroupData findGroupResponse =
+        GroupData.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
     await ChaosMonkey.delayAsync();
     return findGroupResponse;
@@ -79,7 +80,7 @@ class OnboardingRepository {
     assert(response.statusCode == 200);
 
     final SigninUserResponse signinUserResponse = SigninUserResponse.fromJson(
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+        decodeResponseBytesToJson(response.bodyBytes));
 
     await ChaosMonkey.delayAsync();
     return signinUserResponse;
@@ -105,8 +106,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData startNewGroupResponse = GroupData.fromJson(
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+    final GroupData startNewGroupResponse =
+        GroupData.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
     await ChaosMonkey.delayAsync();
     return startNewGroupResponse;
@@ -207,8 +208,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final UserSettings userSettings = UserSettings.fromJson(
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+    final UserSettings userSettings =
+        UserSettings.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
     await ChaosMonkey.delayAsync();
     return userSettings;
@@ -228,8 +229,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData groupSettings = GroupData.fromJson(
-        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
+    final GroupData groupSettings =
+        GroupData.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
     await ChaosMonkey.delayAsync();
     return groupSettings;
