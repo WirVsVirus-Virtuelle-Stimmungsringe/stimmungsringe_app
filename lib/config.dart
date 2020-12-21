@@ -20,6 +20,7 @@ class Config {
   Future<void> loaded;
 
   String _backendUrl;
+  bool _debug;
   bool _useFakeDeviceId;
   String _fakeDeviceId;
   bool _chaosMonkeyEnabled;
@@ -36,23 +37,31 @@ class Config {
       final Map<String, String> env = configData[1] as Map<String, String>;
 
       _backendUrl = _getString('backendUrl', config, env);
+      _debug = _getBool('debug', config, env);
       _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
       _fakeDeviceId = _getString('fakeDeviceId', config, env);
       _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
 
-      debugPrint(
-        """
+      if (_debug) {
+        debugPrint(
+          """
 loaded config:
         backendUrl: $_backendUrl
+        debug: $_debug
         useFakeDeviceId: $_useFakeDeviceId
         fakeDeviceId: $_fakeDeviceId
         chaosMonkeyEnabled: $_chaosMonkeyEnabled""",
-      );
+        );
+      }
     });
   }
 
   String get backendUrl {
     return _backendUrl;
+  }
+
+  bool get debug {
+    return _debug;
   }
 
   bool get useFakeDeviceId {

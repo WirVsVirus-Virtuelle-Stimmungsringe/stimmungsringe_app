@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:familiarise/config.dart';
 import 'package:familiarise/data/available_avatars.dart';
 import 'package:familiarise/session.dart';
+import 'package:familiarise/utils/response.dart';
 import 'package:http/http.dart' as http;
 
 class AvatarRepository {
@@ -24,6 +23,6 @@ class AvatarRepository {
         'load available avatars -> ${response.statusCode}');
 
     return AvailableAvatars.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        decodeResponseBytesToJson(response.bodyBytes));
   }
 }

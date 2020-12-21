@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:familiarise/config.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
@@ -10,18 +12,25 @@ import 'package:familiarise/pages/routing_error_page.dart';
 import 'package:familiarise/pages/set_my_sentiment_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
+import 'package:familiarise/push_notifications.dart';
 import 'package:familiarise/repositories/avatar_repository.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+
+PushNotificationsManager pushNotificationsManager;
 
 Future<void> main() async {
-  // TODO: throws exceptions on start
-//  SystemChrome.setPreferredOrientations(
-//      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
-  // https://bloclibrary.dev/#/flutterweathertutorial?id=repository
-
   await Config().loaded;
+
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  // TODO: remove platform check as soon as we have an apple developer account
+  if (Platform.isAndroid) {
+    pushNotificationsManager = PushNotificationsManager();
+    await pushNotificationsManager.init();
+  }
 
   final UserSettingsBloc userSettingsBloc =
       UserSettingsBloc(OnboardingRepository(), AvatarRepository());
