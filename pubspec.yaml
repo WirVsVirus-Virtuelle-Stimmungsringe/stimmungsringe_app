@@ -39,7 +39,7 @@ dependencies:
   cached_network_image: 2.2.0+1
   carousel_slider: ^2.2.0
   firebase_core: ^0.5.3
-  firebase_messaging: ^8.0.0-dev.10
+  firebase_messaging: ^8.0.0-dev.11
 
 dev_dependencies:
   flutter_test:
