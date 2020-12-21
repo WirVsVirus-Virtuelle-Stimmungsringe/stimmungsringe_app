@@ -27,7 +27,7 @@ class MessageRepository {
     assert(response.statusCode == 200);
 
     final MessageInbox inbox = MessageInbox.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return inbox;
@@ -45,7 +45,7 @@ class MessageRepository {
     assert(response.statusCode == 200);
 
     final AvailableMessages availableMessages = AvailableMessages.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return availableMessages;
@@ -63,7 +63,7 @@ class MessageRepository {
     assert(response.statusCode == 200);
 
     final AvailableMessages availableMessages = AvailableMessages.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return availableMessages;

@@ -39,8 +39,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData findGroupResponse =
-        GroupData.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    final GroupData findGroupResponse = GroupData.fromJson(
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return findGroupResponse;
@@ -66,7 +66,7 @@ class OnboardingRepository {
     assert(response.statusCode == 200);
 
     final SigninUserResponse signinUserResponse = SigninUserResponse.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return signinUserResponse;
@@ -92,8 +92,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData startNewGroupResponse =
-        GroupData.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    final GroupData startNewGroupResponse = GroupData.fromJson(
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return startNewGroupResponse;
@@ -195,7 +195,7 @@ class OnboardingRepository {
     assert(response.statusCode == 200);
 
     final UserSettings userSettings = UserSettings.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return userSettings;
@@ -215,8 +215,8 @@ class OnboardingRepository {
 
     assert(response.statusCode == 200);
 
-    final GroupData groupSettings =
-        GroupData.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    final GroupData groupSettings = GroupData.fromJson(
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return groupSettings;

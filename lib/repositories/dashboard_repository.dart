@@ -28,8 +28,8 @@ class DashboardRepository {
     assert(
         response.statusCode == 200, 'load dashboard -> ${response.statusCode}');
 
-    final Dashboard dashboard =
-        Dashboard.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    final Dashboard dashboard = Dashboard.fromJson(
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return dashboard;
@@ -63,7 +63,7 @@ class DashboardRepository {
     //await new Future.delayed(const Duration(seconds: 1));
 
     final OtherDetail detailPage = OtherDetail.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
 
     await ChaosMonkey.delayAsync();
     return detailPage;

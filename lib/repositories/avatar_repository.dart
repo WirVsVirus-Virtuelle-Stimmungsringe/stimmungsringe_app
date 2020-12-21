@@ -24,6 +24,6 @@ class AvatarRepository {
         'load available avatars -> ${response.statusCode}');
 
     return AvailableAvatars.fromJson(
-        json.decode(response.body) as Map<String, dynamic>);
+        json.decode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>);
   }
 }
