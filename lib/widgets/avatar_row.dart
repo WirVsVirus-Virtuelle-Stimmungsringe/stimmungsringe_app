@@ -31,7 +31,7 @@ class AvatarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: _avatarSize + 20,
       child: Stack(
         children: <Widget>[
