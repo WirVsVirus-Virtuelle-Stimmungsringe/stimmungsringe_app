@@ -1,11 +1,9 @@
-import 'package:flutter/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/painting.dart';
 
-NetworkImage makeProtectedNetworkImage(String userId, String url,
+ImageProvider makeProtectedNetworkImage(String userId, String url,
     {Map<String, String> headers}) {
-  final allHeaders = {
-    ...?headers,
-    ...{'X-User-ID': userId}
-  };
+  final allHeaders = {...?headers, 'X-User-ID': userId};
 
-  return NetworkImage(url, headers: allHeaders);
+  return CachedNetworkImageProvider(url, headers: allHeaders);
 }
