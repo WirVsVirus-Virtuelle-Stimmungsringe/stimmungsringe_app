@@ -1,5 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
-import 'package:familiarise/utils/format_last_update_timestamp.dart';
+import 'package:familiarise/utils/calc_time_difference_in_words.dart';
 import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
@@ -77,7 +77,7 @@ class AvatarRowCondensed extends StatelessWidget {
                 ),
                 Center(
                     child: Text(
-                  formatLastUpdateTimestamp(lastStatusUpdate, now),
+                  calcTimeDifferenceInWords(lastStatusUpdate, now),
                   style: const TextStyle(
                     color: CupertinoColors.white,
                     fontSize: 12,
