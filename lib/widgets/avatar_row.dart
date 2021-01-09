@@ -63,10 +63,13 @@ class AvatarRow extends StatelessWidget {
           Positioned(
             bottom: 10,
             left: _avatarSize + 20 + 10,
-            child: Text(
-              name,
-              style: const TextStyle(
-                fontSize: 20,
+            child: wrapGestureDetector(
+              onTap: onAvatarImageTap,
+              child: Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
@@ -141,9 +144,10 @@ class AvatarRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 sentimentIcon,
-                const Icon(
-                  CupertinoIcons.pen,
+                const FaIcon(
+                  FontAwesomeIcons.pen,
                   color: CupertinoColors.white,
+                  size: 20,
                 ),
               ],
             ),
