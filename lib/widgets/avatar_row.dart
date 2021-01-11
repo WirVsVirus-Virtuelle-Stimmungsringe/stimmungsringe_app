@@ -147,7 +147,7 @@ class AvatarRow extends StatelessWidget {
                 const FaIcon(
                   FontAwesomeIcons.pen,
                   color: CupertinoColors.white,
-                  size: 20,
+                  size: _avatarSize / 7,
                 ),
               ],
             ),

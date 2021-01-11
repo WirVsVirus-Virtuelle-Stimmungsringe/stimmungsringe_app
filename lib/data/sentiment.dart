@@ -1,5 +1,5 @@
+import 'package:familiarise/icons/weather_icons.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum Sentiment { sunny, sunnyWithClouds, cloudy, windy, cloudyNight, thundery }
 
@@ -12,17 +12,17 @@ extension SentimentExtension on Sentiment {
   IconData get icon {
     switch (this) {
       case Sentiment.sunny:
-        return FontAwesomeIcons.solidSun;
+        return WeatherIcons.sun;
       case Sentiment.sunnyWithClouds:
-        return FontAwesomeIcons.cloudSun;
+        return WeatherIcons.cloudSun;
       case Sentiment.cloudy:
-        return FontAwesomeIcons.cloud;
+        return WeatherIcons.clouds;
       case Sentiment.windy:
-        return FontAwesomeIcons.wind;
+        return WeatherIcons.fogCloud;
       case Sentiment.cloudyNight:
-        return FontAwesomeIcons.cloudMoon;
+        return WeatherIcons.cloudMoon;
       default:
-        return FontAwesomeIcons.bolt;
+        return WeatherIcons.cloudFlashAlt;
     }
   }
 
