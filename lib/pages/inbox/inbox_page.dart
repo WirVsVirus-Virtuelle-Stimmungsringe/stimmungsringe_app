@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
+import 'package:familiarise/utils/calc_time_difference_in_words.dart';
 import 'package:familiarise/widgets/avatar.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
@@ -94,10 +95,11 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   Widget _carousel(BuiltList<Message> messages) {
-    return CarouselSlider(
+    return CarouselSlider.builder(
       carouselController: _carouselController,
       options: CarouselOptions(
         height: 500,
+        viewportFraction: 1,
         enableInfiniteScroll: false,
         onPageChanged: (index, reason) {
           setState(() {
@@ -105,11 +107,16 @@ class _InboxPageState extends State<InboxPage> {
           });
         },
       ),
-      items: messages.map(_carouselEntry).toList(growable: false),
+      itemCount: messages.length,
+      itemBuilder: (context, index) {
+        return _carouselEntry(context, messages.elementAt(index));
+      },
     );
   }
 
-  Widget _carouselEntry(Message message) {
+  Widget _carouselEntry(BuildContext context, Message message) {
+    final double textPadding = MediaQuery.of(context).size.width / 6;
+
     return Column(
       key: ObjectKey(message.createdAt),
       children: [
@@ -130,6 +137,20 @@ class _InboxPageState extends State<InboxPage> {
               message.senderUser.avatarUrl,
             ),
             size: 200,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            left: textPadding,
+            right: textPadding,
+            bottom: 12,
+          ),
+          child: Text(
+            'von ${message.senderUser.displayName}, ${calcTimeDifferenceInWords(message.createdAt, DateTime.now())}',
+            style: const TextStyle(
+              color: CupertinoColors.white,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
         const FaIcon(

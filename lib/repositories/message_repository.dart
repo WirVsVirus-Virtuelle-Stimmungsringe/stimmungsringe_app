@@ -57,7 +57,10 @@ class MessageRepository {
 
     final http.Response response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json', 'X-User-ID': currentUserId},
+      headers: {
+        'X-User-ID': currentUserId,
+        'Content-Type': 'application/json',
+      },
       body: json.encode({'text': text}),
     );
 
