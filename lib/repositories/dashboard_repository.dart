@@ -6,6 +6,7 @@ import 'package:familiarise/data/other_detail.dart';
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/repositories/chaos_monkey.dart';
 import 'package:familiarise/session.dart';
+import 'package:familiarise/utils/api_headers.dart';
 import 'package:familiarise/utils/response.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class DashboardRepository {
 
     final http.Response response = await http.get(
       url,
-      headers: {'X-User-ID': currentUserId},
+      headers: authenticated(currentUserId),
     );
 
     assert(
@@ -41,8 +42,8 @@ class DashboardRepository {
 
     final http.Response response = await http.put(url,
         headers: {
-          'X-User-ID': currentUserId,
-          'Content-Type': 'application/json'
+          ...authenticated(currentUserId),
+          'Content-Type': 'application/json',
         },
         body: json.encode({'sentiment': sentiment.sentimentCode}));
     // TODO response handling
@@ -56,7 +57,7 @@ class DashboardRepository {
 
     final http.Response response = await http.get(
       url,
-      headers: {'X-User-ID': currentUserId},
+      headers: authenticated(currentUserId),
     );
 
     assert(response.statusCode == 200);

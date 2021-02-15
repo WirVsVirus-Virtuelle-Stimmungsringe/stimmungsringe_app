@@ -8,6 +8,7 @@ import 'package:familiarise/data/user_settings.dart';
 import 'package:familiarise/main.dart';
 import 'package:familiarise/repositories/chaos_monkey.dart';
 import 'package:familiarise/session.dart';
+import 'package:familiarise/utils/api_headers.dart';
 import 'package:familiarise/utils/response.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,7 +28,7 @@ class OnboardingRepository {
     final http.Response response = await http.post(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -68,6 +69,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
+        ...public(),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -92,7 +94,7 @@ class OnboardingRepository {
     final http.Response response = await http.post(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -119,7 +121,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -139,7 +141,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -159,7 +161,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -181,7 +183,7 @@ class OnboardingRepository {
     final http.Response response = await http.put(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -201,7 +203,7 @@ class OnboardingRepository {
     final http.Response response = await http.get(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
     );
@@ -222,7 +224,7 @@ class OnboardingRepository {
     final http.Response response = await http.get(
       url,
       headers: {
-        'X-User-ID': currentUserId,
+        ...authenticated(currentUserId),
         'Content-Type': 'application/json',
       },
     );

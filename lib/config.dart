@@ -24,6 +24,7 @@ class Config {
   bool _useFakeDeviceId;
   String _fakeDeviceId;
   bool _chaosMonkeyEnabled;
+  String _proxyKey;
 
   static final Config _singleton = Config._internal();
 
@@ -41,6 +42,7 @@ class Config {
       _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
       _fakeDeviceId = _getString('fakeDeviceId', config, env);
       _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
+      _proxyKey = _getString('proxyKey', config, env);
 
       if (_debug) {
         debugPrint(
@@ -50,7 +52,9 @@ loaded config:
         debug: $_debug
         useFakeDeviceId: $_useFakeDeviceId
         fakeDeviceId: $_fakeDeviceId
-        chaosMonkeyEnabled: $_chaosMonkeyEnabled""",
+        chaosMonkeyEnabled: $_chaosMonkeyEnabled
+        proxyKey: $_proxyKey
+        """,
         );
       }
     });
@@ -74,6 +78,10 @@ loaded config:
 
   bool get chaosMonkeyEnabled {
     return _chaosMonkeyEnabled;
+  }
+
+  String get proxyKey {
+    return _proxyKey;
   }
 
   String _getString(String configKey, Map config, Map<String, String> env) {
