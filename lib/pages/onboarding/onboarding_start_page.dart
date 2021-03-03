@@ -1,3 +1,4 @@
+import 'package:familiarise/pages/about/impressum_page.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/onboarding/bloc/onboarding_bloc.dart';
 import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
@@ -110,6 +111,15 @@ class OnboardingStartPage extends StatelessWidget {
                                   BlocProvider.of<OnboardingBloc>(context),
                             ),
                             text: const Text('Fam-Group Code eingeben'),
+                          ),
+                          ActionButton(
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              ImpressumPage.routeUri,
+                              arguments:
+                                  BlocProvider.of<OnboardingBloc>(context),
+                            ),
+                            text: const Text('Impressum'),
                           ),
                         ],
                       ),
