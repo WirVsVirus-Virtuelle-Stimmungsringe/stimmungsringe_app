@@ -120,8 +120,8 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             ],
           ),
         ),
-        _buildLeaveGroupArea(context),
         ImpressumLink.buildImpressumLink(context),
+        _buildLeaveGroupArea(context),
       ],
     );
   }
