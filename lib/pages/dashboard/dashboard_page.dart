@@ -191,8 +191,8 @@ class _DashboardPageState extends State<DashboardPage>
       children: <Widget>[
         const Paragraph(
           child: Text(
-            'Du hast leider noch keine Mitglieder in deiner Gruppe. Gebe doch '
-            'einfach den Code an deine Angehörigen weiter.',
+            'Du hast eine leere Fam-Group erstellt. '
+            'Lade deine wichtigsten Mitmenschen ein, indem du den Code teilst.',
             textAlign: TextAlign.center,
           ),
         ),
