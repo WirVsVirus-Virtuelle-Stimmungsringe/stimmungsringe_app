@@ -6,6 +6,7 @@ import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
 import 'package:familiarise/widgets/full_size_scroll_area.dart';
+import 'package:familiarise/widgets/impressum_link.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
@@ -120,6 +121,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           ),
         ),
         _buildLeaveGroupArea(context),
+        ImpressumLink.buildImpressumLink(context),
       ],
     );
   }
