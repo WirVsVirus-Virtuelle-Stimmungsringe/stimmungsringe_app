@@ -1,4 +1,3 @@
-import 'package:familiarise/pages/about/impressum_page.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/onboarding/bloc/onboarding_bloc.dart';
 import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
@@ -11,9 +10,11 @@ import 'package:familiarise/widgets/action_button.dart';
 import 'package:familiarise/widgets/button_group.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
 import 'package:familiarise/widgets/headline.dart';
+import 'package:familiarise/widgets/impressum_link.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingStartPage extends StatelessWidget {
@@ -53,79 +54,75 @@ class OnboardingStartPage extends StatelessWidget {
                 return LoadingSpinner();
               }
 
-              return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    const FamiliariseLogo(),
-                    const Paragraph(
-                      child: Headline('Passt gut auf euch auf!'),
-                    ),
-                    const Paragraph(
-                      child: Text(
-                        'Wir befinden und gerade aufgrund von Corona in einer '
-                        'außergewöhnlichen Situation. Umso wichtiger ist es, '
-                        'dass wir im täglichen Zusammenleben füreinander da sind.',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Paragraph(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          // Note: Styles for TextSpans must be explicitly defined.
-                          // Child text spans will inherit styles from parent
-                          style: DefaultTextStyle.of(context).style,
-                          children: const <TextSpan>[
-                            TextSpan(
-                              text: 'FAMILIARISE ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text:
-                                  'hilft dir deine Stimmung mit Wettersymbolen '
-                                  'einfach und direkt mit deinem Umfeld zu teilen '
-                                  'und aktiv für gutes Wetter im gemeinsamen '
-                                  'Zusammenleben zu sorgen.',
-                            )
-                          ],
+              return Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        const FamiliariseLogo(),
+                        const Paragraph(
+                          child: Headline('Passt gut auf euch auf!'),
                         ),
-                      ),
+                        const Paragraph(
+                          child: Text(
+                            'Wir befinden und gerade aufgrund von Corona in einer '
+                            'außergewöhnlichen Situation. Umso wichtiger ist es, '
+                            'dass wir im täglichen Zusammenleben füreinander da sind.',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Paragraph(
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              // Note: Styles for TextSpans must be explicitly defined.
+                              // Child text spans will inherit styles from parent
+                              style: DefaultTextStyle.of(context).style,
+                              children: const <TextSpan>[
+                                TextSpan(
+                                  text: 'FAMILIARISE ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                TextSpan(
+                                  text:
+                                      'hilft dir deine Stimmung mit Wettersymbolen '
+                                      'einfach und direkt mit deinem Umfeld zu teilen '
+                                      'und aktiv für gutes Wetter im gemeinsamen '
+                                      'Zusammenleben zu sorgen.',
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Paragraph(
+                          child: ButtonGroup(
+                            children: <Widget>[
+                              ActionButton(
+                                text: const Text('Meine Fam-Group starten'),
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  OnboardingCreateGroupPage.routeUri,
+                                  arguments:
+                                      BlocProvider.of<OnboardingBloc>(context),
+                                ),
+                              ),
+                              ActionButton(
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  OnboardingJoinGroupPage.routeUri,
+                                  arguments:
+                                      BlocProvider.of<OnboardingBloc>(context),
+                                ),
+                                text: const Text('Fam-Group Code eingeben'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Paragraph(
-                      child: ButtonGroup(
-                        children: <Widget>[
-                          ActionButton(
-                            text: const Text('Meine Fam-Group starten'),
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              OnboardingCreateGroupPage.routeUri,
-                              arguments:
-                                  BlocProvider.of<OnboardingBloc>(context),
-                            ),
-                          ),
-                          ActionButton(
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              OnboardingJoinGroupPage.routeUri,
-                              arguments:
-                                  BlocProvider.of<OnboardingBloc>(context),
-                            ),
-                            text: const Text('Fam-Group Code eingeben'),
-                          ),
-                          ActionButton(
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              ImpressumPage.routeUri,
-                              arguments:
-                                  BlocProvider.of<OnboardingBloc>(context),
-                            ),
-                            text: const Text('Impressum'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  ImpressumLink.buildImpressumLink(context),
+                ],
               );
             },
             listener: (context, state) {
