@@ -12,9 +12,12 @@ class RefreshDashboardIfNecessary extends DashboardEvent {}
 
 class SetNewSentiment extends DashboardEvent {
   final Sentiment sentiment;
+  final String sentimentText;
 
-  SetNewSentiment(this.sentiment) : assert(sentiment != null);
+  SetNewSentiment(this.sentiment, this.sentimentText)
+      : assert(sentiment != null),
+        assert(sentimentText != null);
 
   @override
-  List<Object> get props => [sentiment];
+  List<Object> get props => [sentiment, sentimentText];
 }

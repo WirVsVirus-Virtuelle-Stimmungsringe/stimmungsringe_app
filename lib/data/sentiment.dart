@@ -60,6 +60,23 @@ extension SentimentExtension on Sentiment {
     }
   }
 
+  String get defaultSentimentText {
+    switch (this) {
+      case Sentiment.sunny:
+        return "Bin gut drauf";
+      case Sentiment.sunnyWithClouds:
+        return "Bin heiter";
+      case Sentiment.cloudy:
+        return "Geht so…";
+      case Sentiment.windy:
+        return "Ich halte durch";
+      case Sentiment.cloudyNight:
+        return "Bin müde";
+      default:
+        return "Frag' lieber nicht…";
+    }
+  }
+
   String get sentimentCode {
     return toString().split('.').last;
   }

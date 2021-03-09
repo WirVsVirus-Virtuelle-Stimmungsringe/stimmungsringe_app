@@ -5,6 +5,7 @@ import 'package:familiarise/data/user_minimal.dart';
 class MyTile extends Equatable {
   final UserMinimal user;
   final Sentiment sentiment;
+  final String sentimentText;
   final DateTime lastStatusUpdate;
 
   @override
@@ -14,17 +15,24 @@ class MyTile extends Equatable {
     return MyTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       SentimentExtension.fromJson(jsonMap['sentiment'] as String),
+      jsonMap['sentimentText'] as String,
       DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }
 
-  const MyTile(this.user, this.sentiment, this.lastStatusUpdate);
+  const MyTile(
+      this.user, this.sentiment, this.sentimentText, this.lastStatusUpdate);
 
-  MyTile copyWith(
-      {UserMinimal user, Sentiment sentiment, DateTime lastStatusUpdate}) {
+  MyTile copyWith({
+    UserMinimal user,
+    Sentiment sentiment,
+    String sentimentText,
+    DateTime lastStatusUpdate,
+  }) {
     return MyTile(
       user ?? this.user,
       sentiment ?? this.sentiment,
+      sentimentText ?? this.sentimentText,
       lastStatusUpdate ?? this.lastStatusUpdate,
     );
   }
