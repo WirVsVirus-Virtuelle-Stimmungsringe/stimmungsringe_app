@@ -56,72 +56,75 @@ class OnboardingStartPage extends StatelessWidget {
 
               return Column(
                 children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        const FamiliariseLogo(),
-                        const Paragraph(
-                          child: Headline('Passt gut auf euch auf!'),
-                        ),
-                        const Paragraph(
-                          child: Text(
-                            'Wir befinden und gerade aufgrund von Corona in einer '
-                            'außergewöhnlichen Situation. Umso wichtiger ist es, '
-                            'dass wir im täglichen Zusammenleben füreinander da sind.',
-                            textAlign: TextAlign.center,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const FamiliariseLogo(),
+                          const Paragraph(
+                            child: Headline('Passt gut auf euch auf!'),
                           ),
-                        ),
-                        Paragraph(
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: DefaultTextStyle.of(context).style,
-                              children: const <TextSpan>[
-                                TextSpan(
-                                  text: 'FAMILIARISE ',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                          const Paragraph(
+                            child: Text(
+                              'Wir befinden und gerade aufgrund von Corona in einer '
+                              'außergewöhnlichen Situation. Umso wichtiger ist es, '
+                              'dass wir im täglichen Zusammenleben füreinander da sind.',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Paragraph(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                // Note: Styles for TextSpans must be explicitly defined.
+                                // Child text spans will inherit styles from parent
+                                style: DefaultTextStyle.of(context).style,
+                                children: const <TextSpan>[
+                                  TextSpan(
+                                    text: 'FAMILIARISE ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        'hilft dir deine Stimmung mit Wettersymbolen '
+                                        'einfach und direkt mit deinem Umfeld zu teilen '
+                                        'und aktiv für gutes Wetter im gemeinsamen '
+                                        'Zusammenleben zu sorgen.',
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Paragraph(
+                            child: ButtonGroup(
+                              children: <Widget>[
+                                ActionButton(
+                                  text: const Text('Meine Fam-Group starten'),
+                                  onPressed: () => Navigator.pushNamed(
+                                    context,
+                                    OnboardingCreateGroupPage.routeUri,
+                                    arguments: BlocProvider.of<OnboardingBloc>(
+                                        context),
+                                  ),
                                 ),
-                                TextSpan(
-                                  text:
-                                      'hilft dir deine Stimmung mit Wettersymbolen '
-                                      'einfach und direkt mit deinem Umfeld zu teilen '
-                                      'und aktiv für gutes Wetter im gemeinsamen '
-                                      'Zusammenleben zu sorgen.',
-                                )
+                                ActionButton(
+                                  onPressed: () => Navigator.pushNamed(
+                                    context,
+                                    OnboardingJoinGroupPage.routeUri,
+                                    arguments: BlocProvider.of<OnboardingBloc>(
+                                        context),
+                                  ),
+                                  text: const Text('Fam-Group Code eingeben'),
+                                ),
                               ],
                             ),
                           ),
-                        ),
-                        Paragraph(
-                          child: ButtonGroup(
-                            children: <Widget>[
-                              ActionButton(
-                                text: const Text('Meine Fam-Group starten'),
-                                onPressed: () => Navigator.pushNamed(
-                                  context,
-                                  OnboardingCreateGroupPage.routeUri,
-                                  arguments:
-                                      BlocProvider.of<OnboardingBloc>(context),
-                                ),
-                              ),
-                              ActionButton(
-                                onPressed: () => Navigator.pushNamed(
-                                  context,
-                                  OnboardingJoinGroupPage.routeUri,
-                                  arguments:
-                                      BlocProvider.of<OnboardingBloc>(context),
-                                ),
-                                text: const Text('Fam-Group Code eingeben'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                  ImpressumLink.buildImpressumLink(context),
+                  ImpressumLink(),
                 ],
               );
             },
