@@ -4,6 +4,7 @@ import 'package:familiarise/pages/group_settings/bloc/group_settings_state.dart'
 import 'package:familiarise/pages/loading_spinner_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/widgets/about_link.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
 import 'package:familiarise/widgets/full_size_scroll_area.dart';
 import 'package:familiarise/widgets/paragraph.dart';
@@ -81,44 +82,46 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
 
   Widget buildContent(ShowCurrentGroupSettings state, BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            children: [
-              const FamiliariseLogo(
-                height: 200,
-              ),
-              const Paragraph(
-                child: Text(
-                  'Dein FAMILIARISE Fam-Group Code lautet:',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              children: [
+                const FamiliariseLogo(
+                  height: 200,
                 ),
-              ),
-              ShareGroupCode(
-                groupCode: state.groupCode,
-              ),
-              const Paragraph(
-                child: Text(
-                  'Name der Fam-Group:',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Paragraph(
-                  child: CupertinoTextField(
-                    placeholder: "Wie soll die Fam-Group heißen?",
-                    controller: _groupNameController,
+                const Paragraph(
+                  child: Text(
+                    'Dein FAMILIARISE Fam-Group Code lautet:',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-            ],
+                ShareGroupCode(
+                  groupCode: state.groupCode,
+                ),
+                const Paragraph(
+                  child: Text(
+                    'Name der Fam-Group:',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Paragraph(
+                    child: CupertinoTextField(
+                      placeholder: "Wie soll die Fam-Group heißen?",
+                      controller: _groupNameController,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
+        Paragraph(child: AboutLink()),
         _buildLeaveGroupArea(context),
       ],
     );
