@@ -1,12 +1,12 @@
-import 'package:familiarise/pages/about/impressum_page.dart';
+import 'package:familiarise/pages/about/about_page.dart';
 import 'package:flutter/cupertino.dart';
 
-class ImpressumLink extends StatelessWidget {
+class AboutLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ImpressumPage.routeUri);
+        Navigator.pushNamed(context, AboutPage.routeUri);
       },
       child: const Text(
         'Impressum',

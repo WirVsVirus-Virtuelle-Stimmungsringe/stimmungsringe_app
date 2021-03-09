@@ -6,11 +6,11 @@ import 'package:familiarise/pages/onboarding/onboarding_create_group_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_join_group_page.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/widgets/about_link.dart';
 import 'package:familiarise/widgets/action_button.dart';
 import 'package:familiarise/widgets/button_group.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
 import 'package:familiarise/widgets/headline.dart';
-import 'package:familiarise/widgets/impressum_link.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
@@ -124,7 +124,7 @@ class OnboardingStartPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ImpressumLink(),
+                  AboutLink(),
                 ],
               );
             },

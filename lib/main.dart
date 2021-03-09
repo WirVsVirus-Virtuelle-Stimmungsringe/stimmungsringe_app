@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:familiarise/config.dart';
-import 'package:familiarise/pages/about/impressum_page.dart';
+import 'package:familiarise/pages/about/about_page.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
 import 'package:familiarise/pages/inbox/inbox_page.dart';
@@ -104,7 +104,7 @@ class _SentimentAppState extends State<SentimentApp>
         GroupSettingsPage.makeRoute(),
         UserSettingsPage.makeRoute(userSettingsBloc),
         InboxPage.makeRoute(),
-        ImpressumPage.makeRoute(),
+        AboutPage.makeRoute(),
       ]),
       onUnknownRoute: (_) =>
           CupertinoPageRoute<Widget>(builder: (context) => RoutingErrorPage()),

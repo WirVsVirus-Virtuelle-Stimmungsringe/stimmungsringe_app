@@ -1,15 +1,15 @@
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
 
-class ImpressumPage extends StatelessWidget {
-  static const String routeUri = '/impressum';
+class AboutPage extends StatelessWidget {
+  static const String routeUri = '/about';
 
   static MapEntry<String, WidgetBuilder> makeRoute() => MapEntry(
         routeUri,
-        (_) => const ImpressumPage(),
+        (_) => const AboutPage(),
       );
 
-  const ImpressumPage({Key key}) : super(key: key);
+  const AboutPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

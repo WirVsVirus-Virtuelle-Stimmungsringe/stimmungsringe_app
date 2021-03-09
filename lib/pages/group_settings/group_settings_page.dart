@@ -4,9 +4,9 @@ import 'package:familiarise/pages/group_settings/bloc/group_settings_state.dart'
 import 'package:familiarise/pages/loading_spinner_page.dart';
 import 'package:familiarise/pages/onboarding/onboarding_start_page.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
+import 'package:familiarise/widgets/about_link.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
 import 'package:familiarise/widgets/full_size_scroll_area.dart';
-import 'package:familiarise/widgets/impressum_link.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,7 +121,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             ),
           ),
         ),
-        Paragraph(child: ImpressumLink()),
+        Paragraph(child: AboutLink()),
         _buildLeaveGroupArea(context),
       ],
     );
