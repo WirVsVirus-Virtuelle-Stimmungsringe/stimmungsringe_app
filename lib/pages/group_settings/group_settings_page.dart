@@ -91,15 +91,19 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 const FamiliariseLogo(
                   height: 200,
                 ),
-                const Paragraph(
-                  child: Text(
-                    'Einladungs-Code der Fam-Group:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                Paragraph(
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Einladungs-Code der Fam-Group:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      ShareGroupCode(
+                        groupCode: state.groupCode,
+                      ),
+                    ],
                   ),
-                ),
-                ShareGroupCode(
-                  groupCode: state.groupCode,
                 ),
                 const Paragraph(
                   child: Text(

@@ -194,22 +194,26 @@ class _DashboardPageState extends State<DashboardPage>
           child: Column(
             children: [
               const Paragraph(
-                child: Headline('Fam-Group erfolgreich erstellt!'),
+                child: Headline('Du bist allein in deiner Fam-Group! 😢'),
               ),
               const Paragraph(
                 child: Text(
                     'Teile den Code mit den Leuten, die du in die Fam-Group einladen willst.',
                     textAlign: TextAlign.center),
               ),
-              const Paragraph(
-                child: Text(
-                  'Einladungs-Code der Fam-Group:',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              Paragraph(
+                child: Column(
+                  children: [
+                    const Text(
+                      'Einladungs-Code der Fam-Group:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    ShareGroupCode(
+                      groupCode: groupData.groupCode,
+                    ),
+                  ],
                 ),
-              ),
-              ShareGroupCode(
-                groupCode: groupData.groupCode,
               ),
             ],
           ),
