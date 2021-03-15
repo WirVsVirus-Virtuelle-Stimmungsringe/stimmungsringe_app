@@ -93,7 +93,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 ),
                 const Paragraph(
                   child: Text(
-                    'Dein FAMILIARISE Fam-Group-Code lautet:',
+                    'Einladungs-Code der Fam-Group:',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -138,7 +138,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           const Paragraph(
             isFirstWidget: true,
             child: Text(
-              'Diese Gruppe verlassen:',
+              'Die aktuelle Fam-Group verlassen:',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: CupertinoColors.black, fontWeight: FontWeight.bold),
@@ -159,7 +159,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           ),
           const Paragraph(
             child: Text(
-              'Notiere dir den Fam-Group-Code. Du kannst jederzeit wieder der Fam-Group mit diesem Code beitreten.',
+              'Notiere dir den Code. Mit ihm findest du deine Fam-Group wieder.',
               textAlign: TextAlign.center,
               style: TextStyle(color: CupertinoColors.black),
             ),

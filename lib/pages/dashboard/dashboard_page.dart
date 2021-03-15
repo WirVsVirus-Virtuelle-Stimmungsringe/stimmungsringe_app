@@ -198,7 +198,7 @@ class _DashboardPageState extends State<DashboardPage>
         ),
         const Paragraph(
           child: Text(
-            'Dein FAMILIARISE Fam-Group-Code lautet:',
+            'Einladungs-Code der Fam-Group:',
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
