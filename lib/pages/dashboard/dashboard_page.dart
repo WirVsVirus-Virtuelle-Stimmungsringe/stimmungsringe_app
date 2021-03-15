@@ -222,8 +222,7 @@ class _DashboardPageState extends State<DashboardPage>
     return Column(
       children: <Widget>[
         Paragraph(
-          child: Headline(
-              'Wetter in meiner Fam-Group "${dashboard.groupData.groupName}"'),
+          child: Headline('Fam-Group "${dashboard.groupData.groupName}"'),
         ),
         Expanded(
           child: Paragraph(
