@@ -117,7 +117,7 @@ class OnboardingStartPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AboutLink(),
+                  Paragraph(child: AboutLink()),
                 ],
               );
             },
