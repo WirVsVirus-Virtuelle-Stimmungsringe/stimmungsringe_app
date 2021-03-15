@@ -61,36 +61,52 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: BlocConsumer<OnboardingBloc, OnboardingState>(
             builder: (context, state) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    const FamiliariseLogo(),
-                    const Paragraph(
-                      child: Headline('Erstelle eine neue Fam-Group!'),
-                    ),
-                    const Paragraph(
-                      child: Text('Wähle einen Namen für deine Fam-Group:'),
-                    ),
-                    Paragraph(
-                      child: CupertinoTextField(
-                        placeholder: "Name der Fam-Group",
-                        controller: _newGroupNameController,
-                        onSubmitted: _startNewGroup,
-                        autofocus: true,
-                      ),
-                    ),
-                    Paragraph(
-                      child: ButtonGroup(
-                        children: [
-                          ActionButton(
-                            text: const Text('Weiter'),
-                            onPressed: submitButtonHandler,
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const FamiliariseLogo(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 24),
+                            child: Column(
+                              children: [
+                                const Paragraph(
+                                  child:
+                                      Headline('Erstelle eine neue Fam-Group!'),
+                                ),
+                                const Paragraph(
+                                  child: Text(
+                                      'Wähle einen Namen für deine Fam-Group:'),
+                                ),
+                                Paragraph(
+                                  child: CupertinoTextField(
+                                    placeholder: "Name der Fam-Group",
+                                    controller: _newGroupNameController,
+                                    onSubmitted: _startNewGroup,
+                                    autofocus: true,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ButtonGroup(
+                      children: [
+                        ActionButton(
+                          text: const Text('Weiter'),
+                          onPressed: submitButtonHandler,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               );
             },
             listener: (context, state) {
