@@ -5,6 +5,7 @@ import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
 import 'package:familiarise/widgets/action_button.dart';
 import 'package:familiarise/widgets/button_group.dart';
 import 'package:familiarise/widgets/familiarise_logo.dart';
+import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/wait_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,22 +66,17 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
                   children: <Widget>[
                     const FamiliariseLogo(),
                     const Paragraph(
-                      child: Text(
-                        'Trete deiner Fam-Group bei, um direkt und einfach ein '
-                        'Gespür für die Stimmungslage der Mitglieder zu bekommen.\n'
-                        'Es sind keine langen Gespräche oder Interpretationen nötig.',
-                        textAlign: TextAlign.center,
-                      ),
+                      child: Headline('Tritt einer bestehenden Fam-Group bei!'),
                     ),
                     const Paragraph(
                       child: Text(
-                        'Du kannst einfach da sein und Acht geben!',
+                        'Gib dazu den dafür vorgesehen Fam-Group-Code ein:',
                         textAlign: TextAlign.center,
                       ),
                     ),
                     Paragraph(
                       child: CupertinoTextField(
-                        placeholder: "Kennst du den Fam-Group-Code?",
+                        placeholder: "Fam-Group-Code",
                         controller: _groupCodeController,
                         onSubmitted: _joinGroupByCode,
                         autofocus: true,

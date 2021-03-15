@@ -66,11 +66,14 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                   children: <Widget>[
                     const FamiliariseLogo(),
                     const Paragraph(
-                      child: Headline('Benenne deine Fam-Group:'),
+                      child: Headline('Erstelle eine neue Fam-Group!'),
+                    ),
+                    const Paragraph(
+                      child: Text('Wähle einen Namen für deine Fam-Group:'),
                     ),
                     Paragraph(
                       child: CupertinoTextField(
-                        placeholder: "Wie soll die neue Gruppe heißen?",
+                        placeholder: "Name der Fam-Group",
                         controller: _newGroupNameController,
                         onSubmitted: _startNewGroup,
                         autofocus: true,
@@ -80,7 +83,7 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                       child: ButtonGroup(
                         children: [
                           ActionButton(
-                            text: const Text('Fam-Group starten'),
+                            text: const Text('Weiter'),
                             onPressed: submitButtonHandler,
                           ),
                         ],
