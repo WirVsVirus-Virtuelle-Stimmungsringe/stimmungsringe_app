@@ -30,9 +30,7 @@ class Avatar extends StatelessWidget {
           image: image,
           fit: BoxFit.contain,
         ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(size / 2),
-        ),
+        borderRadius: BorderRadius.circular(size / 2),
         border: Border.all(
           color: borderColor ?? CupertinoColors.white,
           width: 4.0,

@@ -152,7 +152,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         now: DateTime.now(),
       );
 
-      await dashboardRepository.setNewSentiment(setNewSentiment.sentiment);
+      await dashboardRepository.setNewSentiment(
+        setNewSentiment.sentiment,
+        setNewSentiment.sentimentText,
+      );
       final Dashboard loadDashboardPageData =
           await dashboardRepository.loadDashboardPageData();
       print(

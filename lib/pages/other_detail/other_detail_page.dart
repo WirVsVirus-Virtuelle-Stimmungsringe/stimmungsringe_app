@@ -7,7 +7,7 @@ import 'package:familiarise/pages/other_detail/bloc/other_detail_page_event.dart
 import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/message_repository.dart';
-import 'package:familiarise/widgets/avatar_row.dart';
+import 'package:familiarise/widgets/avatar_row_other.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/push_message_icon.dart';
@@ -74,7 +74,7 @@ class OtherDetailPage extends StatelessWidget {
         BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
             builder: (context, state) {
           if (state is OtherDetailPageLoaded) {
-            return AvatarRow(
+            return AvatarRowOther(
               name: state.otherDetail.user.hasName
                   ? state.otherDetail.user.displayName
                   : '',
@@ -83,6 +83,7 @@ class OtherDetailPage extends StatelessWidget {
                 state.otherDetail.user.avatarUrl,
               ),
               avatarSentiment: state.otherDetail.sentiment,
+              sentimentText: state.otherDetail.sentimentText,
             );
           } else {
             return LoadingSpinner();

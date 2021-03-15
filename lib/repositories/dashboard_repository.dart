@@ -37,7 +37,8 @@ class DashboardRepository {
     return dashboard;
   }
 
-  Future<void> setNewSentiment(Sentiment sentiment) async {
+  Future<void> setNewSentiment(
+      Sentiment sentiment, String sentimentText) async {
     final String url = '${Config().backendUrl}/mystatus';
 
     final http.Response response = await http.put(url,
@@ -45,7 +46,12 @@ class DashboardRepository {
           ...authenticated(currentUserId),
           'Content-Type': 'application/json',
         },
-        body: json.encode({'sentiment': sentiment.sentimentCode}));
+        body: json.encode(
+          {
+            'sentiment': sentiment.sentimentCode,
+            'sentimentText': sentimentText
+          },
+        ));
     // TODO response handling
 
     assert(response.statusCode == 200);

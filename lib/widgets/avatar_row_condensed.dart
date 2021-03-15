@@ -76,13 +76,14 @@ class AvatarRowCondensed extends StatelessWidget {
                   ),
                 ),
                 Center(
-                    child: Text(
-                  calcTimeDifferenceInWords(lastStatusUpdate, now),
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 12,
+                  child: Text(
+                    calcTimeDifferenceInWords(lastStatusUpdate, now),
+                    style: const TextStyle(
+                      color: CupertinoColors.white,
+                      fontSize: 12,
+                    ),
                   ),
-                )),
+                ),
               ],
             ),
           ],
