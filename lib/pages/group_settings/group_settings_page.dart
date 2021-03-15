@@ -53,7 +53,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             },
             child: CupertinoPageScaffold(
               navigationBar: const CupertinoNavigationBar(
-                middle: Text('Fam-Group Einstellungen'),
+                middle: Text('Fam-Group-Einstellungen'),
               ),
               child: SafeArea(
                 bottom: false,

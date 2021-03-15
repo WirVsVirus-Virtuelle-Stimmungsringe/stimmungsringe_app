@@ -61,55 +61,57 @@ class OnboardingStartPage extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           const FamiliariseLogo(),
-                          const Paragraph(
-                            child: Headline('Für ein achtsames Miteinander!'),
-                          ),
-                          const Paragraph(
-                            child: Text(
-                              'Passt auf euch auf und seid füreinander da.',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Paragraph(
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                // Note: Styles for TextSpans must be explicitly defined.
-                                // Child text spans will inherit styles from parent
-                                style: DefaultTextStyle.of(context).style,
-                                children: const <TextSpan>[
-                                  TextSpan(
-                                    text:
-                                        'Mit der FAMILIARISE-App kannst du deine Stimmung mit deinem Umfeld teilen.',
-                                  )
-                                ],
+                          Column(
+                            children: [
+                              const Paragraph(
+                                child:
+                                    Headline('Für ein achtsames Miteinander!'),
                               ),
-                            ),
+                              const Paragraph(
+                                child: Text(
+                                  'Passt auf euch auf und seid füreinander da.',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Paragraph(
+                                child: RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    // Note: Styles for TextSpans must be explicitly defined.
+                                    // Child text spans will inherit styles from parent
+                                    style: DefaultTextStyle.of(context).style,
+                                    children: const <TextSpan>[
+                                      TextSpan(
+                                        text:
+                                            'Mit der FAMILIARISE-App kannst du deine Stimmung mit deinem Umfeld teilen.',
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 30, bottom: 30),
-                            child: ButtonGroup(
-                              children: <Widget>[
-                                ActionButton(
-                                  text: const Text('Meine Fam-Group starten'),
-                                  onPressed: () => Navigator.pushNamed(
-                                    context,
-                                    OnboardingCreateGroupPage.routeUri,
-                                    arguments: BlocProvider.of<OnboardingBloc>(
-                                        context),
-                                  ),
+                          ButtonGroup(
+                            children: <Widget>[
+                              ActionButton(
+                                text: const Text('Meine Fam-Group starten'),
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  OnboardingCreateGroupPage.routeUri,
+                                  arguments:
+                                      BlocProvider.of<OnboardingBloc>(context),
                                 ),
-                                ActionButton(
-                                  onPressed: () => Navigator.pushNamed(
-                                    context,
-                                    OnboardingJoinGroupPage.routeUri,
-                                    arguments: BlocProvider.of<OnboardingBloc>(
-                                        context),
-                                  ),
-                                  text: const Text('Fam-Group-Code verwenden'),
+                              ),
+                              ActionButton(
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  OnboardingJoinGroupPage.routeUri,
+                                  arguments:
+                                      BlocProvider.of<OnboardingBloc>(context),
                                 ),
-                              ],
-                            ),
+                                text: const Text('Fam-Group-Code verwenden'),
+                              ),
+                            ],
                           ),
                         ],
                       ),

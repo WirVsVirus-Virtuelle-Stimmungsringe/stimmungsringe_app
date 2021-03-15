@@ -189,22 +189,30 @@ class _DashboardPageState extends State<DashboardPage>
 
     return Column(
       children: <Widget>[
-        const Paragraph(
-          child: Text(
-            'Du hast eine leere Fam-Group erstellt. '
-            'Lade deine wichtigsten Mitmenschen ein, indem du den Code teilst.',
-            textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 8),
+          child: Column(
+            children: [
+              const Paragraph(
+                child: Headline('Fam-Group erfolgreich erstellt!'),
+              ),
+              const Paragraph(
+                child: Text(
+                    'Teile den Code mit den Leuten, die du in die Fam-Group einladen willst.',
+                    textAlign: TextAlign.center),
+              ),
+              const Paragraph(
+                child: Text(
+                  'Einladungs-Code der Fam-Group:',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              ShareGroupCode(
+                groupCode: groupData.groupCode,
+              ),
+            ],
           ),
-        ),
-        const Paragraph(
-          child: Text(
-            'Einladungs-Code der Fam-Group:',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        ShareGroupCode(
-          groupCode: groupData.groupCode,
         ),
       ],
     );
