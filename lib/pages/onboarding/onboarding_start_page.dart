@@ -62,13 +62,11 @@ class OnboardingStartPage extends StatelessWidget {
                         children: <Widget>[
                           const FamiliariseLogo(),
                           const Paragraph(
-                            child: Headline('Passt gut auf euch auf!'),
+                            child: Headline('Für ein achtsames Miteinander!'),
                           ),
                           const Paragraph(
                             child: Text(
-                              'Wir befinden und gerade aufgrund von Corona in einer '
-                              'außergewöhnlichen Situation. Umso wichtiger ist es, '
-                              'dass wir im täglichen Zusammenleben füreinander da sind.',
+                              'Passt auf euch auf und seid füreinander da.',
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -81,22 +79,15 @@ class OnboardingStartPage extends StatelessWidget {
                                 style: DefaultTextStyle.of(context).style,
                                 children: const <TextSpan>[
                                   TextSpan(
-                                    text: 'FAMILIARISE ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(
                                     text:
-                                        'hilft dir deine Stimmung mit Wettersymbolen '
-                                        'einfach und direkt mit deinem Umfeld zu teilen '
-                                        'und aktiv für gutes Wetter im gemeinsamen '
-                                        'Zusammenleben zu sorgen.',
+                                        'Mit der FAMILIARISE-App kannst du deine Stimmung mit deinem Umfeld teilen.',
                                   )
                                 ],
                               ),
                             ),
                           ),
-                          Paragraph(
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30, bottom: 30),
                             child: ButtonGroup(
                               children: <Widget>[
                                 ActionButton(
@@ -115,7 +106,7 @@ class OnboardingStartPage extends StatelessWidget {
                                     arguments: BlocProvider.of<OnboardingBloc>(
                                         context),
                                   ),
-                                  text: const Text('Fam-Group Code eingeben'),
+                                  text: const Text('Fam-Group-Code verwenden'),
                                 ),
                               ],
                             ),

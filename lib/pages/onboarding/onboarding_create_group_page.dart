@@ -66,8 +66,7 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                   children: <Widget>[
                     const FamiliariseLogo(),
                     const Paragraph(
-                      child:
-                          Headline('Vergebe einen Namen für deine Fam-Group'),
+                      child: Headline('Benenne deine Fam-Group:'),
                     ),
                     Paragraph(
                       child: CupertinoTextField(

@@ -93,7 +93,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 ),
                 const Paragraph(
                   child: Text(
-                    'Dein FAMILIARISE Fam-Group Code lautet:',
+                    'Dein FAMILIARISE Fam-Group-Code lautet:',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -159,7 +159,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
           ),
           const Paragraph(
             child: Text(
-              'Notiere dir den Fam-Group Code. Du kannst jederzeit wieder der Fam-Group mit diesem Code beitreten.',
+              'Notiere dir den Fam-Group-Code. Du kannst jederzeit wieder der Fam-Group mit diesem Code beitreten.',
               textAlign: TextAlign.center,
               style: TextStyle(color: CupertinoColors.black),
             ),

@@ -80,7 +80,7 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
                     ),
                     Paragraph(
                       child: CupertinoTextField(
-                        placeholder: "Kennst du den Fam-Group Code?",
+                        placeholder: "Kennst du den Fam-Group-Code?",
                         controller: _groupCodeController,
                         onSubmitted: _joinGroupByCode,
                         autofocus: true,
