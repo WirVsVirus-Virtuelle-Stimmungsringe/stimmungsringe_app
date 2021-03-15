@@ -59,94 +59,101 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: SingleChildScrollView(
-            child: BlocConsumer<OnboardingBloc, OnboardingState>(
-              builder: (context, state) {
-                return Column(
-                  children: <Widget>[
-                    const FamiliariseLogo(),
-                    const Paragraph(
-                      child: Headline('Tritt einer bestehenden Fam-Group bei!'),
-                    ),
-                    const Paragraph(
-                      child: Text(
-                        'Gib dazu den dafür vorgesehen Fam-Group-Code ein:',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Paragraph(
-                      child: CupertinoTextField(
-                        placeholder: "Fam-Group-Code",
-                        controller: _groupCodeController,
-                        onSubmitted: _joinGroupByCode,
-                        autofocus: true,
-                      ),
-                    ),
-                    Paragraph(
-                      child: ButtonGroup(
-                        children: [
-                          ActionButton(
-                            onPressed: submitButtonHandler,
-                            text: const Text('beitreten'),
+          child: BlocConsumer<OnboardingBloc, OnboardingState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const FamiliariseLogo(),
+                          const Paragraph(
+                            child: Headline(
+                                'Tritt einer bestehenden Fam-Group bei!'),
+                          ),
+                          const Paragraph(
+                            child: Text(
+                              'Gib dazu den dafür vorgesehen Fam-Group-Code ein:',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Paragraph(
+                            child: CupertinoTextField(
+                              placeholder: "Einladungs-Code (xxxxxx)",
+                              controller: _groupCodeController,
+                              onSubmitted: _joinGroupByCode,
+                              autofocus: true,
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                );
-              },
-              listener: (context, state) {
-                if (state is JoinGroupPendingState) {
-                  if (!waitDialogVisible) {
-                    showCupertinoDialog<void>(
-                      context: context,
-                      builder: (_) => const WaitDialog(),
-                    );
-                    waitDialogVisible = true;
-                  }
-                } else {
-                  if (waitDialogVisible) {
-                    Navigator.of(context).pop();
-                    waitDialogVisible = false;
-                  }
-                }
-
-                if (state is JoinedGroupState) {
-                  print("show alert: joined group ${state.groupName}");
-
-                  Future.delayed(const Duration(milliseconds: 800), () {
-                    Fluttertoast.showToast(
-                      msg: "Erfolgreich beigetreten",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      backgroundColor: CupertinoColors.activeGreen,
-                      textColor: CupertinoColors.white,
-                    );
-                  });
-
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    DashboardPage.routeUri,
-                    (_) => false,
+                  ),
+                  Paragraph(
+                    child: ButtonGroup(
+                      children: [
+                        ActionButton(
+                          onPressed: submitButtonHandler,
+                          text: const Text('Beitreten'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+            listener: (context, state) {
+              if (state is JoinGroupPendingState) {
+                if (!waitDialogVisible) {
+                  showCupertinoDialog<void>(
+                    context: context,
+                    builder: (_) => const WaitDialog(),
                   );
+                  waitDialogVisible = true;
                 }
-
-                if (state is GroupNotFoundState) {
-                  print("show alert: Group not found!");
-                  _groupCodeController.clear();
-
-                  Future.delayed(const Duration(milliseconds: 800), () {
-                    Fluttertoast.showToast(
-                      msg: "Gruppe nicht gefunden",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      backgroundColor: CupertinoColors.destructiveRed,
-                      textColor: CupertinoColors.white,
-                    );
-                  });
+              } else {
+                if (waitDialogVisible) {
+                  Navigator.of(context).pop();
+                  waitDialogVisible = false;
                 }
-              },
-            ),
+              }
+
+              if (state is JoinedGroupState) {
+                print("show alert: joined group ${state.groupName}");
+
+                Future.delayed(const Duration(milliseconds: 800), () {
+                  Fluttertoast.showToast(
+                    msg: "Erfolgreich beigetreten",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: CupertinoColors.activeGreen,
+                    textColor: CupertinoColors.white,
+                  );
+                });
+
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  DashboardPage.routeUri,
+                  (_) => false,
+                );
+              }
+
+              if (state is GroupNotFoundState) {
+                print("show alert: Group not found!");
+                _groupCodeController.clear();
+
+                Future.delayed(const Duration(milliseconds: 800), () {
+                  Fluttertoast.showToast(
+                    msg: "Gruppe nicht gefunden",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                    backgroundColor: CupertinoColors.destructiveRed,
+                    textColor: CupertinoColors.white,
+                  );
+                });
+              }
+            },
           ),
         ),
       ),
