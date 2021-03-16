@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
@@ -5,10 +7,11 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
-import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/sentiment_icon_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SetMySentimentPage extends StatefulWidget {
@@ -42,6 +45,8 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
           _sentiment = stateWithData.dashboard.myTile.sentiment;
           _sentimentTextController.text =
               stateWithData.dashboard.myTile.sentimentText;
+          _enteredTextLength =
+              stateWithData.dashboard.myTile.sentimentText.characters.length;
         }
         return _buildLoadedPage(context, state as StateWithData);
       } else {
@@ -52,7 +57,6 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
 
   Widget _buildLoadedPage(BuildContext context, StateWithData state) {
     final Dashboard dashboard = state.dashboard;
-    const maxStatusTextLength = 20;
 
     return WillPopScope(
       onWillPop: () {
@@ -79,52 +83,17 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
                 ),
                 avatarSentiment: _sentiment,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                child: const Paragraph(
-                  child: Text(
-                    'Welches Wettersymbol passt gerade am besten zu deiner Stimmung?',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              ..._allSentiments(context),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                child: Paragraph(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Paragraph(
-                        child: Text(
-                          'Wie würdest du deine Stimmung kurz beschreiben?',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      CupertinoTextField(
-                        placeholder: "Beschreibung",
-                        controller: _sentimentTextController,
-                        maxLength: maxStatusTextLength,
-                        onChanged: (enteredText) {
-                          setState(() {
-                            _enteredTextLength = enteredText.length;
-                            _sentimentTextTouched = true;
-                          });
-                        },
-                        suffix: Padding(
-                          padding: const EdgeInsets.only(right: 4.0),
-                          child: Text(
-                            "$_enteredTextLength/$maxStatusTextLength",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: CupertinoColors.inactiveGray,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ..._buildWeatherPicker(),
+                        ..._buildSentimentTextInput(),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -135,22 +104,62 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
     );
   }
 
-  Iterable<Widget> _allSentiments(BuildContext context) {
-    final slices = _toPaddedSlices<Sentiment, Widget>(
-      allValues: Sentiment.values,
-      mapper: (currSentiment) => SentimentIconButton(
-        sentiment: currSentiment,
-        isSelected: _sentiment == currSentiment,
-        onTap: (selectedSentiment) {
+  List<Widget> _buildWeatherPicker() {
+    return <Widget>[
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Text(
+          'Welches Wettersymbol passt gerade am besten zu deiner Stimmung?',
+          textAlign: TextAlign.start,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      ..._buildAllSentimentsGrid(context),
+    ];
+  }
+
+  List<Widget> _buildSentimentTextInput() {
+    const maxStatusTextLength = 20;
+
+    return <Widget>[
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Text(
+          'Wie würdest du deine Stimmung kurz beschreiben?',
+          textAlign: TextAlign.start,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      CupertinoTextField(
+        placeholder: "Beschreibung",
+        controller: _sentimentTextController,
+        inputFormatters: [
+          _StringCharactersLimitingTextInputFormatter(maxStatusTextLength)
+        ],
+        onChanged: (enteredText) {
           setState(() {
-            _sentiment = selectedSentiment;
-            if (!_sentimentTextTouched) {
-              _sentimentTextController.text =
-                  selectedSentiment.defaultSentimentText;
-            }
+            _enteredTextLength = enteredText.characters.length;
+            _sentimentTextTouched = true;
           });
         },
+        suffix: Padding(
+          padding: const EdgeInsets.only(right: 4.0),
+          child: Text(
+            "$_enteredTextLength/$maxStatusTextLength",
+            style: const TextStyle(
+              fontSize: 14,
+              color: CupertinoColors.inactiveGray,
+            ),
+          ),
+        ),
       ),
+    ];
+  }
+
+  Iterable<Widget> _buildAllSentimentsGrid(BuildContext context) {
+    final slices = _toPaddedSlices<Sentiment, Widget>(
+      allValues: Sentiment.values,
+      mapper: _makeIconButtonForSentiment,
       sliceLength: 3,
       paddingValueFactory: () => Container(),
     );
@@ -169,6 +178,24 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
             )
             .toList(growable: false),
       ),
+    );
+  }
+
+  Widget _makeIconButtonForSentiment(Sentiment sentiment) {
+    return SentimentIconButton(
+      sentiment: sentiment,
+      isSelected: _sentiment == sentiment,
+      onTap: (selectedSentiment) {
+        setState(() {
+          _sentiment = selectedSentiment;
+          if (!_sentimentTextTouched) {
+            _sentimentTextController.text =
+                selectedSentiment.defaultSentimentText;
+            _enteredTextLength =
+                selectedSentiment.defaultSentimentText.characters.length;
+          }
+        });
+      },
     );
   }
 
@@ -199,5 +226,43 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
     }
 
     return slices;
+  }
+}
+
+class _StringCharactersLimitingTextInputFormatter extends TextInputFormatter {
+  final int maxLength;
+
+  _StringCharactersLimitingTextInputFormatter(this.maxLength)
+      : assert(maxLength == null || maxLength == -1 || maxLength > 0);
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (maxLength != null &&
+        maxLength > 0 &&
+        newValue.text.characters.length > maxLength) {
+      // If already at the maximum and tried to enter even more, keep the old value.
+      if (oldValue.text.characters.length == maxLength) {
+        return oldValue;
+      }
+      return _truncate(newValue, maxLength);
+    }
+    return newValue;
+  }
+
+  static TextEditingValue _truncate(TextEditingValue value, int maxLength) {
+    String newValue = value.text;
+    if (value.text.characters.length > maxLength) {
+      newValue = value.text.characters.take(maxLength).string;
+    }
+    return TextEditingValue(
+      text: newValue,
+      selection: value.selection.copyWith(
+        baseOffset: min(value.selection.start, newValue.length),
+        extentOffset: min(value.selection.end, newValue.length),
+      ),
+    );
   }
 }
