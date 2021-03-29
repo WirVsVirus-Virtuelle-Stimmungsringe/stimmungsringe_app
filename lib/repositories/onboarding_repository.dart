@@ -22,33 +22,6 @@ class OnboardingRepository {
 
   OnboardingRepository._internal();
 
-  Future<GroupData> findGroupByCode(String groupCode) async {
-    final String url = '${Config().backendUrl}/onboarding/group-by-code';
-
-    final http.Response response = await http.post(
-      url,
-      headers: {
-        ...authenticated(currentUserId),
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        'groupCode': groupCode,
-      }),
-    );
-
-    if (response.statusCode == 204) {
-      return null;
-    }
-
-    assert(response.statusCode == 200);
-
-    final GroupData findGroupResponse =
-        GroupData.fromJson(decodeResponseBytesToJson(response.bodyBytes));
-
-    await ChaosMonkey.delayAsync();
-    return findGroupResponse;
-  }
-
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
     final String url = '${Config().backendUrl}/onboarding/signin';
 
@@ -115,7 +88,10 @@ class OnboardingRepository {
     return startNewGroupResponse;
   }
 
-  Future<void> joinGroup(String groupId) async {
+  /**
+   * return false if user failed to join the group
+   */
+  Future<GroupData> joinGroup(String groupCode) async {
     final String url = '${Config().backendUrl}/onboarding/group/join';
 
     final http.Response response = await http.put(
@@ -125,14 +101,21 @@ class OnboardingRepository {
         'Content-Type': 'application/json',
       },
       body: json.encode({
-        'groupId': groupId,
+        'groupCode': groupCode,
       }),
     );
 
+    if (response.statusCode == 204) {
+      return null;
+    }
+
     assert(response.statusCode == 200);
 
+    final GroupData findGroupResponse =
+        GroupData.fromJson(decodeResponseBytesToJson(response.bodyBytes));
+
     await ChaosMonkey.delayAsync();
-    return;
+    return findGroupResponse;
   }
 
   Future<void> leaveGroup(String groupId) async {

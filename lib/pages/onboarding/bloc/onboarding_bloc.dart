@@ -71,16 +71,14 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   Stream<OnboardingState> _mapJoinGroupToState(
-      JoinGroupEvent searchGroup) async* {
+      JoinGroupEvent joinGroup) async* {
     yield JoinGroupPendingState();
 
-    final GroupData findGroupResponse =
-        await onboardingRepository.findGroupByCode(searchGroup.groupCode);
-
-    if (findGroupResponse != null) {
-      await onboardingRepository.joinGroup(findGroupResponse.groupId);
-      currentGroupId = findGroupResponse.groupId;
-      yield JoinedGroupState(groupName: findGroupResponse.groupName);
+    final GroupData groupData =
+        await onboardingRepository.joinGroup(joinGroup.groupCode);
+    if (groupData != null) {
+      currentGroupId = groupData.groupId;
+      yield JoinedGroupState(groupName: groupData.groupName);
     } else {
       yield GroupNotFoundState();
       yield JoinGroupFormState();
