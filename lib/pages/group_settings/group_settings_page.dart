@@ -53,7 +53,7 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
             },
             child: CupertinoPageScaffold(
               navigationBar: const CupertinoNavigationBar(
-                middle: Text('Fam-Group Einstellungen'),
+                middle: Text('Fam-Group-Einstellungen'),
               ),
               child: SafeArea(
                 bottom: false,
@@ -91,15 +91,19 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
                 const FamiliariseLogo(
                   height: 200,
                 ),
-                const Paragraph(
-                  child: Text(
-                    'Dein FAMILIARISE Fam-Group Code lautet:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                Paragraph(
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Einladungs-Code der Fam-Group:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      ShareGroupCode(
+                        groupCode: state.groupCode,
+                      ),
+                    ],
                   ),
-                ),
-                ShareGroupCode(
-                  groupCode: state.groupCode,
                 ),
                 const Paragraph(
                   child: Text(
@@ -136,32 +140,25 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
       child: Column(
         children: <Widget>[
           const Paragraph(
-            isFirstWidget: true,
             child: Text(
-              'Diese Gruppe verlassen:',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: CupertinoColors.black, fontWeight: FontWeight.bold),
-            ),
-          ),
-          CupertinoButton(
-            borderRadius: BorderRadius.circular(12.0),
-            color: CupertinoColors.white,
-            onPressed: () {
-              BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
-            },
-            child: const Text(
-              'Gruppe verlassen',
-              style: TextStyle(
-                color: Color(0xff951919),
-              ),
-            ),
-          ),
-          const Paragraph(
-            child: Text(
-              'Notiere dir den Fam-Group Code. Du kannst jederzeit wieder der Fam-Group mit diesem Code beitreten.',
+              'Notiere dir den Code vor dem Verlassen der Fam-Group. Mit ihm findest du deine Fam-Group wieder.',
               textAlign: TextAlign.center,
               style: TextStyle(color: CupertinoColors.black),
+            ),
+          ),
+          Paragraph(
+            child: CupertinoButton(
+              borderRadius: BorderRadius.circular(12.0),
+              color: CupertinoColors.white,
+              onPressed: () {
+                BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
+              },
+              child: const Text(
+                'Fam-Group verlassen',
+                style: TextStyle(
+                  color: Color(0xff951919),
+                ),
+              ),
             ),
           ),
         ],

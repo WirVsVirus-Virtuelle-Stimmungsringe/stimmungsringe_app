@@ -189,22 +189,34 @@ class _DashboardPageState extends State<DashboardPage>
 
     return Column(
       children: <Widget>[
-        const Paragraph(
-          child: Text(
-            'Du hast eine leere Fam-Group erstellt. '
-            'Lade deine wichtigsten Mitmenschen ein, indem du den Code teilst.',
-            textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 8),
+          child: Column(
+            children: [
+              const Paragraph(
+                child: Headline('Du bist allein in deiner Fam-Group! 😢'),
+              ),
+              const Paragraph(
+                child: Text(
+                    'Teile den Code mit den Leuten, die du in die Fam-Group einladen willst.',
+                    textAlign: TextAlign.center),
+              ),
+              Paragraph(
+                child: Column(
+                  children: [
+                    const Text(
+                      'Einladungs-Code der Fam-Group:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    ShareGroupCode(
+                      groupCode: groupData.groupCode,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-        const Paragraph(
-          child: Text(
-            'Dein FAMILIARISE Fam-Group Code lautet:',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        ShareGroupCode(
-          groupCode: groupData.groupCode,
         ),
       ],
     );
@@ -214,8 +226,7 @@ class _DashboardPageState extends State<DashboardPage>
     return Column(
       children: <Widget>[
         Paragraph(
-          child: Headline(
-              'Wetter in meiner Fam-Group "${dashboard.groupData.groupName}"'),
+          child: Headline('Fam-Group "${dashboard.groupData.groupName}"'),
         ),
         Expanded(
           child: Paragraph(

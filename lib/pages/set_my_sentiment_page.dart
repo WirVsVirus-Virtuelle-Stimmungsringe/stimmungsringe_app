@@ -68,7 +68,7 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
       },
       child: CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: Text('Persönliches Wetter'),
+          middle: Text('Meine Stimmung'),
         ),
         child: SafeArea(
           child: Column(
@@ -109,7 +109,7 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: Text(
-          'Welches Wettersymbol passt gerade am besten zu deiner Stimmung?',
+          'Welches Wetter-Symbol entspricht deiner aktuellen Stimmung?',
           textAlign: TextAlign.start,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

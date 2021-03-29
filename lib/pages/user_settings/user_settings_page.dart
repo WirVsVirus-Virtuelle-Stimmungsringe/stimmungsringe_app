@@ -110,9 +110,9 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
           const Padding(
             padding: EdgeInsets.only(top: 16),
             child: Text(
-              'Dein Name',
+              'Welchen Namen willst du dir geben?',
               textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           Paragraph(
