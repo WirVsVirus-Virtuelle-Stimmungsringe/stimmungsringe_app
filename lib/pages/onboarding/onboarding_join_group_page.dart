@@ -32,7 +32,8 @@ class OnboardingJoinGroupPage extends StatefulWidget {
 
 class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
   final _groupCodeController = TextEditingController();
-  bool waitDialogVisible = false;
+  bool _waitDialogVisible = false;
+  bool _codeSubmittedAtLeastOnce = false;
 
   @override
   void initState() {
@@ -50,10 +51,6 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final submitButtonHandler = _isGroupCodeValid()
-        ? () => _joinGroupByCode(_groupCodeController.text)
-        : null;
-
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(),
       child: SafeArea(
@@ -66,11 +63,15 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const FamiliariseLogo(),
+                          const Center(child: FamiliariseLogo()),
                           const Paragraph(
-                            child: Headline(
-                                'Tritt einer bestehenden Fam-Group bei!'),
+                            child: Center(
+                              child: Headline(
+                                'Tritt einer bestehenden Fam-Group bei!',
+                              ),
+                            ),
                           ),
                           const Paragraph(
                             child: Text(
@@ -80,12 +81,14 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
                           ),
                           Paragraph(
                             child: CupertinoTextField(
-                              placeholder: "Einladungs-Code (xxxxxx)",
+                              placeholder: "Einladungs-Code",
                               controller: _groupCodeController,
                               onSubmitted: _joinGroupByCode,
                               autofocus: true,
                             ),
                           ),
+                          if (_codeSubmittedAtLeastOnce && !_isGroupCodeValid())
+                            _makeInvalidCodeEnteredMessage()
                         ],
                       ),
                     ),
@@ -94,7 +97,10 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
                     child: ButtonGroup(
                       children: [
                         ActionButton(
-                          onPressed: submitButtonHandler,
+                          onPressed: _isGroupCodeValid()
+                              ? () =>
+                                  _joinGroupByCode(_groupCodeController.text)
+                              : null,
                           text: const Text('Beitreten'),
                         ),
                       ],
@@ -105,17 +111,17 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
             },
             listener: (context, state) {
               if (state is JoinGroupPendingState) {
-                if (!waitDialogVisible) {
+                if (!_waitDialogVisible) {
                   showCupertinoDialog<void>(
                     context: context,
                     builder: (_) => const WaitDialog(),
                   );
-                  waitDialogVisible = true;
+                  _waitDialogVisible = true;
                 }
               } else {
-                if (waitDialogVisible) {
+                if (_waitDialogVisible) {
                   Navigator.of(context).pop();
-                  waitDialogVisible = false;
+                  _waitDialogVisible = false;
                 }
               }
 
@@ -160,11 +166,24 @@ class _OnboardingJoinGroupPageState extends State<OnboardingJoinGroupPage> {
     );
   }
 
+  Widget _makeInvalidCodeEnteredMessage() {
+    return const Paragraph(
+      child: Text(
+        'Der Fam-Group-Code ist eine sechsstellige Zahl',
+        style: TextStyle(color: CupertinoColors.systemRed),
+      ),
+    );
+  }
+
   bool _isGroupCodeValid() {
-    return _groupCodeController.text.length >= 3;
+    return RegExp(r'^\d{6}$').hasMatch(_groupCodeController.text);
   }
 
   void _joinGroupByCode(String groupCode) {
+    if (!_codeSubmittedAtLeastOnce) {
+      setState(() => _codeSubmittedAtLeastOnce = true);
+    }
+
     if (_isGroupCodeValid()) {
       BlocProvider.of<OnboardingBloc>(context).add(JoinGroupEvent(groupCode));
     }

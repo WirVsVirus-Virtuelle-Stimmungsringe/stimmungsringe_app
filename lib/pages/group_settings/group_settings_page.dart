@@ -140,32 +140,25 @@ class _GroupSettingsPageState extends State<GroupSettingsPage> {
       child: Column(
         children: <Widget>[
           const Paragraph(
-            isFirstWidget: true,
             child: Text(
-              'Die aktuelle Fam-Group verlassen:',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: CupertinoColors.black, fontWeight: FontWeight.bold),
-            ),
-          ),
-          CupertinoButton(
-            borderRadius: BorderRadius.circular(12.0),
-            color: CupertinoColors.white,
-            onPressed: () {
-              BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
-            },
-            child: const Text(
-              'Gruppe verlassen',
-              style: TextStyle(
-                color: Color(0xff951919),
-              ),
-            ),
-          ),
-          const Paragraph(
-            child: Text(
-              'Notiere dir den Code. Mit ihm findest du deine Fam-Group wieder.',
+              'Notiere dir den Code vor dem Verlassen der Fam-Group. Mit ihm findest du deine Fam-Group wieder.',
               textAlign: TextAlign.center,
               style: TextStyle(color: CupertinoColors.black),
+            ),
+          ),
+          Paragraph(
+            child: CupertinoButton(
+              borderRadius: BorderRadius.circular(12.0),
+              color: CupertinoColors.white,
+              onPressed: () {
+                BlocProvider.of<GroupSettingsBloc>(context).add(LeaveGroup());
+              },
+              child: const Text(
+                'Fam-Group verlassen',
+                style: TextStyle(
+                  color: Color(0xff951919),
+                ),
+              ),
             ),
           ),
         ],

@@ -67,7 +67,8 @@ class OnboardingStartPage extends StatelessWidget {
                               children: [
                                 const Paragraph(
                                   child: Headline(
-                                      'Für ein achtsames Miteinander!'),
+                                    'Für ein achtsames Miteinander!',
+                                  ),
                                 ),
                                 const Paragraph(
                                   child: Text(
