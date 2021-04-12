@@ -4,7 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const double _avatarSize = 150;
+const _avatarSize = 150.0;
+const _avatarBorderWidth = 4.0;
+const _indicatorSize = 60.0;
+const _indicatorBorderWidth = 3.0;
 
 class AvatarRowOther extends StatelessWidget {
   final Sentiment avatarSentiment;
@@ -44,8 +47,11 @@ class AvatarRowOther extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: Container(),
+                const SizedBox(
+                  width: _avatarSize +
+                      _avatarBorderWidth * 2 +
+                      _indicatorSize / 2 +
+                      _indicatorBorderWidth * 2,
                 ),
                 Expanded(
                   child: Center(
@@ -98,21 +104,18 @@ class AvatarRowOther extends StatelessWidget {
 
   /// show heart symbol with message count
   Widget _buildWeatherIndicator() {
-    const indicatorSize = 60.0;
-    const indicatorBorderWidth = 2.0;
-
     return Positioned(
       left: _avatarSize - 20,
       bottom: _avatarSize - 60,
-      width: indicatorSize,
-      height: indicatorSize,
+      width: _indicatorSize,
+      height: _indicatorSize,
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
             color: CupertinoColors.white,
-            width: indicatorBorderWidth,
+            width: _indicatorBorderWidth,
           ),
-          borderRadius: BorderRadius.circular(indicatorSize / 2),
+          borderRadius: BorderRadius.circular(_indicatorSize / 2),
         ),
         child: ClipOval(
           child: Container(
@@ -120,7 +123,7 @@ class AvatarRowOther extends StatelessWidget {
             child: Center(
               child: FaIcon(
                 avatarSentiment.icon,
-                size: indicatorSize * 0.7 - (indicatorBorderWidth * 2),
+                size: _indicatorSize * 0.7 - (_indicatorBorderWidth * 2),
                 color: CupertinoColors.white,
               ),
             ),
