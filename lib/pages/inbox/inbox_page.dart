@@ -52,7 +52,15 @@ class _InboxPageState extends State<InboxPage> {
       child: CupertinoPageScaffold(
         backgroundColor: _colorTransparent,
         navigationBar: CupertinoNavigationBar(
-          // actionsForegroundColor: CupertinoColors.white,
+          leading: CupertinoNavigationBarBackButton(
+            color: CupertinoColors.white,
+            // this onPressed is only needed to work around what seems to be an
+            // issue in Flutter: when you navigate to this screen,
+            // ModalRoute.of(context) may be null for a short period of time
+            onPressed: () {
+              Navigator.maybePop(context);
+            },
+          ),
           backgroundColor: _colorTransparent,
           border: Border.all(color: _colorTransparent, width: 0),
         ),
