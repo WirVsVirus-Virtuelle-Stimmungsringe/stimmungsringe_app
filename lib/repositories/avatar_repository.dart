@@ -16,7 +16,7 @@ class AvatarRepository {
 
   Future<AvailableAvatars> availableAvatars() async {
     final http.Response response = await http.get(
-      '${Config().backendUrl}/avatar/available',
+      Uri.parse('${Config().backendUrl}/avatar/available'),
       headers: authenticated(currentUserId),
     );
 

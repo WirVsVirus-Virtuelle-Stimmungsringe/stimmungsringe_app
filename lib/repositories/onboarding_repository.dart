@@ -23,7 +23,7 @@ class OnboardingRepository {
   OnboardingRepository._internal();
 
   Future<SigninUserResponse> signin(String deviceIdentifier) async {
-    final String url = '${Config().backendUrl}/onboarding/signin';
+    final Uri url = Uri.parse('${Config().backendUrl}/onboarding/signin');
 
     String fcmToken;
     if (pushNotificationsManager != null) {
@@ -62,7 +62,7 @@ class OnboardingRepository {
   }
 
   Future<GroupData> startNewGroup(String groupName) async {
-    final String url = '${Config().backendUrl}/onboarding/group/start';
+    final Uri url = Uri.parse('${Config().backendUrl}/onboarding/group/start');
 
     final http.Response response = await http.post(
       url,
@@ -88,11 +88,9 @@ class OnboardingRepository {
     return startNewGroupResponse;
   }
 
-  /**
-   * return false if user failed to join the group
-   */
+  /// return false if user failed to join the group
   Future<GroupData> joinGroup(String groupCode) async {
-    final String url = '${Config().backendUrl}/onboarding/group/join';
+    final Uri url = Uri.parse('${Config().backendUrl}/onboarding/group/join');
 
     final http.Response response = await http.put(
       url,
@@ -119,7 +117,7 @@ class OnboardingRepository {
   }
 
   Future<void> leaveGroup(String groupId) async {
-    final String url = '${Config().backendUrl}/onboarding/group/leave';
+    final Uri url = Uri.parse('${Config().backendUrl}/onboarding/group/leave');
 
     final http.Response response = await http.put(
       url,
@@ -139,7 +137,8 @@ class OnboardingRepository {
   }
 
   Future<void> updateUserSettings(String name, String stockAvatar) async {
-    final String url = '${Config().backendUrl}/onboarding/user/settings';
+    final Uri url =
+        Uri.parse('${Config().backendUrl}/onboarding/user/settings');
 
     final http.Response response = await http.put(
       url,
@@ -160,8 +159,8 @@ class OnboardingRepository {
   }
 
   Future<void> updateGroupSettings(String groupId, String groupName) async {
-    final String url =
-        '${Config().backendUrl}/onboarding/group/$groupId/settings';
+    final Uri url =
+        Uri.parse('${Config().backendUrl}/onboarding/group/$groupId/settings');
 
     final http.Response response = await http.put(
       url,
@@ -181,7 +180,8 @@ class OnboardingRepository {
   }
 
   Future<UserSettings> getUserSettings() async {
-    final String url = '${Config().backendUrl}/onboarding/user/settings';
+    final Uri url =
+        Uri.parse('${Config().backendUrl}/onboarding/user/settings');
 
     final http.Response response = await http.get(
       url,
@@ -201,8 +201,8 @@ class OnboardingRepository {
   }
 
   Future<GroupData> getGroupSettings(String groupId) async {
-    final String url =
-        '${Config().backendUrl}/onboarding/group/$groupId/settings';
+    final Uri url =
+        Uri.parse('${Config().backendUrl}/onboarding/group/$groupId/settings');
 
     final http.Response response = await http.get(
       url,

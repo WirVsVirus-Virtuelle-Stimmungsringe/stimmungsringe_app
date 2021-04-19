@@ -31,7 +31,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         assert(messageRepository != null),
         assert(userSettingsBloc != null),
         super(DashboardUninitialized()) {
-    _userSettingsBlocSubscription = userSettingsBloc.listen((state) {
+    _userSettingsBlocSubscription = userSettingsBloc.stream.listen((state) {
       if (state is UserSettingsLoaded) {
         print("settings sub");
         add(RefreshDashboardIfNecessary());

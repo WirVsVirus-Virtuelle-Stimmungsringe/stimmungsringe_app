@@ -52,7 +52,7 @@ class _InboxPageState extends State<InboxPage> {
       child: CupertinoPageScaffold(
         backgroundColor: _colorTransparent,
         navigationBar: CupertinoNavigationBar(
-          actionsForegroundColor: CupertinoColors.white,
+          // actionsForegroundColor: CupertinoColors.white,
           backgroundColor: _colorTransparent,
           border: Border.all(color: _colorTransparent, width: 0),
         ),
@@ -108,7 +108,7 @@ class _InboxPageState extends State<InboxPage> {
         },
       ),
       itemCount: messages.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (context, index, realIndex) {
         return _carouselEntry(context, messages.elementAt(index));
       },
     );

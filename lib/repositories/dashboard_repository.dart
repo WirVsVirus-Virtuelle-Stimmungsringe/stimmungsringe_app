@@ -20,7 +20,7 @@ class DashboardRepository {
   DashboardRepository._internal();
 
   Future<Dashboard> loadDashboardPageData() async {
-    final String url = '${Config().backendUrl}/dashboard';
+    final Uri url = Uri.parse('${Config().backendUrl}/dashboard');
 
     final http.Response response = await http.get(
       url,
@@ -39,7 +39,7 @@ class DashboardRepository {
 
   Future<void> setNewSentiment(
       Sentiment sentiment, String sentimentText) async {
-    final String url = '${Config().backendUrl}/mystatus';
+    final Uri url = Uri.parse('${Config().backendUrl}/mystatus');
 
     final http.Response response = await http.put(url,
         headers: {
@@ -59,7 +59,7 @@ class DashboardRepository {
   }
 
   Future<OtherDetail> loadOtherDetailPageData(String userId) async {
-    final String url = '${Config().backendUrl}/otherstatuspage/$userId';
+    final Uri url = Uri.parse('${Config().backendUrl}/otherstatuspage/$userId');
 
     final http.Response response = await http.get(
       url,

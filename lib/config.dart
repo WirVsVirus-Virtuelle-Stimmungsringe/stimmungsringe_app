@@ -1,7 +1,7 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
 import 'package:yaml/yaml.dart';
 
 Future<Map> _loadConfig() async {
@@ -12,8 +12,8 @@ Future<Map> _loadConfig() async {
 }
 
 Future<Map<String, String>> _loadEnv() async {
-  await DotEnv().load('config/.env');
-  return DotEnv().env;
+  await dot_env.load(fileName: 'config/.env');
+  return dot_env.env;
 }
 
 class Config {
