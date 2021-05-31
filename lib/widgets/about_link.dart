@@ -9,7 +9,7 @@ class AboutLink extends StatelessWidget {
         Navigator.pushNamed(context, AboutPage.routeUri);
       },
       child: const Text(
-        'Impressum',
+        'Impressum / Datenschutz',
         style: TextStyle(
             color: CupertinoColors.link, decoration: TextDecoration.underline),
       ),
