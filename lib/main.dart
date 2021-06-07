@@ -94,6 +94,7 @@ class _SentimentAppState extends State<SentimentApp>
       title: 'Familiarise',
       initialRoute: OnboardingStartPage.routeUri,
       theme: theme,
+      debugShowCheckedModeBanner: Config().debug,
       routes: Map.fromEntries([
         OnboardingStartPage.makeRoute(userSettingsBloc),
         OnboardingCreateGroupPage.route,
