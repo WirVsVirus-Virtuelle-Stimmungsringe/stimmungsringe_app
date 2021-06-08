@@ -11,10 +11,10 @@
         android:strokeWidth="0">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:endColor="#377371"
+                android:endColor="#DB6B0B"
                 android:endX="100"
                 android:endY="100"
-                android:startColor="#3C9A6B"
+                android:startColor="#C30B9F"
                 android:startX="0"
                 android:startY="0"
                 android:type="linear" />

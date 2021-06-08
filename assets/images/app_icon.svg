@@ -1,25 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1024 1024" style="enable-background:new 0 0 1024 1024;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:url(#SVGID_1_);stroke:#000000;stroke-miterlimit:10;}
-	.st1{fill:none;}
-	.st2{opacity:0.7;}
-	.st3{fill:#FFFFFF;}
-</style>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="9.094947e-13" x2="1024" y2="1024">
-	<stop  offset="0" style="stop-color:#3C9A6B"/>
-	<stop  offset="1" style="stop-color:#377371"/>
-</linearGradient>
-<rect class="st0" width="1024" height="1024"/>
-<g id="Ebene_2_1_">
-	<g id="Ebene_1-2">
-		<rect id="Rechteck_368" class="st1" width="1024" height="1024"/>
-		<g id="Gruppe_971" class="st2">
-			<path id="Pfad_537" class="st3" d="M603.7,307.5V199.2l-187.9,26.6v564.7l101.4-14.4V543l74.2-10.5V426.6l-74.2,10.5V319.8
-				L603.7,307.5z"/>
-		</g>
-	</g>
-</g>
+<svg id="Gruppe_1079" data-name="Gruppe 1079" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.233" y1="0.301" x2="0.966" y2="0.988" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c30b9f"/>
+      <stop offset="1" stop-color="#db6b0b"/>
+    </linearGradient>
+  </defs>
+  <rect id="Rechteck_369" data-name="Rechteck 369" width="1024" height="1024" fill="url(#linear-gradient)"/>
+  <path id="Pfad_866" data-name="Pfad 866" d="M140.9,50.187v-81.23L0-11.093v423.37l76.014-10.763V226.752l55.67-7.882v-79.38l-55.67,7.882v-88ZM377.373,358.846,293.3-52.62l-74.866,10.6L134.349,393.255l67.186-9.513,12.67-74.4,73.33-10.383,11.9,70.925ZM277.937,232.01l-52.981,7.5,21.115-129.756c4.608-28.961,6.144-51.947,6.144-51.947l.765-.108s1.153,22.605,5.379,50.315Zm395.828,84.87L647.272-102.738,575.1-92.519,537.468,115.266c-4.608,25.266-7.674,47.855-7.674,47.855l-.771.109s-2.689-21.774-6.909-46.408L487.177-80.071,414.611-69.8l-26.1,427.066,62.2-8.806c.771-24.723,9.216-208.066,9.216-208.066,1.153-28.467.765-53.03.765-53.03l.389-.055s3.066,24.184,8.445,51.726c0,0,33.785,177.982,39.157,201.217l34.938-4.947C549.755,306.135,582.775,123,582.775,123c4.99-27.783,8.062-54.063,8.062-54.063l.765-.108s-.382,26.517.771,52.813c0,0,8.827,184.592,9.6,205.4Z" transform="translate(175.117 475.483)" fill="#fff"/>
+  <g id="Gruppe_1071" data-name="Gruppe 1071" transform="translate(239.047 138.136) rotate(-8)">
+    <path id="Pfad_867" data-name="Pfad 867" d="M19.2,76.8a19.187,19.187,0,0,0,19.2-19.176V19.209A19.2,19.2,0,1,0,0,19.185V57.6A19.171,19.171,0,0,0,19.144,76.8Z" transform="translate(230.37)" fill="#fff" fill-rule="evenodd"/>
+    <path id="Pfad_868" data-name="Pfad 868" d="M32.747,59.891,59.891,32.747A19.194,19.194,0,0,0,32.747,5.6L5.6,32.747A19.194,19.194,0,0,0,32.747,59.891Z" transform="translate(366.094 67.498)" fill="#fff" fill-rule="evenodd"/>
+    <path id="Pfad_869" data-name="Pfad 869" d="M76.8,19.2A19.207,19.207,0,0,0,57.6,0H19.207a19.2,19.2,0,0,0-.025,38.393H57.6A19.187,19.187,0,0,0,76.8,19.218V19.2Z" transform="translate(0 230.37)" fill="#fff" fill-rule="evenodd"/>
+    <path id="Pfad_870" data-name="Pfad 870" d="M57.578,0H19.184a19.2,19.2,0,0,0,0,38.393H57.576A19.2,19.2,0,0,0,57.6,0h-.022Z" transform="translate(422.346 230.37)" fill="#fff" fill-rule="evenodd"/>
+    <path id="Pfad_871" data-name="Pfad 871" d="M32.745,59.891A19.194,19.194,0,0,0,59.891,32.747L32.745,5.6A19.194,19.194,0,0,0,5.6,32.747Z" transform="translate(67.469 67.498)" fill="#fff" fill-rule="evenodd"/>
+    <path id="Pfad_872" data-name="Pfad 872" d="M267.359,153.572a134.617,134.617,0,0,0,1.393-19.2C268.752,60.289,208.463,0,134.376,0S0,60.289,0,134.376a134.945,134.945,0,0,0,1.393,19.2Z" transform="translate(115.189 115.192)" fill="#fff" fill-rule="evenodd"/>
+  </g>
 </svg>
