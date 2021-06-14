@@ -27,11 +27,8 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  // TODO: remove platform check as soon as we have an apple developer account
-  if (Platform.isAndroid) {
-    pushNotificationsManager = PushNotificationsManager();
-    await pushNotificationsManager.init();
-  }
+  pushNotificationsManager = PushNotificationsManager();
+  await pushNotificationsManager.init();
 
   final UserSettingsBloc userSettingsBloc =
       UserSettingsBloc(OnboardingRepository(), AvatarRepository());

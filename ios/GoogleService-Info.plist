@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>991896350276-mbefkija84j54npfjv77ri5o9jqg387e.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.991896350276-mbefkija84j54npfjv77ri5o9jqg387e</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDdj_5_ktgfhPjkgUCjTJ7zI_nLKkNo_us</string>
+	<key>GCM_SENDER_ID</key>
+	<string>991896350276</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>de.familiarise.app</string>
+	<key>PROJECT_ID</key>
+	<string>familiarise-5b39d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>familiarise-5b39d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:991896350276:ios:9a9e4e5548737408c19611</string>
+	<key>DATABASE_URL</key>
+	<string>https://familiarise-5b39d.firebaseio.com</string>
+</dict>
+</plist>
