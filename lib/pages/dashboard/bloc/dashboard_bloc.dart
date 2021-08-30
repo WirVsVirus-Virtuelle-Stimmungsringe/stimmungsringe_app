@@ -36,16 +36,20 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
     _refreshSubscription =
         Stream<void>.periodic(_refreshInterval).listen((_) async {
-      final futures = await Future.wait([
-        dashboardRepository.loadDashboardPageData(),
-        messageRepository.loadInbox()
-      ]);
-      final dashboard = futures[0] as Dashboard;
-      final messageInbox = futures[1] as MessageInbox;
+      try {
+        final futures = await Future.wait([
+          dashboardRepository.loadDashboardPageData(),
+          messageRepository.loadInbox()
+        ]);
+        final dashboard = futures[0] as Dashboard;
+        final messageInbox = futures[1] as MessageInbox;
 
-      _dashboardHash = dashboard.hashCode;
-      _messageInboxHash = messageInbox.hashCode;
-      add(RefreshDashboardIfNecessary());
+        _dashboardHash = dashboard.hashCode;
+        _messageInboxHash = messageInbox.hashCode;
+        add(RefreshDashboardIfNecessary());
+      } catch (_) {
+        add(PropagateDashboardRefreshError());
+      }
     });
   }
 
@@ -63,6 +67,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       yield* _mapRefreshDashboardToState(event);
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
+    } else if (event is PropagateDashboardRefreshError) {
+      yield* _mapPropagateDashboardRefreshErrorToState(event);
     }
   }
 
@@ -96,7 +102,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   Stream<DashboardState> _mapRefreshDashboardToState(
     RefreshDashboardIfNecessary refresh,
   ) async* {
-    if (state is! DashboardLoaded) {
+    if (state is DashboardUninitialized || state is DashboardLoading) {
       return;
     }
     try {
@@ -104,7 +110,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final stateWithData = state as StateWithData;
         if (stateWithData.dashboard.hashCode == _dashboardHash &&
             stateWithData.inbox.hashCode == _messageInboxHash) {
-          print("skip refresh");
+          yield DashboardLoaded.fromDashboardState(state);
           return;
         }
       }
@@ -175,6 +181,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         now: DateTime.now(),
       );
     }
+  }
+
+  Stream<DashboardState> _mapPropagateDashboardRefreshErrorToState(
+    PropagateDashboardRefreshError propagateDashboardRefreshErrorEvent,
+  ) async* {
+    yield DashboardError.fromDashboardState(state);
   }
 
   @override

@@ -20,9 +20,11 @@ import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/retry_view.dart';
 import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
@@ -97,6 +99,28 @@ class _DashboardPageState extends State<DashboardPage>
         bottom: false,
         child: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
+            if (state is DashboardError) {
+              if (!state.hasDashboard) {
+                return RetryView(
+                  onPressed: () {
+                    BlocProvider.of<DashboardBloc>(context)
+                        .add(FetchDashboard());
+                  },
+                );
+              } else {
+                if (state.isFirstError) {
+                  Fluttertoast.showToast(
+                    msg: "Verbindung unterbrochen",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: CupertinoColors.systemOrange,
+                    textColor: CupertinoColors.black,
+                  );
+                }
+                // show inline retry button
+              }
+            }
+
             if (!state.hasDashboard) {
               return LoadingSpinner();
             }
@@ -106,6 +130,9 @@ class _DashboardPageState extends State<DashboardPage>
             return Column(
               children: <Widget>[
                 _avatarRow(stateWithData),
+                Text(
+                  (state is DashboardError) ? "cnt ${state.errorCount}" : "n/a",
+                ),
                 Expanded(
                   child: buildDashboardBody(stateWithData),
                 )

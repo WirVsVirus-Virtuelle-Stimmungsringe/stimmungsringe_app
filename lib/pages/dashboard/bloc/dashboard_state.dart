@@ -109,8 +109,9 @@ class DashboardError extends DashboardState implements StateWithData {
   final MessageInbox? inbox;
   @override
   final DateTime? now;
+  final int errorCount;
 
-  DashboardError({this.dashboard, this.inbox, this.now})
+  DashboardError({this.dashboard, this.inbox, this.now, this.errorCount = 1})
       : assert(
           (dashboard == null && inbox == null && now == null) ||
               (dashboard != null && inbox != null && now != null),
@@ -128,6 +129,9 @@ class DashboardError extends DashboardState implements StateWithData {
         dashboard: dashboard ?? stateWithData.dashboard,
         inbox: inbox ?? stateWithData.inbox,
         now: now ?? stateWithData.now,
+        errorCount: (dashboardState is DashboardError)
+            ? dashboardState.errorCount + 1
+            : 1,
       );
     } else {
       return DashboardError();
@@ -137,6 +141,8 @@ class DashboardError extends DashboardState implements StateWithData {
   @override
   bool get hasDashboard => dashboard != null;
 
+  bool get isFirstError => errorCount == 1;
+
   @override
-  List<Object?> get props => [dashboard, inbox, now];
+  List<Object?> get props => [dashboard, inbox, now, errorCount];
 }
