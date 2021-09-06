@@ -1,5 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
-import 'package:familiarise/utils/calc_time_difference_in_words.dart';
+import 'package:familiarise/utils/time_utils.dart';
 import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
