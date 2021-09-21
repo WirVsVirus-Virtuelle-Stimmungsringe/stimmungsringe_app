@@ -141,6 +141,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       );
     } catch (ex) {
       print(ex);
+      yield* _mapPropagateDashboardRefreshErrorToState(
+        PropagateDashboardRefreshError(),
+      );
     }
   }
 
