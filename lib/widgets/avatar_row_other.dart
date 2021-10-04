@@ -92,6 +92,7 @@ class AvatarRowOther extends StatelessWidget {
       child: Avatar(
         image: image,
         backgroundColor: avatarSentiment.avatarIconBackgroundColor,
+        // ignore: avoid_redundant_argument_values
         size: _avatarSize,
       ),
     );
