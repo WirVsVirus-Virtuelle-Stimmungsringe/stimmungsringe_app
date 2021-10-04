@@ -11,7 +11,7 @@ class UserSettings extends Equatable {
   static UserSettings fromJson(Map<String, dynamic> jsonMap) {
     return UserSettings(
       jsonMap['userName'] as String,
-      jsonMap['hasName'] as bool,
+      jsonMap['hasName'] as bool/*!*/,
       jsonMap['stockAvatar'] as String,
     );
   }

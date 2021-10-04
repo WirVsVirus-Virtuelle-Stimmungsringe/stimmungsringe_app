@@ -11,13 +11,17 @@ class SigninUserResponse extends Equatable {
 
   static SigninUserResponse fromJson(Map<String, dynamic> jsonMap) {
     return SigninUserResponse(
-      jsonMap['userId'] as String,
-      jsonMap['hasGroup'] as bool,
+      jsonMap['userId'] as String /*!*/,
+      jsonMap['hasGroup'] as bool /*!*/,
       jsonMap['groupId'] as String,
       jsonMap['groupName'] as String,
     );
   }
 
   const SigninUserResponse(
-      this.userId, this.hasGroup, this.groupId, this.groupName);
+    this.userId,
+    this.hasGroup,
+    this.groupId,
+    this.groupName,
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class GroupSettingsEvent extends Equatable {
   @override
@@ -10,7 +11,7 @@ class LoadSettings extends GroupSettingsEvent {}
 class SaveGroupSettings extends GroupSettingsEvent {
   final String groupName;
 
-  SaveGroupSettings({this.groupName});
+  SaveGroupSettings({@required this.groupName});
 
   @override
   List<Object> get props => [groupName];

@@ -12,16 +12,21 @@ class UserMinimal extends Equatable {
 
   static UserMinimal fromJson(Map<String, dynamic> jsonMap) {
     return UserMinimal(
-        jsonMap['userId'] as String,
-        jsonMap['displayName'] as String,
-        jsonMap['hasName'] as bool,
-        jsonMap['avatarUrl'] as String);
+      jsonMap['userId'] as String /*!*/,
+      jsonMap['displayName'] as String,
+      jsonMap['hasName'] as bool /*!*/,
+      jsonMap['avatarUrl'] as String /*!*/,
+    );
   }
 
   const UserMinimal(
-      this.userId, this.displayName, this.hasName, this._avatarUrl);
+    this.userId,
+    this.displayName,
+    this.hasName,
+    this._avatarUrl,
+  );
 
   String get avatarUrl {
-    return _avatarUrl == null ? null : Config().backendUrl + _avatarUrl;
+    return Config().backendUrl + _avatarUrl;
   }
 }

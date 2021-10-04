@@ -15,11 +15,15 @@ class OtherTile extends Equatable {
     return OtherTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       SentimentExtension.fromJson(jsonMap['sentiment'] as String),
-      jsonMap['sentimentText'] as String,
+      jsonMap['sentimentText'] as String /*!*/,
       DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }
 
   const OtherTile(
-      this.user, this.sentiment, this.sentimentText, this.lastStatusUpdate);
+    this.user,
+    this.sentiment,
+    this.sentimentText,
+    this.lastStatusUpdate,
+  );
 }

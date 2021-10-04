@@ -178,10 +178,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   @override
   Future<void> close() {
     _userSettingsBlocSubscription.cancel();
-    if (_refreshSubscription != null) {
-      _refreshSubscription.cancel();
-      _refreshSubscription = null;
-    }
+    _refreshSubscription.cancel();
     return super.close();
   }
 }

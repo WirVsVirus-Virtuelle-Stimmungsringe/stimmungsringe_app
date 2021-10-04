@@ -10,9 +10,9 @@ class GroupData extends Equatable {
 
   static GroupData fromJson(Map<String, dynamic> jsonMap) {
     return GroupData(
-      jsonMap['groupId'] as String,
-      jsonMap['groupName'] as String,
-      jsonMap['groupCode'] as String,
+      jsonMap['groupId'] as String/*!*/,
+      jsonMap['groupName'] as String/*!*/,
+      jsonMap['groupCode'] as String/*!*/,
     );
   }
 

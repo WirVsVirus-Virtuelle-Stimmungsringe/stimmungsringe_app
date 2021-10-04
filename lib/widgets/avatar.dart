@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-const double _avatarSize = 150;
-
 class Avatar extends StatelessWidget {
   final ImageProvider image;
   final Color borderColor;
@@ -11,28 +9,26 @@ class Avatar extends StatelessWidget {
   const Avatar({
     Key key,
     @required this.image,
-    this.borderColor,
-    this.backgroundColor,
-    this.size,
+    this.borderColor = CupertinoColors.white,
+    this.backgroundColor = const Color(0xff6e8983),
+    this.size = 150,
   })  : assert(image != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = this.size ?? _avatarSize;
-
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: backgroundColor ?? const Color(0xff6e8983),
+        color: backgroundColor,
         image: DecorationImage(
           image: image,
           fit: BoxFit.contain,
         ),
         borderRadius: BorderRadius.circular(size / 2),
         border: Border.all(
-          color: borderColor ?? CupertinoColors.white,
+          color: borderColor,
           width: 4.0,
         ),
       ),

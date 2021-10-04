@@ -8,16 +8,16 @@ class Paragraph extends StatelessWidget {
   const Paragraph({
     Key key,
     @required this.child,
-    this.isFirstWidget,
-    this.isLastWidget,
+    this.isFirstWidget = false,
+    this.isLastWidget = false,
   })  : assert(child != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final edgeInsets = EdgeInsets.only(
-      top: isFirstWidget ?? false ? 16 : 8,
-      bottom: isLastWidget ?? false ? 0 : 8,
+      top: isFirstWidget ? 16 : 8,
+      bottom: isLastWidget ? 0 : 8,
     );
     return Padding(
       padding: edgeInsets,

@@ -8,7 +8,7 @@ Future<Map> _loadConfig() async {
   WidgetsFlutterBinding.ensureInitialized();
   final String configYamlStr =
       await rootBundle.loadString('config/config.yaml');
-  return loadYaml(configYamlStr) as Map;
+  return loadYaml(configYamlStr) as Map/*!*/;
 }
 
 Future<Map<String, String>> _loadEnv() async {
@@ -17,14 +17,14 @@ Future<Map<String, String>> _loadEnv() async {
 }
 
 class Config {
-  Future<void> loaded;
+  Future<void> /*!*/ loaded;
 
-  String _backendUrl;
-  bool _debug;
-  bool _useFakeDeviceId;
-  String _fakeDeviceId;
-  bool _chaosMonkeyEnabled;
-  String _proxyKey;
+  String /*!*/ _backendUrl;
+  bool /*!*/ _debug;
+  bool /*!*/ _useFakeDeviceId;
+  String /*!*/ _fakeDeviceId;
+  bool /*!*/ _chaosMonkeyEnabled;
+  String /*!*/ _proxyKey;
 
   static final Config _singleton = Config._internal();
 
@@ -38,10 +38,11 @@ class Config {
       final Map<String, String> env = configData[1] as Map<String, String>;
 
       _backendUrl = _getString('backendUrl', config, env);
-      _debug = _getBool('debug', config, env);
-      _useFakeDeviceId = _getBool('useFakeDeviceId', config, env);
+      _debug = _getBool('debug', config, env) ?? false;
+      _useFakeDeviceId = _getBool('useFakeDeviceId', config, env) ?? false;
       _fakeDeviceId = _getString('fakeDeviceId', config, env);
-      _chaosMonkeyEnabled = _getBool('chaosMonkeyEnabled', config, env);
+      _chaosMonkeyEnabled =
+          _getBool('chaosMonkeyEnabled', config, env) ?? false;
       _proxyKey = _getString('proxyKey', config, env);
 
       if (_debug) {
@@ -84,17 +85,22 @@ loaded config:
     return _proxyKey;
   }
 
-  String _getString(String configKey, Map config, Map<String, String> env) {
+  String _getString(
+      String configKey, Map /*!*/ config, Map<String, String> env) {
     return _getConfigProperty((value) => value, configKey, config, env);
   }
 
-  bool _getBool(String configKey, Map config, Map<String, String> env) {
+  bool _getBool(String configKey, Map /*!*/ config, Map<String, String> env) {
     return _getConfigProperty(
-        (value) => value.toLowerCase() == 'true', configKey, config, env);
+      (value) => value != null && value.toLowerCase() == 'true',
+      configKey,
+      config,
+      env,
+    );
   }
 
-  T _getConfigProperty<T>(T Function(String) fromEnv, String configKey,
-      Map config, Map<String, String> env) {
+  T _getConfigProperty<T>(T /*?*/ Function(String) fromEnv, String configKey,
+      Map /*!*/ config, Map<String, String> env) {
     // camelCaseToUpperUnderscore: backendUrl -> BACKEND_URL
     final String envKey = StringUtils.camelCaseToUpperUnderscore(configKey);
 
@@ -103,7 +109,7 @@ loaded config:
     }
 
     if (config.containsKey(configKey)) {
-      return config[configKey] as T;
+      return config[configKey] as T/*!*/;
     }
 
     return null;

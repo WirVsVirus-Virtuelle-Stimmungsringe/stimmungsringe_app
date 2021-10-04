@@ -29,8 +29,11 @@ class Dashboard extends Equatable {
 
   const Dashboard(this.myTile, this.otherTiles, this.groupData);
 
-  Dashboard copyWith(
-      {MyTile myTile, BuiltList<OtherTile> otherTiles, GroupData groupData}) {
+  Dashboard copyWith({
+    MyTile myTile,
+    BuiltList<OtherTile> otherTiles,
+    GroupData groupData,
+  }) {
     return Dashboard(
       myTile ?? this.myTile,
       otherTiles ?? this.otherTiles,
