@@ -157,7 +157,7 @@ class AvatarRow extends StatelessWidget {
           );
   }
 
-  static Widget wrapGestureDetector({Widget child, void Function() onTap}) =>
+  static Widget wrapGestureDetector({Widget/*!*/ child, void Function() onTap}) =>
       (onTap != null)
           ? GestureDetector(
               onTap: () {

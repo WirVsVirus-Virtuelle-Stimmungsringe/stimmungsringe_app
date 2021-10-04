@@ -17,7 +17,7 @@ class OtherDetail extends Equatable {
     return OtherDetail(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       SentimentExtension.fromJson(jsonMap['sentiment'] as String),
-      jsonMap['sentimentText'] as String,
+      jsonMap['sentimentText'] as String /*!*/,
       BuiltList.of(
         (jsonMap['suggestions'] as List<dynamic>).map(
           (dynamic suggestion) =>
@@ -28,5 +28,9 @@ class OtherDetail extends Equatable {
   }
 
   const OtherDetail(
-      this.user, this.sentiment, this.sentimentText, this.suggestions);
+    this.user,
+    this.sentiment,
+    this.sentimentText,
+    this.suggestions,
+  );
 }

@@ -116,7 +116,7 @@ class OnboardingRepository {
     return findGroupResponse;
   }
 
-  Future<void> leaveGroup(String groupId) async {
+  Future<void> leaveGroup(String/*!*/ groupId) async {
     final Uri url = Uri.parse('${Config().backendUrl}/onboarding/group/leave');
 
     final http.Response response = await http.put(
@@ -158,7 +158,7 @@ class OnboardingRepository {
     return;
   }
 
-  Future<void> updateGroupSettings(String groupId, String groupName) async {
+  Future<void> updateGroupSettings(String/*!*/ groupId, String groupName) async {
     final Uri url =
         Uri.parse('${Config().backendUrl}/onboarding/group/$groupId/settings');
 
@@ -200,7 +200,7 @@ class OnboardingRepository {
     return userSettings;
   }
 
-  Future<GroupData> getGroupSettings(String groupId) async {
+  Future<GroupData> getGroupSettings(String/*!*/ groupId) async {
     final Uri url =
         Uri.parse('${Config().backendUrl}/onboarding/group/$groupId/settings');
 

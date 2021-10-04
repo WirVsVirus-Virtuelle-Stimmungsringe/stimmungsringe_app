@@ -15,7 +15,7 @@ class MyTile extends Equatable {
     return MyTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       SentimentExtension.fromJson(jsonMap['sentiment'] as String),
-      jsonMap['sentimentText'] as String,
+      jsonMap['sentimentText'] as String/*!*/,
       DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }

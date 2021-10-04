@@ -31,14 +31,14 @@ class StockAvatar extends Equatable {
 
   static StockAvatar fromJson(Map<String, dynamic> jsonMap) {
     return StockAvatar(
-      jsonMap['avatarName'] as String,
-      jsonMap['avatarUrl'] as String,
+      jsonMap['avatarName'] as String/*!*/,
+      jsonMap['avatarUrl'] as String/*!*/,
     );
   }
 
   const StockAvatar(this.avatarName, this._avatarUrl);
 
   String get avatarUrl {
-    return _avatarUrl == null ? null : Config().backendUrl + _avatarUrl;
+    return Config().backendUrl + _avatarUrl;
   }
 }

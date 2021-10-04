@@ -14,7 +14,7 @@ class Message extends Equatable {
     return Message(
       DateTime.parse(jsonMap['createdAt'] as String),
       UserMinimal.fromJson(jsonMap['senderUser'] as Map<String, dynamic>),
-      jsonMap['text'] as String,
+      jsonMap['text'] as String/*!*/,
     );
   }
 
@@ -58,8 +58,8 @@ class MessageTemplate extends Equatable {
 
   static MessageTemplate fromJson(Map<String, dynamic> jsonMap) {
     return MessageTemplate(
-      jsonMap['used'] as bool,
-      jsonMap['text'] as String,
+      jsonMap['used'] as bool/*!*/,
+      jsonMap['text'] as String/*!*/,
     );
   }
 
