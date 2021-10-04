@@ -15,13 +15,11 @@ class OtherDetailPageLoaded extends OtherDetailPageState {
   final OtherDetail otherDetail;
   final AvailableMessages availableMessages;
 
-  OtherDetailPageLoaded(this.otherDetail, this.availableMessages)
-      : assert(otherDetail != null),
-        assert(availableMessages != null);
+  OtherDetailPageLoaded(this.otherDetail, this.availableMessages);
 
   OtherDetailPageLoaded copyWith({
-    OtherDetail otherDetail,
-    AvailableMessages availableMessages,
+    OtherDetail? otherDetail,
+    AvailableMessages? availableMessages,
   }) {
     return OtherDetailPageLoaded(
       otherDetail ?? this.otherDetail,
@@ -40,8 +38,7 @@ class OtherDetailPageSendingMessage extends OtherDetailPageLoaded {
     OtherDetail otherDetail,
     AvailableMessages availableMessages,
     this.sendingForMessage,
-  )   : assert(sendingForMessage != null),
-        super(otherDetail, availableMessages);
+  ) : super(otherDetail, availableMessages);
 
   factory OtherDetailPageSendingMessage.fromOtherDetailPageLoaded(
     OtherDetailPageLoaded otherDetailPageLoaded,

@@ -14,13 +14,13 @@ class Message extends Equatable {
     return Message(
       DateTime.parse(jsonMap['createdAt'] as String),
       UserMinimal.fromJson(jsonMap['senderUser'] as Map<String, dynamic>),
-      jsonMap['text'] as String/*!*/,
+      jsonMap['text'] as String,
     );
   }
 
   const Message(this.createdAt, this.senderUser, this.text);
 
-  Message copyWith({DateTime createdAt, UserMinimal senderUser, String text}) {
+  Message copyWith({DateTime? createdAt, UserMinimal? senderUser, String? text}) {
     return Message(
       createdAt ?? this.createdAt,
       senderUser ?? this.senderUser,
@@ -58,14 +58,14 @@ class MessageTemplate extends Equatable {
 
   static MessageTemplate fromJson(Map<String, dynamic> jsonMap) {
     return MessageTemplate(
-      jsonMap['used'] as bool/*!*/,
-      jsonMap['text'] as String/*!*/,
+      jsonMap['used'] as bool,
+      jsonMap['text'] as String,
     );
   }
 
   const MessageTemplate(this.used, this.text);
 
-  MessageTemplate copyWith({String text}) {
+  MessageTemplate copyWith({String? text}) {
     return MessageTemplate(
       used,
       text ?? this.text,

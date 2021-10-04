@@ -31,8 +31,8 @@ class StockAvatar extends Equatable {
 
   static StockAvatar fromJson(Map<String, dynamic> jsonMap) {
     return StockAvatar(
-      jsonMap['avatarName'] as String/*!*/,
-      jsonMap['avatarUrl'] as String/*!*/,
+      jsonMap['avatarName'] as String,
+      jsonMap['avatarUrl'] as String,
     );
   }
 

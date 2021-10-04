@@ -8,14 +8,11 @@ class SentimentIconButton extends StatelessWidget {
   final void Function(Sentiment) onTap;
 
   const SentimentIconButton({
-    Key key,
-    @required this.sentiment,
-    @required this.isSelected,
-    @required this.onTap,
-  })  : assert(sentiment != null),
-        assert(isSelected != null),
-        assert(onTap != null),
-        super(key: key);
+    Key? key,
+    required this.sentiment,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

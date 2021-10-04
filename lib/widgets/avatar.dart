@@ -7,13 +7,12 @@ class Avatar extends StatelessWidget {
   final double size;
 
   const Avatar({
-    Key key,
-    @required this.image,
+    Key? key,
+    required this.image,
     this.borderColor = CupertinoColors.white,
     this.backgroundColor = const Color(0xff6e8983),
     this.size = 150,
-  })  : assert(image != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

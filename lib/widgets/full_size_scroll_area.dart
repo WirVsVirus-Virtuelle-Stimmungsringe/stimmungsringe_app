@@ -4,10 +4,9 @@ class FullSizeScrollArea extends StatelessWidget {
   final WidgetBuilder builder;
 
   const FullSizeScrollArea({
-    Key key,
-    @required this.builder,
-  })  : assert(builder != null),
-        super(key: key);
+    Key? key,
+    required this.builder,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,6 @@ import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/message_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
@@ -18,19 +17,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final DashboardRepository dashboardRepository;
   final MessageRepository messageRepository;
 
-  StreamSubscription<UserSettingsState> _userSettingsBlocSubscription;
+  late StreamSubscription<UserSettingsState> _userSettingsBlocSubscription;
   int _dashboardHash = 0;
   int _messageInboxHash = 0;
-  StreamSubscription<void> _refreshSubscription;
+  late StreamSubscription<void> _refreshSubscription;
 
   DashboardBloc({
-    @required this.dashboardRepository,
-    @required this.messageRepository,
-    @required UserSettingsBloc userSettingsBloc,
-  })  : assert(dashboardRepository != null),
-        assert(messageRepository != null),
-        assert(userSettingsBloc != null),
-        super(DashboardUninitialized()) {
+    required this.dashboardRepository,
+    required this.messageRepository,
+    required UserSettingsBloc userSettingsBloc,
+  }) : super(DashboardUninitialized()) {
     _userSettingsBlocSubscription = userSettingsBloc.stream.listen((state) {
       if (state is UserSettingsLoaded) {
         print("settings sub");
@@ -71,7 +67,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   Stream<DashboardState> _mapFetchDashboardToState(
-      FetchDashboard fetch) async* {
+    FetchDashboard fetch,
+  ) async* {
     if (state is DashboardLoading) {
       return;
     }
@@ -97,7 +94,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   Stream<DashboardState> _mapRefreshDashboardToState(
-      RefreshDashboardIfNecessary refresh) async* {
+    RefreshDashboardIfNecessary refresh,
+  ) async* {
     if (state is! DashboardLoaded) {
       return;
     }
@@ -132,7 +130,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   Stream<DashboardState> _mapSetNewSentimentToState(
-      SetNewSentiment setNewSentiment) async* {
+    SetNewSentiment setNewSentiment,
+  ) async* {
     if (state is! DashboardLoaded) {
       return;
     }
@@ -142,10 +141,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final Dashboard prevDashboard = dashboardLoadedState.dashboard;
       final Dashboard optimisticUpdate = prevDashboard.copyWith(
-          myTile: prevDashboard.myTile
-              .copyWith(sentiment: setNewSentiment.sentiment));
+        myTile:
+            prevDashboard.myTile.copyWith(sentiment: setNewSentiment.sentiment),
+      );
       print(
-          "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}");
+        "optimistic set ${optimisticUpdate.myTile.sentiment.sentimentCode}",
+      );
       yield DashboardLoaded.fromDashboardState(
         dashboardLoadedState,
         dashboard: optimisticUpdate,
@@ -159,7 +160,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       final Dashboard loadDashboardPageData =
           await dashboardRepository.loadDashboardPageData();
       print(
-          "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}");
+        "reloaded dashboard ${loadDashboardPageData.myTile.sentiment.sentimentCode}",
+      );
       yield DashboardLoaded.fromDashboardState(
         dashboardLoadedState,
         dashboard: loadDashboardPageData,

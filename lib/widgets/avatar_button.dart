@@ -7,14 +7,11 @@ class AvatarButton extends StatelessWidget {
   final void Function() onAvatarTap;
 
   const AvatarButton({
-    Key key,
-    @required this.image,
-    @required this.selected,
-    @required this.onAvatarTap,
-  })  : assert(image != null),
-        assert(selected != null),
-        assert(onAvatarTap != null),
-        super(key: key);
+    Key? key,
+    required this.image,
+    required this.selected,
+    required this.onAvatarTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

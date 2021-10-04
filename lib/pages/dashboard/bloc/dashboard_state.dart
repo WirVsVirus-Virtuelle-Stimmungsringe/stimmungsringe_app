@@ -1,21 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/message.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class StateWithData {
-  Dashboard get dashboard;
+  Dashboard? get dashboard;
 
-  MessageInbox get inbox;
+  MessageInbox? get inbox;
 
-  DateTime get now;
+  DateTime? get now;
 }
 
 abstract class DashboardState extends Equatable {
   bool get hasDashboard;
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class DashboardUninitialized extends DashboardState {
@@ -25,21 +24,27 @@ class DashboardUninitialized extends DashboardState {
 
 class DashboardLoading extends DashboardState implements StateWithData {
   @override
-  final Dashboard dashboard;
+  final Dashboard? dashboard;
   @override
-  final MessageInbox inbox;
+  final MessageInbox? inbox;
   @override
-  final DateTime now;
+  final DateTime? now;
 
   DashboardLoading({
     this.dashboard,
     this.inbox,
     this.now,
-  }) : assert((dashboard == null && inbox == null && now == null) ||
-            (dashboard != null && inbox != null && now != null));
+  }) : assert(
+          (dashboard == null && inbox == null && now == null) ||
+              (dashboard != null && inbox != null && now != null),
+        );
 
-  factory DashboardLoading.fromDashboardState(DashboardState dashboardState,
-      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+  factory DashboardLoading.fromDashboardState(
+    DashboardState dashboardState, {
+    Dashboard? dashboard,
+    MessageInbox? inbox,
+    DateTime? now,
+  }) {
     if (dashboardState.hasDashboard) {
       final StateWithData stateWithData = dashboardState as StateWithData;
       return DashboardLoading(
@@ -56,7 +61,7 @@ class DashboardLoading extends DashboardState implements StateWithData {
   bool get hasDashboard => dashboard != null;
 
   @override
-  List<Object> get props => [dashboard, inbox, now];
+  List<Object?> get props => [dashboard, inbox, now];
 }
 
 class DashboardLoaded extends DashboardState implements StateWithData {
@@ -68,22 +73,24 @@ class DashboardLoaded extends DashboardState implements StateWithData {
   final DateTime now;
 
   DashboardLoaded({
-    @required this.dashboard,
-    @required this.inbox,
-    @required this.now,
-  })  : assert(dashboard != null),
-        assert(inbox != null),
-        assert(now != null);
+    required this.dashboard,
+    required this.inbox,
+    required this.now,
+  });
 
-  factory DashboardLoaded.fromDashboardState(DashboardState dashboardState,
-      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+  factory DashboardLoaded.fromDashboardState(
+    DashboardState dashboardState, {
+    Dashboard? dashboard,
+    MessageInbox? inbox,
+    DateTime? now,
+  }) {
     assert(dashboardState.hasDashboard);
 
     final StateWithData stateWithData = dashboardState as StateWithData;
     return DashboardLoaded(
-      dashboard: dashboard ?? stateWithData.dashboard,
-      inbox: inbox ?? stateWithData.inbox,
-      now: now ?? stateWithData.now,
+      dashboard: dashboard ?? stateWithData.dashboard!,
+      inbox: inbox ?? stateWithData.inbox!,
+      now: now ?? stateWithData.now!,
     );
   }
 
@@ -97,18 +104,24 @@ class DashboardLoaded extends DashboardState implements StateWithData {
 class DashboardError extends DashboardState implements StateWithData {
   // may be null
   @override
-  final Dashboard dashboard;
+  final Dashboard? dashboard;
   @override
-  final MessageInbox inbox;
+  final MessageInbox? inbox;
   @override
-  final DateTime now;
+  final DateTime? now;
 
   DashboardError({this.dashboard, this.inbox, this.now})
-      : assert((dashboard == null && inbox == null && now == null) ||
-            (dashboard != null && inbox != null && now != null));
+      : assert(
+          (dashboard == null && inbox == null && now == null) ||
+              (dashboard != null && inbox != null && now != null),
+        );
 
-  factory DashboardError.fromDashboardState(DashboardState dashboardState,
-      {Dashboard dashboard, MessageInbox inbox, DateTime now}) {
+  factory DashboardError.fromDashboardState(
+    DashboardState dashboardState, {
+    Dashboard? dashboard,
+    MessageInbox? inbox,
+    DateTime? now,
+  }) {
     if (dashboardState.hasDashboard) {
       final StateWithData stateWithData = dashboardState as StateWithData;
       return DashboardError(
@@ -125,5 +138,5 @@ class DashboardError extends DashboardState implements StateWithData {
   bool get hasDashboard => dashboard != null;
 
   @override
-  List<Object> get props => [dashboard, inbox, now];
+  List<Object?> get props => [dashboard, inbox, now];
 }

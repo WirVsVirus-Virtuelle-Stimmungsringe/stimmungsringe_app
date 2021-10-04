@@ -14,9 +14,7 @@ class SetNewSentiment extends DashboardEvent {
   final Sentiment sentiment;
   final String sentimentText;
 
-  SetNewSentiment(this.sentiment, this.sentimentText)
-      : assert(sentiment != null),
-        assert(sentimentText != null);
+  SetNewSentiment(this.sentiment, this.sentimentText);
 
   @override
   List<Object> get props => [sentiment, sentimentText];

@@ -15,12 +15,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 class OnboardingCreateGroupPage extends StatefulWidget {
   static const String routeUri = '/onboarding/create-group';
 
-  const OnboardingCreateGroupPage({Key key}) : super(key: key);
+  const OnboardingCreateGroupPage({Key? key}) : super(key: key);
 
   static MapEntry<String, WidgetBuilder> route = MapEntry(
     routeUri,
     (BuildContext context) => BlocProvider.value(
-      value: ModalRoute.of(context).settings.arguments as OnboardingBloc,
+      value: ModalRoute.of(context)!.settings.arguments! as OnboardingBloc,
       child: const OnboardingCreateGroupPage(),
     ),
   );
@@ -78,7 +78,8 @@ class _OnboardingCreateGroupPageState extends State<OnboardingCreateGroupPage> {
                                 ),
                                 const Paragraph(
                                   child: Text(
-                                      'Wähle einen Namen für deine Fam-Group:'),
+                                    'Wähle einen Namen für deine Fam-Group:',
+                                  ),
                                 ),
                                 Paragraph(
                                   child: CupertinoTextField(

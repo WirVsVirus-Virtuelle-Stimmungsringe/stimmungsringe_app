@@ -21,7 +21,8 @@ class OnboardingStartPage extends StatelessWidget {
   static const String routeUri = '/';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          UserSettingsBloc userSettingsBloc) =>
+    UserSettingsBloc userSettingsBloc,
+  ) =>
       MapEntry(
         routeUri,
         (_) => BlocProvider<OnboardingBloc>(
@@ -35,9 +36,8 @@ class OnboardingStartPage extends StatelessWidget {
 
   final UserSettingsBloc userSettingsBloc;
 
-  const OnboardingStartPage({Key key, @required this.userSettingsBloc})
-      : assert(userSettingsBloc != null),
-        super(key: key);
+  const OnboardingStartPage({Key? key, required this.userSettingsBloc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

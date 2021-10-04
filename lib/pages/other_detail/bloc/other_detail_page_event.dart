@@ -8,7 +8,7 @@ abstract class OtherDetailPageEvent extends Equatable {
 class FetchOtherDetailPage extends OtherDetailPageEvent {
   final String otherUserId;
 
-  FetchOtherDetailPage(this.otherUserId) : assert(otherUserId != null);
+  FetchOtherDetailPage(this.otherUserId);
 
   @override
   List<Object> get props => [otherUserId];
@@ -18,9 +18,7 @@ class SendMessage extends OtherDetailPageEvent {
   final String otherUserId;
   final String text;
 
-  SendMessage(this.otherUserId, this.text)
-      : assert(otherUserId != null),
-        assert(text != null);
+  SendMessage(this.otherUserId, this.text);
 
   @override
   List<Object> get props => [otherUserId, text];

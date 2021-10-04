@@ -12,7 +12,7 @@ class ShowCreateNewGroupFormEvent extends OnboardingEvent {}
 class CreateNewGroupEvent extends OnboardingEvent {
   final String groupName;
 
-  CreateNewGroupEvent(this.groupName) : assert(groupName != null);
+  CreateNewGroupEvent(this.groupName);
 
   @override
   List<Object> get props => [groupName];
@@ -23,7 +23,7 @@ class ShowJoinGroupFormEvent extends OnboardingEvent {}
 class JoinGroupEvent extends OnboardingEvent {
   final String groupCode;
 
-  JoinGroupEvent(this.groupCode) : assert(groupCode != null);
+  JoinGroupEvent(this.groupCode);
 
   @override
   List<Object> get props => [groupCode];

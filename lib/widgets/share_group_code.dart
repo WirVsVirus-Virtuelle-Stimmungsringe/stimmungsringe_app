@@ -5,9 +5,7 @@ import 'package:share/share.dart';
 class ShareGroupCode extends StatelessWidget {
   final String groupCode;
 
-  const ShareGroupCode({Key key, @required this.groupCode})
-      : assert(groupCode != null),
-        super(key: key);
+  const ShareGroupCode({Key? key, required this.groupCode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,8 @@ class ShareGroupCode extends StatelessWidget {
           CupertinoButton(
             onPressed: () {
               Share.share(
-                  'Trete bei FAMILIARISE der Fam-Group bei: $groupCode');
+                'Trete bei FAMILIARISE der Fam-Group bei: $groupCode',
+              );
             },
             child: const Icon(
               CupertinoIcons.share,

@@ -11,7 +11,9 @@ class AboutLink extends StatelessWidget {
       child: const Text(
         'Impressum / Datenschutz',
         style: TextStyle(
-            color: CupertinoColors.link, decoration: TextDecoration.underline),
+          color: CupertinoColors.link,
+          decoration: TextDecoration.underline,
+        ),
       ),
     );
   }

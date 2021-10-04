@@ -21,17 +21,18 @@ class OtherDetailPage extends StatelessWidget {
   static MapEntry<String, WidgetBuilder> makeRoute() => MapEntry(
         routeUri,
         (BuildContext context) {
-          final args =
-              ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-          final dashboardBloc = args['dashboardBloc'] as DashboardBloc;
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>?;
+          final dashboardBloc = args!['dashboardBloc'] as DashboardBloc;
           final otherUserId = args['otherUserId'] as String;
 
           return BlocProvider.value(
             value: dashboardBloc,
             child: BlocProvider<OtherDetailPageBloc>(
               create: (context) => OtherDetailPageBloc(
-                  dashboardRepository: DashboardRepository(),
-                  messageRepository: MessageRepository()),
+                dashboardRepository: DashboardRepository(),
+                messageRepository: MessageRepository(),
+              ),
               child: OtherDetailPage(
                 otherUserId: otherUserId,
               ),
@@ -40,11 +41,10 @@ class OtherDetailPage extends StatelessWidget {
         },
       );
 
-  final String otherUserId;
+  const OtherDetailPage({required this.otherUserId, Key? key})
+      : super(key: key);
 
-  const OtherDetailPage({@required this.otherUserId, Key key})
-      : assert(otherUserId != null),
-        super(key: key);
+  final String otherUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -52,53 +52,59 @@ class OtherDetailPage extends StatelessWidget {
         .add(FetchOtherDetailPage(otherUserId));
 
     return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          middle: Text('Wie geht es eigentlich ... '),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
-              builder: (context, state) {
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Wie geht es eigentlich ... '),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
+          builder: (context, state) {
             if (state is OtherDetailPageLoaded) {
               return _buildContent();
             } else {
               return LoadingSpinner();
             }
-          }),
-        ));
+          },
+        ),
+      ),
+    );
   }
 
   Column _buildContent() {
     return Column(
       children: <Widget>[
         BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
-            builder: (context, state) {
-          if (state is OtherDetailPageLoaded) {
-            return AvatarRowOther(
-              name: state.otherDetail.user.hasName
-                  ? state.otherDetail.user.displayName
-                  : '',
-              image: makeProtectedNetworkImage(
-                state.otherDetail.user.userId,
-                state.otherDetail.user.avatarUrl,
-              ),
-              avatarSentiment: state.otherDetail.sentiment,
-              sentimentText: state.otherDetail.sentimentText,
-            );
-          } else {
-            return LoadingSpinner();
-          }
-        }),
+          builder: (context, state) {
+            if (state is OtherDetailPageLoaded) {
+              return AvatarRowOther(
+                name: state.otherDetail.user.hasName
+                    ? state.otherDetail.user.displayName!
+                    : '',
+                image: makeProtectedNetworkImage(
+                  state.otherDetail.user.userId,
+                  state.otherDetail.user.avatarUrl,
+                ),
+                avatarSentiment: state.otherDetail.sentiment,
+                sentimentText: state.otherDetail.sentimentText,
+              );
+            } else {
+              return LoadingSpinner();
+            }
+          },
+        ),
         Expanded(
           child: BlocBuilder<OtherDetailPageBloc, OtherDetailPageState>(
             builder: (context, state) {
               if (state is OtherDetailPageLoaded) {
-                String sendingMessage;
+                String? sendingMessage;
                 if (state is OtherDetailPageSendingMessage) {
                   sendingMessage = state.sendingForMessage;
                 }
                 return _buildPushMessageList(
-                    state.otherDetail, state.availableMessages, sendingMessage);
+                  state.otherDetail,
+                  state.availableMessages,
+                  sendingMessage,
+                );
               }
 
               return Container();
@@ -112,7 +118,7 @@ class OtherDetailPage extends StatelessWidget {
   ListView _buildPushMessageList(
     OtherDetail otherUserDetails,
     AvailableMessages availableMessages,
-    String sendingMessage,
+    String? sendingMessage,
   ) {
     return ListView.builder(
       itemCount: availableMessages.messageTemplates.length,
@@ -131,9 +137,13 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPushMessageRow(BuildContext context,
-      OtherDetail otherUserDetails, MessageTemplate messageTemplate,
-      {bool isSendingMessage, bool isLastItem}) {
+  Widget _buildPushMessageRow(
+    BuildContext context,
+    OtherDetail otherUserDetails,
+    MessageTemplate messageTemplate, {
+    required bool isSendingMessage,
+    required bool isLastItem,
+  }) {
     final Widget row = Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Row(
@@ -196,8 +206,11 @@ class OtherDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMessageText(BuildContext context,
-      MessageTemplate messageTemplate, OtherDetail otherUserDetails) {
+  Widget _buildMessageText(
+    BuildContext context,
+    MessageTemplate messageTemplate,
+    OtherDetail otherUserDetails,
+  ) {
     final messageText = Text(messageTemplate.text);
 
     if (messageTemplate.used) {
@@ -214,7 +227,9 @@ class OtherDetailPage extends StatelessWidget {
   }
 
   Widget _buildMessageUsedText(
-      BuildContext context, OtherDetail otherUserDetails) {
+    BuildContext context,
+    OtherDetail otherUserDetails,
+  ) {
     final bool isDarkTheme =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final Color textColor = isDarkTheme

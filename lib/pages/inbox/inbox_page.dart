@@ -20,9 +20,9 @@ class InboxPage extends StatefulWidget {
   static MapEntry<String, WidgetBuilder> makeRoute() =>
       MapEntry(routeUri, (BuildContext context) {
         final args =
-            ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
         final DashboardBloc dashboardBloc =
-            args['dashboardBloc'] as DashboardBloc;
+            args!['dashboardBloc'] as DashboardBloc;
 
         return BlocProvider.value(value: dashboardBloc, child: InboxPage());
       });
@@ -84,18 +84,20 @@ class _InboxPageState extends State<InboxPage> {
   }
 
   Widget _bodyContent(StateWithData state) {
+    final messages = state.inbox?.messages ?? BuiltList.of(<Message>[]);
+
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
         children: <Widget>[
           Flexible(
             child: Center(
-              child: _carousel(state.inbox.messages),
+              child: _carousel(messages),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: _dots(state.inbox.messages),
+            children: _dots(messages),
           ),
         ],
       ),

@@ -17,7 +17,8 @@ class UserSettingsPage extends StatefulWidget {
   static const String routeUri = '/user-settings';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-          UserSettingsBloc userSettingsBloc) =>
+    UserSettingsBloc userSettingsBloc,
+  ) =>
       MapEntry(
         routeUri,
         (BuildContext context) => BlocProvider<UserSettingsBloc>.value(
@@ -32,7 +33,7 @@ class UserSettingsPage extends StatefulWidget {
 
 class _UserSettingsPageState extends State<UserSettingsPage> {
   final _userNameController = TextEditingController();
-  String _selectedAvatar;
+  String? _selectedAvatar;
 
   @override
   void didChangeDependencies() {
@@ -68,7 +69,7 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
       listener: (context, state) {
         if (state is UserSettingsLoaded) {
           setState(() {
-            _userNameController.text = state.userName;
+            _userNameController.text = state.userName ?? '';
             _selectedAvatar = state.stockAvatar;
           });
         }

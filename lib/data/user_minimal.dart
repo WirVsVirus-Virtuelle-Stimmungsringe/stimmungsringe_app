@@ -3,19 +3,19 @@ import 'package:familiarise/config.dart';
 
 class UserMinimal extends Equatable {
   final String userId;
-  final String displayName;
+  final String? displayName;
   final bool hasName;
   final String _avatarUrl;
 
   @override
-  List<Object> get props => [userId, displayName, hasName, _avatarUrl];
+  List<Object?> get props => [userId, displayName, hasName, _avatarUrl];
 
   static UserMinimal fromJson(Map<String, dynamic> jsonMap) {
     return UserMinimal(
-      jsonMap['userId'] as String /*!*/,
-      jsonMap['displayName'] as String,
-      jsonMap['hasName'] as bool /*!*/,
-      jsonMap['avatarUrl'] as String /*!*/,
+      jsonMap['userId'] as String,
+      jsonMap['displayName'] as String?,
+      jsonMap['hasName'] as bool,
+      jsonMap['avatarUrl'] as String,
     );
   }
 
@@ -24,7 +24,7 @@ class UserMinimal extends Equatable {
     this.displayName,
     this.hasName,
     this._avatarUrl,
-  );
+  ) : assert(hasName == (displayName != null));
 
   String get avatarUrl {
     return Config().backendUrl + _avatarUrl;
