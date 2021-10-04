@@ -15,19 +15,23 @@ class MyTile extends Equatable {
     return MyTile(
       UserMinimal.fromJson(jsonMap['user'] as Map<String, dynamic>),
       SentimentExtension.fromJson(jsonMap['sentiment'] as String),
-      jsonMap['sentimentText'] as String/*!*/,
+      jsonMap['sentimentText'] as String,
       DateTime.parse(jsonMap['lastStatusUpdate'] as String),
     );
   }
 
   const MyTile(
-      this.user, this.sentiment, this.sentimentText, this.lastStatusUpdate);
+    this.user,
+    this.sentiment,
+    this.sentimentText,
+    this.lastStatusUpdate,
+  );
 
   MyTile copyWith({
-    UserMinimal user,
-    Sentiment sentiment,
-    String sentimentText,
-    DateTime lastStatusUpdate,
+    UserMinimal? user,
+    Sentiment? sentiment,
+    String? sentimentText,
+    DateTime? lastStatusUpdate,
   }) {
     return MyTile(
       user ?? this.user,

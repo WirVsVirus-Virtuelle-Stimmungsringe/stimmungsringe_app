@@ -4,15 +4,13 @@ import 'package:familiarise/pages/onboarding/bloc/onboarding_event.dart';
 import 'package:familiarise/pages/onboarding/bloc/onboarding_state.dart';
 import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:familiarise/session.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final OnboardingRepository onboardingRepository;
 
-  OnboardingBloc({@required this.onboardingRepository})
-      : assert(onboardingRepository != null),
-        super(CheckingUserState());
+  OnboardingBloc({required this.onboardingRepository})
+      : super(CheckingUserState());
 
   @override
   Stream<OnboardingState> mapEventToState(OnboardingEvent event) async* {
@@ -30,7 +28,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   Stream<OnboardingState> _mapCheckUserToState(
-      CheckUserEvent checkUser) async* {
+    CheckUserEvent checkUser,
+  ) async* {
     final String deviceId = await getCurrentDeviceIdentifier();
     final SigninUserResponse signinUserResponse =
         await onboardingRepository.signin(deviceId);
@@ -46,15 +45,17 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   Stream<OnboardingState> _mapShowCreateNewGroupFormToState(
-      ShowCreateNewGroupFormEvent beginStartNewGroup) async* {
+    ShowCreateNewGroupFormEvent beginStartNewGroup,
+  ) async* {
     yield CreateNewGroupFormState();
   }
 
   Stream<OnboardingState> _mapCreateNewGroupToState(
-      CreateNewGroupEvent startNewGroup) async* {
+    CreateNewGroupEvent startNewGroup,
+  ) async* {
     yield CreateNewGroupPendingState();
 
-    final GroupData startNewGroupResponse =
+    final GroupData? startNewGroupResponse =
         await onboardingRepository.startNewGroup(startNewGroup.groupName);
 
     if (startNewGroupResponse != null) {
@@ -66,15 +67,17 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   Stream<OnboardingState> _mapShowJoinGroupFormToState(
-      ShowJoinGroupFormEvent beginJoinGroup) async* {
+    ShowJoinGroupFormEvent beginJoinGroup,
+  ) async* {
     yield JoinGroupFormState();
   }
 
   Stream<OnboardingState> _mapJoinGroupToState(
-      JoinGroupEvent joinGroup) async* {
+    JoinGroupEvent joinGroup,
+  ) async* {
     yield JoinGroupPendingState();
 
-    final GroupData groupData =
+    final GroupData? groupData =
         await onboardingRepository.joinGroup(joinGroup.groupCode);
     if (groupData != null) {
       currentGroupId = groupData.groupId;

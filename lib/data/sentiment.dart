@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 enum Sentiment { sunny, sunnyWithClouds, cloudy, windy, cloudyNight, thundery }
 
 extension SentimentExtension on Sentiment {
-  static Sentiment fromJson(String/*!*/ sentimentCode) {
+  static Sentiment fromJson(String sentimentCode) {
     return Sentiment.values
         .firstWhere((type) => type.toString().split(".").last == sentimentCode);
   }
@@ -86,7 +86,5 @@ class _SentimentColors {
   final Color startColor;
   final Color endColor;
 
-  const _SentimentColors(this.startColor, this.endColor)
-      : assert(startColor != null),
-        assert(endColor != null);
+  const _SentimentColors(this.startColor, this.endColor);
 }

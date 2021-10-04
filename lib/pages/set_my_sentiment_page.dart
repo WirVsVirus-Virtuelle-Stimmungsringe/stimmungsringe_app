@@ -20,7 +20,7 @@ class SetMySentimentPage extends StatefulWidget {
   static MapEntry<String, WidgetBuilder> route = MapEntry(
     routeUri,
     (context) => BlocProvider<DashboardBloc>.value(
-      value: ModalRoute.of(context).settings.arguments as DashboardBloc,
+      value: ModalRoute.of(context)!.settings.arguments! as DashboardBloc,
       child: SetMySentimentPage(),
     ),
   );
@@ -30,7 +30,7 @@ class SetMySentimentPage extends StatefulWidget {
 }
 
 class _SetMySentimentPageState extends State<SetMySentimentPage> {
-  Sentiment _sentiment;
+  Sentiment? _sentiment;
   bool _sentimentTextTouched = false;
   int _enteredTextLength = 0;
   final _sentimentTextController = TextEditingController();
@@ -38,32 +38,35 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardBloc, DashboardState>(
-        builder: (context, state) {
-      if (state.hasDashboard) {
-        final stateWithData = state as StateWithData;
-        if (_sentiment == null) {
-          _sentiment = stateWithData.dashboard.myTile.sentiment;
-          _sentimentTextController.text =
-              stateWithData.dashboard.myTile.sentimentText;
-          _enteredTextLength =
-              stateWithData.dashboard.myTile.sentimentText.characters.length;
+      builder: (context, state) {
+        if (state.hasDashboard) {
+          final stateWithData = state as StateWithData;
+          if (_sentiment == null) {
+            _sentiment = stateWithData.dashboard!.myTile.sentiment;
+            _sentimentTextController.text =
+                stateWithData.dashboard!.myTile.sentimentText;
+            _enteredTextLength =
+                stateWithData.dashboard!.myTile.sentimentText.characters.length;
+          }
+          return _buildLoadedPage(context, state as StateWithData);
+        } else {
+          return LoadingSpinner();
         }
-        return _buildLoadedPage(context, state as StateWithData);
-      } else {
-        return LoadingSpinner();
-      }
-    });
+      },
+    );
   }
 
   Widget _buildLoadedPage(BuildContext context, StateWithData state) {
-    final Dashboard dashboard = state.dashboard;
+    final Dashboard dashboard = state.dashboard!;
 
     return WillPopScope(
       onWillPop: () {
-        final DashboardBloc dashboardBloc =
-            BlocProvider.of<DashboardBloc>(context);
-        dashboardBloc
-            .add(SetNewSentiment(_sentiment, _sentimentTextController.text));
+        if (_sentiment != null) {
+          final DashboardBloc dashboardBloc =
+              BlocProvider.of<DashboardBloc>(context);
+          dashboardBloc
+              .add(SetNewSentiment(_sentiment!, _sentimentTextController.text));
+        }
         return Future.value(true);
       },
       child: CupertinoPageScaffold(
@@ -75,13 +78,13 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
             children: <Widget>[
               AvatarRow(
                 name: dashboard.myTile.user.hasName
-                    ? dashboard.myTile.user.displayName
+                    ? dashboard.myTile.user.displayName!
                     : '',
                 image: makeProtectedNetworkImage(
                   dashboard.myTile.user.userId,
                   dashboard.myTile.user.avatarUrl,
                 ),
-                avatarSentiment: _sentiment,
+                avatarSentiment: _sentiment!,
               ),
               Expanded(
                 child: Padding(
@@ -171,8 +174,9 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
               (currSentimentButton) => Expanded(
                 child: Center(
                   child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: currSentimentButton),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: currSentimentButton,
+                  ),
                 ),
               ),
             )
@@ -200,10 +204,10 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
   }
 
   List<List<U>> _toPaddedSlices<T, U>({
-    Iterable<T> allValues,
-    U Function(T) mapper,
-    int sliceLength,
-    U Function() paddingValueFactory,
+    required Iterable<T> allValues,
+    required U Function(T) mapper,
+    required int sliceLength,
+    required U Function() paddingValueFactory,
   }) {
     final slices = <List<U>>[];
 
@@ -233,16 +237,14 @@ class _StringCharactersLimitingTextInputFormatter extends TextInputFormatter {
   final int maxLength;
 
   _StringCharactersLimitingTextInputFormatter(this.maxLength)
-      : assert(maxLength == null || maxLength == -1 || maxLength > 0);
+      : assert(maxLength == -1 || maxLength > 0);
 
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    if (maxLength != null &&
-        maxLength > 0 &&
-        newValue.text.characters.length > maxLength) {
+    if (maxLength > 0 && newValue.text.characters.length > maxLength) {
       // If already at the maximum and tried to enter even more, keep the old value.
       if (oldValue.text.characters.length == maxLength) {
         return oldValue;

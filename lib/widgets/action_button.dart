@@ -3,20 +3,19 @@ import 'package:flutter/cupertino.dart';
 
 class ActionButton extends StatelessWidget {
   final Text text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const ActionButton({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
     this.onPressed,
-  })  : assert(text != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ButtonGroup buttonGroup =
+    final ButtonGroup? buttonGroup =
         context.findAncestorWidgetOfExactType<ButtonGroup>();
-    final BorderRadius borderRadius =
+    final BorderRadius? borderRadius =
         buttonGroup == null ? BorderRadius.circular(12.0) : null;
 
     return CupertinoButton(

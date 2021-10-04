@@ -8,7 +8,7 @@ class AboutPage extends StatelessWidget {
         (_) => const AboutPage(),
       );
 
-  const AboutPage({Key key}) : super(key: key);
+  const AboutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +21,38 @@ class AboutPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SingleChildScrollView(
             child: Column(
-              children: [
-                const Text.rich(TextSpan(
-                  text: 'Impressum',
-                  style: TextStyle(
+              children: const [
+                Text.rich(
+                  TextSpan(
+                    text: 'Impressum',
+                    style: TextStyle(
                       color: CupertinoColors.darkBackgroundGray,
-                      fontWeight: FontWeight.bold),
-                )),
-                const Text.rich(const TextSpan(text: '''
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: '''
 Betreiber der App und verantwortlich für den Inhalt gemäß § 5 TMG:
 
     Daniela Rogge c/o familiarise
     Sachsensiedlung 5 | 45481 Mülheim
     kontakt@familiarise.de
-            ''')),
-                const Text.rich(TextSpan(
-                  text: 'Datenschutz',
-                  style: TextStyle(
+            ''',
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: 'Datenschutz',
+                    style: TextStyle(
                       color: CupertinoColors.darkBackgroundGray,
-                      fontWeight: FontWeight.bold),
-                )),
-                const Text.rich(
-                  const TextSpan(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
                     text: '''
 Verantwortlicher gemäß Art. 4 Nr. 7 der europäischen Datenschutz-Grundverordnung (DSGVO) ist
 

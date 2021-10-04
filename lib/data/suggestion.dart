@@ -8,7 +8,7 @@ class Suggestion extends Equatable {
 
   static Suggestion fromJson(Map<String, dynamic> jsonMap) {
     return Suggestion(
-      jsonMap['text'] as String /*!*/,
+      jsonMap['text'] as String,
     );
   }
 

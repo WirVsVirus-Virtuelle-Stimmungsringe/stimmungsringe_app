@@ -7,10 +7,10 @@ import 'package:familiarise/data/other_tile.dart';
 class Dashboard extends Equatable {
   final MyTile myTile;
   final BuiltList<OtherTile> otherTiles;
-  final GroupData groupData;
+  final GroupData? groupData;
 
   @override
-  List<Object> get props => [myTile, otherTiles, groupData];
+  List<Object?> get props => [myTile, otherTiles, groupData];
 
   static Dashboard fromJson(Map<String, dynamic> jsonMap) {
     return Dashboard(
@@ -30,9 +30,9 @@ class Dashboard extends Equatable {
   const Dashboard(this.myTile, this.otherTiles, this.groupData);
 
   Dashboard copyWith({
-    MyTile myTile,
-    BuiltList<OtherTile> otherTiles,
-    GroupData groupData,
+    MyTile? myTile,
+    BuiltList<OtherTile>? otherTiles,
+    GroupData? groupData,
   }) {
     return Dashboard(
       myTile ?? this.myTile,

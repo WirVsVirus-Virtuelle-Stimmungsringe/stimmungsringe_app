@@ -16,16 +16,12 @@ class AvatarRowOther extends StatelessWidget {
   final ImageProvider image;
 
   const AvatarRowOther({
-    Key key,
-    @required this.avatarSentiment,
-    @required this.sentimentText,
-    @required this.name,
-    @required this.image,
-  })  : assert(avatarSentiment != null),
-        assert(sentimentText != null),
-        assert(name != null),
-        assert(image != null),
-        super(key: key);
+    Key? key,
+    required this.avatarSentiment,
+    required this.sentimentText,
+    required this.name,
+    required this.image,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +91,6 @@ class AvatarRowOther extends StatelessWidget {
       left: 20,
       child: Avatar(
         image: image,
-        borderColor: CupertinoColors.white,
         backgroundColor: avatarSentiment.avatarIconBackgroundColor,
         size: _avatarSize,
       ),

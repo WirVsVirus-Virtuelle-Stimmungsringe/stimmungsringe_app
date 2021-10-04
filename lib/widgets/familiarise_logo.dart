@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class FamiliariseLogo extends StatelessWidget {
   final double height;
 
-  const FamiliariseLogo({Key key, this.height = 250}) : super(key: key);
+  const FamiliariseLogo({Key? key, this.height = 250}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

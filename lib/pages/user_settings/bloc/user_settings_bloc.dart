@@ -23,7 +23,8 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
   }
 
   Stream<UserSettingsState> mapLoadUserSettingsToState(
-      LoadUserSettings loadUserSettingsEvent) async* {
+    LoadUserSettings loadUserSettingsEvent,
+  ) async* {
     if (state is UserSettingsLoading) {
       return;
     }
@@ -45,7 +46,8 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
   }
 
   Stream<UserSettingsState> mapSaveUserSettingsToState(
-      SaveUserSettings event) async* {
+    SaveUserSettings event,
+  ) async* {
     await onboardingRepository.updateUserSettings(
       event.userName,
       event.stockAvatar,
@@ -55,7 +57,8 @@ class UserSettingsBloc extends Bloc<UserSettingsEvent, UserSettingsState> {
 
   @override
   void onTransition(
-      Transition<UserSettingsEvent, UserSettingsState> transition) {
+    Transition<UserSettingsEvent, UserSettingsState> transition,
+  ) {
     super.onTransition(transition);
     print(transition);
   }

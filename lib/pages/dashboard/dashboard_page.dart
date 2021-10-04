@@ -28,7 +28,8 @@ class DashboardPage extends StatefulWidget {
   static const String routeUri = '/home';
 
   static MapEntry<String, WidgetBuilder> makeRoute(
-      UserSettingsBloc userSettingsBloc) {
+    UserSettingsBloc userSettingsBloc,
+  ) {
     return MapEntry(
       routeUri,
       _makeRouteBuilder(userSettingsBloc),
@@ -36,10 +37,12 @@ class DashboardPage extends StatefulWidget {
   }
 
   static PageRouteBuilder<Widget> makeRouteWithoutTransition(
-      UserSettingsBloc userSettingsBloc) {
+    UserSettingsBloc userSettingsBloc,
+  ) {
     return PageRouteBuilder<Widget>(
-        pageBuilder: (context, animation1, animation2) =>
-            _makeRouteBuilder(userSettingsBloc)(context));
+      pageBuilder: (context, animation1, animation2) =>
+          _makeRouteBuilder(userSettingsBloc)(context),
+    );
   }
 
   static WidgetBuilder _makeRouteBuilder(UserSettingsBloc userSettingsBloc) {
@@ -62,12 +65,12 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -131,9 +134,9 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Widget _avatarRow(StateWithData stateWithData) {
-    final Dashboard dashboard = stateWithData.dashboard;
+    final Dashboard dashboard = stateWithData.dashboard!;
     final String nameInRow = dashboard.myTile.user.hasName
-        ? dashboard.myTile.user.displayName
+        ? dashboard.myTile.user.displayName!
         : 'Namen ändern...';
 
     final UserMinimal user = dashboard.myTile.user;
@@ -157,12 +160,16 @@ class _DashboardPageState extends State<DashboardPage>
           arguments: BlocProvider.of<DashboardBloc>(context),
         );
       },
-      inboxMessageCount: min(stateWithData.inbox.messages.length, 99),
+      inboxMessageCount: min(stateWithData.inbox!.messages.length, 99),
       onInboxIconTap: () {
-        if (stateWithData.inbox.messages.isNotEmpty) {
-          Navigator.pushNamed(context, InboxPage.routeUri, arguments: {
-            'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
-          });
+        if (stateWithData.inbox!.messages.isNotEmpty) {
+          Navigator.pushNamed(
+            context,
+            InboxPage.routeUri,
+            arguments: {
+              'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+            },
+          );
         }
       },
     );
@@ -171,18 +178,18 @@ class _DashboardPageState extends State<DashboardPage>
   Padding buildDashboardBody(StateWithData stateWithData) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: stateWithData.dashboard.otherTiles.isEmpty
+      child: stateWithData.dashboard!.otherTiles.isEmpty
           ? _emptyGroupInfo(
-              stateWithData.dashboard.groupData,
+              stateWithData.dashboard!.groupData,
             )
           : _contactList(
-              stateWithData.dashboard,
-              stateWithData.now,
+              stateWithData.dashboard!,
+              stateWithData.now!,
             ),
     );
   }
 
-  Widget _emptyGroupInfo(GroupData groupData) {
+  Widget _emptyGroupInfo(GroupData? groupData) {
     if (groupData == null) {
       return Container();
     }
@@ -198,8 +205,9 @@ class _DashboardPageState extends State<DashboardPage>
               ),
               const Paragraph(
                 child: Text(
-                    'Teile den Code mit den Leuten, die du in die Fam-Group einladen willst.',
-                    textAlign: TextAlign.center),
+                  'Teile den Code mit den Leuten, die du in die Fam-Group einladen willst.',
+                  textAlign: TextAlign.center,
+                ),
               ),
               Paragraph(
                 child: Column(
@@ -226,7 +234,7 @@ class _DashboardPageState extends State<DashboardPage>
     return Column(
       children: <Widget>[
         Paragraph(
-          child: Headline('Fam-Group "${dashboard.groupData.groupName}"'),
+          child: Headline('Fam-Group "${dashboard.groupData!.groupName}"'),
         ),
         Expanded(
           child: Paragraph(
@@ -241,11 +249,14 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   List<Widget> _otherTiles(
-      BuildContext context, Dashboard dashboard, DateTime now) {
+    BuildContext context,
+    Dashboard dashboard,
+    DateTime now,
+  ) {
     return dashboard.otherTiles.map(
       (tile) {
         final String contactName = tile.user.hasName
-            ? tile.user.displayName
+            ? tile.user.displayName!
             : 'Kontakt hat noch keinen Namen vergeben 😟';
 
         return Container(

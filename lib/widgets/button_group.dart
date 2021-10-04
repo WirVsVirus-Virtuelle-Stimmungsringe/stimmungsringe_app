@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 class ButtonGroup extends StatelessWidget {
   final List<Widget> children;
 
-  const ButtonGroup({Key key, @required this.children})
-      : assert(children != null),
-        super(key: key);
+  const ButtonGroup({Key? key, required this.children}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

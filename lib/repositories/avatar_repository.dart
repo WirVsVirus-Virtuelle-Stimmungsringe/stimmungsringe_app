@@ -20,10 +20,13 @@ class AvatarRepository {
       headers: authenticated(currentUserId),
     );
 
-    assert(response.statusCode == 200,
-        'load available avatars -> ${response.statusCode}');
+    assert(
+      response.statusCode == 200,
+      'load available avatars -> ${response.statusCode}',
+    );
 
     return AvailableAvatars.fromJson(
-        decodeResponseBytesToJson(response.bodyBytes));
+      decodeResponseBytesToJson(response.bodyBytes),
+    );
   }
 }

@@ -15,12 +15,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 class OnboardingJoinGroupPage extends StatefulWidget {
   static const String routeUri = '/onboarding/join-group';
 
-  const OnboardingJoinGroupPage({Key key}) : super(key: key);
+  const OnboardingJoinGroupPage({Key? key}) : super(key: key);
 
   static MapEntry<String, WidgetBuilder> route = MapEntry(
     routeUri,
     (BuildContext context) => BlocProvider.value(
-      value: ModalRoute.of(context).settings.arguments as OnboardingBloc,
+      value: ModalRoute.of(context)!.settings.arguments! as OnboardingBloc,
       child: const OnboardingJoinGroupPage(),
     ),
   );

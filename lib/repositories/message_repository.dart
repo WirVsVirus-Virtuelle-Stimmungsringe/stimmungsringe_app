@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:familiarise/config.dart';
 import 'package:familiarise/data/message.dart';
-import 'package:familiarise/repositories/chaos_monkey.dart';
+import 'package:familiarise/repositories/chaos_monkey.dart' as chaos_monkey;
 import 'package:familiarise/session.dart';
 import 'package:familiarise/utils/api_headers.dart';
 import 'package:familiarise/utils/response.dart';
@@ -31,13 +31,14 @@ class MessageRepository {
     final MessageInbox inbox =
         MessageInbox.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
     return inbox;
   }
 
   Future<AvailableMessages> loadAvailableMessages(String recipientId) async {
     final Uri url = Uri.parse(
-        '${Config().backendUrl}/message/available-messages/$recipientId');
+      '${Config().backendUrl}/message/available-messages/$recipientId',
+    );
 
     final http.Response response = await http.get(
       url,
@@ -47,9 +48,10 @@ class MessageRepository {
     assert(response.statusCode == 200);
 
     final AvailableMessages availableMessages = AvailableMessages.fromJson(
-        decodeResponseBytesToJson(response.bodyBytes));
+      decodeResponseBytesToJson(response.bodyBytes),
+    );
 
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
     return availableMessages;
   }
 
@@ -69,9 +71,10 @@ class MessageRepository {
     assert(response.statusCode == 200);
 
     final AvailableMessages availableMessages = AvailableMessages.fromJson(
-        decodeResponseBytesToJson(response.bodyBytes));
+      decodeResponseBytesToJson(response.bodyBytes),
+    );
 
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
     return availableMessages;
   }
 }

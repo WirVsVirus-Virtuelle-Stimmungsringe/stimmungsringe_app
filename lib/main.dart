@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:familiarise/config.dart';
 import 'package:familiarise/pages/about/about_page.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
@@ -19,31 +17,34 @@ import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-PushNotificationsManager pushNotificationsManager;
+ PushNotificationsManager? pushNotificationsManager;
 
 Future<void> main() async {
   await Config().loaded;
 
   SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
 
   pushNotificationsManager = PushNotificationsManager();
-  await pushNotificationsManager.init();
+  await pushNotificationsManager!.init();
 
   final UserSettingsBloc userSettingsBloc =
       UserSettingsBloc(OnboardingRepository(), AvatarRepository());
 
-  runApp(SentimentApp(
-    userSettingsBloc: userSettingsBloc,
-  ));
+  runApp(
+    SentimentApp(
+      userSettingsBloc: userSettingsBloc,
+    ),
+  );
 }
 
 class SentimentApp extends StatefulWidget {
   final UserSettingsBloc userSettingsBloc;
 
   const SentimentApp({
-    @required this.userSettingsBloc,
-  }) : assert(userSettingsBloc != null);
+    required this.userSettingsBloc,
+  });
 
   @override
   // ignore: no_logic_in_create_state
@@ -56,29 +57,27 @@ class SentimentApp extends StatefulWidget {
 class _SentimentAppState extends State<SentimentApp>
     with WidgetsBindingObserver {
   final UserSettingsBloc userSettingsBloc;
-  CupertinoThemeData theme;
+  CupertinoThemeData? theme;
 
-  _SentimentAppState(this.userSettingsBloc)
-      : assert(userSettingsBloc != null),
-        super();
+  _SentimentAppState(this.userSettingsBloc) : super();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     didChangePlatformBrightness();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
   @override
   void didChangePlatformBrightness() {
     final Brightness brightness =
-        WidgetsBinding.instance.window.platformBrightness;
+        WidgetsBinding.instance!.window.platformBrightness;
 
     setState(() {
       theme = CupertinoThemeData(brightness: brightness);

@@ -35,18 +35,22 @@ class PushNotificationsManager {
 
       _printToken();
 
-      final RemoteMessage initialMessage = await messaging.getInitialMessage();
+      final RemoteMessage? initialMessage = await messaging.getInitialMessage();
 
       if (initialMessage != null) {
         _onMessage(MessageEvent.appStartedOnMessageClick, initialMessage);
       }
 
-      FirebaseMessaging.onMessage.listen((message) =>
-          _onMessage(MessageEvent.receivedMessageWhileInForeground, message));
-      FirebaseMessaging.onMessageOpenedApp.listen((message) =>
-          _onMessage(MessageEvent.appResumedOnMessageClick, message));
+      FirebaseMessaging.onMessage.listen(
+        (message) =>
+            _onMessage(MessageEvent.receivedMessageWhileInForeground, message),
+      );
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (message) => _onMessage(MessageEvent.appResumedOnMessageClick, message),
+      );
       FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
+        _firebaseMessagingBackgroundHandler,
+      );
 
       _initialized = true;
     }
@@ -58,11 +62,12 @@ class PushNotificationsManager {
 
     if (message.notification != null) {
       print(
-          'Message also contained a notification, title: ${message.notification.title}, body: ${message.notification.body}');
+        'Message also contained a notification, title: ${message.notification!.title}, body: ${message.notification!.body}',
+      );
     }
   }
 
-  Future<String> getFcmToken() async {
+  Future<String?> getFcmToken() async {
     assert(_initialized);
     return FirebaseMessaging.instance.getToken();
   }
@@ -74,7 +79,8 @@ class PushNotificationsManager {
     }
 
     print(
-        "FirebaseMessaging token: ${await FirebaseMessaging.instance.getToken()}");
+      "FirebaseMessaging token: ${await FirebaseMessaging.instance.getToken()}",
+    );
   }
 }
 
@@ -86,6 +92,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   if (message.notification != null) {
     print(
-        'Message also contained a notification, title: ${message.notification.title}, body: ${message.notification.body}');
+      'Message also contained a notification, title: ${message.notification!.title}, body: ${message.notification!.body}',
+    );
   }
 }

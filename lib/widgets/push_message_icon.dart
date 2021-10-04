@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class PushMessageIcon extends StatelessWidget {
   final double size;
 
-  const PushMessageIcon({this.size = 40, Key key}) : super(key: key);
+  const PushMessageIcon({this.size = 40, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

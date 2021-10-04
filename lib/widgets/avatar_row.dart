@@ -10,24 +10,21 @@ class AvatarRow extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
   final ImageProvider image;
-  final void Function() onAvatarImageTap;
-  final void Function() onSentimentIconTap;
-  final void Function() onInboxIconTap;
-  final int inboxMessageCount;
+  final void Function()? onAvatarImageTap;
+  final void Function()? onSentimentIconTap;
+  final void Function()? onInboxIconTap;
+  final int? inboxMessageCount;
 
   const AvatarRow({
-    Key key,
-    @required this.avatarSentiment,
-    @required this.name,
-    @required this.image,
+    Key? key,
+    required this.avatarSentiment,
+    required this.name,
+    required this.image,
     this.onAvatarImageTap,
     this.onSentimentIconTap,
     this.onInboxIconTap,
     this.inboxMessageCount,
-  })  : assert(avatarSentiment != null),
-        assert(name != null),
-        assert(image != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +84,6 @@ class AvatarRow extends StatelessWidget {
         onTap: onAvatarImageTap,
         child: Avatar(
           image: image,
-          borderColor: CupertinoColors.white,
           backgroundColor: avatarSentiment.avatarIconBackgroundColor,
           size: _avatarSize,
         ),
@@ -157,7 +153,10 @@ class AvatarRow extends StatelessWidget {
           );
   }
 
-  static Widget wrapGestureDetector({Widget/*!*/ child, void Function() onTap}) =>
+  static Widget wrapGestureDetector({
+    required Widget child,
+    void Function()? onTap,
+  }) =>
       (onTap != null)
           ? GestureDetector(
               onTap: () {

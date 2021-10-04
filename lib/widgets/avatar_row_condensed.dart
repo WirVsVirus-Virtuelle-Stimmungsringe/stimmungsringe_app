@@ -16,18 +16,13 @@ class AvatarRowCondensed extends StatelessWidget {
   final DateTime now;
 
   const AvatarRowCondensed({
-    Key key,
-    @required this.avatarSentiment,
-    @required this.name,
-    @required this.image,
-    @required this.lastStatusUpdate,
-    @required this.now,
-  })  : assert(avatarSentiment != null),
-        assert(name != null),
-        assert(image != null),
-        assert(lastStatusUpdate != null),
-        assert(now != null),
-        super(key: key);
+    Key? key,
+    required this.avatarSentiment,
+    required this.name,
+    required this.image,
+    required this.lastStatusUpdate,
+    required this.now,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +46,6 @@ class AvatarRowCondensed extends StatelessWidget {
               padding: const EdgeInsets.only(right: 20),
               child: Avatar(
                 image: image,
-                borderColor: CupertinoColors.white,
                 backgroundColor: avatarSentiment.avatarIconBackgroundColor,
                 size: _avatarSize,
               ),

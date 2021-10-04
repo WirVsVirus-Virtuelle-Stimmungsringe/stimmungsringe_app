@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class WaitDialog extends StatelessWidget {
-  const WaitDialog({Key key}) : super(key: key);
+  const WaitDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:familiarise/config.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/other_detail.dart';
 import 'package:familiarise/data/sentiment.dart';
-import 'package:familiarise/repositories/chaos_monkey.dart';
+import 'package:familiarise/repositories/chaos_monkey.dart' as chaos_monkey;
 import 'package:familiarise/session.dart';
 import 'package:familiarise/utils/api_headers.dart';
 import 'package:familiarise/utils/response.dart';
@@ -28,34 +28,37 @@ class DashboardRepository {
     );
 
     assert(
-        response.statusCode == 200, 'load dashboard -> ${response.statusCode}');
+      response.statusCode == 200,
+      'load dashboard -> ${response.statusCode}',
+    );
 
     final Dashboard dashboard =
         Dashboard.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
     return dashboard;
   }
 
   Future<void> setNewSentiment(
-      Sentiment sentiment, String sentimentText) async {
+    Sentiment sentiment,
+    String sentimentText,
+  ) async {
     final Uri url = Uri.parse('${Config().backendUrl}/mystatus');
 
-    final http.Response response = await http.put(url,
-        headers: {
-          ...authenticated(currentUserId),
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(
-          {
-            'sentiment': sentiment.sentimentCode,
-            'sentimentText': sentimentText
-          },
-        ));
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        ...authenticated(currentUserId),
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(
+        {'sentiment': sentiment.sentimentCode, 'sentimentText': sentimentText},
+      ),
+    );
     // TODO response handling
 
     assert(response.statusCode == 200);
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
   }
 
   Future<OtherDetail> loadOtherDetailPageData(String userId) async {
@@ -73,7 +76,7 @@ class DashboardRepository {
     final OtherDetail detailPage =
         OtherDetail.fromJson(decodeResponseBytesToJson(response.bodyBytes));
 
-    await ChaosMonkey.delayAsync();
+    await chaos_monkey.delayAsync();
     return detailPage;
   }
 }

@@ -6,12 +6,11 @@ class Paragraph extends StatelessWidget {
   final bool isLastWidget;
 
   const Paragraph({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.isFirstWidget = false,
     this.isLastWidget = false,
-  })  : assert(child != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

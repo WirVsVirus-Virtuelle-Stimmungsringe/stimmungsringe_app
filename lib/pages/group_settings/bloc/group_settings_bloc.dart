@@ -13,14 +13,18 @@ class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
   Stream<GroupSettingsState> mapEventToState(GroupSettingsEvent event) async* {
     if (event is LoadSettings) {
       final groupSettings =
-          await onboardingRepository.getGroupSettings(currentGroupId);
+          await onboardingRepository.getGroupSettings(currentGroupId!);
       yield ShowCurrentGroupSettings(
-          groupSettings.groupName, groupSettings.groupCode);
+        groupSettings.groupName,
+        groupSettings.groupCode,
+      );
     } else if (event is SaveGroupSettings) {
       await onboardingRepository.updateGroupSettings(
-          currentGroupId, event.groupName);
+        currentGroupId!,
+        event.groupName,
+      );
     } else if (event is LeaveGroup) {
-      await onboardingRepository.leaveGroup(currentGroupId);
+      await onboardingRepository.leaveGroup(currentGroupId!);
       currentGroupId = null;
       yield GotoOnboarding();
     }
@@ -28,7 +32,8 @@ class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
 
   @override
   void onTransition(
-      Transition<GroupSettingsEvent, GroupSettingsState> transition) {
+    Transition<GroupSettingsEvent, GroupSettingsState> transition,
+  ) {
     super.onTransition(transition);
     print(transition);
   }
