@@ -102,6 +102,8 @@ class DashboardLoaded extends DashboardState implements StateWithData {
 }
 
 class DashboardError extends DashboardState implements StateWithData {
+  final Duration errorDuration;
+
   // may be null
   @override
   final Dashboard? dashboard;
@@ -110,27 +112,38 @@ class DashboardError extends DashboardState implements StateWithData {
   @override
   final DateTime? now;
 
-  DashboardError({this.dashboard, this.inbox, this.now})
-      : assert(
+  DashboardError({
+    this.errorDuration = Duration.zero,
+    this.dashboard,
+    this.inbox,
+    this.now,
+  }) : assert(
           (dashboard == null && inbox == null && now == null) ||
               (dashboard != null && inbox != null && now != null),
         );
 
   factory DashboardError.fromDashboardState(
     DashboardState dashboardState, {
+    Duration? errorDuration,
     Dashboard? dashboard,
     MessageInbox? inbox,
     DateTime? now,
   }) {
+    final Duration duration = errorDuration ??
+        (dashboardState is DashboardError
+            ? dashboardState.errorDuration
+            : Duration.zero);
+
     if (dashboardState.hasDashboard) {
       final StateWithData stateWithData = dashboardState as StateWithData;
       return DashboardError(
+        errorDuration: duration,
         dashboard: dashboard ?? stateWithData.dashboard,
         inbox: inbox ?? stateWithData.inbox,
         now: now ?? stateWithData.now,
       );
     } else {
-      return DashboardError();
+      return DashboardError(errorDuration: duration);
     }
   }
 
@@ -138,5 +151,5 @@ class DashboardError extends DashboardState implements StateWithData {
   bool get hasDashboard => dashboard != null;
 
   @override
-  List<Object?> get props => [dashboard, inbox, now];
+  List<Object?> get props => [errorDuration, dashboard, inbox, now];
 }

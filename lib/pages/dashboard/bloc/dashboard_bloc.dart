@@ -21,6 +21,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   int _dashboardHash = 0;
   int _messageInboxHash = 0;
   late StreamSubscription<void> _refreshSubscription;
+  StreamSubscription<void>? _errorTimerTickSubscription;
 
   DashboardBloc({
     required this.dashboardRepository,
@@ -29,23 +30,26 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }) : super(DashboardUninitialized()) {
     _userSettingsBlocSubscription = userSettingsBloc.stream.listen((state) {
       if (state is UserSettingsLoaded) {
-        print("settings sub");
         add(RefreshDashboardIfNecessary());
       }
     });
 
     _refreshSubscription =
         Stream<void>.periodic(_refreshInterval).listen((_) async {
-      final futures = await Future.wait([
-        dashboardRepository.loadDashboardPageData(),
-        messageRepository.loadInbox()
-      ]);
-      final dashboard = futures[0] as Dashboard;
-      final messageInbox = futures[1] as MessageInbox;
+      try {
+        final futures = await Future.wait([
+          dashboardRepository.loadDashboardPageData(),
+          messageRepository.loadInbox()
+        ]);
+        final dashboard = futures[0] as Dashboard;
+        final messageInbox = futures[1] as MessageInbox;
 
-      _dashboardHash = dashboard.hashCode;
-      _messageInboxHash = messageInbox.hashCode;
-      add(RefreshDashboardIfNecessary());
+        _dashboardHash = dashboard.hashCode;
+        _messageInboxHash = messageInbox.hashCode;
+        add(RefreshDashboardIfNecessary());
+      } catch (_) {
+        add(PropagateDashboardRefreshError());
+      }
     });
   }
 
@@ -57,12 +61,21 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   @override
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
-    if (event is FetchDashboard) {
-      yield* _mapFetchDashboardToState(event);
-    } else if (event is RefreshDashboardIfNecessary) {
-      yield* _mapRefreshDashboardToState(event);
-    } else if (event is SetNewSentiment) {
-      yield* _mapSetNewSentimentToState(event);
+    if (event is PropagateDashboardRefreshError) {
+      yield* _mapPropagateDashboardRefreshErrorToState(event);
+    } else if (event is IncrementDashboardRefreshErrorDuration) {
+      yield* _mapIncrementDashboardRefreshErrorDuration(event);
+    } else {
+      _errorTimerTickSubscription?.cancel();
+      _errorTimerTickSubscription = null;
+
+      if (event is FetchDashboard) {
+        yield* _mapFetchDashboardToState(event);
+      } else if (event is RefreshDashboardIfNecessary) {
+        yield* _mapRefreshDashboardToState(event);
+      } else if (event is SetNewSentiment) {
+        yield* _mapSetNewSentimentToState(event);
+      }
     }
   }
 
@@ -89,14 +102,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       );
     } catch (ex) {
       print(ex);
-      yield DashboardError.fromDashboardState(state, now: DateTime.now());
+      yield* _mapPropagateDashboardRefreshErrorToState(
+        PropagateDashboardRefreshError(),
+      );
     }
   }
 
   Stream<DashboardState> _mapRefreshDashboardToState(
     RefreshDashboardIfNecessary refresh,
   ) async* {
-    if (state is! DashboardLoaded) {
+    if (state is DashboardUninitialized || state is DashboardLoading) {
       return;
     }
     try {
@@ -104,7 +119,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final stateWithData = state as StateWithData;
         if (stateWithData.dashboard.hashCode == _dashboardHash &&
             stateWithData.inbox.hashCode == _messageInboxHash) {
-          print("skip refresh");
+          yield DashboardLoaded.fromDashboardState(state);
           return;
         }
       }
@@ -126,6 +141,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       );
     } catch (ex) {
       print(ex);
+      yield* _mapPropagateDashboardRefreshErrorToState(
+        PropagateDashboardRefreshError(),
+      );
     }
   }
 
@@ -170,17 +188,39 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     } catch (ex) {
       print(ex);
 
-      yield DashboardError.fromDashboardState(
-        dashboardLoadedState,
-        now: DateTime.now(),
+      yield* _mapPropagateDashboardRefreshErrorToState(
+        PropagateDashboardRefreshError(),
       );
     }
+  }
+
+  Stream<DashboardState> _mapPropagateDashboardRefreshErrorToState(
+    PropagateDashboardRefreshError refreshErrorEvent,
+  ) async* {
+    _errorTimerTickSubscription ??=
+        Stream<void>.periodic(const Duration(seconds: 1))
+            .listen((seconds) => add(IncrementDashboardRefreshErrorDuration()));
+
+    yield DashboardError.fromDashboardState(state);
+  }
+
+  Stream<DashboardState> _mapIncrementDashboardRefreshErrorDuration(
+    IncrementDashboardRefreshErrorDuration incrementDurationEvent,
+  ) async* {
+    final oldState = state;
+    final Duration duration =
+        oldState is DashboardError ? oldState.errorDuration : Duration.zero;
+    yield DashboardError.fromDashboardState(
+      state,
+      errorDuration: duration + const Duration(seconds: 1),
+    );
   }
 
   @override
   Future<void> close() {
     _userSettingsBlocSubscription.cancel();
     _refreshSubscription.cancel();
+    _errorTimerTickSubscription?.cancel();
     return super.close();
   }
 }

@@ -10,6 +10,10 @@ class FetchDashboard extends DashboardEvent {}
 
 class RefreshDashboardIfNecessary extends DashboardEvent {}
 
+class PropagateDashboardRefreshError extends DashboardEvent {}
+
+class IncrementDashboardRefreshErrorDuration extends DashboardEvent {}
+
 class SetNewSentiment extends DashboardEvent {
   final Sentiment sentiment;
   final String sentimentText;

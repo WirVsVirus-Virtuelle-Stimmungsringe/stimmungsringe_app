@@ -14,12 +14,14 @@ import 'package:familiarise/pages/user_settings/bloc/user_settings_bloc.dart';
 import 'package:familiarise/pages/user_settings/user_settings_page.dart';
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/message_repository.dart';
+import 'package:familiarise/utils/time_utils.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
 import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/retry_view.dart';
 import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,6 +99,14 @@ class _DashboardPageState extends State<DashboardPage>
         bottom: false,
         child: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
+            if (state is DashboardError && !state.hasDashboard) {
+              return RetryView(
+                onPressed: () {
+                  BlocProvider.of<DashboardBloc>(context).add(FetchDashboard());
+                },
+              );
+            }
+
             if (!state.hasDashboard) {
               return LoadingSpinner();
             }
@@ -176,20 +186,35 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   Padding buildDashboardBody(StateWithData stateWithData) {
+    Widget dashboardBody;
+
+    if (stateWithData.dashboard!.otherTiles.isEmpty) {
+      dashboardBody = _emptyGroupInfo(
+        stateWithData.dashboard!.groupData,
+        stateWithData is DashboardError ? stateWithData : null,
+      );
+    } else {
+      dashboardBody = _contactList(
+        stateWithData.dashboard!,
+        stateWithData.now!,
+        stateWithData is DashboardError ? stateWithData : null,
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: stateWithData.dashboard!.otherTiles.isEmpty
-          ? _emptyGroupInfo(
-              stateWithData.dashboard!.groupData,
-            )
-          : _contactList(
-              stateWithData.dashboard!,
-              stateWithData.now!,
-            ),
+      child: dashboardBody,
     );
   }
 
-  Widget _emptyGroupInfo(GroupData? groupData) {
+  Widget _emptyGroupInfo(GroupData? groupData, DashboardError? error) {
+    if (error != null) {
+      return Column(
+        children: [
+          _connectionErrorParagraph(error.errorDuration),
+        ],
+      );
+    }
     if (groupData == null) {
       return Container();
     }
@@ -230,9 +255,16 @@ class _DashboardPageState extends State<DashboardPage>
     );
   }
 
-  Widget _contactList(Dashboard dashboard, DateTime now) {
+  Widget _contactList(
+    Dashboard dashboard,
+    DateTime now,
+    DashboardError? error,
+  ) {
     return Column(
       children: <Widget>[
+        ...error != null
+            ? [_connectionErrorParagraph(error.errorDuration)]
+            : [],
         Paragraph(
           child: Headline('Fam-Group "${dashboard.groupData!.groupName}"'),
         ),
@@ -245,6 +277,16 @@ class _DashboardPageState extends State<DashboardPage>
           ),
         )
       ],
+    );
+  }
+
+  Widget _connectionErrorParagraph(Duration errorDuration) {
+    return Paragraph(
+      child: Text(
+        "Verbindung unterbrochen ${durationInWords(errorDuration, true, preposition: "seit")}...",
+        style: const TextStyle(color: CupertinoColors.systemRed, fontSize: 16),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
