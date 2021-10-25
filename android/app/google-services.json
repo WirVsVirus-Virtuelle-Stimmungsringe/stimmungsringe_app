@@ -30,6 +30,13 @@
             {
               "client_id": "991896350276-gnk7nnl3fiokh4s4qj2bf17p5vcmkt15.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "991896350276-mbefkija84j54npfjv77ri5o9jqg387e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.familiarise.app"
+              }
             }
           ]
         }
