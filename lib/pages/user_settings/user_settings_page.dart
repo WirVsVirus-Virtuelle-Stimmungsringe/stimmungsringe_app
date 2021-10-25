@@ -10,6 +10,7 @@ import 'package:familiarise/session.dart';
 import 'package:familiarise/widgets/avatar_button.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/text_field_with_max_length.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -117,7 +118,8 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
             ),
           ),
           Paragraph(
-            child: CupertinoTextField(
+            child: TextFieldWithMaxLength(
+              maxLength: 25,
               placeholder: 'Lasse andere wissen, wie du heißt!',
               controller: _userNameController,
             ),

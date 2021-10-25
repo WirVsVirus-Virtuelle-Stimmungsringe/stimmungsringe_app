@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
@@ -9,9 +7,8 @@ import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/sentiment_icon_button.dart';
+import 'package:familiarise/widgets/text_field_with_max_length.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SetMySentimentPage extends StatefulWidget {
@@ -32,7 +29,6 @@ class SetMySentimentPage extends StatefulWidget {
 class _SetMySentimentPageState extends State<SetMySentimentPage> {
   Sentiment? _sentiment;
   bool _sentimentTextTouched = false;
-  int _enteredTextLength = 0;
   final _sentimentTextController = TextEditingController();
 
   @override
@@ -45,8 +41,6 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
             _sentiment = stateWithData.dashboard!.myTile.sentiment;
             _sentimentTextController.text =
                 stateWithData.dashboard!.myTile.sentimentText;
-            _enteredTextLength =
-                stateWithData.dashboard!.myTile.sentimentText.characters.length;
           }
           return _buildLoadedPage(context, state as StateWithData);
         } else {
@@ -133,28 +127,15 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      CupertinoTextField(
+      TextFieldWithMaxLength(
         placeholder: "Beschreibung",
+        maxLength: maxStatusTextLength,
         controller: _sentimentTextController,
-        inputFormatters: [
-          _StringCharactersLimitingTextInputFormatter(maxStatusTextLength)
-        ],
         onChanged: (enteredText) {
           setState(() {
-            _enteredTextLength = enteredText.characters.length;
             _sentimentTextTouched = true;
           });
         },
-        suffix: Padding(
-          padding: const EdgeInsets.only(right: 4.0),
-          child: Text(
-            "$_enteredTextLength/$maxStatusTextLength",
-            style: const TextStyle(
-              fontSize: 14,
-              color: CupertinoColors.inactiveGray,
-            ),
-          ),
-        ),
       ),
     ];
   }
@@ -195,8 +176,6 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
           if (!_sentimentTextTouched) {
             _sentimentTextController.text =
                 selectedSentiment.defaultSentimentText;
-            _enteredTextLength =
-                selectedSentiment.defaultSentimentText.characters.length;
           }
         });
       },
@@ -230,41 +209,5 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
     }
 
     return slices;
-  }
-}
-
-class _StringCharactersLimitingTextInputFormatter extends TextInputFormatter {
-  final int maxLength;
-
-  _StringCharactersLimitingTextInputFormatter(this.maxLength)
-      : assert(maxLength == -1 || maxLength > 0);
-
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (maxLength > 0 && newValue.text.characters.length > maxLength) {
-      // If already at the maximum and tried to enter even more, keep the old value.
-      if (oldValue.text.characters.length == maxLength) {
-        return oldValue;
-      }
-      return _truncate(newValue, maxLength);
-    }
-    return newValue;
-  }
-
-  static TextEditingValue _truncate(TextEditingValue value, int maxLength) {
-    String newValue = value.text;
-    if (value.text.characters.length > maxLength) {
-      newValue = value.text.characters.take(maxLength).string;
-    }
-    return TextEditingValue(
-      text: newValue,
-      selection: value.selection.copyWith(
-        baseOffset: min(value.selection.start, newValue.length),
-        extentOffset: min(value.selection.end, newValue.length),
-      ),
-    );
   }
 }
