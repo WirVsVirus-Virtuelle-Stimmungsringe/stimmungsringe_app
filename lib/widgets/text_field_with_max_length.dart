@@ -13,7 +13,7 @@ class TextFieldWithMaxLength extends StatefulWidget {
 
   const TextFieldWithMaxLength({
     Key? key,
-    required this.maxLength,
+    this.maxLength = -1,
     this.placeholder,
     this.controller,
     this.onChanged,
@@ -32,7 +32,13 @@ class _TextFieldWithMaxLengthState extends State<TextFieldWithMaxLength> {
     super.initState();
 
     _controller = widget.controller ?? TextEditingController();
-    _currentLength = _controller.text.characters.length;
+
+    final truncatedText = _truncateText(_controller.text, widget.maxLength);
+    _currentLength = truncatedText.characters.length;
+
+    if (_controller.text != truncatedText) {
+      _controller.text = truncatedText;
+    }
   }
 
   @override
@@ -86,10 +92,8 @@ class _StringCharactersLimitingTextInputFormatter extends TextInputFormatter {
   }
 
   static TextEditingValue _truncate(TextEditingValue value, int maxLength) {
-    String newValue = value.text;
-    if (value.text.characters.length > maxLength) {
-      newValue = value.text.characters.take(maxLength).string;
-    }
+    final String newValue = _truncateText(value.text, maxLength);
+
     return TextEditingValue(
       text: newValue,
       selection: value.selection.copyWith(
@@ -98,4 +102,12 @@ class _StringCharactersLimitingTextInputFormatter extends TextInputFormatter {
       ),
     );
   }
+}
+
+String _truncateText(String text, int maxLength) {
+  if (maxLength == -1 || text.characters.length <= maxLength) {
+    return text;
+  }
+
+  return text.characters.take(maxLength).string;
 }
