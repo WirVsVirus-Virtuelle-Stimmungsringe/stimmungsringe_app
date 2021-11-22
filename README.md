@@ -8,3 +8,7 @@
 ## BloC:
 
 - Repository: https://bloclibrary.dev/#/flutterweathertutorial?id=repository
+
+## Installing cocoapods on M1
+
+Following SO answer was very helpful to fix cocoapods errors: https://stackoverflow.com/a/67636592
