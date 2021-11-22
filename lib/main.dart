@@ -17,7 +17,7 @@ import 'package:familiarise/repositories/onboarding_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
- PushNotificationsManager? pushNotificationsManager;
+PushNotificationsManager? pushNotificationsManager;
 
 Future<void> main() async {
   await Config().loaded;
