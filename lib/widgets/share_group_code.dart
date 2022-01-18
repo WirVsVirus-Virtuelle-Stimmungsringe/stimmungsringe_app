@@ -1,6 +1,6 @@
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareGroupCode extends StatelessWidget {
   final String groupCode;
@@ -24,7 +24,8 @@ class ShareGroupCode extends StatelessWidget {
           CupertinoButton(
             onPressed: () {
               Share.share(
-                'Trete bei FAMILIARISE der Fam-Group bei: $groupCode',
+                'Trete bei Familiarise der Fam-Group bei: $groupCode',
+                subject: 'Trete Familiarise bei!',
               );
             },
             child: const Icon(
