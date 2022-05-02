@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/group_data.dart';
 import 'package:familiarise/data/user_minimal.dart';
+import 'package:familiarise/pages/achievement/unseen_achievement_page.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
@@ -97,19 +98,38 @@ class _DashboardPageState extends State<DashboardPage>
         bottom: false,
         child: BlocBuilder<DashboardBloc, DashboardState>(
           builder: (context, state) {
-            if (!state.hasDashboard) {
-              return LoadingSpinner();
+            Widget widget;
+
+            if (!state.hasDashboard || state is UnseenAchievement) {
+              widget = LoadingSpinner();
+            } else {
+              final StateWithData stateWithData = state as StateWithData;
+              widget = Column(
+                children: <Widget>[
+                  _avatarRow(stateWithData),
+                  Expanded(
+                    child: buildDashboardBody(stateWithData),
+                  )
+                ],
+              );
             }
 
-            final StateWithData stateWithData = state as StateWithData;
+            return BlocListener<DashboardBloc, DashboardState>(
+              listener: (context, state) {
+                if (state is! UnseenAchievement) {
+                  return;
+                }
 
-            return Column(
-              children: <Widget>[
-                _avatarRow(stateWithData),
-                Expanded(
-                  child: buildDashboardBody(stateWithData),
-                )
-              ],
+                Navigator.pushNamed(
+                  context,
+                  UnseenAchievementPage.routeUri,
+                  arguments: {
+                    'unseenAchievement': state,
+                    'dashboardBloc': BlocProvider.of<DashboardBloc>(context),
+                  },
+                );
+              },
+              child: widget,
             );
           },
         ),

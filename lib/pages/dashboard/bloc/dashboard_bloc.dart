@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:familiarise/data/achievement.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/data/sentiment.dart';
@@ -21,6 +22,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   int _dashboardHash = 0;
   int _messageInboxHash = 0;
   late StreamSubscription<void> _refreshSubscription;
+  bool _unseenAchievementLoadedOnce = false;
 
   DashboardBloc({
     required this.dashboardRepository,
@@ -58,22 +60,41 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   @override
   Stream<DashboardState> mapEventToState(DashboardEvent event) async* {
     if (event is FetchDashboard) {
-      yield* _mapFetchDashboardToState(event);
+      yield* _mapFetchDashboardToState();
     } else if (event is RefreshDashboardIfNecessary) {
-      yield* _mapRefreshDashboardToState(event);
+      yield* _mapRefreshDashboardToState();
     } else if (event is SetNewSentiment) {
       yield* _mapSetNewSentimentToState(event);
+    } else if (event is MarkAchievementAsSeen) {
+      yield* _mapMarkAchievementAsSeenToState(event);
     }
   }
 
-  Stream<DashboardState> _mapFetchDashboardToState(
-    FetchDashboard fetch,
-  ) async* {
+  Stream<DashboardState> _mapFetchDashboardToState() async* {
     if (state is DashboardLoading) {
       return;
     }
 
     yield DashboardLoading.fromDashboardState(state, now: DateTime.now());
+
+    if (!_unseenAchievementLoadedOnce) {
+      try {
+        final Achievement? unseenAchievement =
+            await dashboardRepository.loadUnseenAchievementForSplash();
+
+        if (unseenAchievement != null) {
+          yield UnseenAchievement.fromDashboardState(
+            state,
+            unseenAchievement: unseenAchievement,
+          );
+          return;
+        }
+      } catch (ex) {
+        print(ex);
+      } finally {
+        _unseenAchievementLoadedOnce = true;
+      }
+    }
 
     try {
       final futures = await Future.wait([
@@ -93,9 +114,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     }
   }
 
-  Stream<DashboardState> _mapRefreshDashboardToState(
-    RefreshDashboardIfNecessary refresh,
-  ) async* {
+  Stream<DashboardState> _mapRefreshDashboardToState() async* {
     if (state is! DashboardLoaded) {
       return;
     }
@@ -175,6 +194,23 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         now: DateTime.now(),
       );
     }
+  }
+
+  Stream<DashboardState> _mapMarkAchievementAsSeenToState(
+    MarkAchievementAsSeen markAchievementAsSeen,
+  ) async* {
+    if (state is! UnseenAchievement) {
+      return;
+    }
+
+    try {
+      dashboardRepository
+          .ackUnseenAchievement(markAchievementAsSeen.achievement);
+    } catch (ex) {
+      print(ex);
+    }
+
+    yield* _mapFetchDashboardToState();
   }
 
   @override

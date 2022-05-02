@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:familiarise/data/achievement.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/message.dart';
 
@@ -64,6 +65,59 @@ class DashboardLoading extends DashboardState implements StateWithData {
   List<Object?> get props => [dashboard, inbox, now];
 }
 
+class UnseenAchievement extends DashboardState implements StateWithData {
+  final Achievement unseenAchievement;
+  @override
+  final Dashboard? dashboard;
+  @override
+  final MessageInbox? inbox;
+  @override
+  final DateTime? now;
+
+  UnseenAchievement({
+    required this.unseenAchievement,
+    this.dashboard,
+    this.inbox,
+    this.now,
+  }) : assert(
+          (dashboard == null && inbox == null && now == null) ||
+              (dashboard != null && inbox != null && now != null),
+        );
+
+  factory UnseenAchievement.fromDashboardState(
+    DashboardState dashboardState, {
+    Achievement? unseenAchievement,
+    Dashboard? dashboard,
+    MessageInbox? inbox,
+    DateTime? now,
+  }) {
+    if (unseenAchievement == null && dashboardState is UnseenAchievement) {
+      unseenAchievement = dashboardState.unseenAchievement;
+    }
+    assert(unseenAchievement != null);
+
+    if (dashboardState.hasDashboard) {
+      final StateWithData stateWithData = dashboardState as StateWithData;
+      return UnseenAchievement(
+        unseenAchievement: unseenAchievement!,
+        dashboard: dashboard ?? stateWithData.dashboard,
+        inbox: inbox ?? stateWithData.inbox,
+        now: now ?? stateWithData.now,
+      );
+    } else {
+      return UnseenAchievement(
+        unseenAchievement: unseenAchievement!,
+      );
+    }
+  }
+
+  @override
+  bool get hasDashboard => dashboard != null;
+
+  @override
+  List<Object?> get props => [unseenAchievement, dashboard, inbox, now];
+}
+
 class DashboardLoaded extends DashboardState implements StateWithData {
   @override
   final Dashboard dashboard;
@@ -102,7 +156,6 @@ class DashboardLoaded extends DashboardState implements StateWithData {
 }
 
 class DashboardError extends DashboardState implements StateWithData {
-  // may be null
   @override
   final Dashboard? dashboard;
   @override
