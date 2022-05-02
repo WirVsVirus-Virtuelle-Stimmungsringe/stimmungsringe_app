@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:familiarise/config.dart';
+import 'package:familiarise/data/achievement.dart';
 import 'package:familiarise/data/dashboard.dart';
 import 'package:familiarise/data/other_detail.dart';
 import 'package:familiarise/data/sentiment.dart';
@@ -18,6 +19,52 @@ class DashboardRepository {
   }
 
   DashboardRepository._internal();
+
+  Future<Achievement?> loadUnseenAchievementForSplash() async {
+    final Uri url =
+        Uri.parse('${Config().backendUrl}/achievement/splash/unseen');
+
+    final http.Response response = await http.get(
+      url,
+      headers: authenticated(currentUserId),
+    );
+
+    assert(
+      response.statusCode == 200 || response.statusCode == 404,
+      'load unseen achievements for splash -> ${response.statusCode}',
+    );
+
+    final Achievement? achievement = response.statusCode == 200
+        ? Achievement.fromJson(decodeResponseBytesToJson(response.bodyBytes))
+        : null;
+
+    await chaos_monkey.delayAsync();
+    return achievement;
+  }
+
+  Future<void> ackUnseenAchievement(Achievement achievement) async {
+    final Uri url = Uri.parse(
+      '${Config().backendUrl}/achievement/splash/${achievement.achievementType.name}/ack',
+    );
+
+    final http.Response response = await http.post(
+      url,
+      headers: {
+        ...authenticated(currentUserId),
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'level': achievement.level,
+      }),
+    );
+
+    assert(
+      response.statusCode == 200,
+      'ack unseen achievements for splash -> ${response.statusCode}',
+    );
+
+    await chaos_monkey.delayAsync();
+  }
 
   Future<Dashboard> loadDashboardPageData() async {
     final Uri url = Uri.parse('${Config().backendUrl}/dashboard');

@@ -1,5 +1,6 @@
 import 'package:familiarise/config.dart';
 import 'package:familiarise/pages/about/about_page.dart';
+import 'package:familiarise/pages/achievement/unseen_achievement_page.dart';
 import 'package:familiarise/pages/dashboard/dashboard_page.dart';
 import 'package:familiarise/pages/group_settings/group_settings_page.dart';
 import 'package:familiarise/pages/inbox/inbox_page.dart';
@@ -95,6 +96,7 @@ class _SentimentAppState extends State<SentimentApp>
         OnboardingStartPage.makeRoute(userSettingsBloc),
         OnboardingCreateGroupPage.route,
         OnboardingJoinGroupPage.route,
+        UnseenAchievementPage.makeRoute(),
         DashboardPage.makeRoute(userSettingsBloc),
         SetMySentimentPage.route,
         OtherDetailPage.makeRoute(),
