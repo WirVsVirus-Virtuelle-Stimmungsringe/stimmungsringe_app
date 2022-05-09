@@ -14,7 +14,10 @@ class Achievement extends Equatable {
   final String headline;
   final String bodyText;
   final String _avatarUrl;
+  final String pageIcon;
   final BuiltList<Color> gradientColors;
+  final Color ackButtonColor;
+  final String ackButtonText;
 
   @override
   List<Object?> get props => [
@@ -24,7 +27,10 @@ class Achievement extends Equatable {
         headline,
         bodyText,
         _avatarUrl,
+        pageIcon,
         gradientColors,
+        ackButtonColor,
+        ackButtonText,
       ];
 
   static Achievement fromJson(Map<String, dynamic> jsonMap) {
@@ -37,25 +43,29 @@ class Achievement extends Equatable {
       jsonMap['headline'] as String,
       jsonMap['bodyText'] as String,
       jsonMap['avatarUrl'] as String,
+      jsonMap['pageIcon'] as String,
       BuiltList.of(
-        (jsonMap['gradientColors'] as List<dynamic>).map((dynamic color) {
-          final colorEntry = color as Map<String, dynamic>;
-
-          if (colorEntry['rgba'] != null) {
-            final rgbaParts = colorEntry['rgba'] as List<dynamic>;
-            return Color.fromRGBO(
-              rgbaParts[0] as int,
-              rgbaParts[1] as int,
-              rgbaParts[2] as int,
-              rgbaParts[3] as double,
-            );
-          }
-
-          throw UnsupportedError(
-            'unknown color format: ${jsonEncode(colorEntry)}',
-          );
-        }),
+        (jsonMap['gradientColors'] as List<dynamic>)
+            .map((dynamic color) => _parseColor(color as Map<String, dynamic>)),
       ),
+      _parseColor(jsonMap['ackButtonColor'] as Map<String, dynamic>),
+      jsonMap['ackButtonText'] as String,
+    );
+  }
+
+  static Color _parseColor(Map<String, dynamic> colorEntry) {
+    if (colorEntry['rgba'] != null) {
+      final rgbaParts = colorEntry['rgba'] as List<dynamic>;
+      return Color.fromRGBO(
+        rgbaParts[0] as int,
+        rgbaParts[1] as int,
+        rgbaParts[2] as int,
+        rgbaParts[3] as double,
+      );
+    }
+
+    throw UnsupportedError(
+      'unknown color format: ${jsonEncode(colorEntry)}',
     );
   }
 
@@ -66,7 +76,10 @@ class Achievement extends Equatable {
     this.headline,
     this.bodyText,
     this._avatarUrl,
+    this.pageIcon,
     this.gradientColors,
+    this.ackButtonColor,
+    this.ackButtonText,
   );
 
   String get avatarUrl {
