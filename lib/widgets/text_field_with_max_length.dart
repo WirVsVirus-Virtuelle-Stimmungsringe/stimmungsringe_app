@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:characters/characters.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class TextFieldWithMaxLength extends StatefulWidget {
   final int maxLength;

@@ -1,6 +1,4 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
@@ -10,7 +8,6 @@ import 'package:familiarise/widgets/avatar.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

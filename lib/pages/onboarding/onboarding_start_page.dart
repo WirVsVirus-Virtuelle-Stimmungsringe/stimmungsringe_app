@@ -14,7 +14,6 @@ import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnboardingStartPage extends StatelessWidget {

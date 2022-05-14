@@ -65,20 +65,20 @@ class _SentimentAppState extends State<SentimentApp>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     didChangePlatformBrightness();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   void didChangePlatformBrightness() {
     final Brightness brightness =
-        WidgetsBinding.instance!.window.platformBrightness;
+        WidgetsBinding.instance.window.platformBrightness;
 
     setState(() {
       theme = CupertinoThemeData(brightness: brightness);
