@@ -1,7 +1,6 @@
 import 'package:familiarise/data/sentiment.dart';
 import 'package:familiarise/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const double _avatarSize = 150;
