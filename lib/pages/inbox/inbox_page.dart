@@ -3,10 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:familiarise/data/message.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
+import 'package:familiarise/session.dart';
 import 'package:familiarise/utils/calc_time_difference_in_words.dart';
-import 'package:familiarise/widgets/avatar.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -138,13 +138,10 @@ class _InboxPageState extends State<InboxPage> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Avatar(
-            image: makeProtectedNetworkImage(
-              message.senderUser.userId,
-              message.senderUser.avatarUrl,
-            ),
-            size: 200,
-          ),
+          child: makeAvatarSvgWidgetFactory(
+            userId: currentUserId,
+            avatarSvgUrl: message.senderUser.avatarSvgUrl,
+          )(size: 200),
         ),
         Padding(
           padding: EdgeInsets.only(

@@ -8,8 +8,8 @@ import 'package:familiarise/pages/user_settings/bloc/user_settings_event.dart';
 import 'package:familiarise/pages/user_settings/bloc/user_settings_state.dart';
 import 'package:familiarise/session.dart';
 import 'package:familiarise/widgets/avatar_button.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:familiarise/widgets/paragraph.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/text_field_with_max_length.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -152,7 +152,10 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
 
   Widget _buildAvatar(StockAvatar avatar) {
     return AvatarButton(
-      image: makeProtectedNetworkImage(currentUserId, avatar.avatarUrl),
+      avatarWidgetFactory: makeAvatarSvgWidgetFactory(
+        userId: currentUserId,
+        avatarSvgUrl: avatar.avatarSvgUrl,
+      ),
       selected: avatar.avatarName == _selectedAvatar,
       onAvatarTap: () {
         setState(() {

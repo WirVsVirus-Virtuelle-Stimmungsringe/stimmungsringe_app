@@ -17,10 +17,10 @@ import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
 import 'package:familiarise/widgets/avatar_row_condensed.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:familiarise/widgets/headline.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
 import 'package:familiarise/widgets/paragraph.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/share_group_code.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -162,9 +162,9 @@ class _DashboardPageState extends State<DashboardPage>
     final UserMinimal user = dashboard.myTile.user;
     return AvatarRow(
       name: nameInRow,
-      image: makeProtectedNetworkImage(
-        user.userId,
-        user.avatarUrl,
+      avatarWidgetFactory: makeAvatarSvgWidgetFactory(
+        userId: user.userId,
+        avatarSvgUrl: user.avatarSvgUrl,
       ),
       avatarSentiment: dashboard.myTile.sentiment,
       onAvatarImageTap: () {
@@ -292,9 +292,9 @@ class _DashboardPageState extends State<DashboardPage>
             ),
             child: AvatarRowCondensed(
               name: contactName,
-              image: makeProtectedNetworkImage(
-                tile.user.userId,
-                tile.user.avatarUrl,
+              avatarWidgetFactory: makeAvatarSvgWidgetFactory(
+                userId: tile.user.userId,
+                avatarSvgUrl: tile.user.avatarSvgUrl,
               ),
               avatarSentiment: tile.sentiment,
               lastStatusUpdate: tile.lastStatusUpdate,

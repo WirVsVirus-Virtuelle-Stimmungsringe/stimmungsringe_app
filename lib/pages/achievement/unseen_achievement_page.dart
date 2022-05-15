@@ -3,8 +3,7 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/session.dart';
-import 'package:familiarise/widgets/avatar.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,13 +74,10 @@ class UnseenAchievementPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: Avatar(
-                      image: makeProtectedNetworkImage(
-                        currentUserId,
-                        unseenAchievement.avatarUrl,
-                      ),
-                      size: 200,
-                    ),
+                    child: makeAvatarSvgWidgetFactory(
+                      userId: currentUserId,
+                      avatarSvgUrl: unseenAchievement.avatarSvgUrl,
+                    )(size: 200),
                   ),
                   Padding(
                     padding: EdgeInsets.only(

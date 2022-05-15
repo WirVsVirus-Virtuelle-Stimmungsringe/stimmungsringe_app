@@ -8,8 +8,8 @@ import 'package:familiarise/pages/other_detail/bloc/other_detail_page_state.dart
 import 'package:familiarise/repositories/dashboard_repository.dart';
 import 'package:familiarise/repositories/message_repository.dart';
 import 'package:familiarise/widgets/avatar_row_other.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/push_message_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,9 +80,9 @@ class OtherDetailPage extends StatelessWidget {
                 name: state.otherDetail.user.hasName
                     ? state.otherDetail.user.displayName!
                     : '',
-                image: makeProtectedNetworkImage(
-                  state.otherDetail.user.userId,
-                  state.otherDetail.user.avatarUrl,
+                avatarWidgetFactory: makeAvatarSvgWidgetFactory(
+                  userId: state.otherDetail.user.userId,
+                  avatarSvgUrl: state.otherDetail.user.avatarSvgUrl,
                 ),
                 avatarSentiment: state.otherDetail.sentiment,
                 sentimentText: state.otherDetail.sentimentText,

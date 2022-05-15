@@ -24,21 +24,24 @@ class AvailableAvatars extends Equatable {
 
 class StockAvatar extends Equatable {
   final String avatarName;
-  final String _avatarUrl;
+  final String _avatarSvgUrl;
 
   @override
-  List<Object> get props => [avatarName, _avatarUrl];
+  List<Object?> get props => [avatarName, _avatarSvgUrl];
 
   static StockAvatar fromJson(Map<String, dynamic> jsonMap) {
     return StockAvatar(
       jsonMap['avatarName'] as String,
-      jsonMap['avatarUrl'] as String,
+      jsonMap['avatarSvgUrl'] as String,
     );
   }
 
-  const StockAvatar(this.avatarName, this._avatarUrl);
+  const StockAvatar(
+    this.avatarName,
+    this._avatarSvgUrl,
+  );
 
-  String get avatarUrl {
-    return Config().backendUrl + _avatarUrl;
+  String get avatarSvgUrl {
+    return Config().backendUrl + _avatarSvgUrl;
   }
 }
