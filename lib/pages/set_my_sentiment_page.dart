@@ -4,8 +4,8 @@ import 'package:familiarise/pages/dashboard/bloc/dashboard_bloc.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_event.dart';
 import 'package:familiarise/pages/dashboard/bloc/dashboard_state.dart';
 import 'package:familiarise/widgets/avatar_row.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:familiarise/widgets/loading_spinner.dart';
-import 'package:familiarise/widgets/protected_network_image.dart';
 import 'package:familiarise/widgets/sentiment_icon_button.dart';
 import 'package:familiarise/widgets/text_field_with_max_length.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,9 +74,9 @@ class _SetMySentimentPageState extends State<SetMySentimentPage> {
                 name: dashboard.myTile.user.hasName
                     ? dashboard.myTile.user.displayName!
                     : '',
-                image: makeProtectedNetworkImage(
-                  dashboard.myTile.user.userId,
-                  dashboard.myTile.user.avatarUrl,
+                avatarWidgetFactory: makeAvatarSvgWidgetFactory(
+                  userId: dashboard.myTile.user.userId,
+                  avatarSvgUrl: dashboard.myTile.user.avatarSvgUrl,
                 ),
                 avatarSentiment: _sentiment!,
               ),

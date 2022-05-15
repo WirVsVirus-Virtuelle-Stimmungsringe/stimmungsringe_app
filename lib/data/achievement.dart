@@ -13,7 +13,7 @@ class Achievement extends Equatable {
   final AchievementPageType pageType;
   final String headline;
   final String bodyText;
-  final String _avatarUrl;
+  final String _avatarSvgUrl;
   final String pageIcon;
   final BuiltList<Color> gradientColors;
   final Color ackButtonColor;
@@ -26,7 +26,7 @@ class Achievement extends Equatable {
         pageType,
         headline,
         bodyText,
-        _avatarUrl,
+        _avatarSvgUrl,
         pageIcon,
         gradientColors,
         ackButtonColor,
@@ -42,7 +42,7 @@ class Achievement extends Equatable {
       ),
       jsonMap['headline'] as String,
       jsonMap['bodyText'] as String,
-      jsonMap['avatarUrl'] as String,
+      jsonMap['avatarSvgUrl'] as String,
       jsonMap['pageIcon'] as String,
       BuiltList.of(
         (jsonMap['gradientColors'] as List<dynamic>)
@@ -75,14 +75,14 @@ class Achievement extends Equatable {
     this.pageType,
     this.headline,
     this.bodyText,
-    this._avatarUrl,
+    this._avatarSvgUrl,
     this.pageIcon,
     this.gradientColors,
     this.ackButtonColor,
     this.ackButtonText,
   );
 
-  String get avatarUrl {
-    return Config().backendUrl + _avatarUrl;
+  String get avatarSvgUrl {
+    return Config().backendUrl + _avatarSvgUrl;
   }
 }

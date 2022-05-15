@@ -1,5 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
-import 'package:familiarise/widgets/avatar.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,7 +8,7 @@ const double _avatarSize = 150;
 class AvatarRow extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String name;
-  final ImageProvider image;
+  final AvatarWidgetFactory avatarWidgetFactory;
   final void Function()? onAvatarImageTap;
   final void Function()? onSentimentIconTap;
   final void Function()? onInboxIconTap;
@@ -18,7 +18,7 @@ class AvatarRow extends StatelessWidget {
     Key? key,
     required this.avatarSentiment,
     required this.name,
-    required this.image,
+    required this.avatarWidgetFactory,
     this.onAvatarImageTap,
     this.onSentimentIconTap,
     this.onInboxIconTap,
@@ -81,8 +81,7 @@ class AvatarRow extends StatelessWidget {
       left: 20,
       child: wrapGestureDetector(
         onTap: onAvatarImageTap,
-        child: Avatar(
-          image: image,
+        child: avatarWidgetFactory(
           backgroundColor: avatarSentiment.avatarIconBackgroundColor,
           // ignore: avoid_redundant_argument_values
           size: _avatarSize,

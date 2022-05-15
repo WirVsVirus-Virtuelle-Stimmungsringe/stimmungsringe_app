@@ -1,14 +1,14 @@
-import 'package:familiarise/widgets/avatar.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:flutter/cupertino.dart';
 
 class AvatarButton extends StatelessWidget {
-  final ImageProvider image;
+  final AvatarWidgetFactory avatarWidgetFactory;
   final bool selected;
   final void Function() onAvatarTap;
 
   const AvatarButton({
     Key? key,
-    required this.image,
+    required this.avatarWidgetFactory,
     required this.selected,
     required this.onAvatarTap,
   }) : super(key: key);
@@ -21,10 +21,7 @@ class AvatarButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: onAvatarTap,
-      child: Avatar(
-        image: image,
-        borderColor: borderColor,
-      ),
+      child: avatarWidgetFactory(borderColor: borderColor),
     );
   }
 }

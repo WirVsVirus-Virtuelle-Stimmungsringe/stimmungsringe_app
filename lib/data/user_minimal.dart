@@ -5,17 +5,17 @@ class UserMinimal extends Equatable {
   final String userId;
   final String? displayName;
   final bool hasName;
-  final String _avatarUrl;
+  final String _avatarSvgUrl;
 
   @override
-  List<Object?> get props => [userId, displayName, hasName, _avatarUrl];
+  List<Object?> get props => [userId, displayName, hasName, _avatarSvgUrl];
 
   static UserMinimal fromJson(Map<String, dynamic> jsonMap) {
     return UserMinimal(
       jsonMap['userId'] as String,
       jsonMap['displayName'] as String?,
       jsonMap['hasName'] as bool,
-      jsonMap['avatarUrl'] as String,
+      jsonMap['avatarSvgUrl'] as String,
     );
   }
 
@@ -23,10 +23,10 @@ class UserMinimal extends Equatable {
     this.userId,
     this.displayName,
     this.hasName,
-    this._avatarUrl,
+    this._avatarSvgUrl,
   ) : assert(hasName == (displayName != null));
 
-  String get avatarUrl {
-    return Config().backendUrl + _avatarUrl;
+  String get avatarSvgUrl {
+    return Config().backendUrl + _avatarSvgUrl;
   }
 }

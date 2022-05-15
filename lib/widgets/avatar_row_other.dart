@@ -1,5 +1,5 @@
 import 'package:familiarise/data/sentiment.dart';
-import 'package:familiarise/widgets/avatar.dart';
+import 'package:familiarise/widgets/avatar_widget_factory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,14 +12,14 @@ class AvatarRowOther extends StatelessWidget {
   final Sentiment avatarSentiment;
   final String sentimentText;
   final String name;
-  final ImageProvider image;
+  final AvatarWidgetFactory avatarWidgetFactory;
 
   const AvatarRowOther({
     Key? key,
     required this.avatarSentiment,
     required this.sentimentText,
     required this.name,
-    required this.image,
+    required this.avatarWidgetFactory,
   }) : super(key: key);
 
   @override
@@ -88,8 +88,7 @@ class AvatarRowOther extends StatelessWidget {
     return Positioned(
       top: 20,
       left: 20,
-      child: Avatar(
-        image: image,
+      child: avatarWidgetFactory(
         backgroundColor: avatarSentiment.avatarIconBackgroundColor,
         // ignore: avoid_redundant_argument_values
         size: _avatarSize,
