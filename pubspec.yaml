@@ -14,7 +14,7 @@ description: Familiarise App
 version: 1.0.0+8
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.17.0 <3.0.0'
 
 dependencies:
   basic_utils: ^4.2.2
