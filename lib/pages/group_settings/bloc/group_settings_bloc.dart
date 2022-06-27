@@ -24,6 +24,7 @@ class GroupSettingsBloc extends Bloc<GroupSettingsEvent, GroupSettingsState> {
         event.groupName,
       );
     } else if (event is LeaveGroup) {
+      yield GroupSettingsLoading();
       await onboardingRepository.leaveGroup(currentGroupId!);
       currentGroupId = null;
       yield GotoOnboarding();

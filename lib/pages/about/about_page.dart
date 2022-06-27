@@ -70,7 +70,7 @@ Die Geräte-ID stellt ein pseudonymisiertes Datum dar.
 
 Die Datenübermittlung zwischen der familiarise-App und dem familiarise-Server erfolgt verschlüsselt mittels HTTPS.
 
-Die Löschung der personenbezogenen Daten muss durch den Nutzer selbsttätig durch die Funktion "Gruppe verlassen" erfolgen.
+Die Löschung der personenbezogenen Daten muss durch den Nutzer selbsttätig durch die Funktion "Fam-Group verlassen" erfolgen.
 
 Push-Berechtigungen in den Apps
 Die familiarise-App nutzt Push-Services der Betriebssystemhersteller. Dies sind Kurzmitteilungen,
